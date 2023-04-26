@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.views.CustomersView">
+   <children>
+      <VBox prefHeight="400.0" prefWidth="600.0">
+         <children>
+            <AnchorPane prefHeight="20.0" prefWidth="600.0" />
+            <VBox prefHeight="366.0" prefWidth="600.0">
+               <children>
+                  <HBox prefHeight="307.0" prefWidth="600.0">
+                     <children>
+                        <VBox fx:id="card_box_left" prefHeight="307.0" prefWidth="300.0" />
+                        <VBox fx:id="card_box_right" prefHeight="307.0" prefWidth="300.0" />
+                     </children>
+                  </HBox>
+                  <HBox fx:id="button_box" prefHeight="31.0" prefWidth="600.0">
+                     <children>
+                        <HBox fx:id="button_box_left" prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <MFXButton fx:id="new_customer_button" text="New  Customer" />
+                              <MFXButton fx:id="edit_button" text="Edit" />
+                           </children>
+                        </HBox>
+                        <HBox fx:id="button_box_right" prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <MFXButton fx:id="delete_button" text="Delete" />
+                              <MFXButton fx:id="back_button" text="Back" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

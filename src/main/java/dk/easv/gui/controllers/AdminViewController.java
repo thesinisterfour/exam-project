@@ -1,6 +1,8 @@
 package dk.easv.gui.controllers;
 
 import dk.easv.Main;
+import io.github.palexdev.materialfx.controls.MFXComboBox;
+import io.github.palexdev.materialfx.controls.MFXTableView;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -19,9 +21,9 @@ public class AdminViewController implements Initializable {
     @FXML
     private TextField userName;
     @FXML
-    private ComboBox comboBox;
+    private MFXComboBox comboBox;
     @FXML
-    private TableView tableView;
+    private MFXTableView tableView;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
     }

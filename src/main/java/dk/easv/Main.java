@@ -16,8 +16,8 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         if (Files.exists(Config.CONFIG_PATH.getUrl())){
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("views/hello-view.fxml"));
-            Scene scene = new Scene(fxmlLoader.load());
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("views/login-screen.fxml"));
+            Scene scene = new Scene(fxmlLoader.load(), 760, 480);
             stage.setTitle("Hello!");
             stage.setScene(scene);
             stage.show();

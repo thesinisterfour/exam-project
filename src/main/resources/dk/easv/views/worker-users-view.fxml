@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import io.github.palexdev.materialfx.controls.MFXScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Pane layoutX="14.0" layoutY="14.0" prefHeight="375.0" prefWidth="572.0" style="-fx-background-color: #333333;">
+         <children>
+            <MFXScrollPane layoutY="1.0" prefHeight="348.0" prefWidth="572.0" style="-fx-background-color: #333333;" />
+            <MFXButton layoutX="14.0" layoutY="349.0" text="New User" />
+            <MFXButton layoutX="90.0" layoutY="349.0" text="Edit" />
+            <MFXButton layoutX="503.0" layoutY="349.0" text="Back" />
+            <MFXButton layoutX="438.0" layoutY="349.0" text="Delete" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

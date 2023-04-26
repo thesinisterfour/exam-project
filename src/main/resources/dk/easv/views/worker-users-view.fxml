@@ -2,20 +2,68 @@
 
 <?import io.github.palexdev.materialfx.controls.MFXButton?>
 <?import io.github.palexdev.materialfx.controls.MFXScrollPane?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+<GridPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.WorkerViewController">
+   <columnConstraints>
+      <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints minHeight="10.0" valignment="CENTER" vgrow="SOMETIMES" />
+   </rowConstraints>
    <children>
-      <Pane layoutX="14.0" layoutY="14.0" prefHeight="375.0" prefWidth="572.0" style="-fx-background-color: #333333;">
+      <Group GridPane.halignment="CENTER" GridPane.hgrow="NEVER" GridPane.vgrow="NEVER">
          <children>
-            <MFXScrollPane layoutY="1.0" prefHeight="348.0" prefWidth="572.0" style="-fx-background-color: #333333;" />
-            <MFXButton layoutX="14.0" layoutY="349.0" text="New User" />
-            <MFXButton layoutX="90.0" layoutY="349.0" text="Edit" />
-            <MFXButton layoutX="503.0" layoutY="349.0" text="Back" />
-            <MFXButton layoutX="438.0" layoutY="349.0" text="Delete" />
+            <GridPane prefHeight="400.0" prefWidth="800.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints maxHeight="372.8000122070313" minHeight="10.0" prefHeight="372.8000122070313" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="192.60001220703126" minHeight="10.0" prefHeight="26.399987792968773" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <MFXScrollPane prefHeight="340.0" GridPane.hgrow="NEVER" GridPane.vgrow="NEVER" />
+                  <GridPane GridPane.rowIndex="1">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <MFXButton fx:id="newUser" prefHeight="26.0" prefWidth="205.0" text="New User" />
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
+                           <children>
+                              <MFXButton fx:id="edit" prefHeight="26.0" prefWidth="274.0" text="Edit" />
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2">
+                           <children>
+                              <MFXButton fx:id="delete" prefHeight="26.0" prefWidth="231.0" text="Delete" />
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="3">
+                           <children>
+                              <MFXButton fx:id="back" prefHeight="26.0" prefWidth="215.0" text="Back" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </GridPane>
+               </children>
+            </GridPane>
          </children>
-      </Pane>
+      </Group>
    </children>
-</AnchorPane>
+</GridPane>

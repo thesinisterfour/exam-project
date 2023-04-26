@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import io.github.palexdev.materialfx.controls.legacy.MFXLegacyTableView?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.views.ProjectManagerView">
+   <children>
+      <VBox fx:id="screen_alignment_vertical" styleClass="screen_alignment_vertical" prefHeight="413.0" prefWidth="600.0">
+         <children>
+            <AnchorPane fx:id="header" prefHeight="54.0" prefWidth="600.0" styleClass="header">
+               <children>
+                  <Label fx:id="greeting_message" layoutX="84.0" layoutY="18.0" styleClass="greeting_message" text="Hello project manager" />
+                  <MFXButton fx:id="logout_button" layoutX="518.0" layoutY="14.0" styleClass="logout_button" text="Log out" />
+                  <ImageView fx:id="logo_image" fitHeight="50.0" fitWidth="50.0" layoutX="13.0" pickOnBounds="true" preserveRatio="true" styleClass="logo_image" />
+               </children>
+            </AnchorPane>
+            <HBox fx:id="tech_card_hbox" prefHeight="156.0" prefWidth="554.0" styleClass="tech_card_hbox" />
+            <MFXLegacyTableView fx:id="document_table" prefHeight="202.0" prefWidth="600.0">
+             <columns>
+                 <TableColumn fx:id="document_table_id" prefWidth="44.800048828125" text="ID" />
+                 <TableColumn fx:id="document_table_name" prefWidth="269.5999755859375" text="Document Name" />
+                 <TableColumn fx:id="document_table_lastview" minWidth="0.0" prefWidth="144.0" text="Last Viewed On" />
+                 <TableColumn fx:id="document_table_createdon" prefWidth="140.79998779296875" text="Created On" />
+             </columns>
+            </MFXLegacyTableView>
+         </children></VBox>
+   </children>
+</AnchorPane>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="625.0" prefWidth="1087.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.AdminViewController">
+   <children>
+      <Pane layoutX="207.0" layoutY="38.0" prefHeight="235.0" prefWidth="674.0" style="-fx-background-color: ffffff;">
+         <children>
+            <Pane layoutX="14.0" layoutY="21.0" prefHeight="193.0" prefWidth="144.0" style="-fx-background-color: #333333;">
+               <children>
+                  <Text fill="WHITE" layoutX="38.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Picture" wrappingWidth="68.474609375">
+                     <font>
+                        <Font size="22.0" />
+                     </font>
+                  </Text>
+               </children>
+            </Pane>
+            <Text layoutX="206.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome [User-Name]" wrappingWidth="165.0" />
+            <MFXButton blendMode="HARD_LIGHT" layoutX="206.0" layoutY="177.0" onAction="#handleLogoutButton" prefHeight="37.0" prefWidth="83.0" style="-fx-background-color: #17263A;" text="Logout" textFill="#e84910">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </MFXButton>
+         </children>
+      </Pane>
+      <Pane layoutX="24.0" layoutY="313.0" prefHeight="287.0" prefWidth="1041.0" style="-fx-background-color: ffffff;" />
+   </children>
+</AnchorPane>

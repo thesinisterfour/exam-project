@@ -10,7 +10,7 @@ import java.sql.Connection;
 import java.util.Properties;
 
 public class ConnectionManager {
-    private static final String usualConfigPath = "/config.cfg";
+    private static final String usualConfigPath = "config.cfg";
     private final SQLServerDataSource ds;
 
     public ConnectionManager() {

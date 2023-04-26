@@ -15,7 +15,7 @@ public class CreateDocumentController {
     @FXML
     private ComboBox comboBox;
     @FXML
-    private DatePicker dpStartDate;
+    private DatePicker dpCreateDate;
 
 
     @FXML

@@ -37,7 +37,7 @@
             <MFXTextField fx:id="txfLocation" layoutX="58.0" layoutY="362.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="412.0" text="Location" />
             <TextArea fx:id="txfDescription" layoutX="536.0" layoutY="297.0" prefHeight="260.0" prefWidth="382.0" text="Here you can write description and notes for the work." />
             <MFXComboBox fx:id="comboBox" layoutX="283.0" layoutY="409.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="187.0" text="pleas select costumer" />
-            <MFXDatePicker fx:id="dpStartDate" layoutX="269.0" layoutY="314.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" />
+            <MFXDatePicker fx:id="dpCreateDate" layoutX="269.0" layoutY="314.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" />
             <MFXButton blendMode="HARD_LIGHT" layoutX="14.0" layoutY="471.0" onAction="#handleCancel" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #17263A;" text="Cancel" textFill="#e84910" />
             <MFXButton blendMode="HARD_LIGHT" layoutX="163.0" layoutY="471.0" onAction="#handleSave" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #17263A;" text="Save" textFill="#e84910" />
          </children>

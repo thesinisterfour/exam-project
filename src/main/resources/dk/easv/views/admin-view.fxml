@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import io.github.palexdev.materialfx.controls.MFXComboBox?>
+<?import io.github.palexdev.materialfx.controls.MFXTableView?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="625.0" prefWidth="1087.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.AdminViewController">
+<AnchorPane prefHeight="625.0" prefWidth="987.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.AdminViewController">
    <children>
-      <Pane layoutX="207.0" layoutY="38.0" prefHeight="235.0" prefWidth="674.0" style="-fx-background-color: ffffff;">
+      <Pane layoutX="157.0" layoutY="31.0" prefHeight="235.0" prefWidth="674.0" style="-fx-background-color: ffffff;">
          <children>
             <Pane layoutX="14.0" layoutY="21.0" prefHeight="193.0" prefWidth="144.0" style="-fx-background-color: #333333;">
                <children>
@@ -19,14 +22,48 @@
                   </Text>
                </children>
             </Pane>
-            <Text layoutX="206.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome [User-Name]" wrappingWidth="165.0" />
-            <MFXButton blendMode="HARD_LIGHT" layoutX="206.0" layoutY="177.0" onAction="#handleLogoutButton" prefHeight="37.0" prefWidth="83.0" style="-fx-background-color: #17263A;" text="Logout" textFill="#e84910">
+            <Text fx:id="userName" layoutX="192.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome [User-Name]" wrappingWidth="125.0" />
+            <MFXButton blendMode="HARD_LIGHT" layoutX="172.0" layoutY="178.0" onAction="#handleLogout" prefHeight="37.0" prefWidth="83.0" style="-fx-background-color: #17263A;" text="Logout" textFill="#e84910">
                <font>
                   <Font size="18.0" />
                </font>
             </MFXButton>
+            <Label layoutX="362.0" layoutY="22.0" prefHeight="193.0" prefWidth="294.0" text="WUAV">
+               <font>
+                  <Font name="Arial" size="93.0" />
+               </font>
+            </Label>
+            <MFXComboBox fx:id="comboBox" layoutX="172.0" layoutY="48.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="24.0" prefWidth="165.0" text="pleas select status" />
          </children>
       </Pane>
-      <Pane layoutX="24.0" layoutY="313.0" prefHeight="287.0" prefWidth="1041.0" style="-fx-background-color: ffffff;" />
+      <Pane layoutX="24.0" layoutY="288.0" prefHeight="312.0" prefWidth="943.0" style="-fx-background-color: ffffff;">
+         <children>
+            <MFXTableView fx:id="tableView" layoutX="308.0" layoutY="14.0" prefHeight="235.0" prefWidth="621.0" />
+            <MFXButton blendMode="HARD_LIGHT" layoutX="27.0" layoutY="52.0" onAction="#handleCreateDocument" prefHeight="37.0" prefWidth="209.0" style="-fx-background-color: #17263A;" text="Create Document" textFill="#e84910">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </MFXButton>
+            <MFXButton blendMode="HARD_LIGHT" layoutX="27.0" layoutY="113.0" onAction="#handleEditDocument" prefHeight="37.0" prefWidth="209.0" style="-fx-background-color: #17263A;" text="Edit Document" textFill="#e84910">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </MFXButton>
+            <MFXButton blendMode="HARD_LIGHT" layoutX="27.0" layoutY="174.0" onAction="#handleUsers" prefHeight="37.0" prefWidth="209.0" style="-fx-background-color: #17263A;" text="Users" textFill="#e84910">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </MFXButton>
+            <MFXButton blendMode="HARD_LIGHT" layoutX="27.0" layoutY="231.0" onAction="#handleCustomers" prefHeight="37.0" prefWidth="209.0" style="-fx-background-color: #17263A;" text="Customers" textFill="#e84910">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </MFXButton>
+            <MFXButton blendMode="HARD_LIGHT" layoutX="846.0" layoutY="264.0" onAction="#handleDelete" prefHeight="17.0" prefWidth="83.0" style="-fx-background-color: #17263A;" text="Delete" textFill="#e84910">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </MFXButton>
+         </children></Pane>
    </children>
 </AnchorPane>

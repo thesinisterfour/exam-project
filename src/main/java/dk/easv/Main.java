@@ -1,5 +1,6 @@
 package dk.easv;
 
+import dk.easv.helpers.Config;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -14,7 +15,7 @@ import java.util.Optional;
 public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        if (Files.exists(Helpers.CONFIG_PATH.getUrl())){
+        if (Files.exists(Config.CONFIG_PATH.getUrl())){
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("views/hello-view.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), 320, 240);
             stage.setTitle("Hello!");
@@ -40,7 +41,6 @@ public class Main extends Application {
                 System.exit(0);
             }
         } else {
-
             System.exit(1);
         }
     }

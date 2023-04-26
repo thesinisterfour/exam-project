@@ -1,13 +1,13 @@
-package dk.easv;
+package dk.easv.helpers;
 
 import java.nio.file.Path;
 
-public enum Helpers {
+public enum Config {
     CONFIG_PATH("src/main/resources/dk/easv/config.cfg");
 
     private final Path url;
 
-    Helpers(String envUrl) {
+    Config(String envUrl) {
         this.url = Path.of(envUrl);
     }
 

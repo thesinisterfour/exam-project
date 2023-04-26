@@ -11,4 +11,6 @@ module dk.easv.eventticketseasvbar {
     exports dk.easv;
     exports dk.easv.gui.controllers;
     opens dk.easv.gui.controllers to javafx.fxml;
+    exports dk.easv.helpers;
+    opens dk.easv.helpers to javafx.fxml;
 }

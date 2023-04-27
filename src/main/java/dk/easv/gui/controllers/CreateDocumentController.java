@@ -1,5 +1,8 @@
 package dk.easv.gui.controllers;
 
+import io.github.palexdev.materialfx.controls.MFXComboBox;
+import io.github.palexdev.materialfx.controls.MFXDatePicker;
+import io.github.palexdev.materialfx.controls.MFXTextField;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -7,15 +10,15 @@ import javafx.scene.control.TextField;
 
 public class CreateDocumentController {
     @FXML
-    private TextField txfDocumentName;
+    private MFXTextField txfDocumentName;
     @FXML
-    private TextField txfLocation;
+    private MFXTextField txfLocation;
     @FXML
-    private TextField txfDescription;
+    private MFXTextField txfDescription;
     @FXML
-    private ComboBox comboBox;
+    private MFXComboBox comboBox;
     @FXML
-    private DatePicker dpCreateDate;
+    private MFXDatePicker dpCreateDate;
 
 
     @FXML

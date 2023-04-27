@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<GridPane fx:id="gridMain" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400.0" minWidth="600.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.TechnicianViewController">
+   <columnConstraints>
+      <ColumnConstraints />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="336.0" minWidth="10.0" prefWidth="106.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="449.0" minWidth="10.0" prefWidth="419.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="303.0" minWidth="10.0" prefWidth="108.0" />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints maxHeight="95.0" minHeight="0.0" prefHeight="25.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="152.0" minHeight="10.0" prefHeight="152.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="303.0" minHeight="10.0" prefHeight="23.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="249.0" minHeight="0.0" prefHeight="170.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="230.0" minHeight="10.0" prefHeight="29.0" vgrow="SOMETIMES" />
+   </rowConstraints>
+   <children>
+      <VBox fx:id="welcomeVBox" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+         <children>
+            <HBox fx:id="welcomeHBox" prefHeight="162.0" prefWidth="408.0">
+               <children>
+                  <GridPane fx:id="gridTop" prefHeight="152.0" prefWidth="422.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="97.0" minWidth="10.0" prefWidth="26.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="194.0" minWidth="10.0" prefWidth="106.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="195.0" minWidth="10.0" prefWidth="175.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints maxHeight="46.0" minHeight="10.0" prefHeight="18.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="117.0" minHeight="10.0" prefHeight="105.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="34.0" minHeight="7.0" prefHeight="19.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <children>
+                        <ImageView fx:id="userImg" fitHeight="108.0" fitWidth="86.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <GridPane fx:id="gridWelcome" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints maxHeight="41.0" minHeight="10.0" prefHeight="34.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="57.0" minHeight="0.0" prefHeight="43.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="76.0" minHeight="10.0" prefHeight="31.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                           <children>
+                              <Label fx:id="labelWelcome" prefHeight="17.0" prefWidth="82.0" text="   Welcome">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                              </Label>
+                              <MFXButton fx:id="statusMFXButton" onAction="#statusAction" prefHeight="25.0" prefWidth="110.0" text="Select Status" GridPane.rowIndex="1" />
+                              <MFXButton fx:id="logoutMFXButton" onAction="#logoutUserAction" prefHeight="25.0" prefWidth="91.0" text="Log Out" GridPane.rowIndex="2" />
+                              <Label fx:id="labelUserName" prefHeight="21.0" prefWidth="94.0" text="[Username]" GridPane.columnIndex="1">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </GridPane>
+                        <Label fx:id="companyLogo" prefHeight="58.0" prefWidth="98.0" text="WUAV" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                           <font>
+                              <Font size="32.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </GridPane>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <GridPane fx:id="gridBottom" GridPane.columnIndex="2" GridPane.rowIndex="3">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints maxHeight="80.0" minHeight="0.0" prefHeight="26.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="80.0" minHeight="8.0" prefHeight="8.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="170.0" minHeight="10.0" prefHeight="146.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <TableView fx:id="docTable" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
+               <columns>
+                  <TableColumn fx:id="columnDocID" prefWidth="55.0" text="ID" />
+                  <TableColumn fx:id="columnDocument" prefWidth="352.0" text="Document" />
+               </columns>
+            </TableView>
+            <MFXButton fx:id="createMFXButton" onAction="#createDocAction" prefHeight="25.0" prefWidth="186.0" text="Create document">
+               <GridPane.margin>
+                  <Insets left="110.0" />
+               </GridPane.margin>
+            </MFXButton>
+         </children>
+      </GridPane>
+      <Label fx:id="userRole" prefHeight="17.0" prefWidth="92.0" text="Technician" GridPane.columnIndex="3">
+         <padding>
+            <Insets left="15.0" />
+         </padding>
+      </Label>
+   </children>
+</GridPane>

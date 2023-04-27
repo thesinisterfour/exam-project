@@ -17,7 +17,7 @@ public class ControllerLogin extends RootController {
     private TextField password;
     @FXML
     private void loginButtonAction(ActionEvent actionEvent) {
-//        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("views/admin-view.fxml"));
+//        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("views/salesperson-view.fxml"));
 //        Scene scene = new Scene(fxmlLoader.load(), 760, 480);
 //        Stage stage = new Stage();
 //        stage.setScene(scene);

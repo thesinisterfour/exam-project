@@ -18,7 +18,7 @@ import javafx.scene.text.Text;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class AdminViewController extends RootController implements Initializable {
+public class SalesPersonViewController extends RootController implements Initializable {
 
     @FXML
     private AnchorPane anchorPane;

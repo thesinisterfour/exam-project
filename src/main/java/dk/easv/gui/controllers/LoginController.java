@@ -5,10 +5,9 @@ import dk.easv.gui.rootContoller.RootController;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.TextField;
 
 
-public class ControllerLogin extends RootController {
+public class LoginController extends RootController {
     @FXML
     private MFXTextField username;
     @FXML

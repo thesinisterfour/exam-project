@@ -2,6 +2,7 @@ package dk.easv.gui.controllers;
 
 
 import dk.easv.gui.rootContoller.RootController;
+import io.github.palexdev.materialfx.controls.MFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -9,9 +10,9 @@ import javafx.scene.control.TextField;
 
 public class ControllerLogin extends RootController {
     @FXML
-    private TextField username;
+    private MFXTextField username;
     @FXML
-    private TextField password;
+    private MFXTextField password;
     @FXML
     private void loginButtonAction(ActionEvent actionEvent) {
 //        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("views/admin-view.fxml"));

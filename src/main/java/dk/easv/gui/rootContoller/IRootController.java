@@ -1,9 +1,10 @@
 package dk.easv.gui.rootContoller;
 
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.stage.Stage;
 
-public interface IRootController {
+public interface IRootController extends Initializable {
     /**
      * method to retrieve Parent root after it is set in controller factory
      *

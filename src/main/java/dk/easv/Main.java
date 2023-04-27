@@ -1,8 +1,10 @@
 package dk.easv;
 
+import dk.easv.gui.controllerFactory.ControllerFactory;
+import dk.easv.gui.rootContoller.RootController;
 import dk.easv.helpers.Config;
+import dk.easv.helpers.ViewType;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -16,8 +18,8 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         if (Files.exists(Config.CONFIG_PATH.getUrl())){
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("views/hello-view.fxml"));
-            Scene scene = new Scene(fxmlLoader.load(), 320, 240);
+            RootController controller = ControllerFactory.loadFxmlFile(ViewType.LOGIN);
+            Scene scene = new Scene(controller.getView(), 760, 480);
             stage.setTitle("Hello!");
             stage.setScene(scene);
             stage.show();

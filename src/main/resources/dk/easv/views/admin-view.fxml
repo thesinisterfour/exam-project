@@ -65,7 +65,7 @@
       <HBox alignment="CENTER_RIGHT" prefHeight="54.0" prefWidth="990.0" spacing="20.0" BorderPane.alignment="CENTER">
          <children>
             <MFXComboBox fx:id="comboBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="24.0" prefWidth="165.0" text="pleas select status" />
-            <MFXButton onAction="#handleLogout" prefHeight="37.0" prefWidth="83.0" text="Logout">
+            <MFXButton onAction="#handleLogout" prefHeight="37.0" prefWidth="83.0" text="Logout" fx:id="logoutButton">
                <font>
                   <Font size="18.0" />
                </font>

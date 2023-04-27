@@ -13,6 +13,13 @@ public enum ViewType {
         public String getFXMLView() {
             return "views/login-view.fxml";
         }
+    },
+
+    PROJECT_MANAGER {
+        @Override
+        public String getFXMLView() {
+            return "views/project-manager-view.fxml";
+        }
     };
     public abstract String getFXMLView();
 }

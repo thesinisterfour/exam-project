@@ -15,6 +15,13 @@ public enum ViewType {
         }
     },
 
+    PROJECT_MANAGER {
+        @Override
+        public String getFXMLView() {
+            return "views/project-manager-view.fxml";
+        }
+    },
+
     USERS_VIEW{
         @Override
         public String getFXMLView() {

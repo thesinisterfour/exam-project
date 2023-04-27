@@ -3,6 +3,7 @@ package dk.easv.gui.controllers;
 import dk.easv.Main;
 import io.github.palexdev.materialfx.controls.MFXComboBox;
 import io.github.palexdev.materialfx.controls.MFXTableView;
+import io.github.palexdev.materialfx.controls.MFXTextField;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -19,7 +20,7 @@ import java.util.ResourceBundle;
 public class AdminViewController implements Initializable {
 
     @FXML
-    private TextField userName;
+    private MFXTextField userName;
     @FXML
     private MFXComboBox comboBox;
     @FXML

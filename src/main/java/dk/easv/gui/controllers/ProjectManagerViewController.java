@@ -22,7 +22,6 @@ public class ProjectManagerViewController extends RootController {
 
     public void displayFxml(Stage stage) throws IOException {
         RootController controller = ControllerFactory.loadFxmlFile(ViewType.PROJECT_MANAGER);
-
         Scene scene = new Scene(controller.getView(), 760, 480);
         stage.setTitle("Project Manager");
         stage.setScene(scene);

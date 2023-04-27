@@ -22,7 +22,6 @@ public class ControllerLogin extends RootController {
 //        Scene scene = new Scene(fxmlLoader.load(), 760, 480);
 //        Stage stage = new Stage();
 //        stage.setScene(scene);
-//        stage.show();
         System.out.println("Logged in");
     }
 

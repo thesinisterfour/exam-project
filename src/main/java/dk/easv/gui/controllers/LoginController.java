@@ -6,6 +6,9 @@ import io.github.palexdev.materialfx.controls.MFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
+import java.net.URL;
+import java.util.ResourceBundle;
+
 
 public class LoginController extends RootController {
     @FXML
@@ -21,5 +24,10 @@ public class LoginController extends RootController {
 //        stage.show();
 
         System.out.println("Logged in");
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
     }
 }

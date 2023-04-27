@@ -46,7 +46,10 @@ public class UserDAO implements ICRUDDao<User> {
     public ConcurrentMap<Integer, User> getAll() throws SQLException {
         ConcurrentMap<Integer, User> userMap = new ConcurrentHashMap<>();
         try(Connection connection = cm.getConnection()){
-            PreparedStatement ps = connection.prepareStatement("SELECT * FROM users;");
+            PreparedStatement ps = connection.prepareStatement("" +
+                    "SELECT dbo.[users].user_id, dbo.[users].first_name, dbo.[users].last_name, dbo.[users].username, dbo.[users].[password], dbo.users_role.role_name\n" +
+                    "FROM  dbo.[users]\n" +
+                    "INNER JOIN dbo.users_role ON dbo.users_role.role_id = dbo.[users].role_id;");
 
             ResultSet rs = ps.executeQuery();
 
@@ -54,22 +57,10 @@ public class UserDAO implements ICRUDDao<User> {
                 int dbId = rs.getInt("user_id");
                 String dbFirstName = rs.getString("first_name");
                 String dbLastName = rs.getString("last_name");
-                int dbRoleId = rs.getInt("role_id");
+                String dbRole = rs.getString("role_name");
                 String dbUsername = rs.getString("username");
                 String dbPassword = rs.getString("password");
-                Role userRole = null;
-
-                ArrayList<Role> roleList = new ArrayList<>();
-                roleList.add(Role.SALESPERSON);
-                roleList.add(Role.ADMIN);
-                roleList.add(Role.TECHNICIAN);
-                roleList.add(Role.PROJECTMANAGER);
-
-                for (Role role:roleList) {
-                    if (dbRoleId == role.getId()){
-                        userRole = role;
-                    }
-                }
+                Role userRole = Role.valueOf(dbRole);
 
                 userMap.put(dbId, new User(dbId, dbFirstName, dbLastName, userRole, dbUsername, dbPassword));
             }

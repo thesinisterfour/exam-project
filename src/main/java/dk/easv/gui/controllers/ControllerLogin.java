@@ -6,6 +6,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 
+import java.net.URL;
+import java.util.ResourceBundle;
+
 
 public class ControllerLogin extends RootController {
     @FXML
@@ -21,5 +24,10 @@ public class ControllerLogin extends RootController {
 //        stage.show();
 
         System.out.println("Logged in");
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
     }
 }

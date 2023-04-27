@@ -18,6 +18,17 @@ public class CRUDLogic {
             return userDAO.add(user);
         }
     }
+    public int addCustomer(Customer customer) throws SQLException, NullPointerException {
+        ICRUDDao<Customer> customerDAO = CRUDDAOFactory.getDao(DAOType.CUSTOMER_DAO);
+        if (customerDAO == null) {
+            throw new NullPointerException("CustomerDAO is null");
+        } else {
+            return customerDAO.add(customer);
+        }
+
+
+
+    }
 
     public ConcurrentMap<Integer, Customer> getAllCustomers() throws SQLException{
         ICRUDDao<Customer> customerDao = CRUDDAOFactory.getDao(DAOType.CUSTOMER_DAO);

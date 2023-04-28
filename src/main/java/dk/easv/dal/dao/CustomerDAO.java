@@ -1,33 +1,41 @@
 package dk.easv.dal.dao;
 
 import dk.easv.be.Customer;
-import dk.easv.be.User;
 import dk.easv.dal.ConnectionManager;
 import dk.easv.dal.interafaces.ICRUDDao;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.concurrent.ConcurrentMap;
 
 public class CustomerDAO implements ICRUDDao<Customer> {
-    private PreparedStatement preparedStatement;
-    private ConnectionManager connectionManager;
+    private final ConnectionManager cm = new ConnectionManager();
 
     @Override
-    public int add(Customer object) throws SQLException {
-        if (object == null) {
-            String sql = "INSERT INTO customer (name ,email ,address ,zipcode) VALUES (?,?,?,?)";
-            preparedStatement = connectionManager.getConnection().prepareStatement(sql);
+    public int add(Customer customer) throws SQLException {
+        try(Connection con = cm.getConnection()){
+            if (customer == null) {
+                throw new SQLException("Object cannot be null");
+            } else {
 
-            preparedStatement.setString(1, object.getCustomerName());
-            preparedStatement.setString(2, object.getCustomerEmail());
-            preparedStatement.setString(3, object.getCustomerAddress());
-            preparedStatement.setInt(4, object.getZipCode());
+                String sql = "INSERT INTO customer (name, email, address, zipcode) VALUES (?, ?, ?, ?)";
+                PreparedStatement ps = con.prepareStatement(sql);
 
-            preparedStatement.execute();
-            throw new SQLException("Object cannot be null");
+                ps.setString(1, customer.getCustomerName());
+                ps.setString(2, customer.getCustomerEmail());
+                ps.setString(3, customer.getCustomerAddress());
+                ps.setInt(4, customer.getZipCode());
+
+                ResultSet rs = ps.executeQuery();
+                if (rs.next()) {
+                    return rs.getInt(1);
+                } else {
+                    throw new SQLException("Could not add customer");
+                }
             }
-            return 0;
+        }
     }
 
     @Override

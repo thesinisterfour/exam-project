@@ -6,30 +6,29 @@ import dk.easv.dal.interafaces.ICRUDDao;
 import dk.easv.helpers.DAOType;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 import java.util.concurrent.ConcurrentMap;
-import java.util.concurrent.atomic.AtomicReference;
 
-public class CRUDLogic {
-    private ICRUDDao<User> userDAO = CRUDDAOFactory.getDao(DAOType.USER_DAO);
-    private User user;
+public class CRUDLogic implements BLLFacade {
 
-    public int addUser(User user) throws SQLException, NullPointerException {
+    @Override
+    public int addUser(User user) throws SQLException{
+        ICRUDDao<User> userDAO = CRUDDAOFactory.getDao(DAOType.USER_DAO);
         if (userDAO == null) {
-            throw new NullPointerException("UserDAO is null");
+            return -1;
         } else {
             return userDAO.add(user);
         }
     }
 
+
+
+    @Override
     public User checkForUser(String username, String password) throws SQLException {
+        ICRUDDao<User> userDAO = CRUDDAOFactory.getDao(DAOType.USER_DAO);
         ConcurrentMap<Integer, User> userMap = userDAO.getAll();
-        List<Map.Entry<Integer, User>> userList = new ArrayList<>(userMap.entrySet());
-        for (Map.Entry<Integer, User> selectedUser:userList) {
-            if (selectedUser.getValue().getUsername().equals(username) && selectedUser.getValue().getPassword().equals(password)){
-                return selectedUser.getValue();
+        for (User user : userMap.values()) {
+            if (user.getUsername().equals(username) && user.getPassword().equals(password)){
+                return user;
             }
         }
         return null;

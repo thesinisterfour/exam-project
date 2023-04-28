@@ -1,10 +1,9 @@
 package dk.easv.gui.controllers;
 
 
-import dk.easv.be.Role;
 import dk.easv.be.User;
-import dk.easv.bll.CRUDLogic;
 import dk.easv.gui.controllerFactory.ControllerFactory;
+import dk.easv.gui.models.LoginModel;
 import dk.easv.gui.rootContoller.RootController;
 import dk.easv.helpers.ViewType;
 import io.github.palexdev.materialfx.controls.MFXTextField;
@@ -21,28 +20,23 @@ import java.util.ResourceBundle;
 
 public class LoginController extends RootController {
 
-    /*No models yet so routing straight to bll, will be changed when models are implemented*/
-    CRUDLogic bll = new CRUDLogic();
+    private final LoginModel model = new LoginModel();
     @FXML
     private MFXTextField username;
     @FXML
     private MFXTextField password;
-
-    Stage stage;
+    private Stage stage;
 
     @FXML
     private void loginButtonAction(ActionEvent actionEvent) throws SQLException, IOException {
-
-        User selectedUser = bll.checkForUser(username.getText(), password.getText());
+        this.stage = this.getStage();
+        User selectedUser = model.checkForUser(username.getText(), password.getText());
         if (selectedUser != null){
-            if (selectedUser.getRole() == Role.ADMIN){
-                displayAdmin();
-            } else if (selectedUser.getRole() == Role.PROJECTMANAGER) {
-                displayProjectManager();
-            } else if (selectedUser.getRole() == Role.SALESPERSON) {
-                displaySalesPerson();
-            } else if (selectedUser.getRole() == Role.TECHNICIAN) {
-                displayTechnician();
+            switch (selectedUser.getRole()) {
+                case ADMIN -> displayAdmin();
+                case PROJECTMANAGER -> displayProjectManager();
+                case SALESPERSON -> displaySalesPerson();
+                case TECHNICIAN -> displayTechnician();
             }
         }
     }
@@ -81,6 +75,5 @@ public class LoginController extends RootController {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        stage = this.stage;
     }
 }

@@ -1,6 +1,5 @@
 package dk.easv.dal.dao;
 
-import com.microsoft.sqlserver.jdbc.SQLServerException;
 import dk.easv.be.Role;
 import dk.easv.be.User;
 import dk.easv.dal.ConnectionManager;
@@ -10,8 +9,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -64,10 +61,7 @@ public class UserDAO implements ICRUDDao<User> {
 
                 userMap.put(dbId, new User(dbId, dbFirstName, dbLastName, userRole, dbUsername, dbPassword));
             }
-
             return userMap;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
         }
     }
 

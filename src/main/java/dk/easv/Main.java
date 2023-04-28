@@ -15,10 +15,8 @@ import java.nio.file.Files;
 import java.util.Optional;
 
 public class Main extends Application {
-    private static Stage primaryStage;
     @Override
     public void start(Stage stage) throws IOException {
-        primaryStage = stage;
         if (Files.exists(Config.CONFIG_PATH.getUrl())){
             RootController controller = ControllerFactory.loadFxmlFile(ViewType.LOGIN);
             Scene scene = new Scene(controller.getView(), 760, 480);
@@ -49,9 +47,6 @@ public class Main extends Application {
         }
     }
 
-    public static Stage getPrimaryStage() {
-        return primaryStage;
-    }
     public static void main(String[] args) {
         launch();
     }

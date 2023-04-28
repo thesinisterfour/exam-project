@@ -1,5 +1,6 @@
 package dk.easv.dal.dao;
 
+import dk.easv.be.City;
 import dk.easv.be.Customer;
 import dk.easv.be.User;
 import dk.easv.dal.interafaces.ICRUDDao;
@@ -34,7 +35,9 @@ public class CustomerDAO implements ICRUDDao<Customer> {
         ConcurrentMap<Integer, Customer> customers = new ConcurrentHashMap<>();
         try (Connection connection = cm.getConnection()){
             PreparedStatement ps = connection.prepareStatement("" +
-                    "select * from dbo.[customer]"
+                    "select dbo.[customer].[customer_id], dbo.[customer].[name], dbo.[customer].[email], dbo.[customer].[address], dbo.cities.city_name, dbo.cities.zipcode\n" +
+                    "from dbo.customer\n" +
+                    "inner join dbo.cities on dbo.cities.zipcode = dbo.customer.zipcode;"
             );
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -43,7 +46,9 @@ public class CustomerDAO implements ICRUDDao<Customer> {
                 String dbEmail = rs.getString("email");
                 String dbAddress = rs.getString("address");
                 int dbZipcode = rs.getInt("zipcode");
-                Customer customer = new Customer(dbId,dbName,dbEmail,dbAddress,dbZipcode);
+                String dbCityName = rs.getString("city_name");
+                City city = new City(dbZipcode, dbCityName);
+                Customer customer = new Customer(dbId,dbName,dbEmail,dbAddress,city);
                 customers.put(dbId, customer);
             }
         } catch (SQLException e) {

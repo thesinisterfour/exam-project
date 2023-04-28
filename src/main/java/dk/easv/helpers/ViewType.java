@@ -41,6 +41,13 @@ public enum ViewType {
         public String getFXMLView() {
             return "views/login-view.fxml";
         }
+    },
+
+    USERS_VIEW{
+        @Override
+        public String getFXMLView() {
+            return "views/worker-users-view.fxml";
+        }
     };
     public abstract String getFXMLView();
 }

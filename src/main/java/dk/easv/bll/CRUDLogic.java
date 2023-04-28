@@ -41,10 +41,15 @@ public class CRUDLogic implements BLLFacade {
         } else {
             return customerDAO.add(customer);
         }
-
-
-
     }
 
+    public ConcurrentMap<Integer, Customer> getAllCustomers() throws SQLException{
+        ICRUDDao<Customer> customerDao = CRUDDAOFactory.getDao(DAOType.CUSTOMER_DAO);
+        if (customerDao == null) {
+            throw new NullPointerException("CustomerDAO is null");
+        } else {
+            return customerDao.getAll();
+        }
+    }
 
 }

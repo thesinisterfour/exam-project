@@ -1,27 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import io.github.palexdev.materialfx.controls.MFXButton?>
-<?import io.github.palexdev.materialfx.controls.MFXComboBox?>
-<?import io.github.palexdev.materialfx.controls.MFXDatePicker?>
-<?import io.github.palexdev.materialfx.controls.MFXTextField?>
-<?import javafx.scene.control.TextArea?>
+
+<?import io.github.palexdev.materialfx.controls.*?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
-
-
 <AnchorPane prefHeight="625.0" prefWidth="990.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.CreateDocumentController">
    <children>
       <Pane layoutX="26.0" layoutY="27.0" prefHeight="572.0" prefWidth="938.0" style="-fx-background-color: ffffff;">
          <children>
             <Pane layoutX="29.0" layoutY="25.0" prefHeight="260.0" prefWidth="480.0" style="-fx-background-color: gray;">
                <children>
-                  <Text layoutX="141.0" layoutY="140.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Uploaded picture">
-                     <font>
-                        <Font size="26.0" />
-                     </font>
-                  </Text>
+                  <Label layoutX="141.0" layoutY="140.0" text="Uploaded picture"/>
                </children>
             </Pane>
             <Pane layoutX="536.0" layoutY="25.0" prefHeight="260.0" prefWidth="382.0" style="-fx-background-color: gray;">
@@ -35,7 +27,7 @@
             </Pane>
             <MFXTextField fx:id="txfDocumentName" layoutX="58.0" layoutY="314.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="120.0" text="Document name" />
             <MFXTextField fx:id="txfLocation" layoutX="58.0" layoutY="362.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="412.0" text="Location" />
-            <TextArea fx:id="txfDescription" layoutX="536.0" layoutY="297.0" prefHeight="260.0" prefWidth="382.0" text="Here you can write description and notes for the work." />
+            <MFXTextField fx:id="txfDescription" layoutX="536.0" layoutY="297.0" prefHeight="260.0" prefWidth="382.0" text="Here you can write description and notes for the work." />
             <MFXComboBox fx:id="comboBox" layoutX="283.0" layoutY="409.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="187.0" text="pleas select costumer" />
             <MFXDatePicker fx:id="dpCreateDate" layoutX="269.0" layoutY="314.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" />
             <MFXButton blendMode="HARD_LIGHT" layoutX="14.0" layoutY="471.0" onAction="#handleCancel" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #17263A;" text="Cancel" textFill="#e84910" />

@@ -15,12 +15,12 @@ public class Customer {
         this.customerAddress = customerAddress;
     }
 
-    public Customer(int customerID, String customerName, String customerEmail, String customerAddress, int zipCode){
+    public Customer(int customerID, String customerName, String customerEmail, String customerAddress, City city){
         this.customerID = customerID;
         this.customerName = customerName;
         this.customerEmail = customerEmail;
         this.customerAddress = customerAddress;
-        this.zipCode = zipCode;
+        this.zipCode = city.getZipcode();
     }
 
     public int getCustomerID(){

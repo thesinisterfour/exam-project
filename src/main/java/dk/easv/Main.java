@@ -30,7 +30,6 @@ public class Main extends Application {
         }
     }
 
-
     private static void showConfigNotFoundAlert() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");

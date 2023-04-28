@@ -2,6 +2,7 @@ package dk.easv.dal.dao;
 
 import dk.easv.be.Customer;
 import dk.easv.be.User;
+import dk.easv.dal.ConnectionManager;
 import dk.easv.dal.interafaces.ICRUDDao;
 
 import java.sql.Connection;
@@ -10,13 +11,33 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
-import dk.easv.dal.ConnectionManager;
 
 public class CustomerDAO implements ICRUDDao<Customer> {
     private final ConnectionManager cm = new ConnectionManager();
+
     @Override
-    public int add(Customer object) throws SQLException {
-        return 0;
+    public int add(Customer customer) throws SQLException {
+        try(Connection con = cm.getConnection()){
+            if (customer == null) {
+                throw new SQLException("Object cannot be null");
+            } else {
+
+                String sql = "INSERT INTO customer (name, email, address, zipcode) VALUES (?, ?, ?, ?)";
+                PreparedStatement ps = con.prepareStatement(sql);
+
+                ps.setString(1, customer.getCustomerName());
+                ps.setString(2, customer.getCustomerEmail());
+                ps.setString(3, customer.getCustomerAddress());
+                ps.setInt(4, customer.getZipCode());
+
+                ResultSet rs = ps.executeQuery();
+                if (rs.next()) {
+                    return rs.getInt(1);
+                } else {
+                    throw new SQLException("Could not add customer");
+                }
+            }
+        }
     }
 
     @Override

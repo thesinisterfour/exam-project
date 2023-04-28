@@ -38,9 +38,9 @@
                         <Font name="Arial Rounded MT Bold" size="24.0" />
                      </font>
                   </Label>
-                  <MFXButton onAction="#loginButtonAction" opacity="0.75" prefHeight="30.0" prefWidth="111.0" style="-fx-background-color: #17263A;" text="Login" textFill="WHITE" GridPane.rowIndex="3" />
-                  <MFXPasswordField fx:id="password" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="250.0" GridPane.rowIndex="2" />
                   <MFXTextField fx:id="username" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="250.0" GridPane.rowIndex="1" />
+                  <MFXPasswordField fx:id="password" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="250.0" GridPane.rowIndex="2" />
+                  <MFXButton defaultButton="true" onAction="#loginButtonAction" opacity="0.75" prefHeight="30.0" prefWidth="111.0" style="-fx-background-color: #17263A;" text="Login" textFill="WHITE" GridPane.rowIndex="3" />
                </children>
                <padding>
                   <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />

@@ -41,6 +41,10 @@ public enum ViewType {
         public String getFXMLView() {
             return "views/login-view.fxml";
         }
+    },
+    ADMIN {
+        @Override
+        public String getFXMLView(){return "views/admin-view.fxml";}
     };
     public abstract String getFXMLView();
 }

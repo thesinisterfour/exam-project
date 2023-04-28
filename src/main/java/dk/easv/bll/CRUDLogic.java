@@ -1,5 +1,6 @@
 package dk.easv.bll;
 
+import dk.easv.be.Customer;
 import dk.easv.be.User;
 import dk.easv.dal.CRUDDAOFactory;
 import dk.easv.dal.interafaces.ICRUDDao;
@@ -32,6 +33,17 @@ public class CRUDLogic implements BLLFacade {
             }
         }
         return null;
+    }
+    public int addCustomer(Customer customer) throws SQLException, NullPointerException {
+        ICRUDDao<Customer> customerDAO = CRUDDAOFactory.getDao(DAOType.CUSTOMER_DAO);
+        if (customerDAO == null) {
+            throw new NullPointerException("CustomerDAO is null");
+        } else {
+            return customerDAO.add(customer);
+        }
+
+
+
     }
 
 

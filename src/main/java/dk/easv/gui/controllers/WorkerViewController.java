@@ -2,6 +2,7 @@ package dk.easv.gui.controllers;
 
 import dk.easv.be.Customer;
 import dk.easv.bll.CRUDLogic;
+import dk.easv.gui.models.CustomerModel;
 import dk.easv.gui.rootContoller.RootController;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import javafx.fxml.FXML;
@@ -15,9 +16,9 @@ import java.util.concurrent.ConcurrentMap;
 
 public class WorkerViewController extends RootController{
 
-    CRUDLogic crudLogic = new CRUDLogic();
+    private CustomerModel customerModel = new CustomerModel();
 
-    ConcurrentMap<Integer, Customer> customers = new ConcurrentHashMap<>();
+    private ConcurrentMap<Integer, Customer> customers = new ConcurrentHashMap<>();
 
     @FXML
     private MFXButton newUser, edit, delete, back;
@@ -45,6 +46,6 @@ public class WorkerViewController extends RootController{
 
 
     public void fetchingCustomers() throws SQLException {
-        customers = crudLogic.getAllCustomers();
+        customers = customerModel.getAllCustomers();
     }
 }

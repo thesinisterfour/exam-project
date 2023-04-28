@@ -1,6 +1,7 @@
 package dk.easv;
 
 import dk.easv.gui.controllerFactory.ControllerFactory;
+import dk.easv.gui.controllers.LoginController;
 import dk.easv.gui.rootContoller.RootController;
 import dk.easv.helpers.Config;
 import dk.easv.helpers.ViewType;
@@ -12,6 +13,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.Locale;
 import java.util.Optional;
 
 public class Main extends Application {

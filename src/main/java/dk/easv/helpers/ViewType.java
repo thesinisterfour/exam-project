@@ -8,10 +8,10 @@ public enum ViewType {
         }
     },
 
-    LOGIN {
+    ADMIN {
         @Override
         public String getFXMLView() {
-            return "views/login-view.fxml";
+            return "views/admin-view.fxml";
         }
     },
 
@@ -19,6 +19,27 @@ public enum ViewType {
         @Override
         public String getFXMLView() {
             return "views/project-manager-view.fxml";
+        }
+    },
+
+    SALES_PERSON {
+        @Override
+        public String getFXMLView() {
+            return "views/sales-person.fxml";
+        }
+    },
+
+    TECHNICIAN {
+        @Override
+        public String getFXMLView() {
+            return "views/technician-view.fxml";
+        }
+    },
+
+    LOGIN {
+        @Override
+        public String getFXMLView() {
+            return "views/login-view.fxml";
         }
     };
     public abstract String getFXMLView();

@@ -37,7 +37,7 @@ public class WorkerViewController extends RootController{
      */
     public void buttonsTest (){
         newUser.setOnAction(e -> {
-            System.out.println(customers);
+            System.out.println(customers.get(customers.size()).getCustomerName());
         });
         edit.setOnAction(e -> System.out.println("edit"));
         delete.setOnAction(e -> System.out.println("delete"));

@@ -3,6 +3,7 @@ package dk.easv.bll;
 import dk.easv.be.Customer;
 import dk.easv.be.User;
 import dk.easv.dal.CRUDDAOFactory;
+import dk.easv.dal.dao.UserDAO;
 import dk.easv.dal.interafaces.ICRUDDao;
 import dk.easv.helpers.DAOType;
 
@@ -49,6 +50,16 @@ public class CRUDLogic implements BLLFacade {
             throw new NullPointerException("CustomerDAO is null");
         } else {
             return customerDao.getAll();
+        }
+    }
+
+    public ConcurrentMap<Integer, User> getAllUsers() throws SQLException{
+        ICRUDDao<User> userDao = CRUDDAOFactory.getDao(DAOType.USER_DAO);
+        if(userDao == null){
+            throw  new NullPointerException("FK off");
+        }
+        else{
+            return userDao.getAll();
         }
     }
 

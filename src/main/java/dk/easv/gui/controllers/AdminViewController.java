@@ -27,10 +27,6 @@ public class AdminViewController extends RootController {
     private MFXButton logoutButton;
 
     private Stage stage;
-
-    public void setStage(Stage stage) {
-        this.stage = stage;
-    }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -40,7 +36,6 @@ public class AdminViewController extends RootController {
         if (stage == null) {
             this.stage = this.getStage();
         }
-
         RootController controller = ControllerFactory.loadFxmlFile(ViewType.LOGIN);
         this.stage.setScene(new Scene(controller.getView(), 760, 480));
         this.stage.setTitle("Login");
@@ -51,11 +46,6 @@ public class AdminViewController extends RootController {
     }
     @FXML
     private void handleCreateDocument() throws IOException {
-//        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("views/create-document.fxml"));
-//        Scene scene = new Scene(fxmlLoader.load(), 990, 625);
-//        Stage stage = new Stage();
-//        stage.setScene(scene);
-//        stage.show();
     }
     @FXML
     private void handleEditDocument() {
@@ -66,15 +56,11 @@ public class AdminViewController extends RootController {
 
     }
     @FXML
-    private void handleCustomers() {
-
-    }
-
-    public void displayFxml() throws IOException {
-        RootController controller = ControllerFactory.loadFxmlFile(ViewType.ADMIN);
+    private void handleCustomers() throws IOException {
+        RootController controller = ControllerFactory.loadFxmlFile(ViewType.CUSTOMERS);
         Scene scene = new Scene(controller.getView(), 760, 480);
+        this.stage = this.getStage();
         stage.setScene(scene);
-        stage.setTitle("Admin");
         stage.show();
     }
 }

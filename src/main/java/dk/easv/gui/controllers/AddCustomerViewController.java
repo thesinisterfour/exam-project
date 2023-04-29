@@ -21,7 +21,7 @@ public class AddCustomerViewController extends RootController {
     private Stage stage;
     @FXML
     void cancelButtonAction(ActionEvent event) {
-        System.out.println("Cancel");
+        getStage().close();
 
     }
 

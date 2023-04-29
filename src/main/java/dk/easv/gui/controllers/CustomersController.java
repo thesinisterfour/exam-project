@@ -6,6 +6,7 @@ import dk.easv.helpers.ViewType;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -31,7 +32,18 @@ public class CustomersController extends RootController {
     }
     public void test(){
         back_button.setOnAction(e -> {
-            System.out.println("Go back");
+            RootController controller = null;
+            Stage stage = new Stage();
+            try {
+                controller = ControllerFactory.loadFxmlFile(ViewType.ADMIN);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+                Scene scene = new Scene(controller.getView());
+                stage.setScene(scene);
+                stage.centerOnScreen();
+                stage.show();
+                getStage().close();
         });
         delete_button.setOnAction(e -> {
             System.out.println("Delete");

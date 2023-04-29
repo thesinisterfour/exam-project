@@ -29,7 +29,7 @@
                         <HBox fx:id="button_box_right" prefHeight="100.0" prefWidth="200.0">
                            <children>
                               <MFXButton fx:id="delete_button" text="Delete" />
-                              <MFXButton fx:id="back_button" text="Back" />
+                              <MFXButton onAction="#goBack" text="Back" />
                            </children>
                         </HBox>
                      </children>

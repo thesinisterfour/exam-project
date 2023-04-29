@@ -24,7 +24,7 @@ public class CustomersController extends RootController {
     private Stage stage;
 
     @FXML
-    private MFXButton back_button,delete_button, edit_button, new_customer_button ;
+    private MFXButton back_button,delete_button, edit_button ;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -32,18 +32,7 @@ public class CustomersController extends RootController {
     }
     public void test(){
         back_button.setOnAction(e -> {
-            RootController controller = null;
-            Stage stage = new Stage();
-            try {
-                controller = ControllerFactory.loadFxmlFile(ViewType.ADMIN);
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
-                Scene scene = new Scene(controller.getView());
-                stage.setScene(scene);
-                stage.centerOnScreen();
-                stage.show();
-                getStage().close();
+
         });
         delete_button.setOnAction(e -> {
             System.out.println("Delete");
@@ -54,17 +43,25 @@ public class CustomersController extends RootController {
     }
 
     @FXML
-    private void createCustomer(ActionEvent actionEvent) {
+    private void createCustomer(ActionEvent actionEvent) throws RuntimeException, IOException {
         RootController controller = null;
         Stage stage = new Stage();
-        try {
-            controller = ControllerFactory.loadFxmlFile(ViewType.CREATE_CUSTOMERS);
-        } catch (IOException ex) {
-            throw new RuntimeException(ex);
-        }
+        controller = ControllerFactory.loadFxmlFile(ViewType.CREATE_CUSTOMERS);
         Scene scene = new Scene(controller.getView());
         stage.setScene(scene);
         stage.centerOnScreen();
         stage.show();
+    }
+
+    @FXML
+    private void goBack(ActionEvent actionEvent) throws RuntimeException, IOException {
+        RootController controller = null;
+        Stage stage = new Stage();
+        controller = ControllerFactory.loadFxmlFile(ViewType.ADMIN);
+        Scene scene = new Scene(controller.getView());
+        stage.setScene(scene);
+        stage.centerOnScreen();
+        stage.show();
+        getStage().close();
     }
 }

@@ -22,10 +22,10 @@ public enum ViewType {
         }
     },
 
-    SALES_PERSON {
+    SALESPERSON {
         @Override
         public String getFXMLView() {
-            return "views/sales-person.fxml";
+            return "views/salesperson-view.fxml";
         }
     },
 

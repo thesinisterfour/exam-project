@@ -5,6 +5,7 @@ import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -17,9 +18,7 @@ public class AddCustomerViewController extends RootController {
     @FXML
     private MFXTextField nameTextField;
 
-    @FXML
-    private MFXButton removeCustomer;
-
+    private Stage stage;
     @FXML
     void cancelButtonAction(ActionEvent event) {
         System.out.println("Cancel");
@@ -28,7 +27,8 @@ public class AddCustomerViewController extends RootController {
 
     @FXML
     void removeCustomerData(ActionEvent event) {
-        System.out.println("Remove");
+        nameTextField.setText("");
+        emailTextField.setText("");
 
     }
 

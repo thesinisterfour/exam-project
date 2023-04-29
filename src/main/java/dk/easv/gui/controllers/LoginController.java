@@ -58,7 +58,7 @@ public class LoginController extends RootController {
     }
 
     private void displaySalesPerson() throws IOException {
-        RootController controller = ControllerFactory.loadFxmlFile(ViewType.SALES_PERSON);
+        RootController controller = ControllerFactory.loadFxmlFile(ViewType.SALESPERSON);
         Scene scene = new Scene(controller.getView(), 760, 480);
         stage.setTitle("Sales Person");
         stage.setScene(scene);

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import io.github.palexdev.materialfx.controls.MFXTextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.AddCustomerViewController">
+   <children>
+      <MFXTextField fx:id="nameTextField" floatMode="BORDER" layoutX="128.0" layoutY="133.0" prefHeight="50.0" prefWidth="344.0" promptText="Name" AnchorPane.bottomAnchor="216.6" AnchorPane.leftAnchor="128.0" AnchorPane.rightAnchor="128.0" AnchorPane.topAnchor="133.0" />
+      <MFXTextField fx:id="emailTextField" floatMode="BORDER" layoutX="128.0" layoutY="200.0" prefHeight="50.0" prefWidth="344.0" promptText="Email" AnchorPane.bottomAnchor="149.6" AnchorPane.leftAnchor="128.0" AnchorPane.rightAnchor="128.0" AnchorPane.topAnchor="200.0" />
+      <MFXButton defaultButton="true" layoutX="432.0" layoutY="334.0" onAction="#submitButtonAction" text="Submit" />
+      <MFXButton cancelButton="true" layoutX="504.0" layoutY="334.0" onAction="#cancelButtonAction" text="Cancel" />
+      <MFXButton fx:id="removeCustomer" layoutX="41.0" layoutY="334.0" onAction="#removeCustomerData" text="Remove" />
+   </children>
+</AnchorPane>

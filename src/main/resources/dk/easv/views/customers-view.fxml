@@ -5,8 +5,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.CustomersController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.CustomersController">
    <children>
       <VBox prefHeight="400.0" prefWidth="600.0">
          <children>
@@ -23,7 +22,7 @@
                      <children>
                         <HBox fx:id="button_box_left" prefHeight="100.0" prefWidth="200.0">
                            <children>
-                              <MFXButton fx:id="new_customer_button" text="New  Customer" />
+                              <MFXButton onAction="#createCustomer" text="New  Customer" />
                               <MFXButton fx:id="edit_button" text="Edit" />
                            </children>
                         </HBox>

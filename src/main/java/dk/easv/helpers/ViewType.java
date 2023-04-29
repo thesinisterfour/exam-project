@@ -42,6 +42,13 @@ public enum ViewType {
         }
     }
     ,
+    CREATE_CUSTOMERS{
+        @Override
+        public String getFXMLView() {
+            return "views/addCustomerView.fxml";
+        }
+    }
+    ,
 
 
     USERS_VIEW{

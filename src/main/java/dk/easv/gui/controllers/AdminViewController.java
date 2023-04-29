@@ -58,7 +58,7 @@ public class AdminViewController extends RootController {
     @FXML
     private void handleCustomers() throws IOException {
         RootController controller = ControllerFactory.loadFxmlFile(ViewType.CUSTOMERS);
-        Scene scene = new Scene(controller.getView(), 760, 480);
+        Scene scene = new Scene(controller.getView());
         this.stage = this.getStage();
         stage.setScene(scene);
         stage.show();

@@ -23,6 +23,13 @@ public class Customer {
         this.zipCode = city.getZipcode();
     }
 
+    public Customer(String customerName, String customerEmail, String customerAddress, int zipCode){
+        this.customerName = customerName;
+        this.customerEmail = customerEmail;
+        this.customerAddress = customerAddress;
+        this.zipCode = zipCode;
+    }
+
     public int getCustomerID(){
         return customerID;
     }

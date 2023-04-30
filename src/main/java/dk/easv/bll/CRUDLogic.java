@@ -1,5 +1,6 @@
 package dk.easv.bll;
 
+import dk.easv.be.City;
 import dk.easv.be.Customer;
 import dk.easv.be.User;
 import dk.easv.dal.CRUDDAOFactory;
@@ -26,6 +27,16 @@ public class CRUDLogic implements BLLFacade {
             throw new NullPointerException("CustomerDAO is null");
         } else {
             return customerDAO.add(customer);
+        }
+    }
+
+    public int addCity(City city) throws SQLException, NullPointerException{
+        ICRUDDao<City> cityDao = CRUDDAOFactory.getDao(DAOType.CITY_DAO);
+        if(cityDao == null){
+            throw new NullPointerException("CityDAO is null");
+        }
+        else {
+            return cityDao.add(city);
         }
     }
 

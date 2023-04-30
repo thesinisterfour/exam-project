@@ -56,7 +56,7 @@
                         </HBox>
                         <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="3">
                            <children>
-                              <MFXButton fx:id="back" prefHeight="26.0" prefWidth="215.0" text="Back" />
+                              <MFXButton onAction="#goBack" prefHeight="26.0" prefWidth="215.0" text="Back" />
                            </children>
                         </HBox>
                      </children>

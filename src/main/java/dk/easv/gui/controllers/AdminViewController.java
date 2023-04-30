@@ -52,7 +52,12 @@ public class AdminViewController extends RootController {
 
     }
     @FXML
-    private void handleUsers() {
+    private void handleUsers() throws IOException {
+        RootController controller = ControllerFactory.loadFxmlFile(ViewType.USERS_VIEW);
+        Scene scene = new Scene(controller.getView());
+        this.stage = this.getStage();
+        stage.setScene(scene);
+        stage.show();
 
     }
     @FXML

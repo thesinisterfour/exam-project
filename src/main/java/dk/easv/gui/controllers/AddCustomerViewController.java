@@ -5,8 +5,10 @@ import dk.easv.gui.models.CityModel;
 import dk.easv.gui.models.CustomerModel;
 import dk.easv.gui.rootContoller.RootController;
 import io.github.palexdev.materialfx.controls.MFXTextField;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -40,7 +42,19 @@ public class AddCustomerViewController extends RootController {
 
     @FXML
     void submitButtonAction(ActionEvent event) {
-        if(nameTextField != null && emailTextField != null && addressTextField != null && cityTextField != null && ZipCodeTextField != null){
+        ObservableList<Node> nodes = this.getView().getChildrenUnmodifiable();
+        boolean emptyField = false;
+        for (Node node : nodes) {
+            if (node instanceof MFXTextField textField){
+                textField.setText(textField.getText().strip());
+                if (textField.getText().isEmpty()) {
+                    textField.setPromptText("Fill this please");
+                    textField.setStyle(textField.getStyle() + "-fx-border-color : red");
+                    emptyField = true;
+                }
+            }
+        }
+        if (!emptyField){
             int zipCode = Integer.parseInt(ZipCodeTextField.getText());
             try {
                 System.out.println(cityModel.get(zipCode));
@@ -55,10 +69,6 @@ public class AddCustomerViewController extends RootController {
                 // catch if exception in add
                 throw new RuntimeException(e);
             }
-
-        }
-        else{
-            System.out.println("Shazam");
         }
 
     }

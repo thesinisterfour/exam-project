@@ -26,7 +26,7 @@ public class WorkerViewController extends RootController{
     private ConcurrentMap<Integer, User> users = new ConcurrentHashMap<>();
 
     @FXML
-    private MFXButton newUser, edit, delete;
+    private MFXButton edit, delete;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         buttonsActions();
@@ -36,9 +36,6 @@ public class WorkerViewController extends RootController{
      * Test controller initial commit
      */
     public void buttonsActions (){
-        newUser.setOnAction(e -> {
-            System.out.println("New User");
-        });
         edit.setOnAction(e -> System.out.println("edit"));
         delete.setOnAction(e -> System.out.println("delete"));
     }

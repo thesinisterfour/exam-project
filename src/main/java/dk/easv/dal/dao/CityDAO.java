@@ -1,7 +1,6 @@
 package dk.easv.dal.dao;
 
 import dk.easv.be.City;
-import dk.easv.be.Customer;
 import dk.easv.dal.ConnectionManager;
 import dk.easv.dal.interafaces.ICRUDDao;
 
@@ -26,8 +25,6 @@ public class CityDAO implements ICRUDDao<City> {
             ResultSet rs = ps.executeQuery();
             rs.next();
             return rs.getInt(1);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
         }
     }
 
@@ -37,8 +34,15 @@ public class CityDAO implements ICRUDDao<City> {
     }
 
     @Override
-    public City get(int id) throws SQLException {
-        return null;
+    public City get(int zipcode) throws SQLException {
+        try(Connection con = cm.getConnection()){
+            String sql = "SELECT * FROM cities WHERE zipcode = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, zipcode);
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+            return new City(rs.getInt("zipcode"), rs.getString("city_name"));
+        }
     }
 
     @Override

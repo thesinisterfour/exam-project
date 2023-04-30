@@ -12,4 +12,8 @@ public class CityModel {
     public int add(City city) throws SQLException{
         return crudLogic.addCity(city);
     }
+
+    public City get(int zipcode) throws SQLException{
+        return crudLogic.getCity(zipcode);
+    }
 }

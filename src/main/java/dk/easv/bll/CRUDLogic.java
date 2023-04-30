@@ -63,4 +63,15 @@ public class CRUDLogic implements BLLFacade {
         }
     }
 
+    @Override
+    public City getCity(int zipcode) throws SQLException {
+        ICRUDDao<City> cityDao = CRUDDAOFactory.getDao(DAOType.CITY_DAO);
+        if(cityDao == null){
+            throw new NullPointerException("CityDAO is null");
+        }
+        else {
+            return cityDao.get(zipcode);
+        }
+    }
+
 }

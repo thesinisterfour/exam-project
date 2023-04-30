@@ -1,12 +1,9 @@
 package dk.easv.gui.controllers;
 
-import dk.easv.be.City;
 import dk.easv.be.Customer;
-import dk.easv.dal.dao.CityDAO;
 import dk.easv.gui.models.CityModel;
 import dk.easv.gui.models.CustomerModel;
 import dk.easv.gui.rootContoller.RootController;
-import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,9 +11,7 @@ import javafx.stage.Stage;
 
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.ResourceBundle;
-import java.util.stream.Collectors;
 
 public class AddCustomerViewController extends RootController {
 
@@ -44,11 +39,23 @@ public class AddCustomerViewController extends RootController {
     }
 
     @FXML
-    void submitButtonAction(ActionEvent event) throws SQLException {
+    void submitButtonAction(ActionEvent event) {
         if(nameTextField != null && emailTextField != null && addressTextField != null && cityTextField != null && ZipCodeTextField != null){
             int zipCode = Integer.parseInt(ZipCodeTextField.getText());
-            cityModel.add(new City(zipCode ,cityTextField.getText()));
-            customerModel.add(new Customer(nameTextField.getText(),emailTextField.getText(),addressTextField.getText(),zipCode));
+            try {
+                System.out.println(cityModel.get(zipCode));
+            } catch (SQLException e) {
+                // catch if city does not exist
+                System.out.println("City does not exist");
+                return;
+            }
+            try {
+                customerModel.add(new Customer(nameTextField.getText(),emailTextField.getText(),addressTextField.getText(),zipCode));
+            } catch (SQLException e) {
+                // catch if exception in add
+                throw new RuntimeException(e);
+            }
+
         }
         else{
             System.out.println("Shazam");

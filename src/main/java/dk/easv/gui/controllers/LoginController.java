@@ -5,11 +5,13 @@ import dk.easv.be.User;
 import dk.easv.gui.controllerFactory.ControllerFactory;
 import dk.easv.gui.models.LoginModel;
 import dk.easv.gui.rootContoller.RootController;
+import dk.easv.helpers.AlertHelper;
 import dk.easv.helpers.ViewType;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -21,6 +23,8 @@ import java.util.ResourceBundle;
 public class LoginController extends RootController {
 
     private final LoginModel model = new LoginModel();
+
+    SalesPersonViewController salesPersonViewController = new SalesPersonViewController();
     @FXML
     private MFXTextField username;
     @FXML
@@ -47,6 +51,7 @@ public class LoginController extends RootController {
         stage.setTitle("Admin");
         stage.setScene(scene);
         stage.show();
+        AlertHelper.showDefaultAlert("Do you want to Delete the following documents ?", Alert.AlertType.CONFIRMATION);
     }
 
     private void displayProjectManager() throws IOException {
@@ -55,6 +60,7 @@ public class LoginController extends RootController {
         stage.setTitle("Project Manager");
         stage.setScene(scene);
         stage.show();
+        AlertHelper.showDefaultAlert("Do you want to Delete the following documents ?", Alert.AlertType.CONFIRMATION);
     }
 
     private void displaySalesPerson() throws IOException {

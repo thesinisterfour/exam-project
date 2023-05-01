@@ -39,26 +39,18 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <HBox prefHeight="100.0" prefWidth="200.0">
-                           <children>
-                              <MFXButton fx:id="newUser" prefHeight="26.0" prefWidth="205.0" text="New User" />
-                           </children>
-                        </HBox>
                         <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
-                           <children>
-                              <MFXButton fx:id="edit" prefHeight="26.0" prefWidth="274.0" text="Edit" />
-                           </children>
-                        </HBox>
-                        <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2">
                            <children>
                               <MFXButton fx:id="delete" prefHeight="26.0" prefWidth="231.0" text="Delete" />
                            </children>
                         </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" />
                         <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="3">
                            <children>
-                              <MFXButton fx:id="back" prefHeight="26.0" prefWidth="215.0" text="Back" />
+                              <MFXButton onAction="#goBack" prefHeight="26.0" prefWidth="215.0" text="Back" />
                            </children>
                         </HBox>
+                        <MFXButton fx:id="edit" prefHeight="26.0" prefWidth="274.0" text="Edit" />
                      </children>
                   </GridPane>
                </children>

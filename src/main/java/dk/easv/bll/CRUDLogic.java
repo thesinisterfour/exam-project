@@ -1,5 +1,6 @@
 package dk.easv.bll;
 
+import dk.easv.be.City;
 import dk.easv.be.Customer;
 import dk.easv.be.User;
 import dk.easv.dal.CRUDDAOFactory;
@@ -30,6 +31,16 @@ public class CRUDLogic implements BLLFacade {
         }
     }
 
+    public int addCity(City city) throws SQLException, NullPointerException{
+        ICRUDDao<City> cityDao = CRUDDAOFactory.getDao(DAOType.CITY_DAO);
+        if(cityDao == null){
+            throw new NullPointerException("CityDAO is null");
+        }
+        else {
+            return cityDao.add(city);
+        }
+    }
+
 
 
     @Override
@@ -53,14 +64,22 @@ public class CRUDLogic implements BLLFacade {
         }
     }
 
+    @Override
+    public City getCity(int zipcode) throws SQLException {
+        ICRUDDao<City> cityDao = CRUDDAOFactory.getDao(DAOType.CITY_DAO);
+        if (cityDao == null) {
+            throw new NullPointerException("CityDAO is null");
+        } else {
+            return cityDao.get(zipcode);
+        }
+    }
     public ConcurrentMap<Integer, User> getAllUsers() throws SQLException{
         ICRUDDao<User> userDao = CRUDDAOFactory.getDao(DAOType.USER_DAO);
         if(userDao == null){
-            throw  new NullPointerException("FK off");
+            throw  new NullPointerException("userDAO is null");
         }
         else{
             return userDao.getAll();
         }
     }
-
 }

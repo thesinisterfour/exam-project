@@ -1,5 +1,6 @@
 package dk.easv.dal;
 
+import dk.easv.dal.dao.CityDAO;
 import dk.easv.dal.dao.CustomerDAO;
 import dk.easv.dal.dao.UserDAO;
 import dk.easv.dal.interafaces.ICRUDDao;
@@ -10,8 +11,8 @@ public class CRUDDAOFactory {
         switch (dao) {
             case CUSTOMER_DAO:
                 return new CustomerDAO();
-            case EVENT_DAO:
-//                return new EventDAO();
+            case CITY_DAO:
+                return new CityDAO();
             case TICKET_DAO:
 //                return new TicketDAO();
             case USER_DAO:

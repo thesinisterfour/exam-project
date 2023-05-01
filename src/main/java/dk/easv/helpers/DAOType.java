@@ -2,7 +2,7 @@ package dk.easv.helpers;
 
 public enum DAOType {
     CUSTOMER_DAO,
-    EVENT_DAO,
+    CITY_DAO,
     TICKET_DAO,
     USER_DAO;
 }

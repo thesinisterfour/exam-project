@@ -1,6 +1,7 @@
 package dk.easv.bll;
 
 import dk.easv.be.Customer;
+import dk.easv.be.Document;
 import dk.easv.be.User;
 import dk.easv.dal.CRUDDAOFactory;
 import dk.easv.dal.interafaces.ICRUDDao;
@@ -51,5 +52,30 @@ public class CRUDLogic implements BLLFacade {
             return customerDao.getAll();
         }
     }
+
+    public int addDocument(Document document) throws SQLException {
+        ICRUDDao<Document> documentDao = CRUDDAOFactory.getDao(DAOType.DOCUMENT_DAO);
+        return documentDao.add(document);
+    }
+
+    public int updateDocument(Document document) throws SQLException {
+        ICRUDDao<Document> documentDao = CRUDDAOFactory.getDao(DAOType.DOCUMENT_DAO);
+        return documentDao.update(document);
+    }
+    public Document getDocument(int id) throws SQLException {
+        ICRUDDao<Document> documentDao = CRUDDAOFactory.getDao(DAOType.DOCUMENT_DAO);
+        return documentDao.get(id);
+    }
+
+    public ConcurrentMap<Integer, Document> getAllDocuments() throws SQLException {
+        ICRUDDao<Document> documentDao = CRUDDAOFactory.getDao(DAOType.DOCUMENT_DAO);
+        return documentDao.getAll();
+    }
+    public int deleteDocument(int id) throws SQLException {
+        ICRUDDao<Document> documentDao = CRUDDAOFactory.getDao(DAOType.DOCUMENT_DAO);
+        return documentDao.delete(id);
+    }
+
+
 
 }

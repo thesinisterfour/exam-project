@@ -1,78 +1,78 @@
 package dk.easv.be;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Document {
 
-    private int documentID;
-    private String documentName;
-    private String documentURL;
-    private Date creationDate;
-    private Date lastView;
-    private String documentDescription;
+    private int id;
+    private String name;
+    private LocalDate creationDate;
+    private LocalDate lastView;
+    private String description;
 
-    public Document(int documentID, String documentName, String documentURL, Date creationDate, String documentDescription){
-        this.documentID = documentID;
-        this.documentName = documentName;
-        this.documentURL = documentURL;
+    public Document(int id, String name, LocalDate creationDate, String description){
+        this.id = id;
+        this.name = name;
         this.creationDate = creationDate;
-        this.documentDescription = documentDescription;
+        this.description = description;
     }
 
-    public Document(int documentID, String documentName, String documentURL, Date creationDate, Date lastView, String documentDescription){
-        this.documentID = documentID;
-        this.documentName = documentName;
-        this.documentURL = documentURL;
+    public Document(int id, String name, LocalDate creationDate, LocalDate lastView, String description){
+        this.id = id;
+        this.name = name;
         this.creationDate = creationDate;
         this.lastView = lastView;
-        this.documentDescription = documentDescription;
+        this.description = description;
     }
 
-    public int getDocumentID(){
-        return documentID;
+    public int getId() {
+        return id;
     }
 
-    public String getDocumentName(){
-        return documentName;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public String getDocumentURL(){
-        return documentURL;
+    public String getName() {
+        return name;
     }
 
-    public Date getCreationDate(){
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public LocalDate getCreationDate() {
         return creationDate;
     }
 
-    public Date getLastView() {
-        return lastView;
-    }
-
-    public String getDocumentDescription() {
-        return documentDescription;
-    }
-
-    public void setDocumentID(int documentID) {
-        this.documentID = documentID;
-    }
-
-    public void setDocumentName(String documentName) {
-        this.documentName = documentName;
-    }
-
-    public void setDocumentURL(String documentURL) {
-        this.documentURL = documentURL;
-    }
-
-    public void setCreationDate(Date creationDate) {
+    public void setCreationDate(LocalDate creationDate) {
         this.creationDate = creationDate;
     }
 
-    public void setLastView(Date lastView) {
+    public LocalDate getLastView() {
+        return lastView;
+    }
+
+    public void setLastView(LocalDate lastView) {
         this.lastView = lastView;
     }
 
-    public void setDocumentDescription(String documentDescription) {
-        this.documentDescription = documentDescription;
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    @Override
+    public String toString() {
+        return "Document{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", creationDate=" + creationDate +
+                ", lastView=" + lastView +
+                ", description='" + description + '\'' +
+                '}';
     }
 }

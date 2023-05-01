@@ -45,11 +45,6 @@ public class DocumentViewController extends RootController {
             imageView.setFitWidth((double) newValue - 20);
         });
         children.add(imageView);
-        try {
-            model.addImage(1, 1, image);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
 
     }
 
@@ -60,5 +55,31 @@ public class DocumentViewController extends RootController {
         mfxTextField.setPrefWidth(vbox.getWidth()-20);
         mfxTextField.setFloatMode(FloatMode.BORDER);
         children.add(mfxTextField);
+    }
+
+    @FXML
+    private void saveOnAction(ActionEvent actionEvent) {
+        ObservableList<Node> children = vbox.getChildren();
+        for (int i = 0; i < children.size(); i++) {
+            Node child = children.get(i);
+            if (child instanceof MFXTextField mfxTextField) {
+                try {
+                    model.addText(1, i, mfxTextField.getText());
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            } else if (child instanceof ImageView imageView) {
+                try {
+                    model.addImage(1, i, imageView.getImage());
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+    }
+
+    @FXML
+    private void CancelOnAction(ActionEvent actionEvent) {
+
     }
 }

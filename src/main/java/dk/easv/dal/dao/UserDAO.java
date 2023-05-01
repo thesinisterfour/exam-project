@@ -20,6 +20,35 @@ public class UserDAO implements ICRUDDao<User> {
         if (object == null) {
             throw new SQLException("Object cannot be null");
         }
+
+        try(Connection connection = cm.getConnection()){
+            PreparedStatement ps = connection.prepareStatement("" +
+                    "INSERT INTO dbo.[users] (first_name, last_name, role_id, username, password)\n" +
+                    "VALUES (?, ?, ?, ?, ?);");
+
+            ps.setString(1, object.getFirstName());
+            ps.setString(2, object.getLastName());
+
+            switch (object.getRole().getId()){
+                case 1:
+                    ps.setInt(3, 4);
+                    break;
+                case 2:
+                    ps.setInt(3, 1);
+                    break;
+                case 3:
+                    ps.setInt(3, 3);
+                    break;
+                case 4:
+                    ps.setInt(3, 2);
+                    break;
+            }
+
+            ps.setString(4, object.getUsername());
+            ps.setString(5, object.getPassword());
+
+            ps.executeQuery();
+        }
         return 0;
     }
 
@@ -27,6 +56,35 @@ public class UserDAO implements ICRUDDao<User> {
     public int update(User object) throws SQLException {
         if (object == null) {
             throw new SQLException("Object cannot be null");
+        }
+
+        try(Connection connection = cm.getConnection()){
+            PreparedStatement ps = connection.prepareStatement("" + "UPDATE dbo.[users] SET first_name=?, last_name=?, " +
+                    "role_id=?, username=?, password=? WHERE user_id=?;");
+
+            ps.setString(1, object.getFirstName());
+            ps.setString(2, object.getLastName());
+
+            switch (object.getRole().getId()){
+                case 1:
+                    ps.setInt(3, 4);
+                    break;
+                case 2:
+                    ps.setInt(3, 1);
+                    break;
+                case 3:
+                    ps.setInt(3, 3);
+                    break;
+                case 4:
+                    ps.setInt(3, 2);
+                    break;
+            }
+
+            ps.setString(4, object.getUsername());
+            ps.setString(5, object.getPassword());
+            ps.setInt(6, object.getUserID());
+
+            ps.executeQuery();
         }
         return 0;
     }
@@ -36,7 +94,19 @@ public class UserDAO implements ICRUDDao<User> {
         if (id <= 0) {
             throw new SQLException("Id must be greater than 0");
         }
-        return null;
+
+        try(Connection connection = cm.getConnection()) {
+            PreparedStatement ps = connection.prepareStatement("" +
+                    "SELECT * FROM dbo.[users] WHERE user_id=? INNER JOIN dbo.users_role ON dbo.users_role.role_id = dbo.[users].role_id;");
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()){
+                return new User(rs.getInt("user_id"), rs.getString("first_name"), rs.getString("last_name"),
+                        Role.valueOf(rs.getString("role_name")), rs.getString("username"), rs.getString("password"));
+            }
+        }
+            return null;
     }
 
     @Override
@@ -70,6 +140,14 @@ public class UserDAO implements ICRUDDao<User> {
         if (id <= 0) {
             throw new SQLException("Id must be greater than 0");
         }
+
+        try(Connection connection = cm.getConnection()){
+            PreparedStatement ps = connection.prepareStatement("" + "DELETE FROM dbo.[users] WHERE user_id=?;");
+            ps.setInt(1, id);
+
+            ps.executeQuery();
+        }
+
         return 0;
     }
 }

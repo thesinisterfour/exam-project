@@ -29,6 +29,13 @@ public enum ViewType {
         }
     },
 
+    WORKER_CARD{
+        @Override
+        public String getFXMLView() {
+            return "views/HboxCard.fxml";
+        }
+    },
+
     LOGIN {
         @Override
         public String getFXMLView() {

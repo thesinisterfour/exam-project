@@ -56,6 +56,13 @@ public enum ViewType {
         }
     }
     ,
+    PROJECTCARD{
+        @Override
+        public String getFXMLView(){
+            return "views/ProjectCard.fxml";
+        }
+    }
+    ,
 
 
     USERS_VIEW{

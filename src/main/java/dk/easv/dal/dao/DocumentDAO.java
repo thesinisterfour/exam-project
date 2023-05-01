@@ -76,9 +76,10 @@ public class DocumentDAO implements ICRUDDao<Document> {
                 int documentID = rs.getInt("document_id");
                 String documentName = rs.getString("document_name");
                 LocalDate dateCreated = rs.getDate("date_created").toLocalDate();
-                LocalDate dateLastOpened = rs.getDate("date_last_opened").toLocalDate();
+                Date dateLastOpened = rs.getDate("date_last_opened");
+                LocalDate dateLastOpenedLocalDate = dateLastOpened == null ? null : dateLastOpened.toLocalDate();
                 String description = rs.getString("description");
-                Document doc = new Document(documentID, documentName, dateCreated, dateLastOpened, description);
+                Document doc = new Document(documentID, documentName, dateCreated, dateLastOpenedLocalDate, description);
                 map.put(documentID, doc);
             }
             return map;

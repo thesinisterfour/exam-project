@@ -1,28 +1,32 @@
 package dk.easv.gui.controllers;
 
+import dk.easv.be.Document;
 import dk.easv.gui.controllerFactory.ControllerFactory;
+import dk.easv.gui.models.DocumentModel;
 import dk.easv.gui.rootContoller.RootController;
 import dk.easv.helpers.ViewType;
-import io.github.palexdev.materialfx.controls.MFXButton;
-import io.github.palexdev.materialfx.controls.MFXComboBox;
-import io.github.palexdev.materialfx.controls.MFXTableView;
-import io.github.palexdev.materialfx.controls.MFXTextField;
+import io.github.palexdev.materialfx.controls.*;
+import io.github.palexdev.materialfx.controls.cell.MFXTableRowCell;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
+import java.util.Comparator;
 import java.util.ResourceBundle;
 
 public class AdminViewController extends RootController {
+
+    private DocumentModel documentModel;
 
     @FXML
     private MFXTextField userName;
     @FXML
     private MFXComboBox comboBox;
     @FXML
-    private MFXTableView tableView;
+    private MFXPaginatedTableView<Document> tableView;
     @FXML
     private MFXButton logoutButton;
 
@@ -33,7 +37,13 @@ public class AdminViewController extends RootController {
     }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        try {
+            documentModel = new DocumentModel();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
+        setUpPaginated();
     }
     @FXML
     public void handleLogout() throws IOException {
@@ -76,5 +86,23 @@ public class AdminViewController extends RootController {
         stage.setScene(scene);
         stage.setTitle("Admin");
         stage.show();
+    }
+
+    private void setUpPaginated(){
+        MFXTableColumn<Document> idColumn = new MFXTableColumn<>("ID", true, Comparator.comparing(Document::getId));
+        MFXTableColumn<Document> nameColumn = new MFXTableColumn<>("Name", true, Comparator.comparing(Document::getName));
+        MFXTableColumn<Document> dateCreatedColumn = new MFXTableColumn<>("Date Created", true, Comparator.comparing(Document::getCreationDate));
+        MFXTableColumn<Document> dateLastOpenedColumn = new MFXTableColumn<>("Date Last Opened", true, Comparator.comparing(Document::getLastView));
+        MFXTableColumn<Document> descriptionColumn = new MFXTableColumn<>("Description", true, Comparator.comparing(Document::getDescription));
+
+        idColumn.setRowCellFactory(document -> new MFXTableRowCell<>(Document::getId));
+        nameColumn.setRowCellFactory(document -> new MFXTableRowCell<>(Document::getName));
+        dateCreatedColumn.setRowCellFactory(document -> new MFXTableRowCell<>(Document::getCreationDate));
+        dateLastOpenedColumn.setRowCellFactory(document -> new MFXTableRowCell<>(Document::getLastView));
+        descriptionColumn.setRowCellFactory(document -> new MFXTableRowCell<>(Document::getDescription));
+
+        tableView.getTableColumns().setAll(idColumn, nameColumn, dateCreatedColumn, dateLastOpenedColumn, descriptionColumn);
+
+        tableView.setItems(documentModel.getObsAllDocuments());
     }
 }

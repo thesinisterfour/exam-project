@@ -19,11 +19,15 @@ public class DocumentDAO implements ICRUDDao<Document> {
     @Override
     public int add(Document document) throws SQLException {
         try (Connection con = cm.getConnection()){
-            PreparedStatement ps = con.prepareStatement("Insert Into documents (document_name, date_created, date_last_opened, description) OUTPUT inserted.document_id VALUES (?, ?, ?, ?)");
+            PreparedStatement ps = con.prepareStatement("Insert Into documents (document_name, date_created, date_last_opened, description) OUTPUT inserted.document_id VALUES (?, CURRENT_TIMESTAMP, ?, ?)");
             ps.setString(1, document.getName());
-            ps.setDate(2, Date.valueOf(document.getCreationDate()));
-            ps.setDate(3, Date.valueOf(document.getLastView()));
-            ps.setString(4, document.getDescription());
+
+            if (document.getLastView() == null){
+                ps.setDate(2, null);
+            } else {
+                ps.setDate(2, Date.valueOf(document.getLastView()));
+            }
+            ps.setString(3, document.getDescription());
 
             ResultSet rs = ps.executeQuery();
             rs.next();

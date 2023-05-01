@@ -25,6 +25,25 @@ public class Document {
         this.description = description;
     }
 
+    public Document(String name, LocalDate creationDate) {
+        this.name = name;
+        this.creationDate = creationDate;
+    }
+    public Document(String name, LocalDate creationDate, String description){
+        this.name = name;
+        this.creationDate = creationDate;
+        this.description = description;
+    }
+
+    public Document(String name) {
+        this.name = name;
+    }
+
+    public Document(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
+
     public int getId() {
         return id;
     }

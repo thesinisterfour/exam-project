@@ -60,12 +60,13 @@ public class AdminViewController extends RootController {
 
     }
     @FXML
-    private void handleCreateDocument() throws IOException {
-//        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("views/create-document.fxml"));
-//        Scene scene = new Scene(fxmlLoader.load(), 990, 625);
-//        Stage stage = new Stage();
-//        stage.setScene(scene);
-//        stage.show();
+    private void handleCreateDocument() {
+        try {
+            RootController rootController = ControllerFactory.loadFxmlFile(ViewType.CREATE_DOCUMENT);
+            this.getStage().setScene(new Scene(rootController.getView(), 760, 480));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
     @FXML
     private void handleEditDocument() {
@@ -103,6 +104,10 @@ public class AdminViewController extends RootController {
 
         tableView.getTableColumns().setAll(idColumn, nameColumn, dateCreatedColumn, dateLastOpenedColumn, descriptionColumn);
 
-        tableView.setItems(documentModel.getObsAllDocuments());
+        try {
+            tableView.setItems(documentModel.getObsAllDocuments());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

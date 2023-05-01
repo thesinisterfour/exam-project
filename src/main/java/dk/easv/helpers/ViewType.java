@@ -56,6 +56,12 @@ public enum ViewType {
         public String getFXMLView() {
             return "views/create-document-view.fxml";
         }
+    },
+    DOCUMENT {
+        @Override
+        public String getFXMLView() {
+            return "views/document-view.fxml";
+        }
     };
     public abstract String getFXMLView();
 }

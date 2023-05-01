@@ -54,8 +54,20 @@ public enum ViewType {
         public String getFXMLView() {
             return "views/add-customer-view.fxml";
         }
-    }
-    ,
+    },
+    HBOXCARD {
+        @Override
+        public String getFXMLView() {
+            return "views/HboxCard.fxml";
+        }
+    },
+
+    CARD{
+        @Override
+        public String getFXMLView() {
+            return "views/Card.fxml";
+        }
+    },
 
 
     USERS_VIEW{

@@ -25,10 +25,9 @@ import java.util.concurrent.ConcurrentMap;
 
 public class WorkerCardController extends RootController {
 
-    @FXML
-    private HBox mainHBoxCard;
-
     private final UserModel userModel = new UserModel();
+
+
 
     private ConcurrentMap<Integer, User> users = new ConcurrentHashMap<>();
 

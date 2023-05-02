@@ -14,4 +14,8 @@ public class CustomerModel {
     public ConcurrentMap<Integer, Customer> getAllCustomers() throws SQLException {
         return crudLogic.getAllCustomers();
     }
+
+    public int add(Customer customer) throws SQLException {
+        return crudLogic.addCustomer(customer);
+    }
 }

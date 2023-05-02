@@ -1,8 +1,11 @@
 package dk.easv.bll;
 
+import dk.easv.be.City;
 import dk.easv.be.Customer;
+import dk.easv.be.Document;
 import dk.easv.be.User;
 import dk.easv.dal.CRUDDAOFactory;
+import dk.easv.dal.dao.UserDAO;
 import dk.easv.dal.interafaces.ICRUDDao;
 import dk.easv.helpers.DAOType;
 
@@ -29,6 +32,16 @@ public class CRUDLogic implements BLLFacade {
         }
     }
 
+    public int addCity(City city) throws SQLException, NullPointerException{
+        ICRUDDao<City> cityDao = CRUDDAOFactory.getDao(DAOType.CITY_DAO);
+        if(cityDao == null){
+            throw new NullPointerException("CityDAO is null");
+        }
+        else {
+            return cityDao.add(city);
+        }
+    }
+
 
 
     @Override
@@ -51,5 +64,48 @@ public class CRUDLogic implements BLLFacade {
             return customerDao.getAll();
         }
     }
+
+    @Override
+    public City getCity(int zipcode) throws SQLException {
+        ICRUDDao<City> cityDao = CRUDDAOFactory.getDao(DAOType.CITY_DAO);
+        if (cityDao == null) {
+            throw new NullPointerException("CityDAO is null");
+        } else {
+            return cityDao.get(zipcode);
+        }
+    }
+    public ConcurrentMap<Integer, User> getAllUsers() throws SQLException{
+        ICRUDDao<User> userDao = CRUDDAOFactory.getDao(DAOType.USER_DAO);
+        if(userDao == null){
+            throw  new NullPointerException("userDAO is null");
+        }
+        else{
+            return userDao.getAll();
+        }
+    }
+    public int addDocument(Document document) throws SQLException {
+        ICRUDDao<Document> documentDao = CRUDDAOFactory.getDao(DAOType.DOCUMENT_DAO);
+        return documentDao.add(document);
+    }
+
+    public int updateDocument(Document document) throws SQLException {
+        ICRUDDao<Document> documentDao = CRUDDAOFactory.getDao(DAOType.DOCUMENT_DAO);
+        return documentDao.update(document);
+    }
+    public Document getDocument(int id) throws SQLException {
+        ICRUDDao<Document> documentDao = CRUDDAOFactory.getDao(DAOType.DOCUMENT_DAO);
+        return documentDao.get(id);
+    }
+
+    public ConcurrentMap<Integer, Document> getAllDocuments() throws SQLException {
+        ICRUDDao<Document> documentDao = CRUDDAOFactory.getDao(DAOType.DOCUMENT_DAO);
+        return documentDao.getAll();
+    }
+    public int deleteDocument(int id) throws SQLException {
+        ICRUDDao<Document> documentDao = CRUDDAOFactory.getDao(DAOType.DOCUMENT_DAO);
+        return documentDao.delete(id);
+    }
+
+
 
 }

@@ -2,6 +2,7 @@ package dk.easv.gui.controllers;
 
 import dk.easv.be.Document;
 import dk.easv.gui.controllerFactory.ControllerFactory;
+import dk.easv.gui.models.ContentModel;
 import dk.easv.gui.models.DocumentModel;
 import dk.easv.gui.rootContoller.RootController;
 import dk.easv.helpers.ViewType;
@@ -70,6 +71,17 @@ public class AdminViewController extends RootController {
     }
     @FXML
     private void handleEditDocument() {
+        ContentModel contentModel = ContentModel.getInstance();
+        Document document = tableView.getSelectionModel().getSelectedValues().get(0);
+        contentModel.setDocumentId(document.getId());
+
+        try {
+            this.stage = this.getStage();
+            RootController rootController = ControllerFactory.loadFxmlFile(ViewType.DOCUMENT);
+            this.getStage().setScene(new Scene(rootController.getView(), stage.getWidth(), stage.getWidth()));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
     }
     @FXML
@@ -86,7 +98,7 @@ public class AdminViewController extends RootController {
         Scene scene = new Scene(controller.getView(), 760, 480);
         stage.setScene(scene);
         stage.setTitle("Admin");
-        stage.show();
+
     }
 
     private void setUpPaginated(){

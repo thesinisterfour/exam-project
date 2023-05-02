@@ -41,7 +41,7 @@
             <HBox alignment="CENTER_RIGHT" prefHeight="0.0" prefWidth="600.0" spacing="20.0" GridPane.columnIndex="1">
                <children>
                   <MFXButton onAction="#saveOnAction" text="Save" defaultButton="true" />
-                  <MFXButton onAction="#CancelOnAction" text="Cancel" cancelButton="true"/>
+                  <MFXButton onAction="#cancelOnAction" text="Cancel" cancelButton="true"/>
                </children>
                <padding>
                   <Insets right="20.0" />

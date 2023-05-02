@@ -1,9 +1,11 @@
 package dk.easv.bll;
 
+import dk.easv.be.Content;
 import dk.easv.dal.dao.ContentDAO;
 import javafx.scene.image.Image;
 
 import java.sql.SQLException;
+import java.util.List;
 
 public class DocumentLogic {
     private ContentDAO contentDAO = new ContentDAO();
@@ -14,5 +16,9 @@ public class DocumentLogic {
 
     public void addImage(int documentId, int index, Image image) throws SQLException {
         contentDAO.addImage(documentId,  index, image);
+    }
+
+    public List<Content> loadContent(int documentId) throws SQLException {
+        return contentDAO.loadContent(documentId);
     }
 }

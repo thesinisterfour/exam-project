@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<GridPane fx:id="gridPaneMain" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.ProjectManagerViewController">
+<GridPane fx:id="gridPaneMain" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.ProjectManagerViewController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="144.0" minWidth="0.0" prefWidth="8.0" />
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="578.0" minWidth="10.0" prefWidth="574.0" />
@@ -36,12 +36,12 @@
          <children>
             <MFXScrollPane fx:id="workerScrollPane" prefHeight="136.0" prefWidth="577.0">
                <content>
-                  <HBox fx:id="workers" prefHeight="100.0" prefWidth="575.0" />
+                  <HBox fx:id="workers" prefHeight="99.0" prefWidth="575.0" />
                </content>
             </MFXScrollPane>
             <MFXScrollPane fx:id="projectScrollPane" prefHeight="147.0" prefWidth="577.0">
                <content>
-                  <HBox fx:id="projects" prefHeight="108.0" prefWidth="574.0" />
+                  <HBox fx:id="projects" prefHeight="110.0" prefWidth="574.0" />
                </content>
             </MFXScrollPane>
          </children>

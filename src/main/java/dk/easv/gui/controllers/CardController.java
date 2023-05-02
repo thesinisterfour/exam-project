@@ -8,9 +8,9 @@ import dk.easv.gui.models.UserModel;
 import dk.easv.gui.rootContoller.RootController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.layout.GridPane;
 
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -31,6 +31,9 @@ public class CardController extends RootController {
 
     private Card card;
 
+    @FXML
+    private GridPane gridLoyal;
+
     private final UserModel userModel = new UserModel();
 
     private final CustomerModel customerModel = new CustomerModel();
@@ -40,21 +43,23 @@ public class CardController extends RootController {
     private ConcurrentMap<Integer, Customer> customers = new ConcurrentHashMap<>();
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        try {
+        /*try {
             test();
-            System.out.println(customers.keySet());
+            //System.out.println(customers.keySet());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+         */
 
     }
 
 
 
-    public void test() throws SQLException {
-        users = userModel.getAllUsers();
-        customers = customerModel.getAllCustomers();
-        test2();
+    public void receiveData(ConcurrentMap<Integer, User> users) {
+        this.users = users;
+        //this.customers = customers;
+        //test2();
     }
 
     public void test2(){
@@ -76,11 +81,15 @@ public class CardController extends RootController {
             username.setText(card.getUserName());
             userAddress.setText(card.getUserAddress());
             userZipcode.setText(card.getUserZipCode());
+            gridLoyal.setStyle(gridLoyal.getStyle() + "-fx-background-color : red;");
             //userEmail.setText(card.getUserEmail());
         }
         if(card.getUserRole() != null){
             username.setText(card.getUserName());
             userEmail.setText(card.getUserEmail());
+            userAddress.setText("");
+            userZipcode.setText("");
+            gridLoyal.setStyle(gridLoyal.getStyle() + "-fx-background-color : red;");
             System.out.println(card.getUserRole());
         }
         else{

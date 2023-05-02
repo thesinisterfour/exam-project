@@ -63,15 +63,15 @@ public class Card {
     public void setUserZipCode(String userZipCode) {
         this.userZipCode = userZipCode;
     }
-    public Card(String userName, String userRole) {
+    public Card(String userName, String userEmail, String userRole) {
         this.userName = userName;
-        //this.userEmail = userEmail;
+        this.userEmail = userEmail;
         this.userRole = userRole;
     }
-    public Card(String customerName, String userAddress, String userZipCode, String userEmail) {
+    public Card(String customerName, String userAddress, int userZipCode, String userEmail) {
         this.customerName = customerName;
         this.userAddress = userAddress;
-        this.userZipCode = userZipCode;
+        this.userZipCode = String.valueOf(userZipCode);
         this.userEmail = userEmail;
     }
 

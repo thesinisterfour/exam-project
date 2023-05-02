@@ -32,10 +32,6 @@ public class AdminViewController extends RootController {
     private MFXButton logoutButton;
 
     private Stage stage;
-
-    public void setStage(Stage stage) {
-        this.stage = stage;
-    }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
@@ -85,17 +81,19 @@ public class AdminViewController extends RootController {
 
     }
     @FXML
-    private void handleUsers() {
+    private void handleUsers() throws IOException {
+        RootController controller = ControllerFactory.loadFxmlFile(ViewType.USERS_VIEW);
+        Scene scene = new Scene(controller.getView());
+        this.stage = this.getStage();
+        stage.setScene(scene);
+        stage.show();
 
     }
     @FXML
-    private void handleCustomers() {
-
-    }
-
-    public void displayFxml() throws IOException {
-        RootController controller = ControllerFactory.loadFxmlFile(ViewType.ADMIN);
-        Scene scene = new Scene(controller.getView(), 760, 480);
+    private void handleCustomers() throws IOException {
+        RootController controller = ControllerFactory.loadFxmlFile(ViewType.CUSTOMERS);
+        Scene scene = new Scene(controller.getView());
+        this.stage = this.getStage();
         stage.setScene(scene);
         stage.setTitle("Admin");
 

@@ -1,5 +1,6 @@
 package dk.easv.bll;
 
+import dk.easv.be.City;
 import dk.easv.be.Document;
 import dk.easv.be.User;
 
@@ -16,4 +17,6 @@ public interface BLLFacade {
     Document getDocument(int id) throws SQLException;
     ConcurrentMap<Integer, Document> getAllDocuments() throws SQLException;
     int deleteDocument(int id) throws SQLException;
+
+    City getCity(int zipcode) throws SQLException;
 }

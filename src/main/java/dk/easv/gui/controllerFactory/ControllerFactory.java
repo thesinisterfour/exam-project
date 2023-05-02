@@ -13,11 +13,8 @@ import java.util.Objects;
 public class ControllerFactory  {
     public static RootController loadFxmlFile(ViewType fxmlFile) throws IOException {
         Objects.requireNonNull(fxmlFile, "fxmlFile must not be null.");
-
         final URL fxmlFileUrl = Main.class.getResource(fxmlFile.getFXMLView());
-
         final FXMLLoader loader = new FXMLLoader(fxmlFileUrl);
-
         final Parent view = loader.load();
         final RootController controller = loader.getController();
         controller.setView(view);

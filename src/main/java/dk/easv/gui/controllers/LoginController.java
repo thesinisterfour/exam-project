@@ -23,8 +23,6 @@ import java.util.ResourceBundle;
 public class LoginController extends RootController {
 
     private final LoginModel model = new LoginModel();
-
-    SalesPersonViewController salesPersonViewController = new SalesPersonViewController();
     @FXML
     private MFXTextField username;
     @FXML

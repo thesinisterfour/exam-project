@@ -8,13 +8,18 @@
     -fx-font-family: "Helvetica";
 }
 
-MFXTextField, MFXPasswordField{
+MFXTextField, MFXPasswordField, MFXPaginatedTableView{
     -fx-background-color: -light-shades;
+}
+
+MFXScrollPane{
+    -fx-background-color: -dark-shades;
 }
 
 MFXButton{
     -fx-background-color: -dark-accent;
     -fx-text-fill: -light-accent;
+    -fx-background-radius: 5px;
 }
 
 .main_pane{
@@ -30,4 +35,8 @@ MFXButton{
 .gray_content_backdrop{
     -fx-background-color: -light-shades-opaque;
     -fx-background-radius: 20px;
+}
+
+.header{
+    -fx-background-color: -light-shades;
 }

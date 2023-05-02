@@ -1,30 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import io.github.palexdev.materialfx.controls.MFXButton?>
-<?import io.github.palexdev.materialfx.controls.MFXTextField?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import io.github.palexdev.materialfx.controls.MFXScrollPane?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.views.DocumentView">
-   <children>
-      <VBox prefHeight="302.0" prefWidth="600.0">
+
+<BorderPane xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.DocumentViewController" stylesheets="@../css/global-style.css" styleClass="main_pane">
+   <center>
+      <MFXScrollPane fitToWidth="true" vbarPolicy="ALWAYS">
+         <content>
+            <VBox fx:id="vbox" alignment="TOP_CENTER" prefHeight="348.0" prefWidth="600.0" spacing="10.0" />
+         </content>
+      </MFXScrollPane>
+   </center>
+   <bottom>
+      <GridPane BorderPane.alignment="CENTER">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="595.199951171875" minWidth="10.0" prefWidth="384.7999572753906" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="332.8000183105469" minWidth="10.0" prefWidth="315.2000427246094" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+         </rowConstraints>
          <children>
-            <AnchorPane prefHeight="20.0" prefWidth="600.0" />
-            <VBox prefHeight="283.0" prefWidth="600.0">
+            <HBox alignment="CENTER_LEFT" prefHeight="0.0" prefWidth="600.0" spacing="20.0">
                <children>
-                  <MFXTextField prefHeight="6.0" prefWidth="152.0" text="Document name" />
-                  <ImageView fitHeight="112.0" fitWidth="159.0" pickOnBounds="true" preserveRatio="true" />
-                  <MFXTextField prefHeight="172.0" prefWidth="342.0" text="Saved text" />
-                  <HBox prefHeight="100.0" prefWidth="200.0">
-                     <children>
-                        <MFXButton text="Cancel" />
-                        <MFXButton text="Save" />
-                     </children>
-                  </HBox>
+                  <MFXButton onAction="#addTextOnAction" text="Add text" />
+                  <MFXButton onAction="#addImageOnAction" text="Add image" />
                </children>
-            </VBox>
-         </children></VBox>
-   </children>
-</AnchorPane>
+               <padding>
+                  <Insets left="20.0" />
+               </padding>
+            </HBox>
+            <HBox alignment="CENTER_RIGHT" prefHeight="0.0" prefWidth="600.0" spacing="20.0" GridPane.columnIndex="1">
+               <children>
+                  <MFXButton onAction="#saveOnAction" text="Save" defaultButton="true" />
+                  <MFXButton onAction="#cancelOnAction" text="Cancel" cancelButton="true"/>
+               </children>
+               <padding>
+                  <Insets right="20.0" />
+               </padding>
+            </HBox>
+         </children>
+      </GridPane>
+   </bottom>
+</BorderPane>

@@ -2,7 +2,7 @@
 
 <?import io.github.palexdev.materialfx.controls.MFXButton?>
 <?import io.github.palexdev.materialfx.controls.MFXComboBox?>
-<?import io.github.palexdev.materialfx.controls.MFXTableView?>
+<?import io.github.palexdev.materialfx.controls.MFXPaginatedTableView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -11,9 +11,9 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="530.0" prefWidth="990.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.AdminViewController">
+<BorderPane prefHeight="530.0" prefWidth="990.0" styleClass="main_pane" stylesheets="@../css/global-style.css, @../css/admin-view-style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.AdminViewController">
    <center>
-      <GridPane prefHeight="235.0" prefWidth="954.0">
+      <GridPane prefHeight="235.0" prefWidth="954.0" styleClass="gray_content_backdrop">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="525.1999755859375" minWidth="10.0" prefWidth="233.19997558593752" />
             <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="720.4000244140625" minWidth="10.0" prefWidth="720.4000244140625" />
@@ -25,13 +25,7 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <MFXTableView fx:id="tableView" prefHeight="370.0" prefWidth="622.0" GridPane.columnIndex="1" GridPane.rowSpan="2147483647" />
-            <MFXButton onAction="#handleCustomers" prefHeight="37.0" prefWidth="209.0" text="Customers" GridPane.rowIndex="3">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </MFXButton>
-            <MFXButton onAction="#handleUsers" prefHeight="37.0" prefWidth="209.0" text="Users" GridPane.rowIndex="2">
+            <MFXButton onAction="#handleCreateDocument" prefHeight="37.0" prefWidth="209.0" text="Create Document">
                <font>
                   <Font size="18.0" />
                </font>
@@ -41,7 +35,12 @@
                   <Font size="18.0" />
                </font>
             </MFXButton>
-            <MFXButton onAction="#handleCreateDocument" prefHeight="37.0" prefWidth="209.0" text="Create Document">
+            <MFXButton onAction="#handleUsers" prefHeight="37.0" prefWidth="209.0" text="Users" GridPane.rowIndex="2">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </MFXButton>
+            <MFXButton onAction="#handleCustomers" prefHeight="37.0" prefWidth="209.0" text="Customers" GridPane.rowIndex="3">
                <font>
                   <Font size="18.0" />
                </font>
@@ -55,6 +54,7 @@
                   </MFXButton>
                </children>
             </HBox>
+            <MFXPaginatedTableView fx:id="tableView" prefHeight="385.0" prefWidth="686.0" GridPane.columnIndex="1" GridPane.rowSpan="2147483647" />
          </children>
          <padding>
             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
@@ -64,8 +64,8 @@
    <top>
       <HBox alignment="CENTER_RIGHT" prefHeight="54.0" prefWidth="990.0" spacing="20.0" BorderPane.alignment="CENTER">
          <children>
-            <MFXComboBox fx:id="comboBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="24.0" prefWidth="165.0" text="pleas select status" />
-            <MFXButton onAction="#handleLogout" prefHeight="37.0" prefWidth="83.0" text="Logout" fx:id="logoutButton">
+            <MFXComboBox fx:id="comboBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="24.0" prefWidth="165.0" text="Please select status" />
+            <MFXButton fx:id="logoutButton" onAction="#handleLogout" prefHeight="37.0" prefWidth="83.0" text="Logout">
                <font>
                   <Font size="18.0" />
                </font>

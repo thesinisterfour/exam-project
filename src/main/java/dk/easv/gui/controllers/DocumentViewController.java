@@ -5,6 +5,8 @@ import dk.easv.gui.models.ContentModel;
 import dk.easv.gui.models.tasks.RetrieveContentTask;
 import dk.easv.gui.rootContoller.RootController;
 import dk.easv.helpers.ViewType;
+import io.github.palexdev.materialfx.controls.MFXButton;
+import io.github.palexdev.materialfx.controls.MFXScrollPane;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import io.github.palexdev.materialfx.enums.FloatMode;
 import javafx.application.Platform;
@@ -15,6 +17,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
@@ -39,6 +42,8 @@ public class DocumentViewController extends RootController {
 
     @FXML
     private VBox vbox;
+    @FXML
+    private MFXScrollPane scrollPane;
 
     /**
      * This function initializes the URL and ResourceBundle and populates the content if the document
@@ -65,6 +70,7 @@ public class DocumentViewController extends RootController {
     @FXML
     private void addImageOnAction(ActionEvent actionEvent) {
         ObservableList<Node> children = vbox.getChildren();
+
         ImageView imageView = new ImageView();
         FileChooser fileChooser = new FileChooser();
         File selectedFile = fileChooser.showOpenDialog(new Stage());
@@ -72,11 +78,32 @@ public class DocumentViewController extends RootController {
         imageView.setImage(image);
         imageView.preserveRatioProperty().set(true);
         imageView.setFitWidth(vbox.getWidth() - 20);
-
         vbox.widthProperty().addListener((observable, oldValue, newValue) -> {
             imageView.setFitWidth((double) newValue - 20);
         });
-        children.add(imageView);
+
+
+        HBox hBox = new HBox(10, imageView, createSideButtonsVBox(children.size()-1));
+        children.add(hBox);
+
+    }
+
+    private VBox createSideButtonsVBox(int i) {
+        MFXButton buttonUp = new MFXButton("↑");
+        buttonUp.setOnAction(event -> moveUp(event, i));
+        //TODO: fix this button
+        MFXButton buttonDelete = new MFXButton("❌️");
+        buttonDelete.setPrefWidth(60);
+        MFXButton buttonDown = new MFXButton("↓");
+        return new VBox(buttonUp, buttonDelete, buttonDown);
+    }
+
+    private void moveUp(ActionEvent event, int i){
+        ObservableList<Node> children = vbox.getChildren();
+        Node swapping = children.remove(i);
+        Node swapFor = children.remove(i-1);
+        children.add(i-1, swapping);
+        children.add(i, swapFor);
 
     }
 
@@ -106,8 +133,8 @@ public class DocumentViewController extends RootController {
     private void saveOnAction(ActionEvent actionEvent) {
         ObservableList<Node> children = vbox.getChildren();
         for (int i = 0; i < children.size(); i++) {
-            Node child = children.get(i);
-            if (child instanceof MFXTextField mfxTextField) {
+            HBox hBox = (HBox) children.get(i);
+            if (hBox.getChildren().get(0) instanceof MFXTextField mfxTextField) {
                 try {
                     // This code is checking if the MFXTextField has an ID assigned to it. If it does
                     // not have an ID, it adds the text content of the MFXTextField to the model at the
@@ -124,7 +151,7 @@ public class DocumentViewController extends RootController {
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
-            } else if (child instanceof ImageView imageView) {
+            } else if (hBox.getChildren().get(0) instanceof ImageView imageView) {
                 try {
                     String id = imageView.getId();
                     if (id == null){
@@ -175,19 +202,24 @@ public class DocumentViewController extends RootController {
                             ImageView imageView = new ImageView();
                             imageView.setImage(image);
                             imageView.preserveRatioProperty().set(true);
-                            imageView.setFitWidth(vbox.getWidth() - 20);
-                            vbox.widthProperty().addListener((o, oldV, newV) -> {
-                                imageView.setFitWidth((double) newV - 20);
-                            });
+                            HBox hBox = new HBox(10, imageView, createSideButtonsVBox(children.size() - 1));
+                            imageView.setFitWidth(scrollPane.getWidth() - 50);
                             imageView.setId(contentMap.get(key) + "");
-                            children.set(key, imageView);
+
+
+                            scrollPane.widthProperty().addListener((o, oldV, newV) -> {
+                                imageView.setFitWidth((double) newV - 50);
+                            });
+
+                            children.set(key, hBox);
                         } else {
                             MFXTextField mfxTextField = new MFXTextField();
                             mfxTextField.setPrefWidth(vbox.getWidth() - 20);
                             mfxTextField.setFloatMode(FloatMode.BORDER);
                             mfxTextField.setText((String) newValue);
                             mfxTextField.setId(contentMap.get(key) + "");
-                            children.set(key, mfxTextField);
+                            HBox hBox = new HBox(10, mfxTextField, createSideButtonsVBox(children.size() - 1));
+                            children.set(key, hBox);
                         }
                     });
                 });

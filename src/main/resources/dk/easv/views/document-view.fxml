@@ -13,7 +13,7 @@
 
 <BorderPane xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.DocumentViewController">
    <center>
-      <MFXScrollPane fitToWidth="true" vbarPolicy="ALWAYS">
+      <MFXScrollPane fx:id="scrollPane" fitToWidth="true" vbarPolicy="ALWAYS">
          <content>
             <VBox fx:id="vbox" alignment="TOP_CENTER" prefHeight="348.0" prefWidth="600.0" spacing="10.0" />
          </content>

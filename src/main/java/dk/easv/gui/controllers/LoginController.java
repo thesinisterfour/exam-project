@@ -51,7 +51,6 @@ public class LoginController extends RootController {
         stage.setTitle("Admin");
         stage.setScene(scene);
         stage.show();
-        AlertHelper.showDefaultAlert("Do you want to Delete the following documents ?", Alert.AlertType.CONFIRMATION);
     }
 
     private void displayProjectManager() throws IOException {
@@ -60,7 +59,6 @@ public class LoginController extends RootController {
         stage.setTitle("Project Manager");
         stage.setScene(scene);
         stage.show();
-        AlertHelper.showDefaultAlert("Do you want to Delete the following documents ?", Alert.AlertType.CONFIRMATION);
     }
 
     private void displaySalesPerson() throws IOException {

@@ -24,26 +24,11 @@ public class UserDAO implements ICRUDDao<User> {
         try(Connection connection = cm.getConnection()){
             PreparedStatement ps = connection.prepareStatement("" +
                     "INSERT INTO dbo.[users] (first_name, last_name, role_id, username, password)\n" +
-                    "VALUES (?, ?, ?, ?, ?);");
+                    "VALUES (?, ?, (SELECT role_id FROM users_role WHERE role_name=?), ?, ?);");
 
             ps.setString(1, object.getFirstName());
             ps.setString(2, object.getLastName());
-
-            switch (object.getRole().getId()){
-                case 1:
-                    ps.setInt(3, 4);
-                    break;
-                case 2:
-                    ps.setInt(3, 1);
-                    break;
-                case 3:
-                    ps.setInt(3, 3);
-                    break;
-                case 4:
-                    ps.setInt(3, 2);
-                    break;
-            }
-
+            ps.setString(3, object.getRole().toString());
             ps.setString(4, object.getUsername());
             ps.setString(5, object.getPassword());
 
@@ -60,26 +45,11 @@ public class UserDAO implements ICRUDDao<User> {
 
         try(Connection connection = cm.getConnection()){
             PreparedStatement ps = connection.prepareStatement("" + "UPDATE dbo.[users] SET first_name=?, last_name=?, " +
-                    "role_id=?, username=?, password=? WHERE user_id=?;");
+                    "(SELECT role_id FROM users_role WHERE role_name=?), username=?, password=? WHERE user_id=?;");
 
             ps.setString(1, object.getFirstName());
             ps.setString(2, object.getLastName());
-
-            switch (object.getRole().getId()){
-                case 1:
-                    ps.setInt(3, 4);
-                    break;
-                case 2:
-                    ps.setInt(3, 1);
-                    break;
-                case 3:
-                    ps.setInt(3, 3);
-                    break;
-                case 4:
-                    ps.setInt(3, 2);
-                    break;
-            }
-
+            ps.setString(3, object.getRole().toString());
             ps.setString(4, object.getUsername());
             ps.setString(5, object.getPassword());
             ps.setInt(6, object.getUserID());

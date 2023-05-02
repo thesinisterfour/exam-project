@@ -13,7 +13,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.net.URL;
 import java.time.Instant;
@@ -23,7 +22,6 @@ import java.util.Comparator;
 import java.util.ResourceBundle;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.ConcurrentNavigableMap;
-
 public class AdminViewController extends RootController {
 
     private DocumentModel documentModel;

@@ -31,6 +31,27 @@ public class ContentDAO {
         }
     }
 
+    public void addText(int documentId, int contentId, int index, String content) throws SQLException {
+        try (Connection con = cm.getConnection()) {
+            PreparedStatement ps = con.prepareStatement("UPDATE contents SET text = ? OUTPUT inserted.id WHERE id = ?");
+            ps.setString(1, content);
+            ps.setInt(2, contentId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                int id = rs.getInt(1);
+                if (id == contentId) {
+                    ps = con.prepareStatement("UPDATE document_contents SET content_index = ? WHERE document_id = ? AND content_id = ?");
+                    ps.setInt(1, index);
+                    ps.setInt(2, documentId);
+                    ps.setInt(3, contentId);
+                    ps.executeUpdate();
+                } else {
+                    throw new SQLException("bruh");
+                }
+            }
+        }
+    }
+
     public void addImage(int documentId, int index, Image image) throws SQLException {
         try (Connection con = cm.getConnection()) {
             PreparedStatement ps = con.prepareStatement("Insert Into contents (image) OUTPUT inserted.id VALUES (?)");
@@ -50,15 +71,14 @@ public class ContentDAO {
         }
     }
 
-    public void addImage(int documentId, int index, int imageId) throws SQLException {
+    public void addImage(int documentId, int contentId, int index) throws SQLException {
         try (Connection con = cm.getConnection()) {
-            PreparedStatement ps = con.prepareStatement("Insert Into document_contents (document_id, content_id, content_index) VALUES (?, ?, ?)");
-            ps.setInt(1, documentId);
-            ps.setInt(2, imageId);
-            ps.setInt(3, index);
+            PreparedStatement ps = con.prepareStatement("UPDATE document_contents SET content_index = ? WHERE document_id = ? AND content_id = ?");
+            ps.setInt(1, index);
+            ps.setInt(2, documentId);
+            ps.setInt(3, contentId);
             ps.executeUpdate();
         }
-
     }
 
     public ConcurrentSkipListMap<Integer, Integer> loadAllContent(int documentId) throws SQLException {
@@ -76,7 +96,7 @@ public class ContentDAO {
         }
     }
 
-    public Object getContent(Integer contentId) throws SQLException{
+    public Object getContent(Integer contentId) throws SQLException {
         try (Connection con = cm.getConnection()) {
             PreparedStatement ps = con.prepareStatement("SELECT * FROM contents WHERE id = ?");
             ps.setInt(1, contentId);
@@ -92,4 +112,6 @@ public class ContentDAO {
             }
         }
     }
+
+
 }

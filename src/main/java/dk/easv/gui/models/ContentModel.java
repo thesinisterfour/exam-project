@@ -25,12 +25,20 @@ public class ContentModel {
         }
         return INSTANCE;
     }
-    public void addText(int documentId, int index, String content) throws SQLException {
-        documentLogic.addText(documentId,  index, content);
+    public void addText(int index, String content) throws SQLException {
+        documentLogic.addText(documentId, index, content);
     }
 
-    public void addImage(int documentId, int index, Image image) throws SQLException {
+    public void addText(int contentId, int index, String content) throws SQLException {
+        documentLogic.addText(documentId, contentId, index, content);
+    }
+
+    public void addImage(int index, Image image) throws SQLException {
         documentLogic.addImage(documentId,  index, image);
+    }
+
+    public void addImage(int contentId, int index) throws SQLException {
+        documentLogic.addImage(documentId, contentId, index);
     }
 
     public int getDocumentId() {

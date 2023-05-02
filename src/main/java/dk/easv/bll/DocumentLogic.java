@@ -13,8 +13,15 @@ public class DocumentLogic {
         contentDAO.addText(documentId,  index, content);
     }
 
+    public void addText(int documentId, int contentId, int index, String content) throws SQLException {
+        contentDAO.addText(documentId, contentId, index, content);
+    }
+
     public void addImage(int documentId, int index, Image image) throws SQLException {
         contentDAO.addImage(documentId,  index, image);
+    }
+    public void addImage(int documentId, int contentId, int index) throws SQLException {
+        contentDAO.addImage(documentId, contentId, index);
     }
 
     public ConcurrentSkipListMap<Integer, Integer> loadAllContent(int documentId) throws SQLException {
@@ -24,4 +31,6 @@ public class DocumentLogic {
     public Object getContent(Integer contentId) throws SQLException{
         return contentDAO.getContent(contentId);
     }
+
+
 }

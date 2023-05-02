@@ -1,4 +1,4 @@
-module dk.easv.eventticketseasvbar {
+module dk.easv {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.sql;

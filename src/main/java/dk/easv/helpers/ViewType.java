@@ -1,13 +1,6 @@
 package dk.easv.helpers;
 
 public enum ViewType {
-    MAIN {
-        @Override
-        public String getFXMLView() {
-            return "views/hello-view.fxml";
-        }
-    },
-
     ADMIN {
         @Override
         public String getFXMLView() {
@@ -36,18 +29,52 @@ public enum ViewType {
         }
     },
 
+    WORKER_CARD{
+        @Override
+        public String getFXMLView() {
+            return "views/HboxCard.fxml";
+        }
+    },
+
     LOGIN {
         @Override
         public String getFXMLView() {
             return "views/login-view.fxml";
         }
     },
+    CUSTOMERS{
+        @Override
+        public String getFXMLView() {
+            return "views/customers-view.fxml";
+        }
+    }
+    ,
+    CREATE_CUSTOMERS{
+        @Override
+        public String getFXMLView() {
+            return "views/add-customer-view.fxml";
+        }
+    }
+    ,
 
 
     USERS_VIEW{
         @Override
         public String getFXMLView() {
             return "views/worker-users-view.fxml";
+        }
+    },
+
+    CREATE_DOCUMENT {
+        @Override
+        public String getFXMLView() {
+            return "views/create-document-view.fxml";
+        }
+    },
+    DOCUMENT {
+        @Override
+        public String getFXMLView() {
+            return "views/document-view.fxml";
         }
     };
     public abstract String getFXMLView();

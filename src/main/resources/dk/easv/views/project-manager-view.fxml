@@ -1,26 +1,84 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import io.github.palexdev.materialfx.controls.MFXScrollPane?>
 <?import io.github.palexdev.materialfx.controls.MFXTableView?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.ProjectManagerViewController">
+<GridPane fx:id="gridPaneMain" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.ProjectManagerViewController">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="144.0" minWidth="0.0" prefWidth="8.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="578.0" minWidth="10.0" prefWidth="574.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="195.0" minWidth="0.0" prefWidth="10.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints maxHeight="129.0" minHeight="1.0" prefHeight="25.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="343.0" minHeight="10.0" prefHeight="208.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="191.0" minHeight="3.0" prefHeight="191.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="75.0" minHeight="3.0" prefHeight="9.0" vgrow="SOMETIMES" />
+  </rowConstraints>
    <children>
-      <VBox fx:id="screen_alignment_vertical" prefHeight="413.0" prefWidth="600.0" styleClass="screen_alignment_vertical">
+      <VBox fx:id="vertBox" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
          <children>
-            <AnchorPane fx:id="header" prefHeight="54.0" prefWidth="600.0" styleClass="header">
+            <HBox fx:id="horiBox" prefHeight="196.0" prefWidth="577.0">
                <children>
-                  <Label fx:id="greeting_message" layoutX="84.0" layoutY="18.0" styleClass="greeting_message" text="Hello project manager" />
-                  <MFXButton fx:id="logout_button" layoutX="518.0" layoutY="14.0" styleClass="logout_button" text="Log out" />
-                  <ImageView fx:id="logo_image" fitHeight="50.0" fitWidth="50.0" layoutX="13.0" pickOnBounds="true" preserveRatio="true" styleClass="logo_image" />
+                  <MFXTableView fx:id="documentTable" prefHeight="200.0" prefWidth="577.0" />
                </children>
-            </AnchorPane>
-            <HBox fx:id="tech_card_hbox" prefHeight="156.0" prefWidth="554.0" styleClass="tech_card_hbox" />
-            <MFXTableView prefHeight="203.0" prefWidth="600.0" />
-         </children></VBox>
+            </HBox>
+         </children>
+      </VBox>
+      <VBox fx:id="boxVert" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+         <children>
+            <MFXScrollPane fx:id="workerScrollPane" prefHeight="136.0" prefWidth="577.0">
+               <content>
+                  <HBox fx:id="workers" prefHeight="100.0" prefWidth="575.0" />
+               </content>
+            </MFXScrollPane>
+            <MFXScrollPane fx:id="projectScrollPane" prefHeight="147.0" prefWidth="577.0">
+               <content>
+                  <HBox fx:id="projects" prefHeight="108.0" prefWidth="574.0" />
+               </content>
+            </MFXScrollPane>
+         </children>
+      </VBox>
+      <VBox fx:id="navBarVBox" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
+         <children>
+            <HBox fx:id="navBarHBox" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <GridPane prefHeight="31.0" prefWidth="592.0">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <MFXButton fx:id="logoutButton" onAction="#logoutAction" text="Log out" GridPane.columnIndex="2" />
+                        <GridPane>
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <Label text="Welcome" />
+                              <Label fx:id="usernameLabel" text="[username]" GridPane.columnIndex="1" />
+                           </children>
+                        </GridPane>
+                     </children>
+                  </GridPane>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
    </children>
-</AnchorPane>
+</GridPane>

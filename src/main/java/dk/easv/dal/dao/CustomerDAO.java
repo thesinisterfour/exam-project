@@ -20,25 +20,20 @@ public class CustomerDAO implements ICRUDDao<Customer> {
     @Override
     public int add(Customer customer) throws SQLException {
         try(Connection con = cm.getConnection()){
-            if (customer == null) {
-                throw new SQLException("Object cannot be null");
-            } else {
-
-                String sql = "INSERT INTO customer (name, email, address, zipcode) VALUES (?, ?, ?, ?)";
+                String sql = "INSERT INTO customer (name, email, address, zipcode) " +
+                        "OUTPUT inserted.customer_id\n" +
+                        "VALUES (?, ?, ?, ?);";
                 PreparedStatement ps = con.prepareStatement(sql);
 
                 ps.setString(1, customer.getCustomerName());
                 ps.setString(2, customer.getCustomerEmail());
                 ps.setString(3, customer.getCustomerAddress());
                 ps.setInt(4, customer.getZipCode());
-
                 ResultSet rs = ps.executeQuery();
-                if (rs.next()) {
-                    return rs.getInt(1);
-                } else {
-                    throw new SQLException("Could not add customer");
-                }
-            }
+                rs.next();
+                return rs.getInt(1);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 

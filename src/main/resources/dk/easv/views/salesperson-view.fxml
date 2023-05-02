@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<GridPane fx:id="mainGrid" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400.0" minWidth="600.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.SalesPersonViewController">
+<GridPane fx:id="mainGrid" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400.0" minWidth="600.0" prefHeight="400.0" prefWidth="600.0" styleClass="main_pane" stylesheets="@../css/global-style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.SalesPersonViewController">
   <columnConstraints>
     <ColumnConstraints />
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="336.0" minWidth="10.0" prefWidth="106.0" />
@@ -32,7 +32,7 @@
          <children>
             <HBox fx:id="hboxWelcome" prefHeight="162.0" prefWidth="408.0">
                <children>
-                  <GridPane fx:id="topGrid" prefHeight="152.0" prefWidth="422.0">
+                  <GridPane fx:id="topGrid" prefHeight="152.0" prefWidth="422.0" styleClass="gray_content_backdrop">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="97.0" minWidth="10.0" prefWidth="26.0" />
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="194.0" minWidth="10.0" prefWidth="106.0" />
@@ -71,11 +71,7 @@
                               </Label>
                            </children>
                         </GridPane>
-                        <Label fx:id="logoLabel" prefHeight="58.0" prefWidth="98.0" text="WUAV" GridPane.columnIndex="3" GridPane.rowIndex="1">
-                           <font>
-                              <Font size="32.0" />
-                           </font>
-                        </Label>
+                        <ImageView fitHeight="22.0" fitWidth="118.0" pickOnBounds="true" preserveRatio="true" styleClass="wuav_logo" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                      </children>
                   </GridPane>
                </children>
@@ -105,7 +101,7 @@
             </TableView>
          </children>
       </GridPane>
-      <Label fx:id="roleLabel" prefHeight="17.0" prefWidth="92.0" text="Sales Agent" GridPane.columnIndex="3">
+      <Label fx:id="roleLabel" prefHeight="17.0" prefWidth="92.0" styleClass="gray_content_backdrop" text="Sales Agent" GridPane.columnIndex="3">
          <padding>
             <Insets left="15.0" />
          </padding>

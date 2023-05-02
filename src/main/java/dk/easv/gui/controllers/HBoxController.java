@@ -12,9 +12,11 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.layout.HBox;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -30,19 +32,24 @@ public class HBoxController extends RootController {
     public void initialize(URL location, ResourceBundle resources) {
     }
 
-    public void setBoxes(ConcurrentMap<Integer, User> user){
+    public void setUserBoxes(ConcurrentMap<Integer, User> user){
         this.users = user;
-        populateHBox();
+        populateUserHBox();
     }
 
-    private void populateHBox() {
+    public void setCustomerBoxes(ConcurrentMap<Integer, Customer> customers){
+        this.customers = customers;
+        populateCustomersHBox();
+    }
+
+    private void populateUserHBox() {
         try {
                 ObservableList<Node> children = mainHboxCard.getChildren();
                 for(int i = 1; users.size() > i; i++){
                     FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(Main.class.getResource("views/Card.fxml")));
                     Parent parent = loader.load();
                     CardController cardController = loader.getController();
-                    cardController.receiveData(users);
+                    cardController.receiveUserData(users);
                     cardController.createCards(new Card(users.get(i).getFirstName(),users.get(i).getFirstName(), users.get(i).getRole().toString()));
                     children.addAll(parent);
                 }
@@ -52,6 +59,23 @@ public class HBoxController extends RootController {
             throw new RuntimeException(e);
         }
 
+    }
+    private void populateCustomersHBox() {
+        try {
+            ObservableList<Node> children = mainHboxCard.getChildren();
+            Set<Integer> keys = customers.keySet();
+            for (Integer key : keys) {
+                FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(Main.class.getResource("views/Card.fxml")));
+                Parent parent = loader.load();
+                CardController cardController = loader.getController();
+                cardController.receiveCustomerData(customers);
+                cardController.createCards(new Card(customers.get(key).getCustomerName(), customers.get(key).getCustomerAddress(), customers.get(key).getZipCode(), customers.get(key).getCustomerEmail()));
+                children.addAll(parent);
+            }
+
+            } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
     }
 
 }

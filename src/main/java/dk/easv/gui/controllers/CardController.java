@@ -56,44 +56,31 @@ public class CardController extends RootController {
 
 
 
-    public void receiveData(ConcurrentMap<Integer, User> users) {
+    public void receiveUserData(ConcurrentMap<Integer, User> users) {
         this.users = users;
-        //this.customers = customers;
-        //test2();
     }
 
-    public void test2(){
-        if(customers != null){
-            username.setText(customers.get(15).getCustomerName());
-            userAddress.setText(customers.get(15).getCustomerAddress());
-            userEmail.setText(customers.get(15).getCustomerEmail());
-            String string = String.valueOf(customers.get(15).getZipCode());
-            userZipcode.setText(string);
-        }
-        else{
-            System.out.println("test");
-        }
+    public void receiveCustomerData(ConcurrentMap<Integer, Customer> customers) {
+        this.customers = customers;
     }
 
     public void createCards(Card card){
         this.card = card;
-        if(card.getUserZipCode() != null){
-            username.setText(card.getUserName());
-            userAddress.setText(card.getUserAddress());
-            userZipcode.setText(card.getUserZipCode());
+        if(card.getCustomerZipCode() != null){
+            username.setText(card.getCustomerName());
+            userAddress.setText(card.getCustomerAddress());
+            userZipcode.setText(card.getCustomerZipCode());
+            userEmail.setText(card.getCustomerEmail());
             gridLoyal.setStyle(gridLoyal.getStyle() + "-fx-background-color : red;");
-            //userEmail.setText(card.getUserEmail());
+
         }
         if(card.getUserRole() != null){
             username.setText(card.getUserName());
-            userEmail.setText(card.getUserEmail());
+            userEmail.setText(card.getUserName());
             userAddress.setText("");
             userZipcode.setText("");
             gridLoyal.setStyle(gridLoyal.getStyle() + "-fx-background-color : red;");
             System.out.println(card.getUserRole());
-        }
-        else{
-            throw new RuntimeException("Failed test");
         }
     }
 }

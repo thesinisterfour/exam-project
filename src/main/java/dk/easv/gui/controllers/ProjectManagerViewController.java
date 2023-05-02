@@ -1,9 +1,11 @@
 package dk.easv.gui.controllers;
 
 import dk.easv.Main;
+import dk.easv.be.Customer;
 import dk.easv.be.Document;
 import dk.easv.be.User;
 import dk.easv.gui.controllerFactory.ControllerFactory;
+import dk.easv.gui.models.CustomerModel;
 import dk.easv.gui.models.UserModel;
 import dk.easv.gui.rootContoller.RootController;
 import dk.easv.helpers.ViewType;
@@ -66,6 +68,8 @@ public class ProjectManagerViewController extends RootController {
 
     private UserModel userModel = new UserModel();
 
+
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
@@ -91,7 +95,7 @@ public class ProjectManagerViewController extends RootController {
                 FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(Main.class.getResource("views/HboxCard.fxml")));
                 HBox hBox = loader.load();
                 HBoxController hboxController = loader.getController();
-                hboxController.setBoxes(map);
+                hboxController.setUserBoxes(map);
                 addLabelAndScrollPane(key.toString(), hBox);
             }
 
@@ -105,9 +109,6 @@ public class ProjectManagerViewController extends RootController {
 
         return userModel.getAllUsers();
     }
-
-
-
     @FXML
     public void logoutAction() throws IOException {
         if (stage == null) {

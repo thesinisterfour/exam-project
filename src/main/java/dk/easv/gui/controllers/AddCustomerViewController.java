@@ -70,6 +70,7 @@ public class AddCustomerViewController extends RootController {
                 throw new RuntimeException(e);
             }
         }
+        getStage().close();
 
     }
     @Override

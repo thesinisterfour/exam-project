@@ -1,12 +1,13 @@
 package dk.easv.gui.controllers;
 
-import dk.easv.be.Content;
 import dk.easv.gui.controllerFactory.ControllerFactory;
 import dk.easv.gui.models.ContentModel;
+import dk.easv.gui.models.tasks.RetrieveContentTask;
 import dk.easv.gui.rootContoller.RootController;
 import dk.easv.helpers.ViewType;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import io.github.palexdev.materialfx.enums.FloatMode;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,14 +15,17 @@ import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.ResourceBundle;
+import java.util.concurrent.ConcurrentSkipListMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class DocumentViewController extends RootController {
 
@@ -33,12 +37,7 @@ public class DocumentViewController extends RootController {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         if (model.getDocumentId() != 0) {
-            try {
-                model.loadContent(model.getDocumentId());
-                populateContent();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            populateContent();
         }
     }
 
@@ -101,26 +100,39 @@ public class DocumentViewController extends RootController {
         }
     }
 
-    private void populateContent(){
-        List<Content> contentList = model.getContentList();
-        for (Content content : contentList) {
-             if (content.getText() == null){
-                    ImageView imageView = new ImageView();
-                    imageView.setImage(content.getImage());
-                    imageView.preserveRatioProperty().set(true);
-                    imageView.setFitWidth(vbox.getWidth() - 20);
-                    vbox.widthProperty().addListener((observable, oldValue, newValue) -> {
-                        imageView.setFitWidth((double) newValue - 20);
+    private void populateContent() {
+        Platform.runLater(() -> {
+            ConcurrentSkipListMap<Integer, Integer> contentMap = model.getContentMap();
+            ObservableList<Node> children = vbox.getChildren();
+            contentMap.forEach((k, v) -> children.add(new Text("")));
+            for (Integer key : contentMap.keySet()) {
+                RetrieveContentTask task = new RetrieveContentTask(contentMap.get(key));
+                task.valueProperty().addListener((observable, oldValue, newValue) -> {
+                    Platform.runLater(() -> {
+                        if (newValue instanceof Image image) {
+                            ImageView imageView = new ImageView();
+                            imageView.setImage(image);
+                            imageView.preserveRatioProperty().set(true);
+                            imageView.setFitWidth(vbox.getWidth() - 20);
+                            vbox.widthProperty().addListener((o, oldV, newV) -> {
+                                imageView.setFitWidth((double) newV - 20);
+                            });
+                            children.set(key, imageView);
+                        } else {
+                            MFXTextField mfxTextField = new MFXTextField();
+                            mfxTextField.setPrefWidth(vbox.getWidth() - 20);
+                            mfxTextField.setFloatMode(FloatMode.BORDER);
+                            mfxTextField.setText(newValue.toString());
+                            children.set(key, mfxTextField);
+                        }
                     });
-                    vbox.getChildren().add(imageView);
-                } else {
-                    MFXTextField mfxTextField = new MFXTextField();
-                    mfxTextField.setPrefWidth(vbox.getWidth() - 20);
-                    mfxTextField.setFloatMode(FloatMode.BORDER);
-                    mfxTextField.setText(content.getText());
-                    vbox.getChildren().add(mfxTextField);
-             }
+                });
 
-        }
+                ExecutorService es = Executors.newSingleThreadExecutor();
+                es.submit(task);
+                es.shutdown();
+
+            }
+        });
     }
 }

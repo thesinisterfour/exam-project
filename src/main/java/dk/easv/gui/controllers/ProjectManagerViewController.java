@@ -1,8 +1,10 @@
 package dk.easv.gui.controllers;
 
 import dk.easv.Main;
+import dk.easv.be.Document;
 import dk.easv.be.User;
 import dk.easv.gui.controllerFactory.ControllerFactory;
+import dk.easv.gui.models.UserModel;
 import dk.easv.gui.rootContoller.RootController;
 import dk.easv.helpers.ViewType;
 import io.github.palexdev.materialfx.controls.MFXScrollPane;
@@ -25,8 +27,10 @@ import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.Objects;
 import java.util.ResourceBundle;
+import java.util.Set;
 import java.util.concurrent.ConcurrentMap;
 
 public class ProjectManagerViewController extends RootController {
@@ -35,7 +39,7 @@ public class ProjectManagerViewController extends RootController {
     private VBox boxVert;
 
     @FXML
-    private MFXTableView<?> documentTable;
+    private MFXTableView<Document> documentTable;
 
     @FXML
     private GridPane gridPaneMain;
@@ -66,19 +70,47 @@ public class ProjectManagerViewController extends RootController {
 
     private Stage stage;
 
+    private UserModel userModel = new UserModel();
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        initUsers();
+        try {
+            initUsers();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    private void initUsers(){
+
+    private void addLabelAndScrollPane(String key, HBox hBox) {
+        MFXScrollPane scrollPane = new MFXScrollPane(hBox);
+        scrollPane.setFitToHeight(true);
+    }
+
+    private void initUsers() throws SQLException {
         ConcurrentMap<Integer, User> map = getAllUsersMap();
+        Set<Integer> keys = map.keySet();
+        try {
+            for (Integer key : keys) {
+                FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(Main.class.getResource("views/HboxCard.fxml")));
+                HBox hBox = loader.load();
+                HBoxController hboxController = loader.getController();
+
+                hboxController.setBoxes(map.get(key));
+                addLabelAndScrollPane(key.toString(), hBox);
+            }
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
-    private ConcurrentMap<Integer, User> getAllUsersMap() {
+    private ConcurrentMap<Integer, User> getAllUsersMap() throws SQLException {
 
-        return null;
+        return userModel.getAllUsers();
     }
+
 
 
     @FXML

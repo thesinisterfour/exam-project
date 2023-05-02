@@ -1,28 +1,33 @@
 package dk.easv.gui.controllers;
 
 import dk.easv.Main;
+import dk.easv.be.Customer;
+import dk.easv.be.Document;
+import dk.easv.be.User;
 import dk.easv.gui.controllerFactory.ControllerFactory;
+import dk.easv.gui.models.CustomerModel;
+import dk.easv.gui.models.UserModel;
 import dk.easv.gui.rootContoller.RootController;
 import dk.easv.helpers.ViewType;
 import io.github.palexdev.materialfx.controls.MFXScrollPane;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXTableView;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
+import java.util.Objects;
 import java.util.ResourceBundle;
+import java.util.Set;
+import java.util.concurrent.ConcurrentMap;
 
 public class ProjectManagerViewController extends RootController {
 
@@ -30,7 +35,7 @@ public class ProjectManagerViewController extends RootController {
     private VBox boxVert;
 
     @FXML
-    private MFXTableView<?> documentTable;
+    private MFXTableView<Document> documentTable;
 
     @FXML
     private GridPane gridPaneMain;
@@ -42,7 +47,7 @@ public class ProjectManagerViewController extends RootController {
     private MFXButton logoutButton;
 
     @FXML
-    private HBox navBarHBox;
+    private HBox navBarHBox, workers;
 
     @FXML
     private VBox navBarVBox;
@@ -61,11 +66,49 @@ public class ProjectManagerViewController extends RootController {
 
     private Stage stage;
 
+    private UserModel userModel = new UserModel();
+
+
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        try {
+            initUsers();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    private void addLabelAndScrollPane(String key, HBox hBox) {
+        Label label = new Label(key);
+        workers.getChildren().add(label);
+        workerScrollPane.setContent(hBox);
+        workerScrollPane.setFitToHeight(true);
+    }
+
+    private void initUsers() throws SQLException {
+        ConcurrentMap<Integer, User> map = getAllUsersMap();
+        Set<Integer> keys = map.keySet();
+        try {
+            for (Integer key : keys) {
+                FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(Main.class.getResource("views/HboxCard.fxml")));
+                HBox hBox = loader.load();
+                HBoxController hboxController = loader.getController();
+                hboxController.setUserBoxes(map);
+                addLabelAndScrollPane(key.toString(), hBox);
+            }
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 
+    private ConcurrentMap<Integer, User> getAllUsersMap() throws SQLException {
+
+        return userModel.getAllUsers();
+    }
     @FXML
     public void logoutAction() throws IOException {
         if (stage == null) {
@@ -77,12 +120,5 @@ public class ProjectManagerViewController extends RootController {
         this.stage.setTitle("Login");
     }
 
-    public void displayFxml(Stage stage) throws IOException {
-        RootController controller = ControllerFactory.loadFxmlFile(ViewType.PROJECT_MANAGER);
 
-        Scene scene = new Scene(controller.getView(), 760, 480);
-        stage.setTitle("Project Manager");
-        stage.setScene(scene);
-        stage.show();
-    }
 }

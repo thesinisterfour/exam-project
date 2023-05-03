@@ -3,6 +3,7 @@ package dk.easv.gui.controllers;
 import dk.easv.Main;
 import dk.easv.be.Card;
 import dk.easv.be.Customer;
+import dk.easv.be.Project;
 import dk.easv.be.User;
 import dk.easv.gui.rootContoller.RootController;
 import javafx.collections.ObservableList;
@@ -28,6 +29,8 @@ public class HBoxController extends RootController {
 
     private ConcurrentMap<Integer, Customer> customers = new ConcurrentHashMap<>();
 
+    private ConcurrentMap<Integer, Project> projects = new ConcurrentHashMap<>();
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
     }
@@ -41,6 +44,13 @@ public class HBoxController extends RootController {
         this.customers = customers;
         populateCustomersHBox();
     }
+
+    /*public void setProjectBoxes(ConcurrentMap<Integer, Project> projects){
+        this.projects = projects;
+        populateProjectHBox();
+    }
+
+     */
 
     private void populateUserHBox() {
         try {
@@ -77,6 +87,27 @@ public class HBoxController extends RootController {
             throw new RuntimeException(ex);
         }
     }
+
+    /*private void populateProjectHBox() {
+        try {
+            ObservableList<Node> children = mainHboxCard.getChildren();
+            for(int i = 1; projects.size() > i; i++){
+                FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(Main.class.getResource("views/ProjectCard.fxml")));
+                Parent parent = loader.load();
+                CardController cardController = loader.getController();
+                cardController.receiveUserData(projects);
+                cardController.createCards(new Card(projects.get(i).getProjectID(), projects.get(i).getProjectName(),projects.get(i).getProjectAddress(), projects.get(i).getProjectZipcode()));
+                children.addAll(parent);
+            }
+
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+     */
 
 }
 

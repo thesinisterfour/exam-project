@@ -43,14 +43,6 @@ public class CardController extends RootController {
     private ConcurrentMap<Integer, Customer> customers = new ConcurrentHashMap<>();
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        /*try {
-            test();
-            //System.out.println(customers.keySet());
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-         */
 
     }
 

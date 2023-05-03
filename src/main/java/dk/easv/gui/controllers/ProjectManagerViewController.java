@@ -3,6 +3,7 @@ package dk.easv.gui.controllers;
 import dk.easv.Main;
 import dk.easv.be.Customer;
 import dk.easv.be.Document;
+import dk.easv.be.Project;
 import dk.easv.be.User;
 import dk.easv.gui.controllerFactory.ControllerFactory;
 import dk.easv.gui.models.CustomerModel;
@@ -74,6 +75,7 @@ public class ProjectManagerViewController extends RootController {
     public void initialize(URL location, ResourceBundle resources) {
         try {
             initUsers();
+            //initProjects();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -104,6 +106,20 @@ public class ProjectManagerViewController extends RootController {
         }
 
     }
+
+    /*private void initProjects() throws SQLException {
+        ConcurrentMap<Integer, Project> map = getAllProjectsMap();
+        Set<Integer> keys = map.keySet();
+        try {
+            for (Integer key : keys) {
+                FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(Main.class.getResource("view/HboxCard.fxml")))
+                HBox hBox = loader.load();
+                HBoxController hBoxController = loader
+            }
+        }
+    }
+
+     */
 
     private ConcurrentMap<Integer, User> getAllUsersMap() throws SQLException {
 

@@ -4,28 +4,28 @@ public class Card {
 
     private String userName;
 
-    private String userEmail;
+    private String customerEmail;
 
     private String userRole;
 
-    private String userAddress;
+    private String customerAddress;
 
-    private String userZipCode;
+    private String customerZipCode;
 
     private String customerName;
 
 
 
-    public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
+    public void setCustomerEmail(String customerEmail) {
+        this.customerEmail = customerEmail;
     }
 
     public String getUserName() {
         return userName;
     }
 
-    public String getUserEmail() {
-        return userEmail;
+    public String getCustomerEmail() {
+        return customerEmail;
     }
 
     public String getUserRole() {
@@ -44,35 +44,35 @@ public class Card {
         return customerName;
     }
 
-    public String getUserAddress() {
-        return userAddress;
+    public String getCustomerAddress() {
+        return customerAddress;
     }
 
-    public String getUserZipCode() {
-        return userZipCode;
+    public String getCustomerZipCode() {
+        return customerZipCode;
     }
 
-    public void setUserAddress(String userAddress) {
-        this.userAddress = userAddress;
+    public void setCustomerAddress(String customerAddress) {
+        this.customerAddress = customerAddress;
     }
 
     public void setCustomerName(String customerName) {
         this.customerName = customerName;
     }
 
-    public void setUserZipCode(String userZipCode) {
-        this.userZipCode = userZipCode;
+    public void setCustomerZipCode(String customerZipCode) {
+        this.customerZipCode = customerZipCode;
     }
-    public Card(String userName, String userRole) {
+    public Card(String userName, String userEmail, String userRole) {
         this.userName = userName;
-        //this.userEmail = userEmail;
+        this.customerEmail = userEmail;
         this.userRole = userRole;
     }
-    public Card(String customerName, String userAddress, String userZipCode, String userEmail) {
+    public Card(String customerName, String userAddress, int userZipCode, String userEmail) {
         this.customerName = customerName;
-        this.userAddress = userAddress;
-        this.userZipCode = userZipCode;
-        this.userEmail = userEmail;
+        this.customerAddress = userAddress;
+        this.customerZipCode = String.valueOf(userZipCode);
+        this.customerEmail = userEmail;
     }
 
 

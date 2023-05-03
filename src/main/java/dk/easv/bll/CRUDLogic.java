@@ -104,7 +104,7 @@ public class CRUDLogic implements BLLFacade {
     }
     public ConcurrentMap<Integer, Project> getCustomerProject() throws SQLException {
         ICRUDDao<Project> projectDAO = CRUDDAOFactory.getDao(DAOType.PROJECT_DAO);
-        return projectDAO.getCustomerProject();
+        return projectDAO.getAll();
     }
 
 

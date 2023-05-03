@@ -1,0 +1,7 @@
+GridPane, VBox{
+    -fx-background-color: darkgray;
+}
+
+ImageView{
+    -fx-image: url('../icons/testPerson.jpg');
+}

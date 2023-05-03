@@ -2,6 +2,8 @@ package dk.easv.dal.dao;
 
 import dk.easv.be.City;
 import dk.easv.be.Customer;
+import dk.easv.be.Role;
+import dk.easv.be.User;
 import dk.easv.dal.ConnectionManager;
 import dk.easv.dal.interafaces.ICRUDDao;
 
@@ -37,11 +39,35 @@ public class CustomerDAO implements ICRUDDao<Customer> {
 
     @Override
     public int update(Customer object) throws SQLException {
+        try(Connection connection = cm.getConnection()){
+            PreparedStatement ps = connection.prepareStatement("" + "UPDATE dbo.[customer] SET name=?, email=?, " +
+                    "adress=?, zipcode=? WHERE customer_id=?;");
+
+            ps.setString(1, object.getCustomerName());
+            ps.setString(2, object.getCustomerEmail());
+            ps.setString(3, object.getCustomerAddress());
+            ps.setInt(4, object.getZipCode());
+            ps.setInt(5, object.getCustomerID());
+
+            ps.executeQuery();
+        }
         return 0;
     }
 
     @Override
     public Customer get(int id) throws SQLException {
+        try(Connection connection = cm.getConnection()) {
+            PreparedStatement ps = connection.prepareStatement("" +
+                    "SELECT * FROM dbo.[customer] WHERE customer_id=? INNER JOIN dbo.cities ON dbo.cities.zipcode = dbo.customer.zipcode;");
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()){
+                City city = new City(rs.getInt("zipcode"), rs.getString("city_name"));
+                return new Customer(rs.getInt("customer_id"), rs.getString("name"), rs.getString("email"),
+                        rs.getString("address"), city);
+            }
+        }
         return null;
     }
 
@@ -75,6 +101,12 @@ public class CustomerDAO implements ICRUDDao<Customer> {
 
     @Override
     public int delete(int id) throws SQLException {
+        try(Connection connection = cm.getConnection()){
+            PreparedStatement ps = connection.prepareStatement("" + "DELETE FROM dbo.[customer] WHERE customer_id=?;");
+            ps.setInt(1, id);
+
+            ps.executeQuery();
+        }
         return 0;
     }
 }

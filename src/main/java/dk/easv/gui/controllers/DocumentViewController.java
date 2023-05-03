@@ -28,9 +28,7 @@ import java.io.File;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
-import java.util.concurrent.ConcurrentSkipListMap;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.*;
 
 /**
  * The DocumentViewController class is a JavaFX controller that handles adding and saving text and
@@ -39,32 +37,40 @@ import java.util.concurrent.Executors;
  */
 public class DocumentViewController extends RootController {
 
+    private final ScheduledExecutorService scheduledSaveService = Executors.newSingleThreadScheduledExecutor();
     private ContentModel model = ContentModel.getInstance();
-
     @FXML
     private VBox vbox;
     @FXML
     private MFXScrollPane scrollPane;
+    @FXML
+    private HBox centeringHBox;
 
     /**
      * This function initializes the URL and ResourceBundle and populates the content if the document
      * ID is not equal to zero.
-     * 
-     * @param location The location of the FXML file that contains the controller class.
+     *
+     * @param location  The location of the FXML file that contains the controller class.
      * @param resources A ResourceBundle object that contains the resources for the current locale. It
-     * is used to retrieve localized strings, images, and other resources.
+     *                  is used to retrieve localized strings, images, and other resources.
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         if (model.getDocumentId() != 0) {
-            populateContent();
+            Platform.runLater(this::populateContent);
+
+            scrollPane.widthProperty().addListener((observable, oldValue, newValue) -> {
+                centeringHBox.setMinWidth(newValue.doubleValue() - 14);
+            });
+            vbox.setMaxWidth(1000);
         }
+//        progressiveSave();
     }
 
     /**
      * This function adds an image to a JavaFX VBox container and resizes it to fit the container's
      * width.
-     * 
+     *
      * @param actionEvent An event that represents a user action, such as clicking a button.
      */
     @FXML
@@ -84,7 +90,7 @@ public class DocumentViewController extends RootController {
     private VBox createSideButtonsVBox() {
         MFXButton buttonUp = new MFXButton("↑");
         buttonUp.setOnAction(this::moveUp);
-        MFXButton buttonDelete = new MFXButton("❌️");
+        MFXButton buttonDelete = new MFXButton("❌");
         buttonDelete.setOnAction(this::deleteNode);
         MFXButton buttonDown = new MFXButton("↓");
         buttonDown.setOnAction(this::moveDown);
@@ -93,7 +99,7 @@ public class DocumentViewController extends RootController {
         return vBox;
     }
 
-    private void moveUp(ActionEvent event){
+    private void moveUp(ActionEvent event) {
         ObservableList<Node> children = vbox.getChildren();
         MFXButton button = (MFXButton) event.getSource();
         HBox hBox = (HBox) button.getParent().getParent();
@@ -106,7 +112,7 @@ public class DocumentViewController extends RootController {
         }
     }
 
-    private void moveDown(ActionEvent event){
+    private void moveDown(ActionEvent event) {
         ObservableList<Node> children = vbox.getChildren();
         MFXButton button = (MFXButton) event.getSource();
         HBox hBox = (HBox) button.getParent().getParent();
@@ -123,7 +129,7 @@ public class DocumentViewController extends RootController {
         ObservableList<Node> children = vbox.getChildren();
         MFXButton button = (MFXButton) event.getSource();
         HBox hBox = (HBox) button.getParent().getParent();
-        if (hBox.getId() != null){
+        if (hBox.getId() != null) {
             int id = Integer.parseInt(hBox.getId());
             try {
                 model.deleteContent(id);
@@ -136,33 +142,36 @@ public class DocumentViewController extends RootController {
 
     /**
      * This function adds a new MFXTextField to a VBox container when an action event occurs.
-     * 
+     *
      * @param actionEvent An event that represents a user action, such as clicking a button.
      */
     @FXML
     private void addTextOnAction(ActionEvent actionEvent) {
         ObservableList<Node> children = vbox.getChildren();
-        MFXTextField mfxTextField = new MFXTextField();
-        mfxTextField.setPrefWidth(vbox.getWidth() - 20);
-        mfxTextField.setFloatMode(FloatMode.BORDER);
-        children.add(mfxTextField);
+        children.add(addText(""));
     }
 
     /**
      * This function saves the text and image data from a JavaFX VBox container into a database using a
      * model class.
-     * 
+     *
      * @param actionEvent An event that represents a user action, such as clicking a button.
      */
     @FXML
     private void saveOnAction(ActionEvent actionEvent) {
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        executorService.submit(this::saveContent);
+        executorService.shutdown();
+    }
+
+    private void saveContent() {
         ObservableList<Node> children = vbox.getChildren();
         for (int i = 0; i < children.size(); i++) {
             HBox hBox = (HBox) children.get(i);
             if (hBox.getChildren().get(0) instanceof MFXTextField mfxTextField) {
                 try {
                     String id = hBox.getId();
-                    if (id == null){
+                    if (id == null) {
                         model.addText(i, mfxTextField.getText());
                     } else {
                         model.addText(Integer.parseInt(id), i, mfxTextField.getText());
@@ -173,7 +182,7 @@ public class DocumentViewController extends RootController {
             } else if (hBox.getChildren().get(0) instanceof ImageView imageView) {
                 try {
                     String id = hBox.getId();
-                    if (id == null){
+                    if (id == null) {
                         model.addImage(i, imageView.getImage());
                     } else {
                         model.addImage(Integer.parseInt(id), i);
@@ -188,9 +197,9 @@ public class DocumentViewController extends RootController {
     /**
      * This function sets the document ID to 0 and loads the admin view when the cancel button is
      * clicked.
-     * 
+     *
      * @param actionEvent The action event that triggered the method, which is usually a user
-     * interaction with a GUI element such as a button.
+     *                    interaction with a GUI element such as a button.
      */
     @FXML
     private void cancelOnAction(ActionEvent actionEvent) {
@@ -209,30 +218,28 @@ public class DocumentViewController extends RootController {
      * the type of content retrieved.
      */
     private void populateContent() {
-        Platform.runLater(() -> {
-            ConcurrentSkipListMap<Integer, Integer> contentMap = model.getContentMap();
-            ObservableList<Node> children = vbox.getChildren();
-            contentMap.forEach((k, v) -> children.add(new Text("")));
-            for (Integer key : contentMap.keySet()) {
-                RetrieveContentTask task = new RetrieveContentTask(contentMap.get(key));
-                // This code is checking if the content is an image or text and updates the VBox on change of the value property.
-                task.valueProperty().addListener((observable, oldValue, newValue) -> Platform.runLater(() -> {
-                    if (newValue instanceof Image image) {
-                        HBox hBox = addImage(image);
-                        hBox.setId(contentMap.get(key) + "");
-                        children.set(key, hBox);
-                    } else {
-                        HBox hBox = addText((String) newValue);
-                        hBox.setId(contentMap.get(key) + "");
-                        children.set(key, hBox);
-                    }
-                }));
+        ExecutorService es = Executors.newFixedThreadPool(50);
+        ConcurrentSkipListMap<Integer, Integer> contentMap = model.getContentMap();
+        ObservableList<Node> children = vbox.getChildren();
+        contentMap.forEach((k, v) -> children.add(new Text("")));
+        for (Integer key : contentMap.keySet()) {
+            RetrieveContentTask task = new RetrieveContentTask(contentMap.get(key));
+            // This code is checking if the content is an image or text and updates the VBox on change of the value property.
+            task.valueProperty().addListener((observable, oldValue, newValue) -> Platform.runLater(() -> {
+                if (newValue instanceof Image image) {
+                    HBox hBox = addImage(image);
+                    hBox.setId(contentMap.get(key) + "");
+                    children.set(key, hBox);
+                } else {
+                    HBox hBox = addText((String) newValue);
+                    hBox.setId(contentMap.get(key) + "");
+                    children.set(key, hBox);
+                }
+            }));
+            es.submit(task);
 
-                ExecutorService es = Executors.newSingleThreadExecutor();
-                es.submit(task);
-                es.shutdown();
-            }
-        });
+        }
+        es.shutdown();
     }
 
     private HBox addText(String newValue) {
@@ -240,6 +247,12 @@ public class DocumentViewController extends RootController {
         mfxTextField.setPrefWidth(vbox.getWidth() - 20);
         mfxTextField.setFloatMode(FloatMode.BORDER);
         mfxTextField.setText(newValue);
+        mfxTextField.setMinWidth(vbox.getWidth() - 50);
+        mfxTextField.setMaxWidth(vbox.getWidth() - 50);
+        vbox.widthProperty().addListener((o, oldV, newV) -> {
+            mfxTextField.setMinWidth(newV.doubleValue() - 50);
+            mfxTextField.setMaxWidth(newV.doubleValue() - 50);
+        });
         return getHBoxWithNavButtons(mfxTextField);
     }
 
@@ -249,15 +262,24 @@ public class DocumentViewController extends RootController {
         imageView.setImage(image);
         imageView.preserveRatioProperty().set(true);
         imageView.setFitWidth(scrollPane.getWidth() - 50);
-        scrollPane.widthProperty().addListener((o, oldV, newV) -> imageView.setFitWidth((double) newV - 50));
+        vbox.widthProperty().addListener((o, oldV, newV) -> imageView.setFitWidth((double) newV - 50));
 
         return getHBoxWithNavButtons(imageView);
 
     }
 
     private HBox getHBoxWithNavButtons(Node node) {
-        HBox hBox = new HBox(10, node, createSideButtonsVBox());
+        HBox hBox = new HBox(8, node, createSideButtonsVBox());
         hBox.setAlignment(Pos.CENTER_LEFT);
         return hBox;
+    }
+
+    // to be implemented
+    private void progressiveSave() {
+        scheduledSaveService.scheduleAtFixedRate(() -> saveOnAction(null), 0, 5, TimeUnit.SECONDS);
+    }
+
+    private void stopProgressiveSave() {
+        scheduledSaveService.shutdown();
     }
 }

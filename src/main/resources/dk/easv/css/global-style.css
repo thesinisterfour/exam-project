@@ -13,7 +13,7 @@ MFXTextField, MFXPasswordField, MFXPaginatedTableView{
 }
 
 MFXScrollPane{
-    -fx-background-color: -dark-shades;
+    /*-fx-background-color: -dark-shades;*/
 }
 
 MFXButton{
@@ -39,4 +39,8 @@ MFXButton{
 
 .header{
     -fx-background-color: -light-shades;
+}
+
+.semi-transparent-bg {
+    -fx-background-color: rgba(0, 0, 0, 0.1);
 }

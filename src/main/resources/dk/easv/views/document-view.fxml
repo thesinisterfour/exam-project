@@ -10,26 +10,29 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-
-<BorderPane xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.DocumentViewController" stylesheets="@../css/global-style.css" styleClass="main_pane">
+<BorderPane styleClass="main_pane" stylesheets="@../css/global-style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.DocumentViewController">
    <center>
-      <MFXScrollPane fitToWidth="true" vbarPolicy="ALWAYS">
+      <MFXScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true" prefHeight="348.0" prefWidth="701.0" styleClass="semi-transparent-bg" vbarPolicy="ALWAYS" BorderPane.alignment="TOP_CENTER">
          <content>
-            <VBox fx:id="vbox" alignment="TOP_CENTER" prefHeight="348.0" prefWidth="600.0" spacing="10.0" />
+            <HBox fx:id="centeringHBox" alignment="TOP_CENTER" styleClass="semi-transparent-bg">
+               <children>
+                  <VBox fx:id="vbox" alignment="TOP_CENTER" spacing="10.0" style="-fx-background-color: white; -fx-border-color: black; -fx-border-width: 1;" HBox.hgrow="ALWAYS" />
+               </children>
+            </HBox>
          </content>
       </MFXScrollPane>
    </center>
    <bottom>
       <GridPane BorderPane.alignment="CENTER">
          <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="595.199951171875" minWidth="10.0" prefWidth="384.7999572753906" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="332.8000183105469" minWidth="10.0" prefWidth="315.2000427246094" />
+            <ColumnConstraints fillWidth="false" halignment="LEFT" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="350.3999755859375" />
+            <ColumnConstraints fillWidth="false" halignment="RIGHT" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="350.40002441406244" />
          </columnConstraints>
          <rowConstraints>
             <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <HBox alignment="CENTER_LEFT" prefHeight="0.0" prefWidth="600.0" spacing="20.0">
+            <HBox alignment="CENTER_LEFT" spacing="8.0">
                <children>
                   <MFXButton onAction="#addTextOnAction" text="Add text" />
                   <MFXButton onAction="#addImageOnAction" text="Add image" />
@@ -38,10 +41,10 @@
                   <Insets left="20.0" />
                </padding>
             </HBox>
-            <HBox alignment="CENTER_RIGHT" prefHeight="0.0" prefWidth="600.0" spacing="20.0" GridPane.columnIndex="1">
+            <HBox alignment="CENTER_RIGHT" spacing="8.0" GridPane.columnIndex="1">
                <children>
-                  <MFXButton onAction="#saveOnAction" text="Save" defaultButton="true" />
-                  <MFXButton onAction="#cancelOnAction" text="Cancel" cancelButton="true"/>
+                  <MFXButton defaultButton="true" onAction="#saveOnAction" text="Save" />
+                  <MFXButton cancelButton="true" onAction="#cancelOnAction" text="Cancel" />
                </children>
                <padding>
                   <Insets right="20.0" />

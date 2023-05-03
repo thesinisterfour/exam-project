@@ -1,6 +1,7 @@
 package dk.easv.be;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 public class Project {
 
@@ -19,6 +20,15 @@ public class Project {
         this.projectZipcode = projectZipcode;
     }
 
+    public Project(int projectID, String projectName, LocalDate startDate, LocalDate endDate, int customerID, String projectAddress, int projectZipcode){
+        this.projectID = projectID;
+        this.projectName = projectName;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.customerID = customerID;
+        this.projectAddress = projectAddress;
+        this.projectZipcode = projectZipcode;
+    }
     public int getProjectID(){
         return projectID;
     }

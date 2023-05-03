@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 
 
-<BorderPane xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.DocumentViewController">
+<BorderPane xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.DocumentViewController" stylesheets="@../css/global-style.css" styleClass="main_pane">
    <center>
       <MFXScrollPane fx:id="scrollPane" fitToWidth="true" vbarPolicy="ALWAYS">
          <content>

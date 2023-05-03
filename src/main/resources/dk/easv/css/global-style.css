@@ -1,0 +1,42 @@
+* {
+    -dark-shades: #333333;
+    -dark-accent: #17263a;
+    -light-accent: #e84910;
+    -light-shades: #f2f2f2;
+    -light-shades-opaque: rgba(242, 242, 242, 0.5);
+    -main-background: #ffffff;
+    -fx-font-family: "Helvetica";
+}
+
+MFXTextField, MFXPasswordField, MFXPaginatedTableView{
+    -fx-background-color: -light-shades;
+}
+
+MFXScrollPane{
+    -fx-background-color: -dark-shades;
+}
+
+MFXButton{
+    -fx-background-color: -dark-accent;
+    -fx-text-fill: -light-accent;
+    -fx-background-radius: 5px;
+}
+
+.main_pane{
+    -fx-background-image:url('../icons/backdrop.png');
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+}
+
+.wuav_logo{
+    -fx-image:url('../icons/WUAV-Logo.png');
+}
+
+.gray_content_backdrop{
+    -fx-background-color: -light-shades-opaque;
+    -fx-background-radius: 20px;
+}
+
+.header{
+    -fx-background-color: -light-shades;
+}

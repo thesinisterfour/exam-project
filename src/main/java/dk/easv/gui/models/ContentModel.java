@@ -67,4 +67,7 @@ public class ContentModel {
     }
 
 
+    public void deleteContent(int id) throws SQLException{
+        documentLogic.deleteContent(documentId, id);
+    }
 }

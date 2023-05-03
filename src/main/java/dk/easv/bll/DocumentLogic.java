@@ -33,4 +33,7 @@ public class DocumentLogic {
     }
 
 
+    public void deleteContent(int documentId, int id) throws SQLException {
+        contentDAO.deleteContent(documentId, id);
+    }
 }

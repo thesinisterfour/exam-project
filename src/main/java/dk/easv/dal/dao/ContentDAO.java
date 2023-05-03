@@ -114,4 +114,12 @@ public class ContentDAO {
     }
 
 
+    public void deleteContent(int documentId, int id) throws SQLException{
+        try (Connection con = cm.getConnection()) {
+            PreparedStatement ps = con.prepareStatement("DELETE FROM document_contents WHERE content_id = ? AND document_id = ?");
+            ps.setInt(1, id);
+            ps.setInt(2, documentId);
+            ps.executeUpdate();
+        }
+    }
 }

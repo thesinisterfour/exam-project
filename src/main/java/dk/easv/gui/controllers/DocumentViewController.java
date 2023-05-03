@@ -65,8 +65,7 @@ public class DocumentViewController extends RootController {
      * This function adds an image to a JavaFX VBox container and resizes it to fit the container's
      * width.
      * 
-     * @param actionEvent An event that is triggered when the "addImage" button is clicked or activated
-     * in some way.
+     * @param actionEvent An event that represents a user action, such as clicking a button.
      */
     @FXML
     private void addImageOnAction(ActionEvent actionEvent) {
@@ -74,18 +73,19 @@ public class DocumentViewController extends RootController {
 
         FileChooser fileChooser = new FileChooser();
         File selectedFile = fileChooser.showOpenDialog(new Stage());
-        Image image = new Image(selectedFile.getAbsolutePath());
-        children.add(addImage(image));
+        if (selectedFile != null) {
+            Image image = new Image(selectedFile.getAbsolutePath());
+            children.add(addImage(image));
+        }
+
 
     }
 
     private VBox createSideButtonsVBox() {
         MFXButton buttonUp = new MFXButton("↑");
         buttonUp.setOnAction(this::moveUp);
-        //TODO: fix this button
         MFXButton buttonDelete = new MFXButton("❌️");
         buttonDelete.setOnAction(this::deleteNode);
-        buttonDelete.setPrefWidth(60);
         MFXButton buttonDown = new MFXButton("↓");
         buttonDown.setOnAction(this::moveDown);
         VBox vBox = new VBox(8, buttonUp, buttonDelete, buttonDown);
@@ -123,15 +123,21 @@ public class DocumentViewController extends RootController {
         ObservableList<Node> children = vbox.getChildren();
         MFXButton button = (MFXButton) event.getSource();
         HBox hBox = (HBox) button.getParent().getParent();
-
+        if (hBox.getId() != null){
+            int id = Integer.parseInt(hBox.getId());
+            try {
+                model.deleteContent(id);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
         children.remove(hBox);
     }
 
     /**
      * This function adds a new MFXTextField to a VBox container when an action event occurs.
      * 
-     * @param actionEvent An event that is triggered when the "addTextOnAction" method is called,
-     * usually by a user action such as clicking a button or pressing a key.
+     * @param actionEvent An event that represents a user action, such as clicking a button.
      */
     @FXML
     private void addTextOnAction(ActionEvent actionEvent) {
@@ -146,8 +152,7 @@ public class DocumentViewController extends RootController {
      * This function saves the text and image data from a JavaFX VBox container into a database using a
      * model class.
      * 
-     * @param actionEvent An event that represents a user action, such as clicking a button or pressing
-     * a key. It is passed as a parameter to the method saveOnAction().
+     * @param actionEvent An event that represents a user action, such as clicking a button.
      */
     @FXML
     private void saveOnAction(ActionEvent actionEvent) {
@@ -162,7 +167,6 @@ public class DocumentViewController extends RootController {
                     } else {
                         model.addText(Integer.parseInt(id), i, mfxTextField.getText());
                     }
-
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }

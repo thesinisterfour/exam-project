@@ -13,6 +13,7 @@ import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -71,40 +72,59 @@ public class DocumentViewController extends RootController {
     private void addImageOnAction(ActionEvent actionEvent) {
         ObservableList<Node> children = vbox.getChildren();
 
-        ImageView imageView = new ImageView();
         FileChooser fileChooser = new FileChooser();
         File selectedFile = fileChooser.showOpenDialog(new Stage());
         Image image = new Image(selectedFile.getAbsolutePath());
-        imageView.setImage(image);
-        imageView.preserveRatioProperty().set(true);
-        imageView.setFitWidth(vbox.getWidth() - 20);
-        vbox.widthProperty().addListener((observable, oldValue, newValue) -> {
-            imageView.setFitWidth((double) newValue - 20);
-        });
-
-
-        HBox hBox = new HBox(10, imageView, createSideButtonsVBox(children.size()-1));
-        children.add(hBox);
+        children.add(addImage(image));
 
     }
 
-    private VBox createSideButtonsVBox(int i) {
+    private VBox createSideButtonsVBox() {
         MFXButton buttonUp = new MFXButton("↑");
-        buttonUp.setOnAction(event -> moveUp(event, i));
+        buttonUp.setOnAction(this::moveUp);
         //TODO: fix this button
         MFXButton buttonDelete = new MFXButton("❌️");
+        buttonDelete.setOnAction(this::deleteNode);
         buttonDelete.setPrefWidth(60);
         MFXButton buttonDown = new MFXButton("↓");
-        return new VBox(buttonUp, buttonDelete, buttonDown);
+        buttonDown.setOnAction(this::moveDown);
+        VBox vBox = new VBox(8, buttonUp, buttonDelete, buttonDown);
+        vBox.setAlignment(Pos.CENTER);
+        return vBox;
     }
 
-    private void moveUp(ActionEvent event, int i){
+    private void moveUp(ActionEvent event){
         ObservableList<Node> children = vbox.getChildren();
-        Node swapping = children.remove(i);
-        Node swapFor = children.remove(i-1);
-        children.add(i-1, swapping);
-        children.add(i, swapFor);
+        MFXButton button = (MFXButton) event.getSource();
+        HBox hBox = (HBox) button.getParent().getParent();
+        int i = children.indexOf(hBox);
+        if (i != 0) {
+            Node swapping = children.remove(i);
+            Node swapFor = children.remove(i - 1);
+            children.add(i - 1, swapping);
+            children.add(i, swapFor);
+        }
+    }
 
+    private void moveDown(ActionEvent event){
+        ObservableList<Node> children = vbox.getChildren();
+        MFXButton button = (MFXButton) event.getSource();
+        HBox hBox = (HBox) button.getParent().getParent();
+        int i = children.indexOf(hBox);
+        if (i != children.size() - 1) {
+            Node swapFor = children.remove(i + 1);
+            Node swapping = children.remove(i);
+            children.add(i, swapFor);
+            children.add(i + 1, swapping);
+        }
+    }
+
+    private void deleteNode(ActionEvent event) {
+        ObservableList<Node> children = vbox.getChildren();
+        MFXButton button = (MFXButton) event.getSource();
+        HBox hBox = (HBox) button.getParent().getParent();
+
+        children.remove(hBox);
     }
 
     /**
@@ -136,12 +156,7 @@ public class DocumentViewController extends RootController {
             HBox hBox = (HBox) children.get(i);
             if (hBox.getChildren().get(0) instanceof MFXTextField mfxTextField) {
                 try {
-                    // This code is checking if the MFXTextField has an ID assigned to it. If it does
-                    // not have an ID, it adds the text content of the MFXTextField to the model at the
-                    // current index `i`. If it does have an ID, it parses the ID to an integer and
-                    // adds the text content of the MFXTextField to the model at the specified index
-                    // `i` and ID.
-                    String id = mfxTextField.getId();
+                    String id = hBox.getId();
                     if (id == null){
                         model.addText(i, mfxTextField.getText());
                     } else {
@@ -153,7 +168,7 @@ public class DocumentViewController extends RootController {
                 }
             } else if (hBox.getChildren().get(0) instanceof ImageView imageView) {
                 try {
-                    String id = imageView.getId();
+                    String id = hBox.getId();
                     if (id == null){
                         model.addImage(i, imageView.getImage());
                     } else {
@@ -196,39 +211,49 @@ public class DocumentViewController extends RootController {
             contentMap.forEach((k, v) -> children.add(new Text("")));
             for (Integer key : contentMap.keySet()) {
                 RetrieveContentTask task = new RetrieveContentTask(contentMap.get(key));
-                task.valueProperty().addListener((observable, oldValue, newValue) -> {
-                    Platform.runLater(() -> {
-                        if (newValue instanceof Image image) {
-                            ImageView imageView = new ImageView();
-                            imageView.setImage(image);
-                            imageView.preserveRatioProperty().set(true);
-                            HBox hBox = new HBox(10, imageView, createSideButtonsVBox(children.size() - 1));
-                            imageView.setFitWidth(scrollPane.getWidth() - 50);
-                            imageView.setId(contentMap.get(key) + "");
-
-
-                            scrollPane.widthProperty().addListener((o, oldV, newV) -> {
-                                imageView.setFitWidth((double) newV - 50);
-                            });
-
-                            children.set(key, hBox);
-                        } else {
-                            MFXTextField mfxTextField = new MFXTextField();
-                            mfxTextField.setPrefWidth(vbox.getWidth() - 20);
-                            mfxTextField.setFloatMode(FloatMode.BORDER);
-                            mfxTextField.setText((String) newValue);
-                            mfxTextField.setId(contentMap.get(key) + "");
-                            HBox hBox = new HBox(10, mfxTextField, createSideButtonsVBox(children.size() - 1));
-                            children.set(key, hBox);
-                        }
-                    });
-                });
+                // This code is checking if the content is an image or text and updates the VBox on change of the value property.
+                task.valueProperty().addListener((observable, oldValue, newValue) -> Platform.runLater(() -> {
+                    if (newValue instanceof Image image) {
+                        HBox hBox = addImage(image);
+                        hBox.setId(contentMap.get(key) + "");
+                        children.set(key, hBox);
+                    } else {
+                        HBox hBox = addText((String) newValue);
+                        hBox.setId(contentMap.get(key) + "");
+                        children.set(key, hBox);
+                    }
+                }));
 
                 ExecutorService es = Executors.newSingleThreadExecutor();
                 es.submit(task);
                 es.shutdown();
-
             }
         });
+    }
+
+    private HBox addText(String newValue) {
+        MFXTextField mfxTextField = new MFXTextField();
+        mfxTextField.setPrefWidth(vbox.getWidth() - 20);
+        mfxTextField.setFloatMode(FloatMode.BORDER);
+        mfxTextField.setText(newValue);
+        return getHBoxWithNavButtons(mfxTextField);
+    }
+
+    private HBox addImage(Image image) {
+        ImageView imageView = new ImageView();
+
+        imageView.setImage(image);
+        imageView.preserveRatioProperty().set(true);
+        imageView.setFitWidth(scrollPane.getWidth() - 50);
+        scrollPane.widthProperty().addListener((o, oldV, newV) -> imageView.setFitWidth((double) newV - 50));
+
+        return getHBoxWithNavButtons(imageView);
+
+    }
+
+    private HBox getHBoxWithNavButtons(Node node) {
+        HBox hBox = new HBox(10, node, createSideButtonsVBox());
+        hBox.setAlignment(Pos.CENTER_LEFT);
+        return hBox;
     }
 }

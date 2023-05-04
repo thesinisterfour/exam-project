@@ -10,6 +10,7 @@ import dk.easv.helpers.DocumentHelper;
 import dk.easv.helpers.ViewType;
 import io.github.palexdev.materialfx.controls.*;
 import io.github.palexdev.materialfx.controls.cell.MFXTableRowCell;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -58,8 +59,16 @@ public class AdminViewController extends RootController {
         this.stage.setTitle("Login");
     }
     @FXML
-    private void handleDelete() {
-
+    private void handleDelete(){
+        Document selectedDocument =  tableView.getSelectionModel().getSelectedValues().get(0);
+        if (selectedDocument != null) {
+            try {
+                documentModel.deleteDocument(selectedDocument.getId());
+                tableView.getItems().remove(selectedDocument);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
     @FXML
     private void handleCreateDocument() {

@@ -40,17 +40,19 @@ public class AdminViewController extends RootController {
     public void initialize(URL location, ResourceBundle resources) {
         try {
             documentModel = new DocumentModel();
-
             DocumentLogic documentLogic = new DocumentLogic();
             List<String> documentNames = documentLogic.showDocumentName();
-            AlertHelper.showDefaultAlert("The following documents are 48 months old, do you want to delete them?",
-                    Alert.AlertType.CONFIRMATION, documentNames);
-
+            StringBuilder message = new StringBuilder("The following documents are 48 months old:\n");
+            for (String documentName : documentNames) {
+                message.append(documentName).append("\n");
+            }
+            AlertHelper.showDefaultAlert(message.toString(), Alert.AlertType.CONFIRMATION);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
         setUpPaginated();
+
     }
     @FXML
     public void handleLogout() throws IOException {

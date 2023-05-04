@@ -6,11 +6,11 @@ import java.util.List;
 
 public class AlertHelper {
     public static Alert alert;
-    public static void showDefaultAlert(String content, Alert.AlertType type, List<String> documentNames) throws SQLException {
+    public static void showDefaultAlert(String content, Alert.AlertType type){
             alert = new Alert(type);
             alert.setAlertType(type);
             alert.setHeaderText(null);
-            alert.setContentText(content + documentNames);
+            alert.setContentText(content);
             alert.setResizable(false);
             alert.show();
     }

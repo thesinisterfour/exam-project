@@ -37,8 +37,10 @@ public class ProjectDAO implements ICRUDDao<Project> {
     public ConcurrentMap<Integer, Project> getAll() throws SQLException {
         ConcurrentMap<Integer, Project> projects = new ConcurrentHashMap<>();
         try (Connection connection = cm.getConnection()){
-            PreparedStatement ps = connection.prepareStatement("SELECT dbo.[project].[project_id], dbo.[project].[project_name], dbo.[project].[project_start_date], dbo.[project].[project_end_date], dbo.customer.customer_id, dbo.[project].[address], dbo.[project].[zipcode] FROM dbo.project"
-                    + "INNER JOIN dbo.customer ON dbo.project.customer_id = dbo.customer.customer_id;"
+            PreparedStatement ps = connection.prepareStatement("" +
+                    "SELECT dbo.[project].[project_id], dbo.[project].[project_name], dbo.[project].[project_start_date], dbo.[project].[project_end_date], dbo.customer.customer_id, dbo.[project].[address], dbo.[project].[zipcode]" +
+                    " FROM dbo.project"
+                    +" INNER JOIN dbo.customer ON dbo.project.customer_id = dbo.customer.customer_id;"
             );
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {

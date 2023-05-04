@@ -115,7 +115,7 @@ public class ProjectManagerViewController extends RootController {
         Set<Integer> keys = map.keySet();
         try {
             for (Integer key : keys) {
-                FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(Main.class.getResource("view/HboxCard.fxml")));
+                FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(Main.class.getResource("views/HboxCard.fxml")));
                 HBox hBox = loader.load();
                 HBoxController hBoxController = loader.getController();
                 hBoxController.setProjectBoxes(map);
@@ -125,6 +125,7 @@ public class ProjectManagerViewController extends RootController {
             throw new RuntimeException(e);
         }
     }
+
 
 
     private ConcurrentMap<Integer, Project> getAllProjectsMap() throws SQLException{

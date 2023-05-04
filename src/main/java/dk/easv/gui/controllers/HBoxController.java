@@ -90,12 +90,13 @@ public class HBoxController extends RootController {
     private void populateProjectHBox() {
         try {
             ObservableList<Node> children = mainHboxCard.getChildren();
-            for(int i = 1; projects.size() > i; i++){
+            Set<Integer> keys = projects.keySet();
+            for (Integer key : keys) {
                 FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(Main.class.getResource("views/ProjectCard.fxml")));
                 Parent parent = loader.load();
                 ProjectCardController projectCardController = loader.getController();
                 projectCardController.receiveProjectData(projects);
-                projectCardController.createProCards(new Project(projects.get(i).getProjectID(), projects.get(i).getProjectName(),projects.get(i).getProjectAddress(), projects.get(i).getProjectZipcode()));
+                projectCardController.createProCards(new Project(projects.get(key).getProjectID(), projects.get(key).getProjectName(),projects.get(key).getProjectAddress(), projects.get(key).getProjectZipcode()));
                 children.addAll(parent);
             }
 

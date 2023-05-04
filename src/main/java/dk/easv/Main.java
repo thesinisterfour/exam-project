@@ -18,7 +18,7 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         if (Files.exists(Config.CONFIG_PATH.getUrl())){
-            RootController controller = ControllerFactory.loadFxmlFile(ViewType.ADMIN);
+            RootController controller = ControllerFactory.loadFxmlFile(ViewType.PROJECT_MANAGER);
             Scene scene = new Scene(controller.getView(), 760, 480);
             stage.setTitle("Hello!");
             stage.setScene(scene);

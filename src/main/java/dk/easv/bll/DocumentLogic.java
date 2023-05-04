@@ -1,9 +1,17 @@
 package dk.easv.bll;
 
+import dk.easv.be.Content;
+import dk.easv.be.Document;
 import dk.easv.dal.dao.ContentDAO;
+import dk.easv.dal.dao.DocumentDAO;
 import javafx.scene.image.Image;
 
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.util.List;
+import java.util.concurrent.ConcurrentMap;
+import java.util.stream.Collectors;
 import java.util.concurrent.ConcurrentSkipListMap;
 
 public class DocumentLogic {
@@ -35,5 +43,17 @@ public class DocumentLogic {
 
     public void deleteContent(int documentId, int id) throws SQLException {
         contentDAO.deleteContent(documentId, id);
+    }
+    public List<Document> showOldDocuments() throws SQLException {
+        LocalDateTime currentDate = LocalDateTime.now();
+        DocumentDAO documentDAO = new DocumentDAO();
+        ConcurrentMap<Integer, Document> documents = documentDAO.getAll();
+        List<Document> oldDocuments = documents.values()
+                .stream()
+                .filter(doc -> ChronoUnit.MONTHS.between(
+                        doc.getCreationDate().atStartOfDay(), currentDate) >= 48)
+                .collect(Collectors.toList());
+
+        return oldDocuments;
     }
 }

@@ -1,25 +1,39 @@
 * {
     -dark-shades: #333333;
+    -dark-shades-opaque: rgba(51, 51, 51, 0.5);
     -dark-accent: #17263a;
     -light-accent: #e84910;
     -light-shades: #f2f2f2;
     -light-shades-opaque: rgba(242, 242, 242, 0.5);
     -main-background: #ffffff;
-    -fx-font-family: "Helvetica";
 }
 
 MFXTextField, MFXPasswordField, MFXPaginatedTableView{
     -fx-background-color: -light-shades;
+    -fx-border-color: -dark-accent;
 }
 
 MFXScrollPane{
-    /*-fx-background-color: -dark-shades;*/
+    -fx-background-color: -dark-shades-opaque;
 }
 
 MFXButton{
-    -fx-background-color: -dark-accent;
-    -fx-text-fill: -light-accent;
+    -fx-background-color: -light-accent;
+    -fx-text-fill: white;
     -fx-background-radius: 5px;
+    -fx-border-color: -dark-accent;
+    -fx-border-radius: 5px;
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
+    -fx-font-smoothing-type: gray;
+}
+
+MFXButton:hover{
+    -fx-opacity: 90%;
+}
+
+Label{
+    -fx-font-weight: bold;
 }
 
 .main_pane{
@@ -43,4 +57,216 @@ MFXButton{
 
 .semi-transparent-bg {
     -fx-background-color: rgba(0, 0, 0, 0.1);
+}
+
+/********************
+Pagination from MFX
+********************/
+.mfx-pagination .pages-bar {
+    -fx-background-color: -light-shades;
+    -fx-background-radius: 30;
+    -fx-padding: 0 10 0 10;
+}
+
+.mfx-pagination .mfx-icon-wrapper {
+    -fx-background-color: -light-shades;
+}
+
+.mfx-pagination .mfx-ripple-generator {
+    -mfx-ripple-radius: 24;
+}
+
+/********************
+Pages from MFX
+********************/
+.mfx-pagination .mfx-page {
+    -fx-background-radius: 10;
+    -fx-pref-width: 32;
+    -fx-pref-height: 32;
+    -fx-max-width: 32;
+    -fx-max-height: 32;
+    -fx-text-fill: -mfx-text-he;
+}
+
+.mfx-pagination .mfx-page:selected {
+    -fx-background-color: -light-accent;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 15, 0.16, 2, 4);
+    -fx-font-size: 14;
+    -fx-text-fill: white;
+}
+
+.mfx-pagination .mfx-icon-wrapper .mfx-font-icon{
+    /*This is where you are supposed to get the image for the icon of the left / right arrow for the page controls*/
+}
+
+/*MFX FILTER*/
+
+.mfx-filter-pane {
+    -mfx-main: -light-accent;
+    -mfx-main-light: -dark-accent;
+    -mfx-main-lighter: #f8f6ff;
+    -mfx-gray: #6b6b6b;
+
+    -fx-background-color: white;
+    -fx-background-radius: 10;
+    -fx-padding: 7 14 7 14;
+}
+
+/********************
+Header
+********************/
+.mfx-filter-pane .header {
+    -fx-padding: 0 0 7 0;
+}
+
+.mfx-filter-pane .header-label {
+    -fx-font-family: "Open Sans SemiBold";
+    -fx-font-size: 14;
+    -fx-text-fill: -mfx-gray;
+    -fx-font-smoothing-type: gray;
+    -fx-padding: 5;
+}
+
+.mfx-filter-pane .header #filterIcon .mfx-ripple-generator {
+    -mfx-ripple-radius: 20;
+    -mfx-ripple-color: derive(-mfx-main, 120%);
+}
+
+.mfx-filter-pane .header #resetIcon .mfx-ripple-generator {
+    -mfx-ripple-radius: 20;
+    -mfx-ripple-color: derive(-mfx-red, 60%);
+}
+
+.mfx-filter-pane .header #filterIcon .mfx-font-icon,
+.mfx-filter-pane .header #resetIcon .mfx-font-icon {
+    -mfx-color: -mfx-gray;
+}
+
+.mfx-filter-pane .header #filterIcon:hover {
+    -fx-background-color: derive(-mfx-main, 150%);
+}
+
+.mfx-filter-pane .header #resetIcon:hover {
+    -fx-background-color: derive(-mfx-red, 90%);
+}
+
+.mfx-filter-pane .header #filterIcon:hover .mfx-font-icon {
+    -mfx-color: -mfx-main;
+}
+
+.mfx-filter-pane .header #resetIcon:hover .mfx-font-icon {
+    -mfx-color: -mfx-red
+}
+
+/********************
+Filter Builder
+********************/
+.mfx-filter-pane .filter-combo {
+    -fx-min-height: 36;
+    -fx-min-width: 120;
+}
+
+.mfx-filter-pane .predicates-combo {
+    -fx-min-height: 36;
+    -fx-min-width: 180;
+}
+
+.mfx-filter-pane .mfx-combo-box {
+    -fx-background-color: -dark-accent;
+    -fx-background-radius: 15;
+    -fx-border-color: #ebebeb;
+    -fx-border-radius: 15;
+
+    -fx-font-family: "Open Sans SemiBold";
+    -fx-font-size: 14;
+    -fx-text-fill: -mfx-gray;
+}
+
+.mfx-filter-pane .mfx-combo-box .caret .mfx-font-icon {
+    -mfx-color: gray;
+}
+
+.mfx-filter-pane .mfx-combo-box .popup .virtual-flow {
+    -fx-background-color: -dark-accent;
+    -fx-border-color: #e6e6e6;
+    -fx-border-radius: 5;
+}
+
+.mfx-filter-pane .mfx-combo-box .popup .virtual-flow .mfx-combo-box-cell,
+.mfx-filter-pane .mfx-combo-box .popup .virtual-flow .mfx-combo-box-cell:selected {
+    -fx-background-color: transparent;
+}
+
+.mfx-filter-pane .mfx-combo-box .popup .virtual-flow .mfx-combo-box-cell:hover {
+    -fx-background-color: #F4EBFF;
+}
+
+.mfx-filter-pane .mfx-combo-box .popup .virtual-flow .mfx-combo-box-cell .label {
+    -fx-text-fill: -mfx-gray;
+}
+
+.mfx-filter-pane .mfx-combo-box .popup .virtual-flow .mfx-combo-box-cell:selected .label {
+    -fx-text-fill: -mfx-main;
+}
+
+.mfx-filter-pane .mfx-text-field {
+    -fx-min-width: 180;
+    -fx-min-height: 36;
+    -fx-background-color: transparent;
+    -fx-border-color: #ebebeb;
+    -fx-border-radius: 15;
+    -fx-padding: 7 8 7 8;
+
+    -fx-font-family: "Open Sans SemiBold";
+}
+
+
+.mfx-filter-pane .mfx-button {
+    -fx-pref-width: 135;
+    -fx-pref-height: 36;
+    -fx-background-color: -light-accent;
+    -fx-background-radius: 15;
+    -fx-text-fill: white;
+
+    -fx-font-family: "Open Sans Bold";
+}
+
+/********************
+Scroll Pane
+********************/
+.mfx-filter-pane .mfx-scroll-pane {
+    -fx-min-height: 100;
+}
+
+.mfx-filter-pane .mfx-scroll-pane .scroll-bar:vertical {
+    -fx-pref-width: 15;
+}
+
+/********************
+Active Filters
+********************/
+.mfx-filter-pane .active-filter {
+    -fx-min-height: 32;
+    -fx-background-color: -dark-accent;
+    -fx-background-radius: 15;
+    -fx-padding: 0 15 0 15;
+}
+
+.mfx-filter-pane .active-filter .mfx-font-icon {
+    -mfx-color: white;
+}
+
+.mfx-filter-pane .active-filter .label {
+    -fx-font-family: "Open Sans Regular";
+    -fx-text-fill: white;
+}
+
+.mfx-filter-pane .active-filter .function-text {
+    -fx-font-family: "Open Sans Bold";
+}
+
+.mfx-filter-pane .and-or-text {
+    -fx-font-family: "Open Sans Bold";
+    -fx-font-size: 14;
+    -fx-fill: -mfx-gray;
 }

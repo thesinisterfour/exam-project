@@ -9,15 +9,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.Date;
+
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 public class ProjectDAO implements ICRUDDao<Project> {
 
-    private final ConnectionManager cm = new ConnectionManager();
 
-
+    private final ConnectionManager cm = ConnectionManager.getINSTANCE();
     @Override
     public int add(Project object) throws SQLException {
         return 0;

@@ -15,7 +15,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 public class CustomerDAO implements ICRUDDao<Customer> {
-    private final ConnectionManager cm = new ConnectionManager();
+    private final ConnectionManager cm = ConnectionManager.getINSTANCE();
 
     @Override
     public int add(Customer customer) throws SQLException {

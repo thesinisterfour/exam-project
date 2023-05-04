@@ -1,14 +1,17 @@
 package dk.easv.gui.controllers;
 
 import dk.easv.Main;
+import dk.easv.bll.DocumentLogic;
 import dk.easv.gui.controllerFactory.ControllerFactory;
 import dk.easv.gui.rootContoller.RootController;
+import dk.easv.helpers.AlertHelper;
 import dk.easv.helpers.ViewType;
 import io.github.palexdev.materialfx.controls.MFXScrollPane;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import io.github.palexdev.materialfx.controls.MFXButton;
@@ -22,6 +25,8 @@ import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class ProjectManagerViewController extends RootController {
@@ -63,7 +68,14 @@ public class ProjectManagerViewController extends RootController {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        try {
+            DocumentLogic documentLogic = new DocumentLogic();
+            List<String> documentNames = documentLogic.showDocumentName();
+            AlertHelper.showDefaultAlert("The following documents are 48 months old, do you want to delete them?",
+                    Alert.AlertType.CONFIRMATION, documentNames);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML

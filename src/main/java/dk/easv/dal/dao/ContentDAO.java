@@ -13,7 +13,7 @@ import java.util.concurrent.ConcurrentSkipListMap;
 
 public class ContentDAO {
 
-    private final ConnectionManager cm = new ConnectionManager();
+    private final ConnectionManager cm = ConnectionManager.getINSTANCE();
 
     public void addText(int documentId, int index, String content) throws SQLException {
         try (Connection con = cm.getConnection()) {

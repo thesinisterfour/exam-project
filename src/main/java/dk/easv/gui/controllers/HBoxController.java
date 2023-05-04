@@ -45,12 +45,11 @@ public class HBoxController extends RootController {
         populateCustomersHBox();
     }
 
-    /*public void setProjectBoxes(ConcurrentMap<Integer, Project> projects){
+    public void setProjectBoxes(ConcurrentMap<Integer, Project> projects){
         this.projects = projects;
         populateProjectHBox();
     }
 
-     */
 
     private void populateUserHBox() {
         try {
@@ -88,15 +87,15 @@ public class HBoxController extends RootController {
         }
     }
 
-    /*private void populateProjectHBox() {
+    private void populateProjectHBox() {
         try {
             ObservableList<Node> children = mainHboxCard.getChildren();
             for(int i = 1; projects.size() > i; i++){
                 FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(Main.class.getResource("views/ProjectCard.fxml")));
                 Parent parent = loader.load();
-                CardController cardController = loader.getController();
-                cardController.receiveUserData(projects);
-                cardController.createCards(new Card(projects.get(i).getProjectID(), projects.get(i).getProjectName(),projects.get(i).getProjectAddress(), projects.get(i).getProjectZipcode()));
+                ProjectCardController projectCardController = loader.getController();
+                projectCardController.receiveProjectData(projects);
+                projectCardController.createProCards(new Project(projects.get(i).getProjectID(), projects.get(i).getProjectName(),projects.get(i).getProjectAddress(), projects.get(i).getProjectZipcode()));
                 children.addAll(parent);
             }
 
@@ -106,8 +105,6 @@ public class HBoxController extends RootController {
         }
 
     }
-
-     */
 
 }
 

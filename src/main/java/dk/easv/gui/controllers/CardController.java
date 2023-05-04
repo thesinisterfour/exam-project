@@ -2,8 +2,10 @@ package dk.easv.gui.controllers;
 
 import dk.easv.be.Card;
 import dk.easv.be.Customer;
+import dk.easv.be.Project;
 import dk.easv.be.User;
 import dk.easv.gui.models.CustomerModel;
+import dk.easv.gui.models.ProjectModel;
 import dk.easv.gui.models.UserModel;
 import dk.easv.gui.rootContoller.RootController;
 import javafx.fxml.FXML;
@@ -41,11 +43,11 @@ public class CardController extends RootController {
     private ConcurrentMap<Integer, User> users = new ConcurrentHashMap<>();
 
     private ConcurrentMap<Integer, Customer> customers = new ConcurrentHashMap<>();
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
     }
-
 
 
     public void receiveUserData(ConcurrentMap<Integer, User> users) {
@@ -55,6 +57,7 @@ public class CardController extends RootController {
     public void receiveCustomerData(ConcurrentMap<Integer, Customer> customers) {
         this.customers = customers;
     }
+
 
     public void createCards(Card card){
         this.card = card;

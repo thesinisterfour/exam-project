@@ -7,6 +7,7 @@ import dk.easv.be.Project;
 import dk.easv.be.User;
 import dk.easv.gui.controllerFactory.ControllerFactory;
 import dk.easv.gui.models.CustomerModel;
+import dk.easv.gui.models.ProjectModel;
 import dk.easv.gui.models.UserModel;
 import dk.easv.gui.rootContoller.RootController;
 import dk.easv.helpers.ViewType;
@@ -69,13 +70,15 @@ public class ProjectManagerViewController extends RootController {
 
     private UserModel userModel = new UserModel();
 
+    private ProjectModel projectModel = new ProjectModel();
+
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
             initUsers();
-            //initProjects();
+            initProjects();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -107,19 +110,26 @@ public class ProjectManagerViewController extends RootController {
 
     }
 
-    /*private void initProjects() throws SQLException {
+    private void initProjects() throws SQLException {
         ConcurrentMap<Integer, Project> map = getAllProjectsMap();
         Set<Integer> keys = map.keySet();
         try {
             for (Integer key : keys) {
-                FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(Main.class.getResource("view/HboxCard.fxml")))
+                FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(Main.class.getResource("view/HboxCard.fxml")));
                 HBox hBox = loader.load();
-                HBoxController hBoxController = loader
+                HBoxController hBoxController = loader.getController();
+                hBoxController.setProjectBoxes(map);
+                addLabelAndScrollPane(key.toString(),hBox);
             }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
-     */
+
+    private ConcurrentMap<Integer, Project> getAllProjectsMap() throws SQLException{
+        return projectModel.getCustomerPoject();
+    }
 
     private ConcurrentMap<Integer, User> getAllUsersMap() throws SQLException {
 

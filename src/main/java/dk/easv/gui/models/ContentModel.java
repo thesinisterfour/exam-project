@@ -1,11 +1,10 @@
 package dk.easv.gui.models;
 
-import dk.easv.be.Content;
 import dk.easv.bll.DocumentLogic;
 import javafx.scene.image.Image;
 
 import java.sql.SQLException;
-import java.util.List;
+import java.util.concurrent.ConcurrentSkipListMap;
 
 public class ContentModel {
     private DocumentLogic documentLogic = new DocumentLogic();
@@ -14,7 +13,7 @@ public class ContentModel {
 
     private static ContentModel INSTANCE;
 
-    private List<Content> contentList;
+    private ConcurrentSkipListMap<Integer, Integer> contentMap;
 
     private ContentModel() {
 
@@ -26,12 +25,20 @@ public class ContentModel {
         }
         return INSTANCE;
     }
-    public void addText(int documentId, int index, String content) throws SQLException {
-        documentLogic.addText(documentId,  index, content);
+    public void addText(int index, String content) throws SQLException {
+        documentLogic.addText(documentId, index, content);
     }
 
-    public void addImage(int documentId, int index, Image image) throws SQLException {
+    public void addText(int contentId, int index, String content) throws SQLException {
+        documentLogic.addText(documentId, contentId, index, content);
+    }
+
+    public void addImage(int index, Image image) throws SQLException {
         documentLogic.addImage(documentId,  index, image);
+    }
+
+    public void addImage(int contentId, int index) throws SQLException {
+        documentLogic.addImage(documentId, contentId, index);
     }
 
     public int getDocumentId() {
@@ -42,15 +49,25 @@ public class ContentModel {
         this.documentId = documentId;
     }
 
-    public void loadContent(int documentId) throws SQLException {
-        contentList = documentLogic.loadContent(documentId);
+    public void loadAllContent(int documentId) throws SQLException {
+        contentMap = documentLogic.loadAllContent(documentId);
     }
 
-    public List<Content> getContentList() {
-        return contentList;
+    public ConcurrentSkipListMap<Integer, Integer> getContentMap() {
+        try {
+            loadAllContent(documentId);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return contentMap;
     }
 
-    public void setContentList(List<Content> contentList) {
-        this.contentList = contentList;
+    public void setContentMap(ConcurrentSkipListMap<Integer, Integer> contentMap) {
+        this.contentMap = contentMap;
+    }
+
+
+    public void deleteContent(int id) throws SQLException{
+        documentLogic.deleteContent(documentId, id);
     }
 }

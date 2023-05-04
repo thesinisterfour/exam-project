@@ -1,7 +1,6 @@
 package dk.easv.gui.controllers;
 
 import dk.easv.be.Document;
-import dk.easv.bll.DocumentLogic;
 import dk.easv.gui.controllerFactory.ControllerFactory;
 import dk.easv.gui.models.ContentModel;
 import dk.easv.gui.models.DocumentModel;
@@ -15,14 +14,12 @@ import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
-
 public class AdminViewController extends RootController {
 
     private DocumentModel documentModel;
@@ -37,6 +34,7 @@ public class AdminViewController extends RootController {
     private MFXButton logoutButton;
 
     private Stage stage;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
@@ -48,7 +46,6 @@ public class AdminViewController extends RootController {
         }
 
         setUpPaginated();
-
     }
     @FXML
     public void handleLogout() throws IOException {

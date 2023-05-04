@@ -12,6 +12,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.concurrent.ConcurrentMap;
 import java.util.stream.Collectors;
+import java.util.concurrent.ConcurrentSkipListMap;
 
 public class DocumentLogic {
     private ContentDAO contentDAO = new ContentDAO();
@@ -20,12 +21,28 @@ public class DocumentLogic {
         contentDAO.addText(documentId,  index, content);
     }
 
+    public void addText(int documentId, int contentId, int index, String content) throws SQLException {
+        contentDAO.addText(documentId, contentId, index, content);
+    }
+
     public void addImage(int documentId, int index, Image image) throws SQLException {
         contentDAO.addImage(documentId,  index, image);
     }
+    public void addImage(int documentId, int contentId, int index) throws SQLException {
+        contentDAO.addImage(documentId, contentId, index);
+    }
 
-    public List<Content> loadContent(int documentId) throws SQLException {
-        return contentDAO.loadContent(documentId);
+    public ConcurrentSkipListMap<Integer, Integer> loadAllContent(int documentId) throws SQLException {
+        return contentDAO.loadAllContent(documentId);
+    }
+
+    public Object getContent(Integer contentId) throws SQLException{
+        return contentDAO.getContent(contentId);
+    }
+
+
+    public void deleteContent(int documentId, int id) throws SQLException {
+        contentDAO.deleteContent(documentId, id);
     }
     public List<Document> showOldDocuments() throws SQLException {
         LocalDateTime currentDate = LocalDateTime.now();

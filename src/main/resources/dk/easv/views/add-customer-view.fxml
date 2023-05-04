@@ -4,8 +4,9 @@
 <?import io.github.palexdev.materialfx.controls.MFXTextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.AddCustomerViewController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" styleClass="main_pane" stylesheets="@../css/global-style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.AddCustomerViewController">
    <children>
+      <AnchorPane prefHeight="400.0" prefWidth="600.0" styleClass="gray_content_backdrop">
       <MFXTextField fx:id="nameTextField" floatMode="BORDER" layoutX="128.0" layoutY="39.0" prefHeight="50.0" prefWidth="344.0" promptText="Name" AnchorPane.bottomAnchor="310.6" AnchorPane.leftAnchor="128.0" AnchorPane.rightAnchor="128.0" AnchorPane.topAnchor="39.0" />
       <MFXTextField fx:id="emailTextField" floatMode="BORDER" layoutX="128.0" layoutY="98.0" prefHeight="50.0" prefWidth="344.0" promptText="Email" AnchorPane.bottomAnchor="251.6" AnchorPane.leftAnchor="128.0" AnchorPane.rightAnchor="128.0" AnchorPane.topAnchor="98.0" />
       <MFXTextField fx:id="addressTextField" floatMode="BORDER" layoutX="128.0" layoutY="155.0" prefHeight="50.0" prefWidth="344.0" promptText="Address" />
@@ -14,5 +15,6 @@
       <MFXButton defaultButton="true" layoutX="432.0" layoutY="334.0" onAction="#submitButtonAction" text="Submit" />
       <MFXButton cancelButton="true" layoutX="504.0" layoutY="334.0" onAction="#cancelButtonAction" text="Cancel" />
       <MFXButton layoutX="41.0" layoutY="334.0" onAction="#removeCustomerData" text="Remove" />
+      </AnchorPane>
    </children>
 </AnchorPane>

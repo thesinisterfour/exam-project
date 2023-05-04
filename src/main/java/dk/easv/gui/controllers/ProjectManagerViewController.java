@@ -1,6 +1,7 @@
 package dk.easv.gui.controllers;
 
 import dk.easv.Main;
+import dk.easv.be.Document;
 import dk.easv.bll.DocumentLogic;
 import dk.easv.gui.controllerFactory.ControllerFactory;
 import dk.easv.gui.models.DocumentModel;
@@ -71,9 +72,9 @@ public class ProjectManagerViewController extends RootController {
     @Override
     public void initialize(URL location, ResourceBundle resources) {;
         try {
-            StringBuilder documentNames = DocumentHelper.convertToString();
-
-            AlertHelper.showDefaultAlert(documentNames.toString(), Alert.AlertType.CONFIRMATION);
+            DocumentLogic documentLogic = new DocumentLogic();
+            List<Document> oldDocuments = documentLogic.showOldDocuments();
+            AlertHelper.showDefaultAlert(DocumentHelper.convertToString(oldDocuments),Alert.AlertType.CONFIRMATION);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

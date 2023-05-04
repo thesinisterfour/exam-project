@@ -27,7 +27,7 @@ public class DocumentLogic {
     public List<Content> loadContent(int documentId) throws SQLException {
         return contentDAO.loadContent(documentId);
     }
-    public static List<Document> showDocumentName() throws SQLException {
+    public List<Document> showOldDocuments() throws SQLException {
         LocalDateTime currentDate = LocalDateTime.now();
         DocumentDAO documentDAO = new DocumentDAO();
         ConcurrentMap<Integer, Document> documents = documentDAO.getAll();

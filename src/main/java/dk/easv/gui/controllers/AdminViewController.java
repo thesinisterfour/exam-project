@@ -41,9 +41,10 @@ public class AdminViewController extends RootController {
     public void initialize(URL location, ResourceBundle resources) {
         try {
             documentModel = new DocumentModel();
-            StringBuilder documentNames = DocumentHelper.convertToString();
 
-            AlertHelper.showDefaultAlert(documentNames.toString(), Alert.AlertType.CONFIRMATION);
+            DocumentLogic documentLogic = new DocumentLogic();
+            List<Document> oldDocuments = documentLogic.showOldDocuments();
+            AlertHelper.showDefaultAlert(DocumentHelper.convertToString(oldDocuments),Alert.AlertType.CONFIRMATION);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

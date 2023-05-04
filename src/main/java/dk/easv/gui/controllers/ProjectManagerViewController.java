@@ -3,8 +3,10 @@ package dk.easv.gui.controllers;
 import dk.easv.Main;
 import dk.easv.bll.DocumentLogic;
 import dk.easv.gui.controllerFactory.ControllerFactory;
+import dk.easv.gui.models.DocumentModel;
 import dk.easv.gui.rootContoller.RootController;
 import dk.easv.helpers.AlertHelper;
+import dk.easv.helpers.DocumentHelper;
 import dk.easv.helpers.ViewType;
 import io.github.palexdev.materialfx.controls.MFXScrollPane;
 import javafx.fxml.FXML;
@@ -67,15 +69,12 @@ public class ProjectManagerViewController extends RootController {
     private Stage stage;
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize(URL location, ResourceBundle resources) {;
         try {
-            DocumentLogic documentLogic = new DocumentLogic();
-            List<String> documentNames = documentLogic.showDocumentName();
-            StringBuilder docNames = new StringBuilder("The following documents are 48 months old:\n");
-            for (String documentName : documentNames) {
-                docNames.append(documentName).append("\n");
-            }
-            AlertHelper.showDefaultAlert(docNames.toString(), Alert.AlertType.CONFIRMATION);
+            DocumentHelper documentHelper = new DocumentHelper();
+            StringBuilder documentNames = documentHelper.convertToString();
+
+            AlertHelper.showDefaultAlert(documentNames.toString(), Alert.AlertType.CONFIRMATION);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

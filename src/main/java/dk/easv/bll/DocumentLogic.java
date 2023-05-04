@@ -27,17 +27,16 @@ public class DocumentLogic {
     public List<Content> loadContent(int documentId) throws SQLException {
         return contentDAO.loadContent(documentId);
     }
-    public List<String> showDocumentName() throws SQLException {
+    public static List<Document> showDocumentName() throws SQLException {
         LocalDateTime currentDate = LocalDateTime.now();
         DocumentDAO documentDAO = new DocumentDAO();
         ConcurrentMap<Integer, Document> documents = documentDAO.getAll();
-        List<String> documentNames = documents.values()
+        List<Document> oldDocuments = documents.values()
                 .stream()
                 .filter(doc -> ChronoUnit.MONTHS.between(
                         doc.getCreationDate().atStartOfDay(), currentDate) >= 48)
-                .map(Document::getName)
                 .collect(Collectors.toList());
 
-        return documentNames;
+        return oldDocuments;
     }
 }

@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import io.github.palexdev.materialfx.controls.MFXPaginatedTableView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -88,13 +87,8 @@
             <RowConstraints maxHeight="170.0" minHeight="10.0" prefHeight="146.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <TableView fx:id="docTable" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
-               <columns>
-                  <TableColumn fx:id="columnDocID" prefWidth="55.0" text="ID" />
-                  <TableColumn fx:id="columnDocument" prefWidth="352.0" text="Document" />
-               </columns>
-            </TableView>
-            <MFXButton fx:id="createMFXButton" onAction="#createAction" prefHeight="25.0" prefWidth="186.0" text="Create document">
+            <MFXPaginatedTableView prefHeight="160.0" prefWidth="454.0" GridPane.rowIndex="2" />
+            <MFXButton fx:id="createMFXButton" onAction="#createAction" prefHeight="9.0" prefWidth="186.0" text="Create document">
                <GridPane.margin>
                   <Insets left="110.0" />
                </GridPane.margin>

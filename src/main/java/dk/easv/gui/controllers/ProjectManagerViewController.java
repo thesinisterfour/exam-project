@@ -33,7 +33,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class ProjectManagerViewController extends RootController {
-
+    DocumentModel documentModel;
     @FXML
     private VBox boxVert;
 
@@ -70,10 +70,10 @@ public class ProjectManagerViewController extends RootController {
     private Stage stage;
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {;
+    public void initialize(URL location, ResourceBundle resources) {
         try {
-            DocumentLogic documentLogic = new DocumentLogic();
-            List<Document> oldDocuments = documentLogic.showOldDocuments();
+            documentModel = new DocumentModel();
+            List<Document> oldDocuments = documentModel.getOldDocuments();
             AlertHelper.showDefaultAlert(DocumentHelper.convertToString(oldDocuments),Alert.AlertType.CONFIRMATION);
         } catch (SQLException e) {
             throw new RuntimeException(e);

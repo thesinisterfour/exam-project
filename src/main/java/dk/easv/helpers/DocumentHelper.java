@@ -7,7 +7,7 @@ import java.util.StringJoiner;
 
 
 public class DocumentHelper {
-    public static String convertToString(List<Document> oldDocuments) throws SQLException {
+    public static String convertToString(List<Document> oldDocuments){
         StringJoiner docNames = new StringJoiner("\n");
         docNames.add("The following documents are 48 months old:");
         for (Document doc : oldDocuments) {

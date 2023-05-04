@@ -3,10 +3,12 @@ package dk.easv.gui.models;
 import dk.easv.be.Document;
 import dk.easv.bll.BLLFacade;
 import dk.easv.bll.CRUDLogic;
+import dk.easv.bll.DocumentLogic;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.sql.SQLException;
+import java.util.List;
 import java.util.concurrent.ConcurrentMap;
 
 public class DocumentModel {
@@ -42,5 +44,8 @@ public class DocumentModel {
     public void setObsAllDocuments() throws SQLException {
         ConcurrentMap<Integer, Document> allDocuments = getAllDocuments();
         this.obsAllDocuments.setAll(allDocuments.values());
+    }
+    public List<Document> getOldDocuments() throws SQLException {
+        return new DocumentLogic().showOldDocuments();
     }
 }

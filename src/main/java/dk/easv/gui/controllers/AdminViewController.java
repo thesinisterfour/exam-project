@@ -40,13 +40,14 @@ public class AdminViewController extends RootController {
     public void initialize(URL location, ResourceBundle resources) {
         try {
             documentModel = new DocumentModel();
+
             DocumentLogic documentLogic = new DocumentLogic();
             List<String> documentNames = documentLogic.showDocumentName();
-            StringBuilder message = new StringBuilder("The following documents are 48 months old:\n");
+            StringBuilder docNames = new StringBuilder("The following documents are 48 months old:\n");
             for (String documentName : documentNames) {
-                message.append(documentName).append("\n");
+                docNames.append(documentName).append("\n");
             }
-            AlertHelper.showDefaultAlert(message.toString(), Alert.AlertType.CONFIRMATION);
+            AlertHelper.showDefaultAlert(docNames.toString(), Alert.AlertType.CONFIRMATION);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

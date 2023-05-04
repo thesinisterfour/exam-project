@@ -1,5 +1,6 @@
 package dk.easv.gui.controllers;
 
+import dk.easv.be.Document;
 import dk.easv.gui.controllerFactory.ControllerFactory;
 import dk.easv.gui.models.ContentModel;
 import dk.easv.gui.models.tasks.RetrieveContentTask;
@@ -9,6 +10,7 @@ import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXScrollPane;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import io.github.palexdev.materialfx.enums.FloatMode;
+import io.github.palexdev.materialfx.utils.SwingFXUtils;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -16,15 +18,23 @@ import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.SnapshotParameters;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import javax.imageio.ImageIO;
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
@@ -265,7 +275,16 @@ public class DocumentViewController extends RootController {
         vbox.widthProperty().addListener((o, oldV, newV) -> imageView.setFitWidth((double) newV - 50));
 
         return getHBoxWithNavButtons(imageView);
+    }
 
+    @FXML
+    private void saveAsPdfOnAction(){
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Save PDF File");
+        fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("PDF files", "*.pdf"));
+        File file = fileChooser.showSaveDialog(new Stage());
+        model.saveAsPDF(file, centeringHBox);
     }
 
     private HBox getHBoxWithNavButtons(Node node) {

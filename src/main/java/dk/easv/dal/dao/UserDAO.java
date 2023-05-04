@@ -14,7 +14,7 @@ import java.util.concurrent.ConcurrentMap;
 
 public class UserDAO implements ICRUDDao<User> {
 
-    private final ConnectionManager cm = new ConnectionManager();
+    private final ConnectionManager cm = ConnectionManager.getINSTANCE();
     @Override
     public int add(User object) throws SQLException {
         if (object == null) {

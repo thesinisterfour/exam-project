@@ -13,7 +13,7 @@ public class DocumentDAO implements ICRUDDao<Document> {
     private final ConnectionManager cm;
 
     public DocumentDAO(){
-        cm = new ConnectionManager();
+        cm = ConnectionManager.getINSTANCE();
     }
 
     @Override

@@ -1,7 +1,6 @@
 package dk.easv.dal.dao;
 
 import dk.easv.be.City;
-import dk.easv.be.Customer;
 import dk.easv.dal.ConnectionManager;
 import dk.easv.dal.interafaces.ICRUDDao;
 
@@ -14,8 +13,8 @@ import java.util.concurrent.ConcurrentMap;
 
 public class CityDAO implements ICRUDDao<City> {
 
-    private final ConnectionManager cm = new ConnectionManager();
-    @Override
+    private final ConnectionManager cm =ConnectionManager.getINSTANCE();
+
     public int add(City city) throws SQLException {
         try(Connection con = cm.getConnection()){
             String sql = "INSERT INTO cities (zipcode, city_name)"+

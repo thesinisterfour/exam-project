@@ -1,19 +1,16 @@
 package dk.easv.dal.dao;
 
-import dk.easv.be.City;
-import dk.easv.be.Customer;
 import dk.easv.be.Project;
 import dk.easv.dal.ConnectionManager;
 import dk.easv.dal.interafaces.ICRUDDao;
 
 import java.sql.*;
-import java.time.LocalDate;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 public class ProjectDAO implements ICRUDDao<Project> {
 
-    private final ConnectionManager cm = new ConnectionManager();
+    private final ConnectionManager cm = ConnectionManager.getINSTANCE();
     @Override
     public int add(Project object) throws SQLException {
         try(Connection con = cm.getConnection()){

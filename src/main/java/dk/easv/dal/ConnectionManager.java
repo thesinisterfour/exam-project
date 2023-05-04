@@ -15,9 +15,8 @@ public class ConnectionManager {
     private static final String usualConfigPath = "config.cfg";
     private static ConnectionManager INSTANCE;
     private final SQLServerConnectionPoolDataSource ds;
-    private ScheduledExecutorService es = Executors.newSingleThreadScheduledExecutor();
 
-    private BlockingDeque<PooledConnection> connections;
+    private final BlockingDeque<PooledConnection> connections;
 
     private ConnectionManager() {
         this(usualConfigPath);
@@ -40,16 +39,14 @@ public class ConnectionManager {
 
         connections = new LinkedBlockingDeque<>(20);
 
-        es.schedule(() -> {
-            for (int i = 0; i < 20; i++) {
-                try {
-                    connections.putLast(createConnection());
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
+        ScheduledExecutorService es = Executors.newSingleThreadScheduledExecutor();
+        es.scheduleAtFixedRate(() -> {
+            try {
+                connections.putLast(createConnection());
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
             }
-
-        }, 0, TimeUnit.MILLISECONDS);
+        }, 0, 1, TimeUnit.MILLISECONDS);
     }
 
     public static ConnectionManager getINSTANCE() {
@@ -61,12 +58,11 @@ public class ConnectionManager {
 
 
     public Connection getConnection() throws SQLException {
-//        try {
-//            return connections.takeFirst().getConnection();
-//        } catch (InterruptedException e) {
-//            throw new RuntimeException(e);
-//        }
-        return ds.getConnection();
+        try {
+            return connections.takeFirst().getConnection();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private PooledConnection createConnection() {

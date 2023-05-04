@@ -71,8 +71,7 @@ public class ProjectManagerViewController extends RootController {
     @Override
     public void initialize(URL location, ResourceBundle resources) {;
         try {
-            DocumentHelper documentHelper = new DocumentHelper();
-            StringBuilder documentNames = documentHelper.convertToString();
+            StringBuilder documentNames = DocumentHelper.convertToString();
 
             AlertHelper.showDefaultAlert(documentNames.toString(), Alert.AlertType.CONFIRMATION);
         } catch (SQLException e) {

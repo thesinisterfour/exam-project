@@ -41,9 +41,7 @@ public class AdminViewController extends RootController {
     public void initialize(URL location, ResourceBundle resources) {
         try {
             documentModel = new DocumentModel();
-
-            DocumentHelper documentHelper = new DocumentHelper();
-            StringBuilder documentNames = documentHelper.convertToString();
+            StringBuilder documentNames = DocumentHelper.convertToString();
 
             AlertHelper.showDefaultAlert(documentNames.toString(), Alert.AlertType.CONFIRMATION);
         } catch (SQLException e) {

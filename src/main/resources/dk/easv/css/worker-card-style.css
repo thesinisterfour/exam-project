@@ -1,5 +1,6 @@
 GridPane, VBox{
     -fx-background-color: darkgray;
+    -fx-background-radius: 5px;
 }
 
 ImageView{

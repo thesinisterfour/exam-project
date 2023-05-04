@@ -4,16 +4,16 @@ import dk.easv.bll.DocumentLogic;
 import javafx.scene.image.Image;
 
 import java.sql.SQLException;
-import java.util.concurrent.ConcurrentSkipListMap;
+import java.util.concurrent.ConcurrentNavigableMap;
 
 public class ContentModel {
-    private DocumentLogic documentLogic = new DocumentLogic();
+    private final DocumentLogic documentLogic = new DocumentLogic();
 
     private int documentId;
 
     private static ContentModel INSTANCE;
 
-    private ConcurrentSkipListMap<Integer, Integer> contentMap;
+    private ConcurrentNavigableMap<Integer, Integer> contentMap;
 
     private ContentModel() {
 
@@ -53,7 +53,7 @@ public class ContentModel {
         contentMap = documentLogic.loadAllContent(documentId);
     }
 
-    public ConcurrentSkipListMap<Integer, Integer> getContentMap() {
+    public ConcurrentNavigableMap<Integer, Integer> getContentMap() {
         try {
             loadAllContent(documentId);
         } catch (SQLException e) {
@@ -62,12 +62,16 @@ public class ContentModel {
         return contentMap;
     }
 
-    public void setContentMap(ConcurrentSkipListMap<Integer, Integer> contentMap) {
+    public void setContentMap(ConcurrentNavigableMap<Integer, Integer> contentMap) {
         this.contentMap = contentMap;
     }
 
 
     public void deleteContent(int id) throws SQLException{
-        documentLogic.deleteContent(documentId, id);
+        documentLogic.deleteContent(id);
+    }
+
+    public void deleteMap(int id) throws SQLException{
+        documentLogic.deleteMapping(documentId, id);
     }
 }

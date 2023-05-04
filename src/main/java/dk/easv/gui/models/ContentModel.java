@@ -1,8 +1,13 @@
 package dk.easv.gui.models;
 
+import dk.easv.be.Document;
 import dk.easv.bll.DocumentLogic;
+import io.github.palexdev.materialfx.utils.SwingFXUtils;
+import javafx.scene.Parent;
 import javafx.scene.image.Image;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.sql.SQLException;
 import java.util.concurrent.ConcurrentSkipListMap;
 
@@ -15,6 +20,9 @@ public class ContentModel {
 
     private ConcurrentSkipListMap<Integer, Integer> contentMap;
 
+    private BufferedImage image;
+
+    private Document document;
     private ContentModel() {
 
     }
@@ -39,6 +47,10 @@ public class ContentModel {
 
     public void addImage(int contentId, int index) throws SQLException {
         documentLogic.addImage(documentId, contentId, index);
+    }
+
+    public void saveAsPDF(File file, Parent root) {
+       documentLogic.generatePDFFromImage(file, root);
     }
 
     public int getDocumentId() {

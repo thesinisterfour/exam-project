@@ -59,15 +59,13 @@ public class AdminViewController extends RootController {
         this.stage.setTitle("Login");
     }
     @FXML
-    private void handleDelete(){
-        Document selectedDocument =  tableView.getSelectionModel().getSelectedValues().get(0);
-        if (selectedDocument != null) {
-            try {
-                documentModel.deleteDocument(selectedDocument.getId());
-                tableView.getItems().remove(selectedDocument);
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
+    private void handleDelete() throws  SQLException{
+        try {
+            Document selectedDocument =  tableView.getSelectionModel().getSelectedValues().get(0);
+            documentModel.deleteDocument(selectedDocument.getId());
+            tableView.getItems().remove(selectedDocument);
+        } catch (IndexOutOfBoundsException e) {
+            AlertHelper.showDefaultAlert("Pleas select a document to delete", Alert.AlertType.ERROR);
         }
     }
     @FXML

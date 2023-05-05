@@ -6,7 +6,9 @@ module dk.easv {
     requires com.microsoft.sqlserver.jdbc;
     requires MaterialFX;
     requires AnimateFX;
-    requires org.apache.pdfbox;
+    requires kernel;
+    requires layout;
+    requires io;
 
 
     opens dk.easv to javafx.fxml;

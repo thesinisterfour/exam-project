@@ -15,6 +15,14 @@
         <javafx.version>19.0.2.1</javafx.version>
     </properties>
 
+    <repositories>
+        <repository>
+            <id>snapshots</id>
+            <name>libs-snapshot</name>
+            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+        </repository>
+    </repositories>
+
     <dependencies>
         <dependency>
             <groupId>org.openjfx</groupId>
@@ -73,6 +81,12 @@
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>31.1-jre</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.github.typhon0</groupId>
+            <artifactId>AnimateFX</artifactId>
+            <version>1.2.4-SNAPSHOT</version>
         </dependency>
 
     </dependencies>

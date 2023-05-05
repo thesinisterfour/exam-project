@@ -1,9 +1,6 @@
 package dk.easv.dal;
 
-import dk.easv.dal.dao.CityDAO;
-import dk.easv.dal.dao.CustomerDAO;
-import dk.easv.dal.dao.DocumentDAO;
-import dk.easv.dal.dao.UserDAO;
+import dk.easv.dal.dao.*;
 import dk.easv.dal.interafaces.ICRUDDao;
 import dk.easv.helpers.DAOType;
 
@@ -14,6 +11,7 @@ public class CRUDDAOFactory {
             case USER_DAO -> new UserDAO();
             case DOCUMENT_DAO -> new DocumentDAO();
             case CITY_DAO -> new CityDAO();
+            case CONTENT_DAO -> new ContentDAO();
         };
     }
 }

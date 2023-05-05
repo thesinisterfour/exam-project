@@ -5,5 +5,7 @@ public enum DAOType {
     CITY_DAO,
     USER_DAO,
     DOCUMENT_DAO,
-    PROJECT_DAO
+    PROJECT_DAO,
+    CONTENT_DAO;
+
 }

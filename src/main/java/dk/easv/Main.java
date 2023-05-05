@@ -1,5 +1,6 @@
 package dk.easv;
 
+import dk.easv.dal.ConnectionManager;
 import dk.easv.gui.controllerFactory.ControllerFactory;
 import dk.easv.gui.rootContoller.RootController;
 import dk.easv.helpers.Config;
@@ -46,8 +47,14 @@ public class Main extends Application {
             System.exit(1);
         }
     }
-
     public static void main(String[] args) {
         launch();
+    }
+
+
+    @Override
+    public void stop() {
+        ConnectionManager cm = ConnectionManager.getINSTANCE();
+        cm.stopExecutorService();
     }
 }

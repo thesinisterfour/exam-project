@@ -87,7 +87,14 @@ public class DocumentLogic {
                 PDImageXObject pdImage = LosslessFactory.createFromImage(
                         new PDDocument(), SwingFXUtils.fromFXImage(snapshot, null));
                 PDDocument document = new PDDocument();
-                PDRectangle pageSize = new PDRectangle(500, 700); // width=500, height=700
+
+                // calculate the appropriate width based on the image width and aspect ratio
+                double imageWidth = pdImage.getWidth();
+                double imageHeight = pdImage.getHeight();
+                double aspectRatio = imageWidth / imageHeight;
+                double pageWidth = 700 * aspectRatio; // assuming height is fixed at 700
+                PDRectangle pageSize = new PDRectangle((float)pageWidth, 700);
+
                 PDPage page = new PDPage(pageSize);
                 PDPageContentStream contentStream = new PDPageContentStream(document, page);
                 contentStream.drawImage(pdImage, 0, 0, page.getMediaBox().getWidth(), page.getMediaBox().getHeight());

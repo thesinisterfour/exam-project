@@ -1,6 +1,6 @@
 package dk.easv.gui.controllers;
 
-import dk.easv.be.Document;
+import dk.easv.be.Doc;
 import dk.easv.gui.controllerFactory.ControllerFactory;
 import dk.easv.gui.models.DocumentModel;
 import dk.easv.gui.rootContoller.RootController;
@@ -35,9 +35,9 @@ public class CreateDocumentController extends RootController {
         String description = descriptionTextField.getText();
         try {
             if (description.isEmpty()) {
-                model.addDocument(new Document(name));
+                model.addDocument(new Doc(name));
             } else {
-                model.addDocument(new Document(name, description));
+                model.addDocument(new Doc(name, description));
             }
         } catch (SQLException e) {
             e.printStackTrace();

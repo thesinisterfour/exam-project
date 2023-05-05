@@ -2,7 +2,6 @@ package dk.easv.bll;
 
 import dk.easv.be.*;
 import dk.easv.dal.CRUDDAOFactory;
-import dk.easv.dal.dao.UserDAO;
 import dk.easv.dal.interafaces.ICRUDDao;
 import dk.easv.helpers.DAOType;
 
@@ -80,26 +79,26 @@ public class CRUDLogic implements BLLFacade {
             return userDao.getAll();
         }
     }
-    public int addDocument(Document document) throws SQLException {
-        ICRUDDao<Document> documentDao = CRUDDAOFactory.getDao(DAOType.DOCUMENT_DAO);
+    public int addDocument(Doc document) throws SQLException {
+        ICRUDDao<Doc> documentDao = CRUDDAOFactory.getDao(DAOType.DOCUMENT_DAO);
         return documentDao.add(document);
     }
 
-    public int updateDocument(Document document) throws SQLException {
-        ICRUDDao<Document> documentDao = CRUDDAOFactory.getDao(DAOType.DOCUMENT_DAO);
+    public int updateDocument(Doc document) throws SQLException {
+        ICRUDDao<Doc> documentDao = CRUDDAOFactory.getDao(DAOType.DOCUMENT_DAO);
         return documentDao.update(document);
     }
-    public Document getDocument(int id) throws SQLException {
-        ICRUDDao<Document> documentDao = CRUDDAOFactory.getDao(DAOType.DOCUMENT_DAO);
+    public Doc getDocument(int id) throws SQLException {
+        ICRUDDao<Doc> documentDao = CRUDDAOFactory.getDao(DAOType.DOCUMENT_DAO);
         return documentDao.get(id);
     }
 
-    public ConcurrentMap<Integer, Document> getAllDocuments() throws SQLException {
-        ICRUDDao<Document> documentDao = CRUDDAOFactory.getDao(DAOType.DOCUMENT_DAO);
+    public ConcurrentMap<Integer, Doc> getAllDocuments() throws SQLException {
+        ICRUDDao<Doc> documentDao = CRUDDAOFactory.getDao(DAOType.DOCUMENT_DAO);
         return documentDao.getAll();
     }
     public int deleteDocument(int id) throws SQLException {
-        ICRUDDao<Document> documentDao = CRUDDAOFactory.getDao(DAOType.DOCUMENT_DAO);
+        ICRUDDao<Doc> documentDao = CRUDDAOFactory.getDao(DAOType.DOCUMENT_DAO);
         return documentDao.delete(id);
     }
     public ConcurrentMap<Integer, Project> getCustomerProject() throws SQLException {

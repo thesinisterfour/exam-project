@@ -1,6 +1,6 @@
 package dk.easv.dal.dao;
 
-import dk.easv.be.Document;
+import dk.easv.be.Doc;
 import dk.easv.dal.ConnectionManager;
 import dk.easv.dal.interafaces.ICRUDDao;
 
@@ -9,7 +9,7 @@ import java.time.LocalDate;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
-public class DocumentDAO implements ICRUDDao<Document> {
+public class DocumentDAO implements ICRUDDao<Doc> {
     private final ConnectionManager cm;
 
     public DocumentDAO(){
@@ -17,7 +17,7 @@ public class DocumentDAO implements ICRUDDao<Document> {
     }
 
     @Override
-    public int add(Document document) throws SQLException {
+    public int add(Doc document) throws SQLException {
         try (Connection con = cm.getConnection()){
             PreparedStatement ps = con.prepareStatement("Insert Into documents (document_name, date_created, date_last_opened, description) OUTPUT inserted.document_id VALUES (?, CURRENT_TIMESTAMP, ?, ?)");
             ps.setString(1, document.getName());
@@ -36,7 +36,7 @@ public class DocumentDAO implements ICRUDDao<Document> {
     }
 
     @Override
-    public int update(Document document) throws SQLException {
+    public int update(Doc document) throws SQLException {
         try (Connection con = cm.getConnection()){
             PreparedStatement ps = con.prepareStatement("UPDATE documents SET document_name = ?, date_created = ?, date_last_opened = ?, description = ? WHERE document_id = ?");
             ps.setString(1, document.getName());
@@ -50,7 +50,7 @@ public class DocumentDAO implements ICRUDDao<Document> {
     }
 
     @Override
-    public Document get(int id) throws SQLException {
+    public Doc get(int id) throws SQLException {
         try (Connection con = cm.getConnection()){
             PreparedStatement ps = con.prepareStatement("SELECT document_id, document_name, date_created, date_last_opened, description FROM documents WHERE document_id = ?");
             ps.setInt(1, id);
@@ -60,10 +60,11 @@ public class DocumentDAO implements ICRUDDao<Document> {
                 int documentID = rs.getInt("document_id");
                 String documentName = rs.getString("document_name");
                 LocalDate dateCreated = rs.getDate("date_created").toLocalDate();
-                LocalDate dateLastOpened = rs.getDate("date_last_opened").toLocalDate();
+                Date dateLastOpened = rs.getDate("date_last_opened");
+                LocalDate dateLastOpenedLocalDate = dateLastOpened == null ? null : dateLastOpened.toLocalDate();
                 String description = rs.getString("description");
 
-                return new Document(documentID, documentName, dateCreated, dateLastOpened, description);
+                return new Doc(documentID, documentName, dateCreated, dateLastOpenedLocalDate, description);
             } else {
                 return null;
             }
@@ -71,8 +72,8 @@ public class DocumentDAO implements ICRUDDao<Document> {
     }
 
     @Override
-    public ConcurrentMap<Integer, Document> getAll() throws SQLException {
-        ConcurrentMap<Integer, Document> map = new ConcurrentHashMap<>();
+    public ConcurrentMap<Integer, Doc> getAll() throws SQLException {
+        ConcurrentMap<Integer, Doc> map = new ConcurrentHashMap<>();
         try (Connection con = cm.getConnection()){
             PreparedStatement ps = con.prepareStatement("SELECT document_id, document_name, date_created, date_last_opened, description FROM documents");
             ResultSet rs = ps.executeQuery();
@@ -83,7 +84,7 @@ public class DocumentDAO implements ICRUDDao<Document> {
                 Date dateLastOpened = rs.getDate("date_last_opened");
                 LocalDate dateLastOpenedLocalDate = dateLastOpened == null ? null : dateLastOpened.toLocalDate();
                 String description = rs.getString("description");
-                Document doc = new Document(documentID, documentName, dateCreated, dateLastOpenedLocalDate, description);
+                Doc doc = new Doc(documentID, documentName, dateCreated, dateLastOpenedLocalDate, description);
                 map.put(documentID, doc);
             }
             return map;

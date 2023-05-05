@@ -1,7 +1,7 @@
 package dk.easv.bll;
 
 import dk.easv.be.City;
-import dk.easv.be.Document;
+import dk.easv.be.Doc;
 import dk.easv.be.User;
 
 import java.sql.SQLException;
@@ -12,10 +12,10 @@ public interface BLLFacade {
 
     User checkForUser(String username, String password) throws SQLException;
 
-    int addDocument(Document document) throws SQLException;
-    int updateDocument(Document document) throws SQLException;
-    Document getDocument(int id) throws SQLException;
-    ConcurrentMap<Integer, Document> getAllDocuments() throws SQLException;
+    int addDocument(Doc document) throws SQLException;
+    int updateDocument(Doc document) throws SQLException;
+    Doc getDocument(int id) throws SQLException;
+    ConcurrentMap<Integer, Doc> getAllDocuments() throws SQLException;
     int deleteDocument(int id) throws SQLException;
 
     City getCity(int zipcode) throws SQLException;

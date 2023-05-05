@@ -133,7 +133,7 @@ public class ProjectManagerViewController extends RootController {
             try {
                 Document selectedDocument = documentTable.getSelectionModel().getSelectedValues().get(0);
                 documentModel.deleteDocument(selectedDocument.getId());
-                documentTable.getItems().remove(selectedDocument);
+                documentModel.setObsAllDocuments();
             } catch (IndexOutOfBoundsException e) {
                 AlertHelper.showDefaultAlert("Pleas select a document to delete", Alert.AlertType.ERROR);
             }

@@ -10,7 +10,6 @@ import dk.easv.helpers.DocumentHelper;
 import dk.easv.helpers.ViewType;
 import io.github.palexdev.materialfx.controls.*;
 import io.github.palexdev.materialfx.controls.cell.MFXTableRowCell;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -63,7 +62,7 @@ public class AdminViewController extends RootController {
         try {
             Document selectedDocument =  tableView.getSelectionModel().getSelectedValues().get(0);
             documentModel.deleteDocument(selectedDocument.getId());
-            tableView.getItems().remove(selectedDocument);
+            documentModel.setObsAllDocuments();
         } catch (IndexOutOfBoundsException e) {
             AlertHelper.showDefaultAlert("Pleas select a document to delete", Alert.AlertType.ERROR);
         }

@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane fx:id="gridPaneProject" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="200.0" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@../css/project-card-style.css" xmlns="http://javafx.com/javafx/19" fx:controller="dk.easv.gui.controllers.ProjectCardController">
+<GridPane fx:id="gridPaneProject" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="200.0" stylesheets="@../css/project-card-style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.ProjectCardController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
   </columnConstraints>
@@ -37,7 +38,8 @@
                   <Label fx:id="projectStatusLabel" text="Status" GridPane.rowIndex="1" />
                </children>
             </GridPane>
-            <ImageView fx:id="presentationImage" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="presentationImage" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+               </ImageView>
          </children>
       </GridPane>
       <GridPane fx:id="lowerGrid" GridPane.rowIndex="1">

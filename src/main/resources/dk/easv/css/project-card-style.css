@@ -2,7 +2,9 @@ GridPane, VBox{
     -fx-background-color: darkgray;
 }
 
-
+.background{
+    -fx-border-color: black;
+}
 
 ImageView{
     -fx-image: url('../icons/SC-Project-Icon.png');

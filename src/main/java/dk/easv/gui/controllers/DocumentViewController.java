@@ -272,8 +272,6 @@ public class DocumentViewController extends RootController {
     }
 
     private HBox addImage(Image image) {
-
-
         ImageView imageView = new ImageView();
 
         imageView.setImage(image);
@@ -281,7 +279,15 @@ public class DocumentViewController extends RootController {
         imageView.setFitWidth(scaleReferencePane.getWidth() - scaleOffset);
         scaleReferencePane.widthProperty().addListener((o, oldV, newV) -> imageView.setFitWidth((double) newV - scaleOffset));
         return getHBoxWithNavButtons(imageView);
-
+    }
+    @FXML
+    private void saveAsPdfOnAction(){
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Save PDF File");
+        fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("PDF files", "*.pdf"));
+        File file = fileChooser.showSaveDialog(new Stage());
+        model.saveAsPDF(file, centeringHBox);
     }
 
     private HBox getHBoxWithNavButtons(Node node) {

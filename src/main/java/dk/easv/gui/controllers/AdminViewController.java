@@ -5,23 +5,21 @@ import dk.easv.gui.controllerFactory.ControllerFactory;
 import dk.easv.gui.models.ContentModel;
 import dk.easv.gui.models.DocumentModel;
 import dk.easv.gui.rootContoller.RootController;
+import dk.easv.helpers.AlertHelper;
+import dk.easv.helpers.DocumentHelper;
 import dk.easv.helpers.ViewType;
 import io.github.palexdev.materialfx.controls.*;
 import io.github.palexdev.materialfx.controls.cell.MFXTableRowCell;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
-import java.time.Instant;
-import java.util.Date;
 import java.sql.SQLException;
 import java.util.Comparator;
+import java.util.List;
 import java.util.ResourceBundle;
-import java.util.concurrent.ConcurrentMap;
-import java.util.concurrent.ConcurrentNavigableMap;
 public class AdminViewController extends RootController {
 
     private DocumentModel documentModel;
@@ -41,6 +39,8 @@ public class AdminViewController extends RootController {
     public void initialize(URL location, ResourceBundle resources) {
         try {
             documentModel = new DocumentModel();
+            List<Document> oldDocuments = documentModel.getOldDocuments();
+            AlertHelper.showDefaultAlert(DocumentHelper.convertToString(oldDocuments),Alert.AlertType.CONFIRMATION);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

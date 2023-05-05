@@ -46,6 +46,14 @@
             <artifactId>materialfx</artifactId>
             <version>11.13.9</version>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.apache.pdfbox/pdfbox -->
+        <dependency>
+            <groupId>org.apache.pdfbox</groupId>
+            <artifactId>pdfbox</artifactId>
+            <version>3.0.0-alpha2</version>
+        </dependency>
+
         <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-io -->
         <dependency>
             <groupId>commons-io</groupId>

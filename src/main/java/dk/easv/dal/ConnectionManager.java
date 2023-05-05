@@ -79,14 +79,7 @@ public class ConnectionManager {
     }
 
     public void stopExecutorService() {
-        es.shutdown();
-        try {
-            if (!es.awaitTermination(10, TimeUnit.SECONDS)){
-                es.shutdownNow();
-            }
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        es.shutdownNow();
 
     }
 

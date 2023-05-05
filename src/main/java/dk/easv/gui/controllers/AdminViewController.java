@@ -1,6 +1,6 @@
 package dk.easv.gui.controllers;
 
-import dk.easv.be.Document;
+import dk.easv.be.Doc;
 import dk.easv.gui.controllerFactory.ControllerFactory;
 import dk.easv.gui.models.ContentModel;
 import dk.easv.gui.models.DocumentModel;
@@ -29,7 +29,7 @@ public class AdminViewController extends RootController {
     @FXML
     private MFXComboBox comboBox;
     @FXML
-    private MFXPaginatedTableView<Document> tableView;
+    private MFXPaginatedTableView<Doc> tableView;
     @FXML
     private MFXButton logoutButton;
 
@@ -39,7 +39,7 @@ public class AdminViewController extends RootController {
     public void initialize(URL location, ResourceBundle resources) {
         try {
             documentModel = new DocumentModel();
-            List<Document> oldDocuments = documentModel.getOldDocuments();
+            List<Doc> oldDocuments = documentModel.getOldDocuments();
             AlertHelper.showDefaultAlert(DocumentHelper.convertToString(oldDocuments),Alert.AlertType.CONFIRMATION);
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -73,7 +73,7 @@ public class AdminViewController extends RootController {
     @FXML
     private void handleEditDocument() {
         ContentModel contentModel = ContentModel.getInstance();
-        Document document = tableView.getSelectionModel().getSelectedValues().get(0);
+        Doc document = tableView.getSelectionModel().getSelectedValues().get(0);
         contentModel.setDocumentId(document.getId());
 
         try {
@@ -105,17 +105,17 @@ public class AdminViewController extends RootController {
     }
 
     private void setUpPaginated(){
-        MFXTableColumn<Document> idColumn = new MFXTableColumn<>("ID", true, Comparator.comparing(Document::getId));
-        MFXTableColumn<Document> nameColumn = new MFXTableColumn<>("Name", true, Comparator.comparing(Document::getName));
-        MFXTableColumn<Document> dateCreatedColumn = new MFXTableColumn<>("Date Created", true, Comparator.comparing(Document::getCreationDate));
-        MFXTableColumn<Document> dateLastOpenedColumn = new MFXTableColumn<>("Date Last Opened", true, Comparator.comparing(Document::getLastView));
-        MFXTableColumn<Document> descriptionColumn = new MFXTableColumn<>("Description", true, Comparator.comparing(Document::getDescription));
+        MFXTableColumn<Doc> idColumn = new MFXTableColumn<>("ID", true, Comparator.comparing(Doc::getId));
+        MFXTableColumn<Doc> nameColumn = new MFXTableColumn<>("Name", true, Comparator.comparing(Doc::getName));
+        MFXTableColumn<Doc> dateCreatedColumn = new MFXTableColumn<>("Date Created", true, Comparator.comparing(Doc::getCreationDate));
+        MFXTableColumn<Doc> dateLastOpenedColumn = new MFXTableColumn<>("Date Last Opened", true, Comparator.comparing(Doc::getLastView));
+        MFXTableColumn<Doc> descriptionColumn = new MFXTableColumn<>("Description", true, Comparator.comparing(Doc::getDescription));
 
-        idColumn.setRowCellFactory(document -> new MFXTableRowCell<>(Document::getId));
-        nameColumn.setRowCellFactory(document -> new MFXTableRowCell<>(Document::getName));
-        dateCreatedColumn.setRowCellFactory(document -> new MFXTableRowCell<>(Document::getCreationDate));
-        dateLastOpenedColumn.setRowCellFactory(document -> new MFXTableRowCell<>(Document::getLastView));
-        descriptionColumn.setRowCellFactory(document -> new MFXTableRowCell<>(Document::getDescription));
+        idColumn.setRowCellFactory(document -> new MFXTableRowCell<>(Doc::getId));
+        nameColumn.setRowCellFactory(document -> new MFXTableRowCell<>(Doc::getName));
+        dateCreatedColumn.setRowCellFactory(document -> new MFXTableRowCell<>(Doc::getCreationDate));
+        dateLastOpenedColumn.setRowCellFactory(document -> new MFXTableRowCell<>(Doc::getLastView));
+        descriptionColumn.setRowCellFactory(document -> new MFXTableRowCell<>(Doc::getDescription));
 
         tableView.getTableColumns().setAll(idColumn, nameColumn, dateCreatedColumn, dateLastOpenedColumn, descriptionColumn);
 

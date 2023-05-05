@@ -1,13 +1,14 @@
 package dk.easv.gui.models;
 
-import dk.easv.be.Document;
+import dk.easv.be.Doc;
 import dk.easv.bll.DocumentLogic;
-import io.github.palexdev.materialfx.utils.SwingFXUtils;
-import javafx.scene.Parent;
+import dk.easv.dal.CRUDDAOFactory;
+import dk.easv.dal.interafaces.ICRUDDao;
+import dk.easv.helpers.DAOType;
 import javafx.scene.image.Image;
 
 import java.awt.image.BufferedImage;
-import java.io.File;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.concurrent.ConcurrentNavigableMap;
 
@@ -22,7 +23,7 @@ public class ContentModel {
 
     private BufferedImage image;
 
-    private Document document;
+    private Doc document;
     private ContentModel() {
 
     }
@@ -49,8 +50,9 @@ public class ContentModel {
         documentLogic.addImage(documentId, contentId, index);
     }
 
-    public void saveAsPDF(File file, Parent root) {
-       documentLogic.generatePDFFromImage(file, root);
+    public void saveAsPDF(String dest) throws SQLException, IOException {
+        ICRUDDao<Doc> docDao = CRUDDAOFactory.getDao(DAOType.DOCUMENT_DAO);
+       documentLogic.generatePDF(docDao.get(documentId), dest);
     }
 
     public int getDocumentId() {

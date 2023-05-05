@@ -30,6 +30,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.Objects;
@@ -328,7 +329,15 @@ public class DocumentViewController extends RootController {
         fileChooser.getExtensionFilters().add(
                 new FileChooser.ExtensionFilter("PDF files", "*.pdf"));
         File file = fileChooser.showSaveDialog(new Stage());
-        model.saveAsPDF(file, centeringHBox);
+        if (file != null) {
+            try {
+                model.saveAsPDF(file.getAbsolutePath());
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     private HBox getHBoxWithNavButtons(Node node) {

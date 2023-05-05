@@ -125,6 +125,20 @@ public class ProjectManagerViewController extends RootController {
         this.stage.setScene(new Scene(controller.getView(), 760, 480));
         this.stage.setTitle("Login");
     }
+    @FXML
+    public void handleDelete() throws SQLException{
+        if (documentTable == null){ // this condition alert can be removed after adding Documents to the tableview
+            AlertHelper.showDefaultAlert("There is no documents to delete", Alert.AlertType.ERROR);
+        } else {
+            try {
+                Document selectedDocument = documentTable.getSelectionModel().getSelectedValues().get(0);
+                documentModel.deleteDocument(selectedDocument.getId());
+                documentModel.setObsAllDocuments();
+            } catch (IndexOutOfBoundsException e) {
+                AlertHelper.showDefaultAlert("Pleas select a document to delete", Alert.AlertType.ERROR);
+            }
+        }
+    }
 
 
 }

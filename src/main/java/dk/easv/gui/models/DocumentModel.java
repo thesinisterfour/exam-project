@@ -17,6 +17,7 @@ public class DocumentModel {
 
     public DocumentModel() throws SQLException {
         obsAllDocuments= FXCollections.observableArrayList();
+        setObsAllDocuments();
     }
     public int addDocument(Doc document) throws SQLException {
         return bll.addDocument(document);
@@ -33,6 +34,7 @@ public class DocumentModel {
         return bll.getAllDocuments();
     }
     public int deleteDocument(int id) throws SQLException {
+        setObsAllDocuments();
         return bll.deleteDocument(id);
     }
 

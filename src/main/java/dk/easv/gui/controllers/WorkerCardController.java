@@ -43,12 +43,6 @@ public class WorkerCardController extends RootController {
 
     }
 
-    /*public void showWorker() throws IOException {
-        populateHBox();
-    }
-
-     */
-
     public void exampleMika() throws SQLException {
         users = userModel.getAllUsers();
         System.out.println(users.get(users.size()).getFirstName());

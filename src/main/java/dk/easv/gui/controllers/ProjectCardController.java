@@ -64,7 +64,7 @@ public class ProjectCardController extends RootController {
             projectNameLabel.setText(project.getProjectName());
             addressAndCity.setText(project.getProjectAddress());
             zipcodeLabel.setText(String.valueOf(project.getProjectZipcode()));
-            gridPaneProject.setStyle(gridPaneProject.getStyle() + "-fx-background-color : red;");
+            gridPaneProject.setStyle(gridPaneProject.getStyle());
 
         }
 

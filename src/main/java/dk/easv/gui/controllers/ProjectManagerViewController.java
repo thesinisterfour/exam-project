@@ -54,7 +54,7 @@ public class ProjectManagerViewController extends RootController {
     private MFXButton logoutButton;
 
     @FXML
-    private HBox navBarHBox, workers;
+    private HBox navBarHBox, workers, projects;
 
     @FXML
     private VBox navBarVBox;
@@ -100,6 +100,13 @@ public class ProjectManagerViewController extends RootController {
         workerScrollPane.setFitToHeight(true);
     }
 
+    private void addProjectsAndScrollPane(String key, HBox hBox){
+        Label label = new Label(key);
+        projects.getChildren().add(label);
+        projectScrollPane.setContent(hBox);
+        projectScrollPane.setFitToHeight(true);
+    }
+
     private void initUsers() throws SQLException {
         ConcurrentMap<Integer, User> map = getAllUsersMap();
         Set<Integer> keys = map.keySet();
@@ -127,7 +134,7 @@ public class ProjectManagerViewController extends RootController {
                 HBox hBox = loader.load();
                 HBoxController hBoxController = loader.getController();
                 hBoxController.setProjectBoxes(map);
-                addLabelAndScrollPane(key.toString(),hBox);
+                addProjectsAndScrollPane(key.toString(),hBox);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);

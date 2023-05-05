@@ -16,7 +16,9 @@ import dk.easv.helpers.DocumentHelper;
 import dk.easv.helpers.ViewType;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXScrollPane;
+import io.github.palexdev.materialfx.controls.MFXTableColumn;
 import io.github.palexdev.materialfx.controls.MFXTableView;
+import io.github.palexdev.materialfx.controls.cell.MFXTableRowCell;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -30,10 +32,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.List;
-import java.util.Objects;
-import java.util.ResourceBundle;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ConcurrentMap;
 
 public class ProjectManagerViewController extends RootController {
@@ -42,7 +41,7 @@ public class ProjectManagerViewController extends RootController {
     private VBox boxVert;
 
     @FXML
-    private MFXTableView<Doc> documentTable;
+    private MFXTableView<Doc> tableViewDoc;
 
     @FXML
     private GridPane gridPaneMain;
@@ -90,6 +89,16 @@ public class ProjectManagerViewController extends RootController {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+        try {
+            documentModel = new DocumentModel();
+            List<Doc> oldDocuments = documentModel.getOldDocuments();
+            AlertHelper.showDefaultAlert(DocumentHelper.convertToString(oldDocuments),Alert.AlertType.CONFIRMATION);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        setUpPaginated();
     }
 
 
@@ -162,5 +171,26 @@ public class ProjectManagerViewController extends RootController {
         this.stage.setTitle("Login");
     }
 
+    private void setUpPaginated(){
+        MFXTableColumn<Doc> idColumn = new MFXTableColumn<>("ID", true, Comparator.comparing(Doc::getId));
+        MFXTableColumn<Doc> nameColumn = new MFXTableColumn<>("Name", true, Comparator.comparing(Doc::getName));
+        MFXTableColumn<Doc> dateCreatedColumn = new MFXTableColumn<>("Date Created", true, Comparator.comparing(Doc::getCreationDate));
+        MFXTableColumn<Doc> dateLastOpenedColumn = new MFXTableColumn<>("Date Last Opened", true, Comparator.comparing(Doc::getLastView));
+        MFXTableColumn<Doc> descriptionColumn = new MFXTableColumn<>("Description", true, Comparator.comparing(Doc::getDescription));
+
+        idColumn.setRowCellFactory(document -> new MFXTableRowCell<>(Doc::getId));
+        nameColumn.setRowCellFactory(document -> new MFXTableRowCell<>(Doc::getName));
+        dateCreatedColumn.setRowCellFactory(document -> new MFXTableRowCell<>(Doc::getCreationDate));
+        dateLastOpenedColumn.setRowCellFactory(document -> new MFXTableRowCell<>(Doc::getLastView));
+        descriptionColumn.setRowCellFactory(document -> new MFXTableRowCell<>(Doc::getDescription));
+
+        tableViewDoc.getTableColumns().setAll(idColumn, nameColumn, dateCreatedColumn, dateLastOpenedColumn, descriptionColumn);
+
+        try {
+            tableViewDoc.setItems(documentModel.getObsAllDocuments());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 }

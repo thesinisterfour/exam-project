@@ -4,6 +4,7 @@ import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.dialogs.MFXGenericDialog;
 import io.github.palexdev.materialfx.dialogs.MFXGenericDialogBuilder;
 import io.github.palexdev.materialfx.dialogs.MFXStageDialog;
+import io.github.palexdev.materialfx.enums.ButtonType;
 import javafx.scene.control.Alert;
 import javafx.stage.Modality;
 
@@ -29,11 +30,17 @@ public class AlertHelper{
                     .setTitle(alertType.name())
                     .get();
 
+
+            MFXButton confirmButton = new MFXButton("Confirm");
+            confirmButton.setButtonType(ButtonType.RAISED);
+            MFXButton cancelButton = new MFXButton("Cancel");
+            cancelButton.setButtonType(ButtonType.RAISED);
             dialogContent.addActions(
-                    Map.entry(new MFXButton("Confirm"), event -> {
+
+                    Map.entry(confirmButton, event -> {
                         dialog.close();
                     }),
-                    Map.entry(new MFXButton("Cancel"), event -> dialog.close())
+                    Map.entry(cancelButton, event -> dialog.close())
             );
 
             dialogContent.setMaxSize(400, 200);

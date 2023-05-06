@@ -86,8 +86,8 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <MFXPaginatedTableView maxWidth="200.0" prefHeight="160.0" prefWidth="200.0" />
-            <MFXPaginatedTableView GridPane.columnIndex="1" />
+            <MFXPaginatedTableView fx:id="cusView" maxWidth="200.0" prefHeight="160.0" prefWidth="200.0" />
+            <MFXPaginatedTableView fx:id="docuView" GridPane.columnIndex="1" />
          </children>
       </GridPane>
       <Label fx:id="roleLabel" prefHeight="17.0" prefWidth="92.0" styleClass="gray_content_backdrop" text="Sales Agent" GridPane.columnIndex="3">

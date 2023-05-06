@@ -78,7 +78,7 @@ public class ProjectManagerViewController extends RootController {
         try {
             documentModel = new DocumentModel();
             List<Doc> oldDocuments = documentModel.getOldDocuments();
-            AlertHelper.showDefaultAlert(DocumentHelper.convertToString(oldDocuments),Alert.AlertType.CONFIRMATION);
+            AlertHelper.showDefaultAlert(DocumentHelper.convertToString(oldDocuments),Alert.AlertType.INFORMATION);
             initUsers();
         } catch (SQLException e) {
             throw new RuntimeException(e);

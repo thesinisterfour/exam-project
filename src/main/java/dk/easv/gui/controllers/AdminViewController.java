@@ -40,7 +40,7 @@ public class AdminViewController extends RootController {
         try {
             documentModel = new DocumentModel();
             List<Doc> oldDocuments = documentModel.getOldDocuments();
-            AlertHelper.showDefaultAlert(DocumentHelper.convertToString(oldDocuments),Alert.AlertType.CONFIRMATION);
+            AlertHelper.showDefaultAlert(DocumentHelper.convertToString(oldDocuments),Alert.AlertType.INFORMATION);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

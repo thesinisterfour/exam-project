@@ -60,7 +60,7 @@ public class AdminViewController extends RootController {
     @FXML
     private void handleDelete() throws  SQLException{
         try {
-            Document selectedDocument =  tableView.getSelectionModel().getSelectedValues().get(0);
+            Doc selectedDocument =  tableView.getSelectionModel().getSelectedValues().get(0);
             documentModel.deleteDocument(selectedDocument.getId());
             documentModel.setObsAllDocuments();
         } catch (IndexOutOfBoundsException e) {

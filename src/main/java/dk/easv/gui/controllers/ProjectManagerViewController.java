@@ -131,7 +131,7 @@ public class ProjectManagerViewController extends RootController {
             AlertHelper.showDefaultAlert("There is no documents to delete", Alert.AlertType.ERROR);
         } else {
             try {
-                Document selectedDocument = documentTable.getSelectionModel().getSelectedValues().get(0);
+                Doc selectedDocument = documentTable.getSelectionModel().getSelectedValues().get(0);
                 documentModel.deleteDocument(selectedDocument.getId());
                 documentModel.setObsAllDocuments();
             } catch (IndexOutOfBoundsException e) {

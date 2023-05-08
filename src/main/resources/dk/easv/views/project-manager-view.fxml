@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<GridPane fx:id="gridPaneMain" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="600.0" styleClass="main_pane" stylesheets="@../css/global-style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.ProjectManagerViewController">
+<GridPane fx:id="gridPaneMain" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="600.0" styleClass="main_pane" stylesheets="@../css/global-style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.ProjectManagerViewController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="144.0" minWidth="0.0" prefWidth="8.0" />
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="578.0" minWidth="10.0" prefWidth="574.0" />
@@ -20,7 +20,7 @@
     <RowConstraints maxHeight="129.0" minHeight="1.0" prefHeight="25.0" vgrow="SOMETIMES" />
     <RowConstraints maxHeight="343.0" minHeight="10.0" prefHeight="208.0" vgrow="SOMETIMES" />
     <RowConstraints maxHeight="191.0" minHeight="3.0" prefHeight="191.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="75.0" minHeight="3.0" prefHeight="9.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="75.0" minHeight="3.0" prefHeight="35.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
       <VBox fx:id="vertBox" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
@@ -80,5 +80,6 @@
             </HBox>
          </children>
       </VBox>
+      <MFXButton onAction="#handleDelete" text="Delete" GridPane.columnIndex="1" GridPane.rowIndex="3" />
    </children>
 </GridPane>

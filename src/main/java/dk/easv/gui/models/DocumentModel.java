@@ -1,6 +1,6 @@
 package dk.easv.gui.models;
 
-import dk.easv.be.Document;
+import dk.easv.be.Doc;
 import dk.easv.bll.BLLFacade;
 import dk.easv.bll.CRUDLogic;
 import dk.easv.bll.DocumentLogic;
@@ -13,39 +13,41 @@ import java.util.concurrent.ConcurrentMap;
 
 public class DocumentModel {
     private final BLLFacade bll = new CRUDLogic();
-    private ObservableList<Document> obsAllDocuments;
+    private ObservableList<Doc> obsAllDocuments;
 
     public DocumentModel() throws SQLException {
         obsAllDocuments= FXCollections.observableArrayList();
+        setObsAllDocuments();
     }
-    public int addDocument(Document document) throws SQLException {
+    public int addDocument(Doc document) throws SQLException {
         return bll.addDocument(document);
     }
 
-    public int updateDocument(Document document) throws SQLException {
+    public int updateDocument(Doc document) throws SQLException {
         return bll.updateDocument(document);
     }
-    public Document getDocument(int id) throws SQLException {
+    public Doc getDocument(int id) throws SQLException {
         return bll.getDocument(id);
     }
 
-    public ConcurrentMap<Integer, Document> getAllDocuments() throws SQLException {
+    public ConcurrentMap<Integer, Doc> getAllDocuments() throws SQLException {
         return bll.getAllDocuments();
     }
     public int deleteDocument(int id) throws SQLException {
+        setObsAllDocuments();
         return bll.deleteDocument(id);
     }
 
-    public ObservableList<Document> getObsAllDocuments() throws SQLException {
+    public ObservableList<Doc> getObsAllDocuments() throws SQLException {
         setObsAllDocuments();
         return obsAllDocuments;
     }
 
     public void setObsAllDocuments() throws SQLException {
-        ConcurrentMap<Integer, Document> allDocuments = getAllDocuments();
+        ConcurrentMap<Integer, Doc> allDocuments = getAllDocuments();
         this.obsAllDocuments.setAll(allDocuments.values());
     }
-    public List<Document> getOldDocuments() throws SQLException {
+    public List<Doc> getOldDocuments() throws SQLException {
         return new DocumentLogic().showOldDocuments();
     }
 }

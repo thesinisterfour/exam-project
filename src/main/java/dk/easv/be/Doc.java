@@ -2,7 +2,7 @@ package dk.easv.be;
 
 import java.time.LocalDate;
 
-public class Document {
+public class Doc {
 
     private int id;
     private String name;
@@ -10,14 +10,14 @@ public class Document {
     private LocalDate lastView;
     private String description;
 
-    public Document(int id, String name, LocalDate creationDate, String description){
+    public Doc(int id, String name, LocalDate creationDate, String description){
         this.id = id;
         this.name = name;
         this.creationDate = creationDate;
         this.description = description;
     }
 
-    public Document(int id, String name, LocalDate creationDate, LocalDate lastView, String description){
+    public Doc(int id, String name, LocalDate creationDate, LocalDate lastView, String description){
         this.id = id;
         this.name = name;
         this.creationDate = creationDate;
@@ -25,21 +25,21 @@ public class Document {
         this.description = description;
     }
 
-    public Document(String name, LocalDate creationDate) {
+    public Doc(String name, LocalDate creationDate) {
         this.name = name;
         this.creationDate = creationDate;
     }
-    public Document(String name, LocalDate creationDate, String description){
+    public Doc(String name, LocalDate creationDate, String description){
         this.name = name;
         this.creationDate = creationDate;
         this.description = description;
     }
 
-    public Document(String name) {
+    public Doc(String name) {
         this.name = name;
     }
 
-    public Document(String name, String description) {
+    public Doc(String name, String description) {
         this.name = name;
         this.description = description;
     }
@@ -86,7 +86,7 @@ public class Document {
 
     @Override
     public String toString() {
-        return "Document{" +
+        return "Doc{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", creationDate=" + creationDate +

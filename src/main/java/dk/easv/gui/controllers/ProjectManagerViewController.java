@@ -1,7 +1,7 @@
 package dk.easv.gui.controllers;
 
 import dk.easv.Main;
-import dk.easv.be.Document;
+import dk.easv.be.Doc;
 import dk.easv.be.User;
 import dk.easv.gui.controllerFactory.ControllerFactory;
 import dk.easv.gui.models.DocumentModel;
@@ -38,7 +38,7 @@ public class ProjectManagerViewController extends RootController {
     private VBox boxVert;
 
     @FXML
-    private MFXTableView<Document> documentTable;
+    private MFXTableView<Doc> documentTable;
 
     @FXML
     private GridPane gridPaneMain;
@@ -77,8 +77,8 @@ public class ProjectManagerViewController extends RootController {
     public void initialize(URL location, ResourceBundle resources) {
         try {
             documentModel = new DocumentModel();
-            List<Document> oldDocuments = documentModel.getOldDocuments();
-            AlertHelper.showDefaultAlert(DocumentHelper.convertToString(oldDocuments),Alert.AlertType.CONFIRMATION);
+            List<Doc> oldDocuments = documentModel.getOldDocuments();
+            AlertHelper.showDefaultAlert(DocumentHelper.convertToString(oldDocuments),Alert.AlertType.INFORMATION);
             initUsers();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -124,6 +124,20 @@ public class ProjectManagerViewController extends RootController {
         RootController controller = ControllerFactory.loadFxmlFile(ViewType.LOGIN);
         this.stage.setScene(new Scene(controller.getView(), 760, 480));
         this.stage.setTitle("Login");
+    }
+    @FXML
+    public void handleDelete() throws SQLException{
+        if (documentTable == null){ // this condition alert can be removed after adding Documents to the tableview
+            AlertHelper.showDefaultAlert("There is no documents to delete", Alert.AlertType.ERROR);
+        } else {
+            try {
+                Doc selectedDocument = documentTable.getSelectionModel().getSelectedValues().get(0);
+                documentModel.deleteDocument(selectedDocument.getId());
+                documentModel.setObsAllDocuments();
+            } catch (IndexOutOfBoundsException e) {
+                AlertHelper.showDefaultAlert("Pleas select a document to delete", Alert.AlertType.ERROR);
+            }
+        }
     }
 
 

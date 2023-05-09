@@ -23,16 +23,22 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.apache.commons.io.FilenameUtils;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.concurrent.*;
@@ -46,6 +52,7 @@ public class DocumentViewController extends RootController {
 
     private final ScheduledExecutorService scheduledSaveService = Executors.newSingleThreadScheduledExecutor();
     private final int scaleOffset = 50;
+    private final Label emptyLabel = new Label("No content to display");
     private ContentModel model = ContentModel.getInstance();
     @FXML
     private VBox vbox;
@@ -54,7 +61,6 @@ public class DocumentViewController extends RootController {
     @FXML
     private HBox centeringHBox;
     private Pane scaleReferencePane;
-    private final Label emptyLabel = new Label("No content to display");
 
     /**
      * This function initializes the URL and ResourceBundle and populates the content if the document
@@ -68,14 +74,14 @@ public class DocumentViewController extends RootController {
     public void initialize(URL location, ResourceBundle resources) {
         if (model.getDocumentId() != 0) {
             populateContent();
-
-            scrollPane.widthProperty().addListener((observable, oldValue, newValue) -> {
-                centeringHBox.setMinWidth(newValue.doubleValue() - 14);
-            });
-            vbox.setMaxWidth(1000);
-
-            scaleReferencePane = vbox;
         }
+
+        scrollPane.widthProperty().addListener((observable, oldValue, newValue) -> {
+            centeringHBox.setMinWidth(newValue.doubleValue() - 14);
+        });
+        vbox.setMaxWidth(1000);
+
+        scaleReferencePane = vbox;
 
 //        progressiveSave();
     }
@@ -186,7 +192,7 @@ public class DocumentViewController extends RootController {
     private void saveContent() {
         ObservableList<Node> children = vbox.getChildren();
         for (int i = 0; i < children.size(); i++) {
-            if (!(children.get(i) instanceof HBox hBox)){
+            if (!(children.get(i) instanceof HBox hBox)) {
                 return;
             }
             if (hBox.getChildren().get(0) instanceof MFXTextField mfxTextField) {
@@ -277,7 +283,7 @@ public class DocumentViewController extends RootController {
                 }
                 es.shutdown();
 
-                if (n.isEmpty()){
+                if (n.isEmpty()) {
 //                    vbox.getChildren().add(0, new Label("No content to display"));
                 }
 
@@ -361,5 +367,48 @@ public class DocumentViewController extends RootController {
         } else if (vbox.getChildren().get(0) == emptyLabel) {
             vbox.getChildren().remove(0);
         }
+    }
+
+    @FXML
+    private void vboxOnDragDropped(DragEvent dragEvent) {
+        Dragboard db = dragEvent.getDragboard();
+        boolean success = false;
+        List<File> droppedFiles = null;
+        if (db.hasFiles()) {
+            droppedFiles = db.getFiles();
+            success = true;
+        }
+
+
+        List<String> imageExtensions = new ArrayList<>();
+        imageExtensions.add("jpg");
+        imageExtensions.add("png");
+
+        if (droppedFiles != null) {
+            for (File file : droppedFiles) {
+//            System.out.println(FilenameUtils.getExtension(file.getAbsolutePath()));
+                if (imageExtensions.contains(FilenameUtils.getExtension(file.getAbsolutePath()))) {
+                    vbox.getChildren().add(addImage(new Image(file.getAbsolutePath())));
+                } else {
+                    System.out.println("Filetype not compatible");
+                }
+            }
+        }
+
+        /* let the source know whether the string was successfully
+         * transferred and used */
+        dragEvent.setDropCompleted(success);
+
+        dragEvent.consume();
+    }
+
+    @FXML
+    private void vboxOnDragOver(DragEvent dragEvent) {
+        if (dragEvent.getGestureSource() != dragEvent && dragEvent.getDragboard().hasFiles()) {
+            /* allow for both copying and moving, whatever user chooses */
+            dragEvent.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+
+        }
+        dragEvent.consume();
     }
 }

@@ -9,6 +9,7 @@ module dk.easv {
     requires kernel;
     requires layout;
     requires io;
+    requires org.apache.commons.io;
 
 
     opens dk.easv to javafx.fxml;

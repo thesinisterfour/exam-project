@@ -17,6 +17,7 @@ import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -384,11 +385,12 @@ public class DocumentViewController extends RootController {
         imageExtensions.add("jpg");
         imageExtensions.add("png");
 
+        ObservableList<Node> children = vbox.getChildren();
         if (droppedFiles != null) {
             for (File file : droppedFiles) {
 //            System.out.println(FilenameUtils.getExtension(file.getAbsolutePath()));
                 if (imageExtensions.contains(FilenameUtils.getExtension(file.getAbsolutePath()))) {
-                    vbox.getChildren().add(addImage(new Image(file.getAbsolutePath())));
+                    children.add(addImage(new Image(file.getAbsolutePath())));
                 } else {
                     System.out.println("Filetype not compatible");
                 }
@@ -399,15 +401,30 @@ public class DocumentViewController extends RootController {
          * transferred and used */
         dragEvent.setDropCompleted(success);
 
+        children.remove(dropImage);
+
         dragEvent.consume();
     }
 
+    private VBox createDropImageVBox(){
+        VBox dropImage = new VBox(new Label("Drop images here"));
+        dropImage.setAlignment(Pos.CENTER);
+        dropImage.setPadding(new Insets(50, 10, 50, 10));
+        return dropImage;
+    }
+
+
+    private VBox dropImage = createDropImageVBox();
     @FXML
     private void vboxOnDragOver(DragEvent dragEvent) {
         if (dragEvent.getGestureSource() != dragEvent && dragEvent.getDragboard().hasFiles()) {
             /* allow for both copying and moving, whatever user chooses */
             dragEvent.acceptTransferModes(TransferMode.COPY_OR_MOVE);
 
+            ObservableList<Node> children = vbox.getChildren();
+            if (!children.contains(dropImage)){
+                children.add(dropImage);
+            }
         }
         dragEvent.consume();
     }

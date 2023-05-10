@@ -380,7 +380,6 @@ public class DocumentViewController extends RootController {
             success = true;
         }
 
-
         List<String> imageExtensions = new ArrayList<>();
         imageExtensions.add("jpg");
         imageExtensions.add("png");
@@ -388,7 +387,6 @@ public class DocumentViewController extends RootController {
         ObservableList<Node> children = vbox.getChildren();
         if (droppedFiles != null) {
             for (File file : droppedFiles) {
-//            System.out.println(FilenameUtils.getExtension(file.getAbsolutePath()));
                 if (imageExtensions.contains(FilenameUtils.getExtension(file.getAbsolutePath()))) {
                     children.add(addImage(new Image(file.getAbsolutePath())));
                 } else {
@@ -396,7 +394,6 @@ public class DocumentViewController extends RootController {
                 }
             }
         }
-
         /* let the source know whether the string was successfully
          * transferred and used */
         dragEvent.setDropCompleted(success);
@@ -407,14 +404,21 @@ public class DocumentViewController extends RootController {
     }
 
     private VBox createDropImageVBox(){
-        VBox dropImage = new VBox(new Label("Drop images here"));
+        VBox dropImage = new VBox(new Label("Release mouse to add image"));
         dropImage.setAlignment(Pos.CENTER);
         dropImage.setPadding(new Insets(50, 10, 50, 10));
+
+        dropImage.setStyle("-fx-border-style: dashed inside;" +
+                "-fx-border-width: 2;" +
+                "-fx-border-insets: 5;" +
+                "-fx-border-radius: 5;" +
+                "-fx-border-color: black;");
+
         return dropImage;
     }
 
 
-    private VBox dropImage = createDropImageVBox();
+    private final VBox dropImage = createDropImageVBox();
     @FXML
     private void vboxOnDragOver(DragEvent dragEvent) {
         if (dragEvent.getGestureSource() != dragEvent && dragEvent.getDragboard().hasFiles()) {
@@ -425,7 +429,6 @@ public class DocumentViewController extends RootController {
             if (!children.contains(dropImage)){
                 children.add(dropImage);
             }
-        }
-        dragEvent.consume();
+        }dragEvent.consume();
     }
 }

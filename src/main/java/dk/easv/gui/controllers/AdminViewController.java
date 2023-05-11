@@ -40,7 +40,7 @@ public class AdminViewController extends RootController {
         try {
             documentModel = new DocumentModel();
             List<Doc> oldDocuments = documentModel.getOldDocuments();
-            AlertHelper.showDefaultAlert(DocumentHelper.convertToString(oldDocuments),Alert.AlertType.CONFIRMATION);
+            AlertHelper.showDefaultAlert(DocumentHelper.convertToString(oldDocuments),Alert.AlertType.INFORMATION);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -58,8 +58,14 @@ public class AdminViewController extends RootController {
         this.stage.setTitle("Login");
     }
     @FXML
-    private void handleDelete() {
-
+    private void handleDelete() throws  SQLException{
+        try {
+            Doc selectedDocument =  tableView.getSelectionModel().getSelectedValues().get(0);
+            documentModel.deleteDocument(selectedDocument.getId());
+            documentModel.setObsAllDocuments();
+        } catch (IndexOutOfBoundsException e) {
+            AlertHelper.showDefaultAlert("Pleas select a document to delete", Alert.AlertType.ERROR);
+        }
     }
     @FXML
     private void handleCreateDocument() {

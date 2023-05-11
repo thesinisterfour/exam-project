@@ -81,5 +81,6 @@
             </HBox>
          </children>
       </VBox>
+      <MFXButton onAction="#handleDelete" text="Delete" GridPane.columnIndex="1" GridPane.rowIndex="3" />
    </children>
 </GridPane>

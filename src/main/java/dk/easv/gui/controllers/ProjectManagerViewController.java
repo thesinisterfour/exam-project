@@ -83,7 +83,7 @@ public class ProjectManagerViewController extends RootController {
         try {
             documentModel = new DocumentModel();
             List<Doc> oldDocuments = documentModel.getOldDocuments();
-            AlertHelper.showDefaultAlert(DocumentHelper.convertToString(oldDocuments),Alert.AlertType.CONFIRMATION);
+            AlertHelper.showDefaultAlert(DocumentHelper.convertToString(oldDocuments),Alert.AlertType.INFORMATION);
             initUsers();
             initProjects();
         } catch (SQLException e) {
@@ -169,6 +169,20 @@ public class ProjectManagerViewController extends RootController {
         RootController controller = ControllerFactory.loadFxmlFile(ViewType.LOGIN);
         this.stage.setScene(new Scene(controller.getView(), 760, 480));
         this.stage.setTitle("Login");
+    }
+    @FXML
+    public void handleDelete() throws SQLException{
+        if (tableViewDoc == null){ // this condition alert can be removed after adding Documents to the tableview
+            AlertHelper.showDefaultAlert("There is no documents to delete", Alert.AlertType.ERROR);
+        } else {
+            try {
+                Doc selectedDocument = tableViewDoc.getSelectionModel().getSelectedValues().get(0);
+                documentModel.deleteDocument(selectedDocument.getId());
+                documentModel.setObsAllDocuments();
+            } catch (IndexOutOfBoundsException e) {
+                AlertHelper.showDefaultAlert("Pleas select a document to delete", Alert.AlertType.ERROR);
+            }
+        }
     }
 
     private void setUpPaginated(){

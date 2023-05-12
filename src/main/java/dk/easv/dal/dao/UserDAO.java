@@ -2,7 +2,8 @@ package dk.easv.dal.dao;
 
 import dk.easv.be.Role;
 import dk.easv.be.User;
-import dk.easv.dal.ConnectionManager;
+import dk.easv.dal.connectionManager.ConnectionManagerFactory;
+import dk.easv.dal.connectionManager.IConnectionManager;
 import dk.easv.dal.interafaces.ICRUDDao;
 
 import java.sql.Connection;
@@ -14,7 +15,7 @@ import java.util.concurrent.ConcurrentMap;
 
 public class UserDAO implements ICRUDDao<User> {
 
-    private final ConnectionManager cm = ConnectionManager.getINSTANCE();
+    private final IConnectionManager cm = ConnectionManagerFactory.createConnectionManager();
     @Override
     public int add(User object) throws SQLException {
         if (object == null) {
@@ -22,8 +23,7 @@ public class UserDAO implements ICRUDDao<User> {
         }
 
         try(Connection connection = cm.getConnection()){
-            PreparedStatement ps = connection.prepareStatement("" +
-                    "INSERT INTO dbo.[users] (first_name, last_name, role_id, username, password)\n" +
+            PreparedStatement ps = connection.prepareStatement("INSERT INTO dbo.[users] (first_name, last_name, role_id, username, password)\n" +
                     "VALUES (?, ?, (SELECT role_id FROM users_role WHERE role_name=?), ?, ?);");
 
             ps.setString(1, object.getFirstName());
@@ -44,8 +44,8 @@ public class UserDAO implements ICRUDDao<User> {
         }
 
         try(Connection connection = cm.getConnection()){
-            PreparedStatement ps = connection.prepareStatement("" + "UPDATE dbo.[users] SET first_name=?, last_name=?, " +
-                    "(SELECT role_id FROM users_role WHERE role_name=?), username=?, password=? WHERE user_id=?;");
+            PreparedStatement ps = connection.prepareStatement("UPDATE dbo.[users] SET first_name=?, last_name=?, " +
+                    "role_id = (SELECT role_id FROM users_role WHERE role_name = ?), username=?, password=? WHERE user_id=?;");
 
             ps.setString(1, object.getFirstName());
             ps.setString(2, object.getLastName());
@@ -66,8 +66,7 @@ public class UserDAO implements ICRUDDao<User> {
         }
 
         try(Connection connection = cm.getConnection()) {
-            PreparedStatement ps = connection.prepareStatement("" +
-                    "SELECT * FROM dbo.[users] WHERE user_id=? INNER JOIN dbo.users_role ON dbo.users_role.role_id = dbo.[users].role_id;");
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM dbo.[users] INNER JOIN dbo.users_role ON dbo.users_role.role_id = dbo.[users].role_id WHERE user_id=?;");
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
 
@@ -83,9 +82,8 @@ public class UserDAO implements ICRUDDao<User> {
     public ConcurrentMap<Integer, User> getAll() throws SQLException {
         ConcurrentMap<Integer, User> userMap = new ConcurrentHashMap<>();
         try(Connection connection = cm.getConnection()){
-            PreparedStatement ps = connection.prepareStatement("" +
-                    "SELECT dbo.[users].user_id, dbo.[users].first_name, dbo.[users].last_name, dbo.[users].username, dbo.[users].[password], dbo.users_role.role_name\n" +
-                    "FROM  dbo.[users]\n" +
+            PreparedStatement ps = connection.prepareStatement("SELECT dbo.[users].user_id, dbo.[users].first_name, dbo.[users].last_name, dbo.[users].username, dbo.[users].[password], dbo.users_role.role_name\n" +
+                    "FROM dbo.[users]\n" +
                     "INNER JOIN dbo.users_role ON dbo.users_role.role_id = dbo.[users].role_id;");
 
             ResultSet rs = ps.executeQuery();
@@ -112,7 +110,7 @@ public class UserDAO implements ICRUDDao<User> {
         }
 
         try(Connection connection = cm.getConnection()){
-            PreparedStatement ps = connection.prepareStatement("" + "DELETE FROM dbo.[users] WHERE user_id=?;");
+            PreparedStatement ps = connection.prepareStatement("DELETE FROM dbo.[users] WHERE user_id=?;");
             ps.setInt(1, id);
 
             ps.executeQuery();

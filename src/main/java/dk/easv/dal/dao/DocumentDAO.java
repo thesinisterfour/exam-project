@@ -1,7 +1,8 @@
 package dk.easv.dal.dao;
 
 import dk.easv.be.Doc;
-import dk.easv.dal.ConnectionManager;
+import dk.easv.dal.connectionManager.ConnectionManagerFactory;
+import dk.easv.dal.connectionManager.IConnectionManager;
 import dk.easv.dal.interafaces.ICRUDDao;
 
 import java.sql.*;
@@ -10,11 +11,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 public class DocumentDAO implements ICRUDDao<Doc> {
-    private final ConnectionManager cm;
-
-    public DocumentDAO(){
-        cm = ConnectionManager.getINSTANCE();
-    }
+    private final IConnectionManager cm = ConnectionManagerFactory.createConnectionManager();
 
     @Override
     public int add(Doc document) throws SQLException {

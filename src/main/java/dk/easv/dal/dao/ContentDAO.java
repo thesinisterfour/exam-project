@@ -1,7 +1,8 @@
 package dk.easv.dal.dao;
 
 import dk.easv.be.Content;
-import dk.easv.dal.ConnectionManager;
+import dk.easv.dal.connectionManager.ConnectionManagerFactory;
+import dk.easv.dal.connectionManager.IConnectionManager;
 import dk.easv.dal.interafaces.ICRUDDao;
 import dk.easv.dal.interafaces.IContentMapperDAO;
 import javafx.scene.image.Image;
@@ -18,6 +19,9 @@ import java.util.concurrent.ConcurrentNavigableMap;
 import java.util.concurrent.ConcurrentSkipListMap;
 
 public class ContentDAO implements ICRUDDao<Content>, IContentMapperDAO {
+
+    private final IConnectionManager cm = ConnectionManagerFactory.createConnectionManager();
+
     @Override
     public int add(Content content) throws SQLException {
         if (content.getImage() != null) {
@@ -71,7 +75,7 @@ public class ContentDAO implements ICRUDDao<Content>, IContentMapperDAO {
             return ps.executeUpdate();
         }
     }
-    private final ConnectionManager cm = ConnectionManager.getINSTANCE();
+
 
     private int addText(int documentId, int index, String content) throws SQLException {
         try (Connection con = cm.getConnection()) {

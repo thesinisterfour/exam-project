@@ -1,7 +1,8 @@
 package dk.easv.dal.dao;
 
 import dk.easv.be.Project;
-import dk.easv.dal.ConnectionManager;
+import dk.easv.dal.connectionManager.ConnectionManagerFactory;
+import dk.easv.dal.connectionManager.IConnectionManager;
 import dk.easv.dal.interafaces.ICRUDDao;
 
 import java.sql.*;
@@ -10,7 +11,7 @@ import java.util.concurrent.ConcurrentMap;
 
 public class ProjectDAO implements ICRUDDao<Project> {
 
-    private final ConnectionManager cm = ConnectionManager.getINSTANCE();
+    private final IConnectionManager cm = ConnectionManagerFactory.createConnectionManager();
     @Override
     public int add(Project object) throws SQLException {
         try(Connection con = cm.getConnection()){
@@ -41,7 +42,7 @@ public class ProjectDAO implements ICRUDDao<Project> {
     @Override
     public int update(Project object) throws SQLException {
         try(Connection connection = cm.getConnection()){
-            PreparedStatement ps = connection.prepareStatement("" + "UPDATE dbo.[project] SET project_name=?, project_start_date=?, " +
+            PreparedStatement ps = connection.prepareStatement("UPDATE dbo.[project] SET project_name=?, project_start_date=?, " +
                     "project_end_date=?, customer_id=?, address=?, zipcode=? WHERE project_id=?;");
 
             ps.setString(1, object.getProjectName());
@@ -60,8 +61,7 @@ public class ProjectDAO implements ICRUDDao<Project> {
     @Override
     public Project get(int id) throws SQLException {
         try(Connection connection = cm.getConnection()) {
-            PreparedStatement ps = connection.prepareStatement("" +
-                    "SELECT * FROM dbo.[project] WHERE project_id=?;");
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM dbo.[project] WHERE project_id=?;");
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
 
@@ -77,9 +77,7 @@ public class ProjectDAO implements ICRUDDao<Project> {
     public ConcurrentMap<Integer, Project> getAll() throws SQLException {
         ConcurrentMap<Integer, Project> projects = new ConcurrentHashMap<>();
         try (Connection connection = cm.getConnection()){
-            PreparedStatement ps = connection.prepareStatement("" +
-                    "SELECT * FROM dbo.[project]"
-            );
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM dbo.[project]");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 int dbId = rs.getInt("project_id");
@@ -93,13 +91,13 @@ public class ProjectDAO implements ICRUDDao<Project> {
                 projects.put(dbId, project);
             }
         }
-        return null;
+        return projects;
     }
 
     @Override
     public int delete(int id) throws SQLException {
         try(Connection connection = cm.getConnection()){
-            PreparedStatement ps = connection.prepareStatement("" + "DELETE FROM dbo.[project] WHERE project_id=?;");
+            PreparedStatement ps = connection.prepareStatement("DELETE FROM dbo.[project] WHERE project_id=?;");
             ps.setInt(1, id);
 
             ps.executeQuery();

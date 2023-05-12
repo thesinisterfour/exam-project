@@ -1,6 +1,6 @@
 package dk.easv;
 
-import dk.easv.dal.ConnectionManager;
+import dk.easv.dal.connectionManager.ConnectionManagerFactory;
 import dk.easv.gui.controllerFactory.ControllerFactory;
 import dk.easv.gui.rootContoller.RootController;
 import dk.easv.helpers.ViewType;
@@ -27,7 +27,6 @@ public class Main extends Application {
 
     @Override
     public void stop() {
-        ConnectionManager cm = ConnectionManager.getINSTANCE();
-        cm.stopExecutorService();
+        ConnectionManagerFactory.stopAllConnectionManagers();
     }
 }

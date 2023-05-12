@@ -54,7 +54,7 @@ public class DocumentViewController extends RootController {
     private final ScheduledExecutorService scheduledSaveService = Executors.newSingleThreadScheduledExecutor();
     private final int scaleOffset = 50;
     private final Label emptyLabel = new Label("No content to display");
-    private ContentModel model = ContentModel.getInstance();
+    private final ContentModel model = ContentModel.getInstance();
     @FXML
     private VBox vbox;
     @FXML
@@ -421,6 +421,7 @@ public class DocumentViewController extends RootController {
     private final VBox dropImage = createDropImageVBox();
     @FXML
     private void vboxOnDragOver(DragEvent dragEvent) {
+        scrollPane.setVvalue(1.0);
         if (dragEvent.getGestureSource() != dragEvent && dragEvent.getDragboard().hasFiles()) {
             /* allow for both copying and moving, whatever user chooses */
             dragEvent.acceptTransferModes(TransferMode.COPY_OR_MOVE);
@@ -429,6 +430,7 @@ public class DocumentViewController extends RootController {
             if (!children.contains(dropImage)){
                 children.add(dropImage);
             }
-        }dragEvent.consume();
+        }
+        dragEvent.consume();
     }
 }

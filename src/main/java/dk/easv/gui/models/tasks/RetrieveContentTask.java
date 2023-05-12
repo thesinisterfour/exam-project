@@ -6,8 +6,8 @@ import javafx.concurrent.Task;
 import java.sql.SQLException;
 
 public class RetrieveContentTask extends Task<Object> {
-    private DocumentLogic documentLogic = new DocumentLogic();
-    private int id;
+    private final DocumentLogic documentLogic = new DocumentLogic();
+    private final int id;
 
     public RetrieveContentTask(int id){
         this.id = id;

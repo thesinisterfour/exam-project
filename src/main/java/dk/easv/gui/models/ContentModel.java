@@ -2,6 +2,7 @@ package dk.easv.gui.models;
 
 import dk.easv.be.Doc;
 import dk.easv.bll.DocumentLogic;
+import dk.easv.bll.IDocumentLogic;
 import dk.easv.dal.CRUDDAOFactory;
 import dk.easv.dal.interafaces.ICRUDDao;
 import dk.easv.helpers.DAOType;
@@ -13,7 +14,7 @@ import java.sql.SQLException;
 import java.util.concurrent.ConcurrentNavigableMap;
 
 public class ContentModel {
-    private final DocumentLogic documentLogic = new DocumentLogic();
+    private final IDocumentLogic documentLogic = new DocumentLogic();
 
     private int documentId;
 

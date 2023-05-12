@@ -33,45 +33,55 @@ import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.ConcurrentNavigableMap;
 import java.util.stream.Collectors;
 
-public class DocumentLogic {
+public class DocumentLogic implements IDocumentLogic {
     private final ICRUDDao<Content> contentDAO = CRUDDAOFactory.getDao(DAOType.CONTENT_DAO);
     private final IContentMapperDAO contentMapper = new ContentDAO();
 
+    @Override
     public void addText(int documentId, int index, String text) throws SQLException {
         contentDAO.add(new Content(documentId, index, text));
     }
 
+    @Override
     public void addText(int documentId, int contentId, int index, String content) throws SQLException {
         contentDAO.add(new Content(documentId, contentId, index, content));
     }
 
+    @Override
     public void addImage(int documentId, int index, Image image) throws SQLException {
         contentDAO.add(new Content(documentId,  index, image));
     }
+    @Override
     public void addImage(int documentId, int contentId, int index) throws SQLException {
         contentDAO.add(new Content(documentId, contentId, index));
     }
 
+    @Override
     public ConcurrentMap<Integer, Content> getAllContent() throws SQLException {
         return contentDAO.getAll();
     }
 
+    @Override
     public Content getContent(int contentId) throws SQLException{
         return contentDAO.get(contentId);
     }
 
 
+    @Override
     public void deleteContent(int id) throws SQLException {
         contentDAO.delete(id);
     }
 
+    @Override
     public void deleteMapping(int documentId, int id) throws SQLException {
         contentMapper.deleteMapping(documentId, id);
     }
 
+    @Override
     public ConcurrentNavigableMap<Integer, Integer> loadAllContent(int documentId) throws SQLException {
         return contentMapper.loadAllContent(documentId);
     }
+    @Override
     public List<Doc> showOldDocuments() throws SQLException {
         LocalDateTime currentDate = LocalDateTime.now();
         DocumentDAO documentDAO = new DocumentDAO();
@@ -85,6 +95,7 @@ public class DocumentLogic {
         return oldDocuments;
     }
 
+    @Override
     public void generatePDF(Doc doc, String dest) throws IOException, SQLException {
         ConcurrentNavigableMap<Integer, Integer> contentMap = loadAllContent(doc.getId());
         PdfWriter writer = new PdfWriter(dest);

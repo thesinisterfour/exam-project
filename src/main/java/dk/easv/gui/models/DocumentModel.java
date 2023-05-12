@@ -1,7 +1,7 @@
 package dk.easv.gui.models;
 
 import dk.easv.be.Doc;
-import dk.easv.bll.BLLFacade;
+import dk.easv.bll.ICRUDLogic;
 import dk.easv.bll.CRUDLogic;
 import dk.easv.bll.DocumentLogic;
 import javafx.collections.FXCollections;
@@ -12,8 +12,8 @@ import java.util.List;
 import java.util.concurrent.ConcurrentMap;
 
 public class DocumentModel {
-    private final BLLFacade bll = new CRUDLogic();
-    private ObservableList<Doc> obsAllDocuments;
+    private final ICRUDLogic bll = new CRUDLogic();
+    private final ObservableList<Doc> obsAllDocuments;
 
     public DocumentModel() throws SQLException {
         obsAllDocuments= FXCollections.observableArrayList();

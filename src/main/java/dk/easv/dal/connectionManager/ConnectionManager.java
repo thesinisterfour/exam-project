@@ -1,4 +1,4 @@
-package dk.easv.dal;
+package dk.easv.dal.connectionManager;
 
 import com.microsoft.sqlserver.jdbc.SQLServerConnectionPoolDataSource;
 import dk.easv.Main;
@@ -14,20 +14,19 @@ import java.util.Optional;
 import java.util.Properties;
 import java.util.concurrent.*;
 
-public class ConnectionManager {
+public class ConnectionManager implements IConnectionManager{
     private static final String usualConfigPath = "config.cfg";
-    private static ConnectionManager INSTANCE;
     private final SQLServerConnectionPoolDataSource ds;
 
     private final ScheduledExecutorService es = Executors.newSingleThreadScheduledExecutor();
-    private final int numberOfConnections = 50;
+    private final int numberOfConnections = 20;
     private final BlockingDeque<PooledConnection> connections = new LinkedBlockingDeque<>(numberOfConnections);
 
-    private ConnectionManager() {
+    public ConnectionManager() {
         this(usualConfigPath);
     }
 
-    private ConnectionManager(String resourcePath) {
+    public ConnectionManager(String resourcePath) {
         Properties props = new Properties();
         try (InputStream resourceStream = Main.class.getResourceAsStream(resourcePath)) {
             props.load(resourceStream);
@@ -54,14 +53,7 @@ public class ConnectionManager {
         }, 0, 1, TimeUnit.MILLISECONDS);
     }
 
-    public static ConnectionManager getINSTANCE() {
-        if (INSTANCE == null) {
-            INSTANCE = new ConnectionManager();
-        }
-        return INSTANCE;
-    }
-
-
+    @Override
     public Connection getConnection() throws SQLException {
         try {
             return connections.takeFirst().getConnection();
@@ -69,6 +61,12 @@ public class ConnectionManager {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public void stopExecutorService() {
+        es.shutdownNow();
+    }
+
 
     private PooledConnection createConnection() {
         try {
@@ -78,10 +76,6 @@ public class ConnectionManager {
         }
     }
 
-    public void stopExecutorService() {
-        es.shutdownNow();
-
-    }
 
     private void showConfigNotFoundAlert(String path) {
         Alert alert = new Alert(Alert.AlertType.ERROR);

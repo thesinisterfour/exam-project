@@ -16,7 +16,7 @@
          <content>
             <HBox fx:id="centeringHBox" alignment="TOP_CENTER" styleClass="semi-transparent-bg">
                <children>
-                  <VBox fx:id="vbox" alignment="TOP_CENTER" spacing="10.0" style="-fx-background-color: white; -fx-border-color: black; -fx-border-width: 1;" HBox.hgrow="ALWAYS" />
+                  <VBox fx:id="vbox" alignment="TOP_CENTER" onDragDropped="#vboxOnDragDropped" onDragOver="#vboxOnDragOver" spacing="10.0" style="-fx-background-color: white; -fx-border-color: black; -fx-border-width: 1;" HBox.hgrow="ALWAYS" />
                </children>
             </HBox>
          </content>

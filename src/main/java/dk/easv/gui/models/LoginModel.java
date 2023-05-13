@@ -1,18 +1,15 @@
 package dk.easv.gui.models;
 
 import dk.easv.be.User;
-import dk.easv.bll.BLLFacade;
-import dk.easv.bll.CRUDLogic;
+import dk.easv.bll.ILoginLogic;
+import dk.easv.bll.LoginLogic;
 
 import java.sql.SQLException;
 
 public class LoginModel {
 
-    private BLLFacade bll;
+    private final ILoginLogic bll = new LoginLogic();
 
-    public LoginModel(){
-        bll = new CRUDLogic();
-    }
     public User checkForUser(String username, String password) throws SQLException {
         return bll.checkForUser(username, password);
     }

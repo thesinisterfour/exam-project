@@ -1,13 +1,14 @@
 package dk.easv.gui.models;
 
 import dk.easv.be.City;
+import dk.easv.bll.ICRUDLogic;
 import dk.easv.bll.CRUDLogic;
 
 import java.sql.SQLException;
 
 public class CityModel {
 
-    private CRUDLogic crudLogic = new CRUDLogic();
+    private final ICRUDLogic crudLogic = new CRUDLogic();
 
     public int add(City city) throws SQLException{
         return crudLogic.addCity(city);

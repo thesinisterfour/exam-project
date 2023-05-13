@@ -5,6 +5,7 @@ import dk.easv.Main;
 import dk.easv.be.Content;
 import dk.easv.gui.controllerFactory.ControllerFactory;
 import dk.easv.gui.models.ContentModel;
+import dk.easv.gui.models.interfaces.IContentModel;
 import dk.easv.gui.models.tasks.RetrieveContentTask;
 import dk.easv.gui.rootContoller.RootController;
 import dk.easv.helpers.ViewType;
@@ -54,7 +55,7 @@ public class DocumentViewController extends RootController {
     private final ScheduledExecutorService scheduledSaveService = Executors.newSingleThreadScheduledExecutor();
     private final int scaleOffset = 50;
     private final Label emptyLabel = new Label("No content to display");
-    private final ContentModel model = ContentModel.getInstance();
+    private final IContentModel model = ContentModel.getInstance();
     @FXML
     private VBox vbox;
     @FXML

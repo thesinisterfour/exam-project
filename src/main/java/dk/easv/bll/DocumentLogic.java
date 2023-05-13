@@ -1,14 +1,18 @@
 package dk.easv.bll;
 
 import com.itextpdf.io.font.constants.StandardFonts;
+import com.itextpdf.io.image.ImageData;
 import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.kernel.colors.Color;
 import com.itextpdf.kernel.colors.DeviceRgb;
 import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.geom.PageSize;
+import com.itextpdf.kernel.geom.Rectangle;
 import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfPage;
 import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.borders.Border;
 import com.itextpdf.layout.borders.SolidBorder;
@@ -38,6 +42,8 @@ import java.util.List;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.ConcurrentNavigableMap;
 import java.util.stream.Collectors;
+import com.itextpdf.io.image.ImageDataFactory;
+import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
 
 public class DocumentLogic implements IDocumentLogic {
     private final ICRUDDao<Content> contentDAO = CRUDDAOFactory.getDao(DAOType.CONTENT_DAO);
@@ -116,6 +122,7 @@ public class DocumentLogic implements IDocumentLogic {
         document.add(new Paragraph(doc.getDescription()));
         document.add(new Paragraph("Document created on: " + doc.getCreationDate().toString()));
         document.add(new Paragraph("PDF generated on: " + LocalDateTime.now()));
+
         for (Integer contentId : contentMap.values()) {
             Content content = getContent(contentId);
             if (content.getImage() != null) {
@@ -134,6 +141,23 @@ public class DocumentLogic implements IDocumentLogic {
 
             }
         }
+
+        //Logic for stamping the logo watermark on every page in the pdf
+
+        String logoPath = "src/main/resources/dk/easv/icons/WUAV-Logo.png";
+        float logoWidth = 123;
+        float logoHeight = 33;
+        float margin = 20;
+        float logoX = pdf.getPage(1).getPageSize().getRight() - logoWidth - margin;
+        float logoY = pdf.getPage(1).getPageSize().getTop() - logoHeight - margin;
+
+        int numberOfPages = pdf.getNumberOfPages();
+        for (int i = 1; i <= numberOfPages; i++) {
+            PdfPage page = pdf.getPage(i);
+            PdfCanvas pdfCanvas = new PdfCanvas(page);
+            pdfCanvas.addImageFittedIntoRectangle(ImageDataFactory.create(logoPath), new Rectangle(logoX, logoY, logoWidth, logoHeight), false);
+        }
+
         document.close();
     }
 }

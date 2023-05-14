@@ -51,8 +51,13 @@ Label{
     -fx-background-radius: 20px;
 }
 
-.header{
+.gray_content_bottom{
+    -fx-background-color: -light-shades-opaque;
+}
+
+.headerPM{
     -fx-background-color: -light-shades;
+    -fx-border-radius: 15px !important;
 }
 
 .semi-transparent-bg {

@@ -10,12 +10,13 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane alignment="CENTER" prefHeight="388.0" prefWidth="487.0" styleClass="main_pane" stylesheets="@../css/global-style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.LoginController">
+<GridPane alignment="CENTER" prefHeight="600.0" prefWidth="900.0" styleClass="main_pane" stylesheets="@../css/global-style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.LoginController">
    <columnConstraints>
       <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" />
    </columnConstraints>
    <rowConstraints>
-      <RowConstraints minHeight="10.0" valignment="CENTER" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="546.3999755859375" minHeight="10.0" prefHeight="532.0000122070312" valignment="CENTER" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="315.79998779296875" minHeight="10.0" prefHeight="67.9999877929688" valignment="CENTER" vgrow="SOMETIMES" />
    </rowConstraints>
    <children>
       <Group>
@@ -42,5 +43,6 @@
             </GridPane>
          </children>
       </Group>
+      <Group GridPane.rowIndex="1" />
    </children>
 </GridPane>

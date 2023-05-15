@@ -4,6 +4,8 @@ import dk.easv.be.Doc;
 import dk.easv.gui.controllerFactory.ControllerFactory;
 import dk.easv.gui.models.ContentModel;
 import dk.easv.gui.models.DocumentModel;
+import dk.easv.gui.models.interfaces.IDocumentModel;
+import dk.easv.gui.models.interfaces.IContentModel;
 import dk.easv.gui.rootContoller.RootController;
 import dk.easv.helpers.AlertHelper;
 import dk.easv.helpers.DocumentHelper;
@@ -14,6 +16,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
+
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -22,7 +25,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 public class AdminViewController extends RootController {
 
-    private DocumentModel documentModel;
+    private IDocumentModel documentModel;
 
     @FXML
     private MFXTextField userName;
@@ -78,7 +81,7 @@ public class AdminViewController extends RootController {
     }
     @FXML
     private void handleEditDocument() {
-        ContentModel contentModel = ContentModel.getInstance();
+        IContentModel contentModel = ContentModel.getInstance();
         Doc document = tableView.getSelectionModel().getSelectedValues().get(0);
         contentModel.setDocumentId(document.getId());
 

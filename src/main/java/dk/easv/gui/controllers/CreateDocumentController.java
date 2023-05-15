@@ -3,6 +3,7 @@ package dk.easv.gui.controllers;
 import dk.easv.be.Doc;
 import dk.easv.gui.controllerFactory.ControllerFactory;
 import dk.easv.gui.models.DocumentModel;
+import dk.easv.gui.models.interfaces.IDocumentModel;
 import dk.easv.gui.rootContoller.RootController;
 import dk.easv.helpers.ViewType;
 import io.github.palexdev.materialfx.controls.MFXTextField;
@@ -16,7 +17,7 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class CreateDocumentController extends RootController {
-    private DocumentModel model = new DocumentModel();
+    private IDocumentModel model = new DocumentModel();
     @FXML
     private MFXTextField nameTextField;
     @FXML

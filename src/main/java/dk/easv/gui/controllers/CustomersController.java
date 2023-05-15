@@ -1,8 +1,10 @@
 package dk.easv.gui.controllers;
+
 import dk.easv.Main;
 import dk.easv.be.Customer;
 import dk.easv.gui.controllerFactory.ControllerFactory;
 import dk.easv.gui.models.CustomerModel;
+import dk.easv.gui.models.interfaces.ICustomerModel;
 import dk.easv.gui.rootContoller.RootController;
 import dk.easv.helpers.ViewType;
 import io.github.palexdev.materialfx.controls.MFXButton;
@@ -10,12 +12,9 @@ import io.github.palexdev.materialfx.controls.MFXScrollPane;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -31,7 +30,7 @@ public class CustomersController extends RootController {
 
     private Stage stage;
 
-    private CustomerModel customerModel = new CustomerModel();
+    private ICustomerModel customerModel = new CustomerModel();
 
 
     private ConcurrentMap<Integer, Customer> customers = new ConcurrentHashMap<>();

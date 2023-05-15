@@ -1,26 +1,22 @@
 package dk.easv.bll;
 
 import com.itextpdf.io.font.constants.StandardFonts;
-import com.itextpdf.io.image.ImageData;
 import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.kernel.colors.Color;
 import com.itextpdf.kernel.colors.DeviceRgb;
 import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
-import com.itextpdf.kernel.geom.PageSize;
 import com.itextpdf.kernel.geom.Rectangle;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfPage;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
 import com.itextpdf.layout.Document;
-import com.itextpdf.layout.borders.Border;
 import com.itextpdf.layout.borders.SolidBorder;
-import com.itextpdf.layout.element.AreaBreak;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.properties.HorizontalAlignment;
 import com.itextpdf.layout.properties.TextAlignment;
-import com.itextpdf.layout.properties.VerticalAlignment;
+import dk.easv.Main;
 import dk.easv.be.Content;
 import dk.easv.be.Doc;
 import dk.easv.dal.CRUDDAOFactory;
@@ -31,6 +27,7 @@ import dk.easv.dal.interafaces.IContentMapperDAO;
 import dk.easv.helpers.DAOType;
 import io.github.palexdev.materialfx.utils.SwingFXUtils;
 import javafx.scene.image.Image;
+
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
@@ -39,11 +36,10 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.ConcurrentNavigableMap;
 import java.util.stream.Collectors;
-import com.itextpdf.io.image.ImageDataFactory;
-import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
 
 public class DocumentLogic implements IDocumentLogic {
     private final ICRUDDao<Content> contentDAO = CRUDDAOFactory.getDao(DAOType.CONTENT_DAO);
@@ -144,7 +140,7 @@ public class DocumentLogic implements IDocumentLogic {
 
         //Logic for stamping the logo watermark on every page in the pdf
 
-        String logoPath = "src/main/resources/dk/easv/icons/WUAV-Logo.png";
+        String logoPath = Objects.requireNonNull(Main.class.getResource("icons/WUAV-Logo.png")).getPath();
         float logoWidth = 123;
         float logoHeight = 33;
         float margin = 20;

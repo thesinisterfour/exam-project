@@ -5,7 +5,9 @@ import dk.easv.be.Doc;
 import dk.easv.be.User;
 import dk.easv.gui.controllerFactory.ControllerFactory;
 import dk.easv.gui.models.DocumentModel;
+import dk.easv.gui.models.interfaces.IUserModel;
 import dk.easv.gui.models.UserModel;
+import dk.easv.gui.models.interfaces.IDocumentModel;
 import dk.easv.gui.rootContoller.RootController;
 import dk.easv.helpers.AlertHelper;
 import dk.easv.helpers.DocumentHelper;
@@ -33,7 +35,7 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentMap;
 
 public class ProjectManagerViewController extends RootController {
-    private DocumentModel documentModel;
+    private IDocumentModel documentModel;
     @FXML
     private VBox boxVert;
 
@@ -69,7 +71,7 @@ public class ProjectManagerViewController extends RootController {
 
     private Stage stage;
 
-    private UserModel userModel = new UserModel();
+    private IUserModel userModel = new UserModel();
 
 
 

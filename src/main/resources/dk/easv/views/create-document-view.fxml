@@ -28,7 +28,7 @@
         </rowConstraints>
          <children>
             <MFXTextField fx:id="nameTextField" floatMode="BORDER" prefHeight="38.0" prefWidth="290.0" promptText="Document name" />
-            <MFXTextField fx:id="descriptionTextField" alignment="CENTER" floatMode="DISABLED" floatingText="Descripton" prefHeight="124.0" prefWidth="278.0" promptText="Description" style="-mfx-text-limit: 10;" GridPane.rowIndex="1" />
+            <MFXTextField fx:id="descriptionTextField" alignment="CENTER" floatMode="DISABLED" floatingText="Descripton" prefHeight="124.0" prefWidth="278.0" promptText="Description" GridPane.rowIndex="1" />
             <HBox alignment="BOTTOM_CENTER" prefHeight="87.0" prefWidth="563.0" spacing="20.0" GridPane.rowIndex="2">
                <children>
                   <MFXButton defaultButton="true" onAction="#createOnAction" text="Create" />

@@ -3,6 +3,7 @@ package dk.easv.gui.controllers;
 import dk.easv.Main;
 import dk.easv.be.User;
 import dk.easv.gui.controllerFactory.ControllerFactory;
+import dk.easv.gui.models.interfaces.IUserModel;
 import dk.easv.gui.models.UserModel;
 import dk.easv.gui.rootContoller.RootController;
 import dk.easv.helpers.ViewType;
@@ -29,7 +30,7 @@ public class WorkerViewController extends RootController{
 
     private ConcurrentMap<Integer, User> users = new ConcurrentHashMap<>();
 
-    private UserModel userModel = new UserModel();
+    private IUserModel userModel = new UserModel();
 
     @FXML
     private HBox workers;

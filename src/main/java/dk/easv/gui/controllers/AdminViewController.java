@@ -4,6 +4,8 @@ import dk.easv.be.Doc;
 import dk.easv.gui.controllerFactory.ControllerFactory;
 import dk.easv.gui.models.ContentModel;
 import dk.easv.gui.models.DocumentModel;
+import dk.easv.gui.models.interfaces.IContentModel;
+import dk.easv.gui.models.interfaces.IDocumentModel;
 import dk.easv.gui.rootContoller.RootController;
 import dk.easv.helpers.AlertHelper;
 import dk.easv.helpers.DocumentHelper;
@@ -14,15 +16,18 @@ import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
+
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
+
 public class AdminViewController extends RootController {
 
-    private DocumentModel documentModel;
+    private IDocumentModel documentModel;
 
     @FXML
     private MFXTextField userName;
@@ -40,13 +45,14 @@ public class AdminViewController extends RootController {
         try {
             documentModel = new DocumentModel();
             List<Doc> oldDocuments = documentModel.getOldDocuments();
-            AlertHelper.showDefaultAlert(DocumentHelper.convertToString(oldDocuments),Alert.AlertType.INFORMATION);
+            AlertHelper.showDefaultAlert(DocumentHelper.convertToString(oldDocuments), Alert.AlertType.INFORMATION);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
         setUpPaginated();
     }
+
     @FXML
     public void handleLogout() throws IOException {
         if (stage == null) {
@@ -57,16 +63,18 @@ public class AdminViewController extends RootController {
         this.stage.setScene(new Scene(controller.getView(), 760, 480));
         this.stage.setTitle("Login");
     }
+
     @FXML
-    private void handleDelete() throws  SQLException{
+    private void handleDelete() throws SQLException {
         try {
-            Doc selectedDocument =  tableView.getSelectionModel().getSelectedValues().get(0);
+            Doc selectedDocument = tableView.getSelectionModel().getSelectedValues().get(0);
             documentModel.deleteDocument(selectedDocument.getId());
             documentModel.setObsAllDocuments();
         } catch (IndexOutOfBoundsException e) {
             AlertHelper.showDefaultAlert("Pleas select a document to delete", Alert.AlertType.ERROR);
         }
     }
+
     @FXML
     private void handleCreateDocument() {
         try {
@@ -76,9 +84,10 @@ public class AdminViewController extends RootController {
             throw new RuntimeException(e);
         }
     }
+
     @FXML
     private void handleEditDocument() {
-        ContentModel contentModel = ContentModel.getInstance();
+        IContentModel contentModel = ContentModel.getInstance();
         Doc document = tableView.getSelectionModel().getSelectedValues().get(0);
         contentModel.setDocumentId(document.getId());
 
@@ -91,6 +100,7 @@ public class AdminViewController extends RootController {
         }
 
     }
+
     @FXML
     private void handleUsers() throws IOException {
         RootController controller = ControllerFactory.loadFxmlFile(ViewType.USERS_VIEW);
@@ -100,6 +110,7 @@ public class AdminViewController extends RootController {
         stage.show();
 
     }
+
     @FXML
     private void handleCustomers() throws IOException {
         RootController controller = ControllerFactory.loadFxmlFile(ViewType.CUSTOMERS);
@@ -110,7 +121,7 @@ public class AdminViewController extends RootController {
 
     }
 
-    private void setUpPaginated(){
+    private void setUpPaginated() {
         MFXTableColumn<Doc> idColumn = new MFXTableColumn<>("ID", true, Comparator.comparing(Doc::getId));
         MFXTableColumn<Doc> nameColumn = new MFXTableColumn<>("Name", true, Comparator.comparing(Doc::getName));
         MFXTableColumn<Doc> dateCreatedColumn = new MFXTableColumn<>("Date Created", true, Comparator.comparing(Doc::getCreationDate));
@@ -120,10 +131,23 @@ public class AdminViewController extends RootController {
         idColumn.setRowCellFactory(document -> new MFXTableRowCell<>(Doc::getId));
         nameColumn.setRowCellFactory(document -> new MFXTableRowCell<>(Doc::getName));
         dateCreatedColumn.setRowCellFactory(document -> new MFXTableRowCell<>(Doc::getCreationDate));
-        dateLastOpenedColumn.setRowCellFactory(document -> new MFXTableRowCell<>(Doc::getLastView));
-        descriptionColumn.setRowCellFactory(document -> new MFXTableRowCell<>(Doc::getDescription));
+        dateLastOpenedColumn.setRowCellFactory(document -> {
+            LocalDate date = document.getLastView();
+            if (date == null){
+                return new MFXTableRowCell<>(doc -> "Never");
+            }
+            return new MFXTableRowCell<>(Doc::getLastView);
+        });
+        descriptionColumn.setRowCellFactory(document ->{
+            String description = document.getDescription();
+            if (description == null){
+                return new MFXTableRowCell<>(doc -> "No description");
+            }
+            return new MFXTableRowCell<>(Doc::getDescription);
+        });
 
         tableView.getTableColumns().setAll(idColumn, nameColumn, dateCreatedColumn, dateLastOpenedColumn, descriptionColumn);
+        tableView.autosizeColumnsOnInitialization();
 
         try {
             tableView.setItems(documentModel.getObsAllDocuments());

@@ -17,7 +17,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        RootController controller = ControllerFactory.loadFxmlFile(ViewType.LOGIN);
+        RootController controller = ControllerFactory.loadFxmlFile(ViewType.MAIN);
         Scene scene = new Scene(controller.getView(), 900, 600);
         stage.setTitle("Hello!");
         stage.setScene(scene);

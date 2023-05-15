@@ -3,6 +3,8 @@ package dk.easv.helpers;
 public enum ViewType {
     ADMIN("views/admin-view.fxml"),
 
+    MAIN("views/Main-view.fxml"),
+
     PROJECT_MANAGER("views/project-manager-view.fxml"),
 
     SALESPERSON ("views/salesperson-view.fxml"),

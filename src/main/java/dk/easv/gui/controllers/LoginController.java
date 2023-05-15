@@ -6,6 +6,7 @@ import dk.easv.gui.controllerFactory.ControllerFactory;
 import dk.easv.gui.models.interfaces.ILoginModel;
 import dk.easv.gui.models.LoginModel;
 import dk.easv.gui.rootContoller.RootController;
+import dk.easv.helpers.UserSingleClass;
 import dk.easv.helpers.ViewType;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import javafx.event.ActionEvent;
@@ -30,18 +31,27 @@ public class LoginController extends RootController {
     private MFXTextField password;
     private Stage stage;
 
+    private UserSingleClass newUser = UserSingleClass.getInstance();
+
     @FXML
     private void loginButtonAction(ActionEvent actionEvent) throws SQLException, IOException {
         this.stage = this.getStage();
         User selectedUser = model.checkForUser(username.getText(), password.getText());
-        if (selectedUser != null){
-            switch (selectedUser.getRole()) {
-                case ADMIN -> displayAdmin();
-                case PROJECTMANAGER -> displayProjectManager();
-                case SALESPERSON -> displaySalesPerson();
-                case TECHNICIAN -> displayTechnician();
+        newUser.setId(selectedUser.getUserID());
+        newUser.setRole(selectedUser.getRole());
+        newUser.setName(selectedUser.getFirstName());
+        System.out.println(newUser);
+        if (newUser != null){
+            displayMain();
             }
-        }
+    }
+
+    private void displayMain() throws IOException{
+        RootController controller = ControllerFactory.loadFxmlFile(ViewType.MAIN);
+        Scene scene = new Scene(controller.getView());
+        stage.setTitle(newUser.getRole().toString());
+        stage.setScene(scene);
+        stage.show();
     }
 
     private void displayAdmin() throws IOException {

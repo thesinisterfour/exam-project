@@ -9,6 +9,7 @@ import dk.easv.gui.models.interfaces.IDocumentModel;
 import dk.easv.gui.rootContoller.RootController;
 import dk.easv.helpers.AlertHelper;
 import dk.easv.helpers.DocumentHelper;
+import dk.easv.helpers.UserSingleClass;
 import dk.easv.helpers.ViewType;
 import io.github.palexdev.materialfx.controls.*;
 import io.github.palexdev.materialfx.controls.cell.MFXTableRowCell;
@@ -40,9 +41,15 @@ public class AdminViewController extends RootController {
 
     private Stage stage;
 
+    private UserSingleClass userSingleClass = UserSingleClass.getInstance();
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
+            if(userSingleClass != null){
+                System.out.println( userSingleClass.getId());
+            }
+
             documentModel = new DocumentModel();
             List<Doc> oldDocuments = documentModel.getOldDocuments();
             AlertHelper.showDefaultAlert(DocumentHelper.convertToString(oldDocuments), Alert.AlertType.INFORMATION);

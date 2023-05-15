@@ -76,7 +76,7 @@
                   <RowConstraints maxHeight="5.599951171874999" minHeight="1.5999511718749986" prefHeight="1.5999511718749986" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <HBox nodeOrientation="RIGHT_TO_LEFT" prefHeight="100.0" prefWidth="200.0">
+                  <HBox fx:id="mainHbox" nodeOrientation="RIGHT_TO_LEFT" prefHeight="100.0" prefWidth="200.0">
                      <children>
                         <MFXButton fx:id="deleteDocument" text="delete">
                            <HBox.margin>

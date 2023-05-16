@@ -5,9 +5,11 @@ import dk.easv.be.Doc;
 import dk.easv.be.Project;
 import dk.easv.gui.controllerFactory.ControllerFactory;
 import dk.easv.gui.models.CustomerModel;
+import dk.easv.gui.models.DocumentMapperModel;
 import dk.easv.gui.models.DocumentModel;
 import dk.easv.gui.models.ProjectModel;
 import dk.easv.gui.models.interfaces.ICustomerModel;
+import dk.easv.gui.models.interfaces.IDocumentMapperModel;
 import dk.easv.gui.models.interfaces.IDocumentModel;
 import dk.easv.gui.models.interfaces.IProjectModel;
 import dk.easv.gui.rootContoller.RootController;
@@ -24,7 +26,6 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class CreateDocumentController extends RootController {
-    private IDocumentModel model = new DocumentModel();
     @FXML
     private MFXTextField nameTextField;
     @FXML
@@ -34,23 +35,42 @@ public class CreateDocumentController extends RootController {
     @FXML
     private MFXFilterComboBox<Project> projectComboBox;
 
-    public CreateDocumentController() throws SQLException {
-    }
-
     @FXML
     private void createOnAction(ActionEvent actionEvent) {
-        String name = nameTextField.getText();
-        if (name.isEmpty()) {
-            nameTextField.setPromptText("Required");
-            return;
-        }
-        String description = descriptionTextField.getText();
         try {
-            if (description.isEmpty()) {
-                model.addDocument(new Doc(name));
-            } else {
-                model.addDocument(new Doc(name, description));
+            final IDocumentModel model = new DocumentModel();
+            final IDocumentMapperModel mapperModel = new DocumentMapperModel();
+            boolean emptyField = false;
+            Customer selectedCustomer = customerComboBox.getSelectionModel().getSelectedItem();
+            Project selectedProject = projectComboBox.getSelectionModel().getSelectedItem();
+            String name = nameTextField.getText();
+            if (name.isEmpty()) {
+                nameTextField.setPromptText("Required");
+                emptyField = true;
             }
+            if (selectedCustomer == null) {
+                customerComboBox.setPromptText("Required");
+                emptyField = true;
+            }
+            if (selectedProject == null) {
+                projectComboBox.setPromptText("Required");
+                emptyField = true;
+            }
+            if (emptyField) {
+                return;
+            }
+
+
+            int docId;
+            String description = descriptionTextField.getText();
+
+            if (description.isEmpty()) {
+                docId = model.addDocument(new Doc(name));
+
+            } else {
+                docId = model.addDocument(new Doc(name, description));
+            }
+            mapperModel.addDocumentToProject(selectedProject.getProjectID(), docId);
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -27,6 +27,12 @@ public class ConnectionManager {
         this(usualConfigPath);
     }
 
+    /**
+     * This constructor loads configuration properties from a resource file,
+     * initializes a SQLServerConnectionPoolDataSource with the retrieved properties,
+     * and schedules a task to create new database connections at a fixed rate.
+     * Additionally, it handles exceptions related to resource loading and displays an alert if the configuration file is not found.
+     */
     private ConnectionManager(String resourcePath) {
         Properties props = new Properties();
         try (InputStream resourceStream = Main.class.getResourceAsStream(resourcePath)) {
@@ -54,6 +60,12 @@ public class ConnectionManager {
         }, 0, 1, TimeUnit.MILLISECONDS);
     }
 
+    /**
+     * This method follows the Singleton pattern, ensuring that only one instance of
+     * the ConnectionManager class is created and shared throughout the application.
+     * @return If the INSTANCE variable is already assigned, the existing instance is returned.
+     * Otherwise, a new instance is created and assigned to the INSTANCE variable before being returned.
+     */
     public static ConnectionManager getINSTANCE() {
         if (INSTANCE == null) {
             INSTANCE = new ConnectionManager();
@@ -62,6 +74,12 @@ public class ConnectionManager {
     }
 
 
+    /**
+     * @return this code attempts to get a connection from a pool by taking the first available connection from the queue and returning it.
+     *  it throws a .
+     * @throws RuntimeException wrapping the InterruptedException, if there is an interruption while waiting for a connection.
+     * @throws SQLException if there's an error during the database operation.
+     */
     public Connection getConnection() throws SQLException {
         try {
             return connections.takeFirst().getConnection();
@@ -70,6 +88,10 @@ public class ConnectionManager {
         }
     }
 
+    /**
+     * @return this code attempts to create a pooled connection by invoking the getPooledConnection() method on a data source (ds).
+     * @throws SQLException (If an exception occurs during this process, it is caught and rethrown as a RuntimeException with the original SQLException as the cause.)
+     */
     private PooledConnection createConnection() {
         try {
             return ds.getPooledConnection();
@@ -78,11 +100,20 @@ public class ConnectionManager {
         }
     }
 
+    /**
+     * this methode stops the executor service by calling shutdownNow().
+     * This will attempt to stop the running tasks and return the list of pending tasks.
+     */
     public void stopExecutorService() {
         es.shutdownNow();
 
     }
 
+    /**
+     * Overall, this method displays an error message in the form of an alert dialog,
+     * informs the user about a missing configuration file, and provides instructions on how to create it.
+     * Depending on the user's interaction, the program may terminate with different exit statuses.
+     */
     private void showConfigNotFoundAlert(String path) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");

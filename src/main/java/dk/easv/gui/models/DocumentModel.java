@@ -15,10 +15,17 @@ public class DocumentModel {
     private final BLLFacade bll = new CRUDLogic();
     private ObservableList<Doc> obsAllDocuments;
 
+    /**
+     *  This is a constructor that initializes an empty ObservableList named
+     *  obsAllDocuments and calls a method named setObsAllDocuments()
+     *  to populate the list with data from the database.
+     * @throws SQLException
+     */
     public DocumentModel() throws SQLException {
         obsAllDocuments= FXCollections.observableArrayList();
         setObsAllDocuments();
     }
+
     public int addDocument(Doc document) throws SQLException {
         return bll.addDocument(document);
     }

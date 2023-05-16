@@ -36,10 +36,19 @@ public class CustomerModel {
      */
 
 
+    /**
+     * @returns a ConcurrentMap of Customer objects. The method retrieves the customers using an object of crudLogic class.
+     * @throws SQLException
+     */
     public ConcurrentMap<Integer, Customer> getAllCustomers() throws SQLException {
         return crudLogic.getAllCustomers();
     }
 
+    /**
+     * @param customer
+     * @returns integer value of customer
+     * @throws SQLException
+     */
     public int add(Customer customer) throws SQLException {
         return crudLogic.addCustomer(customer);
     }

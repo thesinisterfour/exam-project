@@ -11,6 +11,11 @@ public class UserModel {
 
     private CRUDLogic crudLogic = new CRUDLogic();
 
+
+    /**
+     * @returns a ConcurrentMap of Users with Integer keys
+     * @throws SQLException
+     */
     public ConcurrentMap<Integer, User> getAllUsers() throws SQLException {
         return crudLogic.getAllUsers();
     }

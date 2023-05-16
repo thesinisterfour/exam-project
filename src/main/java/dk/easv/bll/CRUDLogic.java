@@ -10,6 +10,12 @@ import java.util.concurrent.ConcurrentMap;
 
 public class CRUDLogic implements BLLFacade {
 
+    /**
+     * the addUser method attempts to retrieve a user DAO from the CRUDDAOFactory
+     * and adds the provided User object by invoking the add method on the DAO.
+     * @return -1 if the DAO retrieval fails or the result returned by the DAO's add method.
+     * @throws SQLException if there is an error doing the database operation.
+     */
     @Override
     public int addUser(User user) throws SQLException{
         ICRUDDao<User> userDAO = CRUDDAOFactory.getDao(DAOType.USER_DAO);
@@ -19,6 +25,14 @@ public class CRUDLogic implements BLLFacade {
             return userDAO.add(user);
         }
     }
+
+    /**
+     *  the addCustomer method attempts to retrieve a customer DAO from the CRUDDAOFactory
+     *  and adds the provided Customer object by invoking the add method on the DAO.
+     * @return the result returned by the DAO's add method
+     * @throws SQLException if there is an error doing the database operations.
+     * @throws NullPointerException if the DAO retrieval fails.
+     */
     public int addCustomer(Customer customer) throws SQLException, NullPointerException {
         ICRUDDao<Customer> customerDAO = CRUDDAOFactory.getDao(DAOType.CUSTOMER_DAO);
         if (customerDAO == null) {
@@ -28,6 +42,12 @@ public class CRUDLogic implements BLLFacade {
         }
     }
 
+    /**
+     * @param city
+     * @return
+     * @throws SQLException
+     * @throws NullPointerException
+     */
     public int addCity(City city) throws SQLException, NullPointerException{
         ICRUDDao<City> cityDao = CRUDDAOFactory.getDao(DAOType.CITY_DAO);
         if(cityDao == null){

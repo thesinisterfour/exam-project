@@ -13,6 +13,10 @@ public class ProjectModel {
     private CRUDLogic crudLogic = new CRUDLogic();
 
 
+    /**
+     * @return a ConcurrentMap of Project objects
+     * @throws SQLException
+     */
     public ConcurrentMap<Integer, Project> getCustomerPoject() throws SQLException {
         return crudLogic.getCustomerProject();
     }

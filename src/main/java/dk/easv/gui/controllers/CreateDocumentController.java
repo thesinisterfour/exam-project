@@ -72,7 +72,14 @@ public class CreateDocumentController extends RootController {
         IProjectModel projectModel = new ProjectModel();
         try {
             customerComboBox.setItems(customerModel.getObsCustomers());
-            projectComboBox.setItems(projectModel.getProjectObservableList());
+            customerComboBox.selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+                try {
+                    projectModel.getProjectsByCustomerId(newValue.getCustomerID());
+                    projectComboBox.setItems(projectModel.getProjectObservableList());
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            });
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

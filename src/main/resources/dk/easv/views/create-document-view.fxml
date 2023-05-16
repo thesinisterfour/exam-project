@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane prefHeight="431.0" prefWidth="561.0" styleClass="main_pane" stylesheets="@../css/global-style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.CreateDocumentController">
+<GridPane prefHeight="431.0" prefWidth="561.0" styleClass="main_pane" stylesheets="@../css/global-style.css" xmlns="http://javafx.com/javafx/19.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.CreateDocumentController">
    <columnConstraints>
       <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" />
    </columnConstraints>
@@ -29,10 +29,10 @@
             <RowConstraints maxHeight="226.80002441406253" minHeight="0.0" prefHeight="27.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <MFXTextField fx:id="nameTextField" floatMode="BORDER" prefHeight="38.0" prefWidth="290.0" promptText="Document name" />
-            <MFXFilterComboBox fx:id="customerComboBox" floatMode="BORDER" prefHeight="40.0" prefWidth="288.0" promptText="Customer" GridPane.rowIndex="1" />
+            <MFXTextField fx:id="nameTextField" floatMode="BORDER" prefHeight="38.0" prefWidth="286.0" promptText="Document name" />
+            <MFXFilterComboBox fx:id="customerComboBox" floatMode="BORDER" prefHeight="40.0" prefWidth="286.0" promptText="Customer" GridPane.rowIndex="1" />
             <MFXFilterComboBox fx:id="projectComboBox" floatMode="BORDER" prefHeight="40.0" prefWidth="286.0" promptText="Project" GridPane.rowIndex="2" />
-            <MFXTextField fx:id="descriptionTextField" alignment="TOP_LEFT" floatMode="DISABLED" floatingText="Descripton" prefHeight="40.0" prefWidth="278.0" promptText="Description" GridPane.rowIndex="3" />
+            <MFXTextField fx:id="descriptionTextField" alignment="TOP_LEFT" floatMode="DISABLED" prefHeight="40.0" prefWidth="286.0" promptText="Description" GridPane.rowIndex="3" />
             <HBox alignment="BOTTOM_CENTER" prefHeight="87.0" prefWidth="563.0" spacing="20.0" GridPane.rowIndex="4">
                <children>
                   <MFXButton defaultButton="true" onAction="#createOnAction" text="Create" />

@@ -4,12 +4,13 @@ import dk.easv.be.Project;
 import dk.easv.dal.connectionManager.ConnectionManagerFactory;
 import dk.easv.dal.connectionManager.IConnectionManager;
 import dk.easv.dal.interafaces.ICRUDDao;
+import dk.easv.dal.interafaces.IProjectMapper;
 
 import java.sql.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
-public class ProjectDAO implements ICRUDDao<Project> {
+public class ProjectDAO implements ICRUDDao<Project>, IProjectMapper {
 
     private final IConnectionManager cm = ConnectionManagerFactory.createConnectionManager();
     @Override
@@ -103,5 +104,27 @@ public class ProjectDAO implements ICRUDDao<Project> {
             ps.executeQuery();
         }
         return 0;
+    }
+
+    @Override
+    public ConcurrentMap<Integer, Project> getProjectsByCustomerId(int id) throws SQLException {
+        ConcurrentMap<Integer, Project> projects = new ConcurrentHashMap<>();
+        try (Connection connection = cm.getConnection()){
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM dbo.[project] INNER JOIN project_customer pc on project.project_id = pc.project_id WHERE pc.customer_id=?;");
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int dbId = rs.getInt("project_id");
+                String dbName = rs.getString("project_name");
+                Date dbStartDate = rs.getDate("project_start_date");
+                Date dbEndDate = rs.getDate("project_end_date");
+                int dbCustomerId = rs.getInt("customer_id");
+                String dbAddress = rs.getString("address");
+                int dbZipcode = rs.getInt("zipcode");
+                Project project = new Project(dbId,dbName,dbStartDate.toLocalDate(), dbEndDate.toLocalDate(), dbCustomerId, dbAddress, dbZipcode);
+                projects.put(dbId, project);
+            }
+        }
+        return projects;
     }
 }

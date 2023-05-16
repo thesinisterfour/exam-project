@@ -13,6 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -43,6 +44,10 @@ public class CardController extends RootController {
     private ConcurrentMap<Integer, User> users = new ConcurrentHashMap<>();
 
     private ConcurrentMap<Integer, Customer> customers = new ConcurrentHashMap<>();
+
+    public CardController() throws SQLException {
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         /*try {

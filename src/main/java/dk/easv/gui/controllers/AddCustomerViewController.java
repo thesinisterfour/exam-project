@@ -27,6 +27,10 @@ public class AddCustomerViewController extends RootController {
     private final ICustomerModel customerModel = new CustomerModel();
 
     private Stage stage;
+
+    public AddCustomerViewController() throws SQLException {
+    }
+
     @FXML
     void cancelButtonAction(ActionEvent event) {
         getStage().close();

@@ -1,11 +1,14 @@
 package dk.easv.gui.controllers;
 
+import dk.easv.be.Customer;
 import dk.easv.be.Doc;
 import dk.easv.be.Role;
 import dk.easv.gui.controllerFactory.ControllerFactory;
 import dk.easv.gui.models.ContentModel;
+import dk.easv.gui.models.CustomerModel;
 import dk.easv.gui.models.DocumentModel;
 import dk.easv.gui.models.interfaces.IContentModel;
+import dk.easv.gui.models.interfaces.ICustomerModel;
 import dk.easv.gui.models.interfaces.IDocumentModel;
 import dk.easv.gui.rootContoller.RootController;
 import dk.easv.helpers.AlertHelper;
@@ -43,7 +46,7 @@ public class MainViewController extends RootController {
                 workersLayer;
 
         @FXML
-        public MFXTableView<?> customerTable;
+        public MFXTableView<Customer> customerTable;
 
         @FXML
         public MFXTableView<Doc> documentsTable;
@@ -70,14 +73,18 @@ public class MainViewController extends RootController {
 
         private IDocumentModel documentModel;
 
+        private ICustomerModel customerModel;
+
         private UserSingleClass actualUser = UserSingleClass.getInstance();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
             documentModel = new DocumentModel();
-            setUpPaginated();
+            customerModel= new CustomerModel();
+            setUpDocBoard();
             roleView();
+            setUpCustomerBoard();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -159,7 +166,7 @@ public class MainViewController extends RootController {
         }
     }
 
-    private void setUpPaginated() {
+    private void setUpDocBoard() {
         MFXTableColumn<Doc> idColumn = new MFXTableColumn<>("ID", true, Comparator.comparing(Doc::getId));
         MFXTableColumn<Doc> nameColumn = new MFXTableColumn<>("Name", true, Comparator.comparing(Doc::getName));
         MFXTableColumn<Doc> dateCreatedColumn = new MFXTableColumn<>("Date Created", true, Comparator.comparing(Doc::getCreationDate));
@@ -191,5 +198,23 @@ public class MainViewController extends RootController {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private void setUpCustomerBoard() throws SQLException {
+        MFXTableColumn<Customer> idColumn = new MFXTableColumn<>("ID", true, Comparator.comparing(Customer::getCustomerID));
+        MFXTableColumn<Customer> nameColumn = new MFXTableColumn<>("Name", true, Comparator.comparing(Customer::getCustomerName));
+        MFXTableColumn<Customer> emailColumn = new MFXTableColumn<>("Email", true, Comparator.comparing(Customer::getCustomerEmail));
+        MFXTableColumn<Customer> addressColumn = new MFXTableColumn<>("Address", true, Comparator.comparing(Customer::getCustomerAddress));
+        MFXTableColumn<Customer> zipCodeColumn = new MFXTableColumn<>("Zip Code", true, Comparator.comparing(Customer::getZipCode));
+
+        idColumn.setRowCellFactory(customer -> new MFXTableRowCell<>(Customer::getCustomerID));
+        nameColumn.setRowCellFactory(customer -> new MFXTableRowCell<>(Customer::getCustomerName));
+        emailColumn.setRowCellFactory(customer -> new MFXTableRowCell<>(Customer::getCustomerEmail));
+        addressColumn.setRowCellFactory(customer -> new MFXTableRowCell<>(Customer::getCustomerAddress));
+        zipCodeColumn.setRowCellFactory(customer -> new MFXTableRowCell<>(Customer::getZipCode));
+
+        customerTable.getTableColumns().setAll(idColumn, nameColumn, emailColumn, addressColumn, zipCodeColumn);
+        customerTable.autosizeColumnsOnInitialization();
+        customerTable.setItems(customerModel.getObsAllDocuments());
     }
 }

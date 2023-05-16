@@ -44,6 +44,9 @@ public class CustomersController extends RootController {
     @FXML
     private MFXScrollPane customersScrollPane;
 
+    public CustomersController() throws SQLException {
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {

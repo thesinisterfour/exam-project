@@ -23,7 +23,6 @@ import java.util.ResourceBundle;
 public class AdminViewController extends RootController {
 
     private DocumentModel documentModel;
-    private static boolean isAlertShown = false;
     @FXML
     private MFXTextField userName;
     @FXML
@@ -40,9 +39,9 @@ public class AdminViewController extends RootController {
         try {
             documentModel = new DocumentModel();
             List<Doc> oldDocuments = documentModel.getOldDocuments();
-            if (!isAlertShown) {
+            if (!oldDocuments.isEmpty() && !AlertHelper.isAlertShown()) {
+                AlertHelper.setDocumentModel(documentModel);
                 AlertHelper.showDefaultAlert(DocumentHelper.convertToString(oldDocuments), Alert.AlertType.INFORMATION);
-                isAlertShown = true;
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

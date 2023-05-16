@@ -19,6 +19,7 @@ import io.github.palexdev.materialfx.controls.MFXTableColumn;
 import io.github.palexdev.materialfx.controls.MFXTableView;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import io.github.palexdev.materialfx.controls.cell.MFXTableRowCell;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -122,10 +123,7 @@ public class MainViewController extends RootController {
 
     @FXML
     public void handleLogout() throws IOException {
-        if (stage == null) {
-            this.stage = this.getStage();
-        }
-
+        this.stage = this.getStage();
         RootController controller = ControllerFactory.loadFxmlFile(ViewType.LOGIN);
         this.stage.setScene(new Scene(controller.getView()));
         this.stage.setTitle("WUAV!!!");
@@ -133,10 +131,16 @@ public class MainViewController extends RootController {
 
     @FXML
     private void displayBusiness() throws IOException{
-        if (stage == null) {
-            this.stage = this.getStage();
-        }
+        this.stage = this.getStage();
         RootController controller = ControllerFactory.loadFxmlFile(ViewType.BUSINESS_VIEW);
+        Scene scene = new Scene(controller.getView());
+        stage.setScene(scene);
+        stage.show();
+    }
+    @FXML
+    private void displayWorkers(ActionEvent actionEvent) throws IOException {
+        this.stage = this.getStage();
+        RootController controller = ControllerFactory.loadFxmlFile(ViewType.WORKERS);
         Scene scene = new Scene(controller.getView());
         stage.setScene(scene);
         stage.show();
@@ -229,4 +233,7 @@ public class MainViewController extends RootController {
         customerTable.autosizeColumnsOnInitialization();
         customerTable.setItems(customerModel.getObsAllCustomers());
     }
+
+
+
 }

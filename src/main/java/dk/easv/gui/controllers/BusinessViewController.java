@@ -63,6 +63,20 @@ public class BusinessViewController extends RootController{
     public BusinessViewController() throws SQLException {
     }
 
+    @FXML
+    private void displayWorkers(ActionEvent actionEvent) throws IOException {
+        this.stage = this.getStage();
+        RootController controller = ControllerFactory.loadFxmlFile(ViewType.WORKERS);
+        this.stage.setScene(new Scene(controller.getView()));
+    }
+
+    @FXML
+    private void displayHome(ActionEvent actionEvent) throws IOException {
+        this.stage = this.getStage();
+        RootController controller = ControllerFactory.loadFxmlFile(ViewType.MAIN);
+        this.stage.setScene(new Scene(controller.getView()));
+    }
+
 
     private ConcurrentMap<Integer, Customer> getAllCustomersMap() throws SQLException {
 
@@ -100,18 +114,7 @@ public class BusinessViewController extends RootController{
         this.stage.setTitle("WUAV!!!");
     }
 
-    private void goHome(){
-        HomeLayer.setOnAction(e -> {
-            this.stage = this.getStage();
-            try {
-                RootController controller = ControllerFactory.loadFxmlFile(ViewType.MAIN);
-                this.stage.setScene(new Scene(controller.getView()));
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
 
-        });
-    }
 
     @FXML
     private void createCustomer(ActionEvent actionEvent) throws RuntimeException, IOException {
@@ -128,11 +131,12 @@ public class BusinessViewController extends RootController{
     public void initialize(URL location, ResourceBundle resources) {
         try {
             businessLayer.setDisable(true);
-            goHome();
             initCustomers();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
     }
+
+
 }

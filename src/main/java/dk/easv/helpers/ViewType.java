@@ -8,6 +8,8 @@ public enum ViewType {
     CREATE_CUSTOMERS("views/add-customer-view.fxml"),
     HBOX_CARD("views/HboxCard.fxml"),
 
+    WORKERS("views/workers-view.fxml"),
+
     CARD("views/Card.fxml"),
     PROJECT_CARD("views/ProjectCard.fxml"),
     USERS_VIEW("views/worker-users-view.fxml"),

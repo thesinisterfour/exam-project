@@ -43,7 +43,7 @@
                         <Insets bottom="10.0" top="10.0" />
                      </VBox.margin>
                   </MFXButton>
-                  <MFXButton fx:id="workersLayer" text="Workers">
+                  <MFXButton fx:id="workersLayer" onAction="#displayWorkers" text="Workers">
                      <VBox.margin>
                         <Insets bottom="10.0" top="10.0" />
                      </VBox.margin>

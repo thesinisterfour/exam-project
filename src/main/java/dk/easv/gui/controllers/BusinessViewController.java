@@ -9,12 +9,15 @@ import dk.easv.gui.rootContoller.RootController;
 import dk.easv.helpers.ViewType;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXScrollPane;
+import io.github.palexdev.materialfx.controls.MFXTableView;
+import io.github.palexdev.materialfx.controls.MFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -23,46 +26,48 @@ import java.sql.SQLException;
 import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
-public class CustomersController extends RootController {
+public class BusinessViewController extends RootController{
+
+    @FXML
+    private MFXButton businessLayer,
+            createCustomer,
+            delete,
+            HomeLayer,
+            workersLayer,
+            edit,
+            logoutButton;
+
+    @FXML
+    private HBox Customers, mainHbox;
+
+
+    @FXML
+    private MFXScrollPane customersScrollPane;
+
+
+    @FXML
+    private MFXTableView<?> documentsTable;
+
+
+    @FXML
+    private VBox iconsVbox;
+    @FXML
+    private MFXTextField searchBar;
 
     private Stage stage;
 
     private ICustomerModel customerModel = new CustomerModel();
 
-
-    private ConcurrentMap<Integer, Customer> customers = new ConcurrentHashMap<>();
-
-    @FXML
-    private MFXButton edit, delete;
-
-    @FXML
-    private HBox Customers;
-
-    @FXML
-    private MFXScrollPane customersScrollPane;
-
-    public CustomersController() throws SQLException {
+    public BusinessViewController() throws SQLException {
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        try {
-            initCustomers();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-        test();
-    }
 
     private ConcurrentMap<Integer, Customer> getAllCustomersMap() throws SQLException {
 
         return customerModel.getAllCustomers();
     }
-
     private void initCustomers() throws SQLException {
         ConcurrentMap<Integer, Customer> map = getAllCustomersMap();
         Set<Integer> keys = map.keySet();
@@ -86,12 +91,25 @@ public class CustomersController extends RootController {
         customersScrollPane.setContent(hBox);
         customersScrollPane.setFitToHeight(true);
     }
-    public void test(){
-        delete.setOnAction(e -> {
-            System.out.println("Delete");
-        });
-        edit.setOnAction(e -> {
-            System.out.println("Edit");
+
+    @FXML
+    void handleLogout(ActionEvent event) throws IOException {
+        this.stage = this.getStage();
+        RootController controller = ControllerFactory.loadFxmlFile(ViewType.LOGIN);
+        this.stage.setScene(new Scene(controller.getView()));
+        this.stage.setTitle("WUAV!!!");
+    }
+
+    private void goHome(){
+        HomeLayer.setOnAction(e -> {
+            this.stage = this.getStage();
+            try {
+                RootController controller = ControllerFactory.loadFxmlFile(ViewType.MAIN);
+                this.stage.setScene(new Scene(controller.getView()));
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+
         });
     }
 
@@ -106,15 +124,15 @@ public class CustomersController extends RootController {
         stage.show();
     }
 
-    @FXML
-    private void goBack(ActionEvent actionEvent) throws RuntimeException, IOException {
-        RootController controller;
-        Stage stage = new Stage();
-        controller = ControllerFactory.loadFxmlFile(ViewType.MAIN);
-        Scene scene = new Scene(controller.getView());
-        stage.setScene(scene);
-        stage.centerOnScreen();
-        stage.show();
-        getStage().close();
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        try {
+            businessLayer.setDisable(true);
+            goHome();
+            initCustomers();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 }

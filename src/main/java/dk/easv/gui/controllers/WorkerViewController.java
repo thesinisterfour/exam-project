@@ -59,7 +59,6 @@ public class WorkerViewController extends RootController{
     }
 
     private ConcurrentMap<Integer, User> getAllUsersMap() throws SQLException {
-
         return userModel.getAllUsers();
     }
 
@@ -95,7 +94,6 @@ public class WorkerViewController extends RootController{
         Stage stage = new Stage();
         controller = ControllerFactory.loadFxmlFile(ViewType.MAIN);
         Scene scene = new Scene(controller.getView());
-        stage.setTitle("Admin");
         stage.setScene(scene);
         stage.centerOnScreen();
         stage.show();

@@ -41,7 +41,7 @@ public class MainViewController extends RootController {
         public MFXButton addDocument,
                 businessLayer,
                 deleteDocument,
-                documentLayer,
+                HomeLayer,
                 editDocument,
                 workersLayer;
 
@@ -80,6 +80,7 @@ public class MainViewController extends RootController {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
+            HomeLayer.setDisable(true);
             documentModel = new DocumentModel();
             customerModel= new CustomerModel();
             setUpDocBoard();
@@ -102,7 +103,7 @@ public class MainViewController extends RootController {
                         tableCustomer.getChildren().remove(customerLabel);
                     }
                     if(actualUser.getRole() == Role.SALESPERSON){
-                         iconsVbox.getChildren().remove(documentLayer);
+                         iconsVbox.getChildren().remove(HomeLayer);
                          iconsVbox.getChildren().remove(workersLayer);
                          mainHbox.getChildren().remove(deleteDocument);
                          mainHbox.getChildren().remove(editDocument);
@@ -127,7 +128,18 @@ public class MainViewController extends RootController {
 
         RootController controller = ControllerFactory.loadFxmlFile(ViewType.LOGIN);
         this.stage.setScene(new Scene(controller.getView()));
-        this.stage.setTitle("Login");
+        this.stage.setTitle("WUAV!!!");
+    }
+
+    @FXML
+    private void displayBusiness() throws IOException{
+        if (stage == null) {
+            this.stage = this.getStage();
+        }
+        RootController controller = ControllerFactory.loadFxmlFile(ViewType.BUSINESS_VIEW);
+        Scene scene = new Scene(controller.getView());
+        stage.setScene(scene);
+        stage.show();
     }
 
     @FXML
@@ -150,7 +162,7 @@ public class MainViewController extends RootController {
             RootController rootController = ControllerFactory.loadFxmlFile(ViewType.DOCUMENT);
             this.getStage().setScene(new Scene(rootController.getView(), stage.getWidth(), stage.getWidth()));
         } catch (IOException e) {
-            AlertHelper.showDefaultAlert("Pleas select a document to Edit", Alert.AlertType.ERROR);
+            AlertHelper.showDefaultAlert("Please select a document to Edit", Alert.AlertType.ERROR);
         }
 
     }
@@ -162,7 +174,7 @@ public class MainViewController extends RootController {
             documentModel.deleteDocument(selectedDocument.getId());
             documentModel.setObsAllDocuments();
         } catch (IndexOutOfBoundsException e) {
-            AlertHelper.showDefaultAlert("Pleas select a document to delete", Alert.AlertType.ERROR);
+            AlertHelper.showDefaultAlert("Please select a document to delete", Alert.AlertType.ERROR);
         }
     }
 

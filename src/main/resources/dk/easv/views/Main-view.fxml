@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<GridPane stylesheets="@../css/global-style.css" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.MainViewController">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" stylesheets="@../css/global-style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.MainViewController">
   <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="445.199951171875" minWidth="10.0" prefWidth="100.0" />
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="888.4000186920166" minWidth="10.0" prefWidth="825.6000793457031" />
@@ -33,12 +33,12 @@
          <children>
             <VBox fx:id="iconsVbox" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
                <children>
-                  <MFXButton fx:id="documentLayer" styleClass="documentTest" text="Document">
+                  <MFXButton fx:id="HomeLayer" text="Home">
                      <VBox.margin>
                         <Insets bottom="10.0" top="10.0" />
                      </VBox.margin>
                   </MFXButton>
-                  <MFXButton fx:id="businessLayer" text="Business">
+                  <MFXButton fx:id="businessLayer" onAction="#displayBusiness" text="Business">
                      <VBox.margin>
                         <Insets bottom="10.0" top="10.0" />
                      </VBox.margin>
@@ -52,7 +52,7 @@
             </VBox>
          </children>
       </GridPane>
-      <GridPane  GridPane.columnIndex="1">
+      <GridPane GridPane.columnIndex="1">
         <columnConstraints>
           <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
@@ -115,7 +115,7 @@
                     </rowConstraints>
                      <children>
                         <Label fx:id="customerLabel" text="Customer" />
-                        <MFXTableView fx:id="customerTable" prefHeight="144.0" prefWidth="830.0" GridPane.rowIndex="1" footerVisible="false"/>
+                        <MFXTableView fx:id="customerTable" footerVisible="false" prefHeight="144.0" prefWidth="830.0" GridPane.rowIndex="1" />
                      </children>
                   </GridPane>
                   <GridPane fx:id="tableProject" GridPane.rowIndex="1">
@@ -128,7 +128,7 @@
                     </rowConstraints>
                      <children>
                         <Label fx:id="projectLabel" text="Project" />
-                        <MFXTableView fx:id="projectTable" prefHeight="137.0" prefWidth="830.0" GridPane.rowIndex="1" footerVisible="false"/>
+                        <MFXTableView fx:id="projectTable" footerVisible="false" prefHeight="137.0" prefWidth="830.0" GridPane.rowIndex="1" />
                      </children>
                   </GridPane>
                   <GridPane GridPane.rowIndex="2">
@@ -141,7 +141,7 @@
                     </rowConstraints>
                      <children>
                         <Label text="Documents" />
-                        <MFXTableView fx:id="documentsTable" prefWidth="830.0" GridPane.rowIndex="1" footerVisible="false"/>
+                        <MFXTableView fx:id="documentsTable" footerVisible="false" prefWidth="830.0" GridPane.rowIndex="1" />
                      </children>
                   </GridPane>
                </children>

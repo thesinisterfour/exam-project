@@ -48,7 +48,7 @@ public class LoginController extends RootController {
     private void displayMain() throws IOException{
         RootController controller = ControllerFactory.loadFxmlFile(ViewType.MAIN);
         Scene scene = new Scene(controller.getView());
-        stage.setTitle(newUser.getRole().toString());
+        stage.setTitle("WUAV!!! " + newUser.getRole().toString());
         stage.setScene(scene);
         stage.show();
     }

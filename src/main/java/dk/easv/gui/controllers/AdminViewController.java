@@ -46,10 +46,6 @@ public class AdminViewController extends RootController {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
-            if(userSingleClass != null){
-                System.out.println( userSingleClass.getId());
-            }
-
             documentModel = new DocumentModel();
             List<Doc> oldDocuments = documentModel.getOldDocuments();
             AlertHelper.showDefaultAlert(DocumentHelper.convertToString(oldDocuments), Alert.AlertType.INFORMATION);

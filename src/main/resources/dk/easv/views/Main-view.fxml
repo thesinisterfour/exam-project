@@ -73,17 +73,17 @@
                <children>
                   <HBox fx:id="mainHbox" nodeOrientation="RIGHT_TO_LEFT" prefHeight="100.0" prefWidth="200.0">
                      <children>
-                        <MFXButton fx:id="deleteDocument" text="delete">
+                        <MFXButton fx:id="deleteDocument" onAction="#handleDelete" text="delete">
                            <HBox.margin>
                               <Insets left="5.0" right="5.0" />
                            </HBox.margin>
                         </MFXButton>
-                        <MFXButton fx:id="editDocument" text="edit">
+                        <MFXButton fx:id="editDocument" onAction="#handleEditDocument" text="edit">
                            <HBox.margin>
                               <Insets left="5.0" right="5.0" />
                            </HBox.margin>
                         </MFXButton>
-                        <MFXButton fx:id="addDocument" text="add">
+                        <MFXButton fx:id="addDocument" onAction="#handleCreateDocument" text="add">
                            <HBox.margin>
                               <Insets right="5.0" />
                            </HBox.margin>

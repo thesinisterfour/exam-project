@@ -1,9 +1,6 @@
 package dk.easv.bll;
 
-import dk.easv.be.City;
-import dk.easv.be.Customer;
-import dk.easv.be.Doc;
-import dk.easv.be.User;
+import dk.easv.be.*;
 
 import java.sql.SQLException;
 import java.util.concurrent.ConcurrentMap;
@@ -26,4 +23,8 @@ public interface ICRUDLogic {
     ConcurrentMap<Integer, Customer> getAllCustomers() throws SQLException;
 
     ConcurrentMap<Integer, User> getAllUsers() throws SQLException;
+
+    int addProject(Project project) throws SQLException;
+
+    ConcurrentMap<Integer, Project> getAllProjects() throws SQLException;
 }

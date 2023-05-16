@@ -1,18 +1,8 @@
 package dk.easv.helpers;
 
 public enum ViewType {
-    ADMIN("views/admin-view.fxml"),
-
     MAIN("views/Main-view.fxml"),
-
-    PROJECT_MANAGER("views/project-manager-view.fxml"),
-
-    SALESPERSON ("views/salesperson-view.fxml"),
-
-    TECHNICIAN ("views/technician-view.fxml"),
-
     WORKER_CARD("views/HboxCard.fxml"),
-
     LOGIN("views/login-view.fxml"),
     CUSTOMERS("views/customers-view.fxml"),
     CREATE_CUSTOMERS("views/add-customer-view.fxml"),

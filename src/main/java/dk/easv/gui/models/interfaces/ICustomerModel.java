@@ -15,5 +15,5 @@ public interface ICustomerModel {
     int add(Customer customer) throws SQLException;
 
 
-    ObservableList<Customer> getObsAllDocuments() throws SQLException;
+    ObservableList<Customer> getObsAllCustomers() throws SQLException;
 }

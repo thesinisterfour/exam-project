@@ -53,38 +53,6 @@ public class LoginController extends RootController {
         stage.show();
     }
 
-    private void displayAdmin() throws IOException {
-        RootController controller = ControllerFactory.loadFxmlFile(ViewType.ADMIN);
-        Scene scene = new Scene(controller.getView(), 760, 480);
-        stage.setTitle("Admin");
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    private void displayProjectManager() throws IOException {
-        RootController controller = ControllerFactory.loadFxmlFile(ViewType.PROJECT_MANAGER);
-        Scene scene = new Scene(controller.getView(), 760, 480);
-        stage.setTitle("Project Manager");
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    private void displaySalesPerson() throws IOException {
-        RootController controller = ControllerFactory.loadFxmlFile(ViewType.SALESPERSON);
-        Scene scene = new Scene(controller.getView(), 760, 480);
-        stage.setTitle("Sales Person");
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    private void displayTechnician() throws IOException {
-        RootController controller = ControllerFactory.loadFxmlFile(ViewType.TECHNICIAN);
-        Scene scene = new Scene(controller.getView(), 760, 480);
-        stage.setTitle("Technician");
-        stage.setScene(scene);
-        stage.show();
-    }
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
     }

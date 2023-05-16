@@ -110,9 +110,8 @@ public class CustomersController extends RootController {
     private void goBack(ActionEvent actionEvent) throws RuntimeException, IOException {
         RootController controller;
         Stage stage = new Stage();
-        controller = ControllerFactory.loadFxmlFile(ViewType.ADMIN);
+        controller = ControllerFactory.loadFxmlFile(ViewType.MAIN);
         Scene scene = new Scene(controller.getView());
-        stage.setTitle("Admin");
         stage.setScene(scene);
         stage.centerOnScreen();
         stage.show();

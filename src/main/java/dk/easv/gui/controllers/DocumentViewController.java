@@ -234,7 +234,7 @@ public class DocumentViewController extends RootController {
     private void cancelOnAction(ActionEvent actionEvent) {
         model.setDocumentId(0);
         try {
-            RootController rootController = ControllerFactory.loadFxmlFile(ViewType.ADMIN);
+            RootController rootController = ControllerFactory.loadFxmlFile(ViewType.MAIN);
             this.getStage().setScene(new Scene(rootController.getView()));
         } catch (Exception e) {
             throw new RuntimeException(e);

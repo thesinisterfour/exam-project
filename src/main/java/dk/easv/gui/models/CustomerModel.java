@@ -27,11 +27,6 @@ public class CustomerModel implements ICustomerModel {
         return crudLogic.getAllCustomers();
     }
 
-    public ObservableList<Customer> getObsAllCustomers() throws SQLException {
-        setObsAllCustomers();
-        return obsAllCustomers;
-    }
-
     @Override
     public void setObsAllCustomers() throws SQLException {
         ConcurrentMap<Integer, Customer> allCustomers = getAllCustomers();
@@ -45,7 +40,7 @@ public class CustomerModel implements ICustomerModel {
     }
 
     @Override
-    public ObservableList<Customer> getObsAllDocuments() throws SQLException {
+    public ObservableList<Customer> getObsAllCustomers() throws SQLException {
         setObsAllCustomers();
         return obsAllCustomers;
     }

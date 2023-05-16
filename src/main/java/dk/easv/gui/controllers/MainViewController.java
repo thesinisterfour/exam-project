@@ -215,6 +215,6 @@ public class MainViewController extends RootController {
 
         customerTable.getTableColumns().setAll(idColumn, nameColumn, emailColumn, addressColumn, zipCodeColumn);
         customerTable.autosizeColumnsOnInitialization();
-        customerTable.setItems(customerModel.getObsAllDocuments());
+        customerTable.setItems(customerModel.getObsAllCustomers());
     }
 }

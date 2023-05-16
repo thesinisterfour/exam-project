@@ -40,7 +40,6 @@ public class LoginController extends RootController {
         newUser.setId(selectedUser.getUserID());
         newUser.setRole(selectedUser.getRole());
         newUser.setName(selectedUser.getFirstName());
-        System.out.println(newUser);
         if (newUser != null){
             displayMain();
             }

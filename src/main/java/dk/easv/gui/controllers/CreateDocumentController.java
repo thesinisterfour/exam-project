@@ -48,8 +48,8 @@ public class CreateDocumentController extends RootController {
     @FXML
     private void cancelOnAction(ActionEvent actionEvent) {
         try {
-            RootController rootController = ControllerFactory.loadFxmlFile(ViewType.ADMIN);
-            this.getStage().setScene(new Scene(rootController.getView(), 760, 480));
+            RootController rootController = ControllerFactory.loadFxmlFile(ViewType.MAIN);
+            this.getStage().setScene(new Scene(rootController.getView()));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

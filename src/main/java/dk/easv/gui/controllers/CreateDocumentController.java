@@ -18,7 +18,8 @@ import io.github.palexdev.materialfx.controls.MFXFilterComboBox;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 
 import java.io.IOException;
 import java.net.URL;
@@ -34,6 +35,8 @@ public class CreateDocumentController extends RootController {
     private MFXFilterComboBox<Customer> customerComboBox;
     @FXML
     private MFXFilterComboBox<Project> projectComboBox;
+    @FXML
+    private GridPane rootGrid;
 
     @FXML
     private void createOnAction(ActionEvent actionEvent) {
@@ -80,7 +83,9 @@ public class CreateDocumentController extends RootController {
     private void cancelOnAction(ActionEvent actionEvent) {
         try {
             RootController rootController = ControllerFactory.loadFxmlFile(ViewType.MAIN);
-            this.getStage().setScene(new Scene(rootController.getView()));
+            BorderPane borderPane = (BorderPane) rootGrid.getParent();
+            BorderPane rootBorderPane = (BorderPane) rootController.getView();
+            borderPane.setCenter(rootBorderPane.getCenter());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

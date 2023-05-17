@@ -3,7 +3,6 @@ package dk.easv.gui.controllers;
 import dk.easv.Main;
 import dk.easv.be.Customer;
 import dk.easv.be.Doc;
-import dk.easv.be.Role;
 import dk.easv.gui.controllerFactory.ControllerFactory;
 import dk.easv.gui.models.CustomerModel;
 import dk.easv.gui.models.DocumentModel;
@@ -13,7 +12,10 @@ import dk.easv.gui.rootContoller.RootController;
 import dk.easv.helpers.AlertHelper;
 import dk.easv.helpers.UserSingleClass;
 import dk.easv.helpers.ViewType;
-import io.github.palexdev.materialfx.controls.*;
+import io.github.palexdev.materialfx.controls.MFXScrollPane;
+import io.github.palexdev.materialfx.controls.MFXTableColumn;
+import io.github.palexdev.materialfx.controls.MFXTableView;
+import io.github.palexdev.materialfx.controls.MFXTextField;
 import io.github.palexdev.materialfx.controls.cell.MFXTableRowCell;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -38,14 +40,6 @@ public class BusinessViewController extends RootController{
 
     private UserSingleClass actualUser = UserSingleClass.getInstance();
 
-    @FXML
-    private MFXButton businessLayer,
-            createCustomer,
-            delete,
-            HomeLayer,
-            workersLayer,
-            edit,
-            logoutButton;
 
     private IDocumentModel documentModel;
     @FXML
@@ -124,23 +118,6 @@ public class BusinessViewController extends RootController{
         AlertHelper.resetIsAlertShown();
     }
 
-    private void roleView(){
-            if(actualUser.getRole() == Role.TECHNICIAN){
-                iconsVbox.getChildren().remove(businessLayer);
-                iconsVbox.getChildren().remove(workersLayer);
-            }
-            if(actualUser.getRole() == Role.SALESPERSON){
-                iconsVbox.getChildren().remove(workersLayer);
-
-            }
-            if(actualUser.getRole() == Role.PROJECTMANAGER){
-                iconsVbox.getChildren().remove(businessLayer);
-
-            }
-
-
-    }
-
 
 
     @FXML
@@ -159,8 +136,6 @@ public class BusinessViewController extends RootController{
     public void initialize(URL location, ResourceBundle resources) {
         try {
             documentModel = new DocumentModel();
-            roleView();
-            businessLayer.setDisable(true);
             initCustomers();
             setUpDocBoard();
         } catch (SQLException e) {

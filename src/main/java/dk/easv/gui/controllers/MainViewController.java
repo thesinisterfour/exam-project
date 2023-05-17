@@ -27,7 +27,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -78,11 +78,15 @@ public class MainViewController extends RootController {
     private ICustomerModel customerModel;
 
     private UserSingleClass actualUser = UserSingleClass.getInstance();
+    @FXML
+    private BorderPane mainBorderPane;
+    @FXML
+    private VBox centerVBox;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
-            HomeLayer.setDisable(true);
+//            HomeLayer.setDisable(true);
             documentModel = new DocumentModel();
             customerModel = new CustomerModel();
             setUpDocBoard();
@@ -127,7 +131,7 @@ public class MainViewController extends RootController {
 
     @FXML
     public void handleLogout() throws IOException {
-        this.stage = this.getStage();
+        this.stage = (Stage) mainBorderPane.getScene().getWindow();
         RootController controller = ControllerFactory.loadFxmlFile(ViewType.LOGIN);
         this.stage.setScene(new Scene(controller.getView()));
         this.stage.setTitle("WUAV!!!");
@@ -136,27 +140,21 @@ public class MainViewController extends RootController {
 
     @FXML
     private void displayBusiness() throws IOException {
-        this.stage = this.getStage();
         RootController controller = ControllerFactory.loadFxmlFile(ViewType.BUSINESS_VIEW);
-        Scene scene = new Scene(controller.getView());
-        stage.setScene(scene);
-        stage.show();
+        mainBorderPane.setCenter(controller.getView());
     }
 
     @FXML
     private void displayWorkers(ActionEvent actionEvent) throws IOException {
-        this.stage = this.getStage();
         RootController controller = ControllerFactory.loadFxmlFile(ViewType.WORKERS);
-        Scene scene = new Scene(controller.getView());
-        stage.setScene(scene);
-        stage.show();
+        mainBorderPane.setCenter(controller.getView());
     }
 
     @FXML
     private void handleCreateDocument() {
         try {
             RootController rootController = ControllerFactory.loadFxmlFile(ViewType.CREATE_DOCUMENT);
-            this.getStage().setScene(new Scene(rootController.getView()));
+            mainBorderPane.setCenter(rootController.getView());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -164,15 +162,16 @@ public class MainViewController extends RootController {
 
     @FXML
     private void handleEditDocument() {
-        IContentModel contentModel = ContentModel.getInstance();
-        Doc document = documentsTable.getSelectionModel().getSelectedValues().get(0);
-        contentModel.setDocumentId(document.getId());
         try {
-            this.stage = this.getStage();
+            IContentModel contentModel = ContentModel.getInstance();
+            Doc document = documentsTable.getSelectionModel().getSelectedValues().get(0);
+            contentModel.setDocumentId(document.getId());
             RootController rootController = ControllerFactory.loadFxmlFile(ViewType.DOCUMENT);
-            this.getStage().setScene(new Scene(rootController.getView()));
+            mainBorderPane.setCenter(rootController.getView());
         } catch (IOException e) {
-            AlertHelper.showDefaultAlert("Please select a document to Edit", Alert.AlertType.ERROR);
+            AlertHelper.showDefaultAlert("A file error occurred", Alert.AlertType.ERROR);
+        } catch (IndexOutOfBoundsException e) {
+            AlertHelper.showDefaultAlert("Please select a document to edit", Alert.AlertType.ERROR);
         }
 
     }
@@ -284,4 +283,16 @@ public class MainViewController extends RootController {
     }
 
 
+    @FXML
+    private void displayHome(ActionEvent actionEvent) {
+        try {
+            if (mainBorderPane.getCenter() != centerVBox){
+                RootController rootController = ControllerFactory.loadFxmlFile(ViewType.MAIN);
+                BorderPane borderPane = (BorderPane) rootController.getView();
+                mainBorderPane.setCenter(borderPane.getCenter());
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

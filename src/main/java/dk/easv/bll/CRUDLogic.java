@@ -1,9 +1,6 @@
 package dk.easv.bll;
 
-import dk.easv.be.City;
-import dk.easv.be.Customer;
-import dk.easv.be.Doc;
-import dk.easv.be.User;
+import dk.easv.be.*;
 import dk.easv.dal.CRUDDAOFactory;
 import dk.easv.dal.interafaces.ICRUDDao;
 import dk.easv.helpers.DAOType;
@@ -104,6 +101,19 @@ public class CRUDLogic implements ICRUDLogic {
         ICRUDDao<Doc> documentDao = CRUDDAOFactory.getDao(DAOType.DOCUMENT_DAO);
         return documentDao.delete(id);
     }
+
+    @Override
+    public int addProject(Project project) throws SQLException {
+        ICRUDDao<Project> projectDao = CRUDDAOFactory.getDao(DAOType.PROJECT_DAO);
+        return  projectDao.add(project);
+    }
+
+    @Override
+    public ConcurrentMap<Integer, Project> getAllProjects() throws SQLException {
+        ICRUDDao<Project> projectDAo = CRUDDAOFactory.getDao(DAOType.PROJECT_DAO);
+        return projectDAo.getAll();
+    }
+
 
 
 

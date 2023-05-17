@@ -5,6 +5,7 @@ module dk.easv {
     requires java.naming;
     requires com.microsoft.sqlserver.jdbc;
     requires MaterialFX;
+    requires VirtualizedFX;
     requires AnimateFX;
     requires kernel;
     requires layout;

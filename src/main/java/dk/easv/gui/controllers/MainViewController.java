@@ -160,11 +160,12 @@ public class MainViewController extends RootController {
     private void handleEditDocument() {
         IContentModel contentModel = ContentModel.getInstance();
         Doc document = documentsTable.getSelectionModel().getSelectedValues().get(0);
+        System.out.println(document);
         contentModel.setDocumentId(document.getId());
         try {
             this.stage = this.getStage();
             RootController rootController = ControllerFactory.loadFxmlFile(ViewType.DOCUMENT);
-            this.getStage().setScene(new Scene(rootController.getView(), stage.getWidth(), stage.getWidth()));
+            this.getStage().setScene(new Scene(rootController.getView()));
         } catch (IOException e) {
             AlertHelper.showDefaultAlert("Please select a document to Edit", Alert.AlertType.ERROR);
         }

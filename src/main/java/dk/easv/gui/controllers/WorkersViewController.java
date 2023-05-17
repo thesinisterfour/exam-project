@@ -1,6 +1,7 @@
 package dk.easv.gui.controllers;
 
 import dk.easv.Main;
+import dk.easv.be.Role;
 import dk.easv.be.User;
 import dk.easv.gui.controllerFactory.ControllerFactory;
 import dk.easv.gui.models.CustomerModel;
@@ -8,6 +9,7 @@ import dk.easv.gui.models.DocumentModel;
 import dk.easv.gui.models.UserModel;
 import dk.easv.gui.models.interfaces.IUserModel;
 import dk.easv.gui.rootContoller.RootController;
+import dk.easv.helpers.UserSingleClass;
 import dk.easv.helpers.ViewType;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXScrollPane;
@@ -32,18 +34,13 @@ import java.util.concurrent.ConcurrentMap;
 
 public class WorkersViewController extends RootController {
 
-    @FXML
-    private MFXButton HomeLayer;
+    private UserSingleClass actualUser = UserSingleClass.getInstance();
 
     @FXML
-    private MFXButton businessLayer;
+    private MFXButton HomeLayer, businessLayer, logoutButton, workersLayer;
 
     @FXML
     private VBox iconsVbox;
-
-    @FXML
-    private MFXButton logoutButton;
-
     @FXML
     private HBox mainHbox;
 
@@ -58,9 +55,6 @@ public class WorkersViewController extends RootController {
 
     @FXML
     private MFXScrollPane workerScrollPane;
-
-    @FXML
-    private MFXButton workersLayer;
 
     private Stage stage;
 
@@ -86,9 +80,25 @@ public class WorkersViewController extends RootController {
         this.stage.setTitle("WUAV!!!");
     }
 
+    private void roleView(){
+            if(actualUser.getRole() == Role.TECHNICIAN){
+                iconsVbox.getChildren().remove(businessLayer);
+                iconsVbox.getChildren().remove(workersLayer);
+            }
+            if(actualUser.getRole() == Role.SALESPERSON){
+                iconsVbox.getChildren().remove(workersLayer);
+
+            }
+            if(actualUser.getRole() == Role.PROJECTMANAGER){
+                iconsVbox.getChildren().remove(businessLayer);
+
+            }
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
+            roleView();
             workersLayer.setDisable(true);
             initUsers();
         } catch (SQLException e) {

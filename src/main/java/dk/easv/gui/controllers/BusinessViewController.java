@@ -2,10 +2,12 @@ package dk.easv.gui.controllers;
 
 import dk.easv.Main;
 import dk.easv.be.Customer;
+import dk.easv.be.Role;
 import dk.easv.gui.controllerFactory.ControllerFactory;
 import dk.easv.gui.models.CustomerModel;
 import dk.easv.gui.models.interfaces.ICustomerModel;
 import dk.easv.gui.rootContoller.RootController;
+import dk.easv.helpers.UserSingleClass;
 import dk.easv.helpers.ViewType;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXScrollPane;
@@ -29,6 +31,8 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentMap;
 
 public class BusinessViewController extends RootController{
+
+    private UserSingleClass actualUser = UserSingleClass.getInstance();
 
     @FXML
     private MFXButton businessLayer,
@@ -114,6 +118,23 @@ public class BusinessViewController extends RootController{
         this.stage.setTitle("WUAV!!!");
     }
 
+    private void roleView(){
+            if(actualUser.getRole() == Role.TECHNICIAN){
+                iconsVbox.getChildren().remove(businessLayer);
+                iconsVbox.getChildren().remove(workersLayer);
+            }
+            if(actualUser.getRole() == Role.SALESPERSON){
+                iconsVbox.getChildren().remove(workersLayer);
+
+            }
+            if(actualUser.getRole() == Role.PROJECTMANAGER){
+                iconsVbox.getChildren().remove(businessLayer);
+
+            }
+
+
+    }
+
 
 
     @FXML
@@ -131,6 +152,7 @@ public class BusinessViewController extends RootController{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
+            roleView();
             businessLayer.setDisable(true);
             initCustomers();
         } catch (SQLException e) {

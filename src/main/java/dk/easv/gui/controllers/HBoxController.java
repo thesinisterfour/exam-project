@@ -71,7 +71,6 @@ public class HBoxController extends RootController {
                 cardController.createCards(new Card(customers.get(key).getCustomerName(), customers.get(key).getCustomerAddress(), customers.get(key).getZipCode(), customers.get(key).getCustomerEmail()));
                 children.addAll(parent);
             }
-
             } catch (IOException ex) {
             throw new RuntimeException(ex);
         }

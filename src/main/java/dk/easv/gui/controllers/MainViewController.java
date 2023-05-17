@@ -104,14 +104,12 @@ public class MainViewController extends RootController {
                         tableCustomer.getChildren().remove(customerLabel);
                     }
                     if(actualUser.getRole() == Role.SALESPERSON){
-                         iconsVbox.getChildren().remove(HomeLayer);
                          iconsVbox.getChildren().remove(workersLayer);
                          mainHbox.getChildren().remove(deleteDocument);
                          mainHbox.getChildren().remove(editDocument);
                          mainHbox.getChildren().remove(addDocument);
                         tableProject.getChildren().remove(projectTable);
                         tableProject.getChildren().remove(projectLabel);
-
                     }
                     if(actualUser.getRole() == Role.PROJECTMANAGER){
                         iconsVbox.getChildren().remove(businessLayer);

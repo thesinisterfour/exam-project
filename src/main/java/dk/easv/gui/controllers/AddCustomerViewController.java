@@ -3,6 +3,8 @@ package dk.easv.gui.controllers;
 import dk.easv.be.Customer;
 import dk.easv.gui.models.CityModel;
 import dk.easv.gui.models.CustomerModel;
+import dk.easv.gui.models.interfaces.ICustomerModel;
+import dk.easv.gui.models.interfaces.ICityModel;
 import dk.easv.gui.rootContoller.RootController;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import javafx.collections.ObservableList;
@@ -20,9 +22,9 @@ public class AddCustomerViewController extends RootController {
     @FXML
     private MFXTextField nameTextField, emailTextField, addressTextField, cityTextField, ZipCodeTextField;
 
-    private final CityModel cityModel = new CityModel();
+    private final ICityModel cityModel = new CityModel();
 
-    private final CustomerModel customerModel = new CustomerModel();
+    private final ICustomerModel customerModel = new CustomerModel();
 
     private Stage stage;
     @FXML

@@ -3,6 +3,7 @@ package dk.easv.gui.controllers;
 
 import dk.easv.be.User;
 import dk.easv.gui.controllerFactory.ControllerFactory;
+import dk.easv.gui.models.interfaces.ILoginModel;
 import dk.easv.gui.models.LoginModel;
 import dk.easv.gui.rootContoller.RootController;
 import dk.easv.helpers.ViewType;
@@ -20,7 +21,7 @@ import java.util.ResourceBundle;
 
 public class LoginController extends RootController {
 
-    private final LoginModel model = new LoginModel();
+    private final ILoginModel model = new LoginModel();
     @FXML
     private MFXTextField username;
     @FXML

@@ -1,12 +1,13 @@
 package dk.easv.gui.models.tasks;
 
 import dk.easv.bll.DocumentLogic;
+import dk.easv.bll.IDocumentLogic;
 import javafx.concurrent.Task;
 
 import java.sql.SQLException;
 
 public class RetrieveContentTask extends Task<Object> {
-    private final DocumentLogic documentLogic = new DocumentLogic();
+    private final IDocumentLogic documentLogic = new DocumentLogic();
     private final int id;
 
     public RetrieveContentTask(int id){

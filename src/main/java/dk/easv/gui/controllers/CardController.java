@@ -4,7 +4,9 @@ import dk.easv.be.Card;
 import dk.easv.be.Customer;
 import dk.easv.be.User;
 import dk.easv.gui.models.CustomerModel;
+import dk.easv.gui.models.interfaces.IUserModel;
 import dk.easv.gui.models.UserModel;
+import dk.easv.gui.models.interfaces.ICustomerModel;
 import dk.easv.gui.rootContoller.RootController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -34,9 +36,9 @@ public class CardController extends RootController {
     @FXML
     private GridPane gridLoyal;
 
-    private final UserModel userModel = new UserModel();
+    private final IUserModel userModel = new UserModel();
 
-    private final CustomerModel customerModel = new CustomerModel();
+    private final ICustomerModel customerModel = new CustomerModel();
 
     private ConcurrentMap<Integer, User> users = new ConcurrentHashMap<>();
 

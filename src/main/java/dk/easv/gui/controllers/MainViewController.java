@@ -11,6 +11,7 @@ import dk.easv.gui.models.DocumentModel;
 import dk.easv.gui.models.ProjectModel;
 import dk.easv.gui.models.interfaces.IContentModel;
 import dk.easv.gui.models.interfaces.ICustomerModel;
+import dk.easv.gui.models.interfaces.IDocumentModel;
 import dk.easv.gui.models.interfaces.IProjectModel;
 import dk.easv.gui.rootContoller.RootController;
 import dk.easv.helpers.AlertHelper;
@@ -73,11 +74,11 @@ public class MainViewController extends RootController {
 
     private Stage stage;
 
-    private DocumentModel documentModel;
+    private IDocumentModel documentModel;
 
     private ICustomerModel customerModel;
 
-    private UserSingleClass actualUser = UserSingleClass.getInstance();
+    private final UserSingleClass actualUser = UserSingleClass.getInstance();
     @FXML
     private BorderPane mainBorderPane;
     @FXML
@@ -86,7 +87,6 @@ public class MainViewController extends RootController {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
-//            HomeLayer.setDisable(true);
             documentModel = new DocumentModel();
             customerModel = new CustomerModel();
             setUpDocBoard();
@@ -216,7 +216,6 @@ public class MainViewController extends RootController {
         documentsTable.autosizeColumnsOnInitialization();
 
 
-
         projectTable.getSelectionModel().selectionProperty().addListener(((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 try {
@@ -229,7 +228,7 @@ public class MainViewController extends RootController {
         }));
     }
 
-    private void setupProjectTable(){
+    private void setupProjectTable() {
         MFXTableColumn<Project> idColumn = new MFXTableColumn<>("ID", true, Comparator.comparing(Project::getProjectID));
         MFXTableColumn<Project> nameColumn = new MFXTableColumn<>("Name", true, Comparator.comparing(Project::getProjectName));
         MFXTableColumn<Project> dateStartColumn = new MFXTableColumn<>("Start Date", true, Comparator.comparing(Project::getStartDate));
@@ -286,7 +285,7 @@ public class MainViewController extends RootController {
     @FXML
     private void displayHome(ActionEvent actionEvent) {
         try {
-            if (mainBorderPane.getCenter() != centerVBox){
+            if (mainBorderPane.getCenter() != centerVBox) {
                 RootController rootController = ControllerFactory.loadFxmlFile(ViewType.MAIN);
                 BorderPane borderPane = (BorderPane) rootController.getView();
                 mainBorderPane.setCenter(borderPane.getCenter());

@@ -1,9 +1,8 @@
 package dk.easv.gui.models;
 
 import dk.easv.be.Customer;
-import dk.easv.be.Doc;
-import dk.easv.bll.ICRUDLogic;
 import dk.easv.bll.CRUDLogic;
+import dk.easv.bll.ICRUDLogic;
 import dk.easv.gui.models.interfaces.ICustomerModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

@@ -1,25 +1,31 @@
 package dk.easv.gui.controllers;
 
 
+import animatefx.animation.FadeIn;
+import animatefx.animation.FadeOut;
 import dk.easv.be.User;
 import dk.easv.gui.controllerFactory.ControllerFactory;
-import dk.easv.gui.models.interfaces.ILoginModel;
 import dk.easv.gui.models.LoginModel;
+import dk.easv.gui.models.interfaces.ILoginModel;
 import dk.easv.gui.rootContoller.RootController;
 import dk.easv.helpers.UserSingleClass;
 import dk.easv.helpers.ViewType;
 import io.github.palexdev.materialfx.controls.MFXTextField;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
-import javax.swing.text.html.ImageView;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 
 public class LoginController extends RootController {
@@ -40,17 +46,42 @@ public class LoginController extends RootController {
         newUser.setId(selectedUser.getUserID());
         newUser.setRole(selectedUser.getRole());
         newUser.setName(selectedUser.getFirstName());
-        if (newUser != null){
+        if (newUser != null) {
             displayMain();
-            }
+        }
     }
 
-    private void displayMain() throws IOException{
-        RootController controller = ControllerFactory.loadFxmlFile(ViewType.MAIN);
-        Scene scene = new Scene(controller.getView());
-        stage.setTitle("WUAV!!! " + newUser.getRole().toString());
-        stage.setScene(scene);
-        stage.show();
+    private void displayMain() throws IOException {
+        ExecutorService es = Executors.newSingleThreadExecutor();
+        Future<Scene> future = es.submit(() -> {
+            try {
+                RootController controller = ControllerFactory.loadFxmlFile(ViewType.MAIN);
+                Parent root = controller.getView();
+                return new Scene(root);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+        FadeOut fo = new FadeOut(root);
+        fo.setOnFinished(e -> {
+            Platform.runLater(() -> {
+                try {
+                    Scene scene = future.get();
+                    stage.setTitle("WUAV!!! " + newUser.getRole().toString());
+                    stage.setScene(scene);
+                    new FadeIn(scene.getRoot()).setSpeed(0.5).play();
+
+                } catch (InterruptedException | ExecutionException ex) {
+                    throw new RuntimeException(ex);
+                }
+            });
+        });
+
+        fo.setSpeed(2).play();
+
+        es.shutdown();
+
     }
 
     @Override

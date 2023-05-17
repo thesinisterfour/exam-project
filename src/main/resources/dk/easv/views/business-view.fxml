@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" stylesheets="@../css/global-style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.BusinessViewController">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" stylesheets="@../css/global-style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.BusinessViewController">
    <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="445.199951171875" minWidth="10.0" prefWidth="100.0" />
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="888.4000186920166" minWidth="10.0" prefWidth="825.6000793457031" />
@@ -32,17 +32,17 @@
          <children>
             <VBox fx:id="iconsVbox" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
                <children>
-                  <MFXButton fx:id="HomeLayer" onAction="#displayHome" styleClass="documentTest" text="Home">
+                  <MFXButton fx:id="HomeLayer" onAction="#displayHome" styleClass="home_Button" text="Home">
                      <VBox.margin>
                         <Insets bottom="10.0" top="10.0" />
                      </VBox.margin>
                   </MFXButton>
-                  <MFXButton fx:id="businessLayer" text="Business">
+                  <MFXButton fx:id="businessLayer" styleClass="business_Button" text="Business">
                      <VBox.margin>
                         <Insets bottom="10.0" top="10.0" />
                      </VBox.margin>
                   </MFXButton>
-                  <MFXButton fx:id="workersLayer" onAction="#displayWorkers" text="Workers">
+                  <MFXButton fx:id="workersLayer" onAction="#displayWorkers" styleClass="worker_Button" text="Workers">
                      <VBox.margin>
                         <Insets bottom="10.0" top="10.0" />
                      </VBox.margin>

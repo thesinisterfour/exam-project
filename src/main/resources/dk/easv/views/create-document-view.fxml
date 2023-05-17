@@ -5,11 +5,9 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-
-<GridPane prefHeight="431.0" prefWidth="561.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.CreateDocumentController" stylesheets="@../css/global-style.css" styleClass="main_pane">
+<GridPane prefHeight="500.0" prefWidth="700.0" styleClass="main_pane" stylesheets="@../css/global-style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.CreateDocumentController">
    <columnConstraints>
       <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" />
    </columnConstraints>
@@ -17,24 +15,31 @@
       <RowConstraints minHeight="10.0" valignment="CENTER" vgrow="SOMETIMES" />
    </rowConstraints>
    <children>
-      <GridPane alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="318.0" styleClass="gray_content_backdrop">
+      <GridPane alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="333.0" prefWidth="450.0" styleClass="gray_content_backdrop">
         <columnConstraints>
           <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints maxHeight="236.8000129699707" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="231.5999969482422" minHeight="10.0" prefHeight="114.60000000000001" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="226.80002441406253" minHeight="10.0" prefHeight="20.60003662109375" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="226.80002441406253" minHeight="10.0" prefHeight="20.60003662109375" valignment="TOP" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <MFXTextField fx:id="nameTextField" floatMode="BORDER" prefHeight="38.0" prefWidth="290.0" promptText="Document name" />
-            <MFXTextField fx:id="descriptionTextField" alignment="CENTER" floatMode="DISABLED" floatingText="Descripton" prefHeight="124.0" prefWidth="278.0" promptText="Description" GridPane.rowIndex="1" />
-            <HBox alignment="BOTTOM_CENTER" prefHeight="87.0" prefWidth="563.0" spacing="20.0" GridPane.rowIndex="2">
+            <MFXTextField fx:id="nameTextField" floatMode="BORDER" prefHeight="44.0" prefWidth="350.0" promptText="Document name" />
+            <MFXTextField fx:id="descriptionTextField" alignment="CENTER" floatMode="DISABLED" floatingText="Descripton" prefHeight="130.0" prefWidth="370.0" promptText="Description" GridPane.rowIndex="1" />
+            <GridPane GridPane.rowIndex="2">
+              <columnConstraints>
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+              </rowConstraints>
                <children>
                   <MFXButton defaultButton="true" onAction="#createOnAction" text="Create" />
-                  <MFXButton cancelButton="true" onAction="#cancelOnAction" text="Cancel" />
+                  <MFXButton cancelButton="true" onAction="#cancelOnAction" text="Cancel" GridPane.columnIndex="1" />
                </children>
-            </HBox>
+            </GridPane>
          </children>
          <padding>
             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />

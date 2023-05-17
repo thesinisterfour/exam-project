@@ -69,9 +69,6 @@ public class MainViewController extends RootController {
     public VBox iconsVbox;
 
     @FXML
-    public GridPane tableCustomer, tableProject;
-
-    @FXML
     public Label customerLabel, projectLabel;
 
     private Stage stage;
@@ -113,16 +110,12 @@ public class MainViewController extends RootController {
                 iconsVbox.getChildren().remove(businessLayer);
                 iconsVbox.getChildren().remove(workersLayer);
                 mainHbox.getChildren().remove(deleteDocument);
-                tableCustomer.getChildren().remove(customerTable);
-                tableCustomer.getChildren().remove(customerLabel);
             }
             if (actualUser.getRole() == Role.SALESPERSON) {
                 iconsVbox.getChildren().remove(workersLayer);
                 mainHbox.getChildren().remove(deleteDocument);
                 mainHbox.getChildren().remove(editDocument);
                 mainHbox.getChildren().remove(addDocument);
-                tableProject.getChildren().remove(projectTable);
-                tableProject.getChildren().remove(projectLabel);
             }
             if (actualUser.getRole() == Role.PROJECTMANAGER) {
                 iconsVbox.getChildren().remove(businessLayer);

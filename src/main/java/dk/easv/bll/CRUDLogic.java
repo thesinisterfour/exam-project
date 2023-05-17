@@ -43,10 +43,10 @@ public class CRUDLogic implements BLLFacade {
     }
 
     /**
-     * @param city
-     * @return
-     * @throws SQLException
-     * @throws NullPointerException
+     * The addCity method attempts to add a City object to the data source using a DAO obtained from the CRUDDAOFactory.
+     * @return If the DAO is not null, the add method of the DAO is called, and its return value is returned by the addCity method.
+     * @throws SQLException if there is an error doing the database operations.
+     * @throws NullPointerException if the DAO is null.
      */
     public int addCity(City city) throws SQLException, NullPointerException{
         ICRUDDao<City> cityDao = CRUDDAOFactory.getDao(DAOType.CITY_DAO);
@@ -59,7 +59,13 @@ public class CRUDLogic implements BLLFacade {
     }
 
 
-
+    /**
+     * Specified by: BLLFacade
+     * the checkForUser method retrieves the User DAO, gets all users from the data source,
+     * and iterates through them to find a user with the given username and password.
+     * @return User object if a matching user is found or null otherwise.
+     * @throws SQLException if there is errors doing the operations.
+     */
     @Override
     public User checkForUser(String username, String password) throws SQLException {
         ICRUDDao<User> userDAO = CRUDDAOFactory.getDao(DAOType.USER_DAO);
@@ -72,6 +78,13 @@ public class CRUDLogic implements BLLFacade {
         return null;
     }
 
+    /**
+     * The getAllCustomers method retrieves the Customer DAO from the CRUDDAOFactory
+     * and calls the getAll method on it to retrieve all customers from the data source.
+     * @return the resulting ConcurrentMap<Integer, Customer>.
+     * @throws SQLException if there is an error doing the database operation.
+     * @throws NullPointerException if the DAO is null.
+     */
     public ConcurrentMap<Integer, Customer> getAllCustomers() throws SQLException{
         ICRUDDao<Customer> customerDao = CRUDDAOFactory.getDao(DAOType.CUSTOMER_DAO);
         if (customerDao == null) {
@@ -81,6 +94,14 @@ public class CRUDLogic implements BLLFacade {
         }
     }
 
+    /**
+     * Specified by: getCity in interface BLLFacade
+     * The getCity method retrieves the City DAO from the CRUDDAOFactory
+     * and calls the get method on it to retrieve a specific city based on the provided zipcode.
+     * @return the resulting City object.
+     * @throws SQLException if there is an error in the database operation.
+     * @throws NullPointerException if the DAO is null.
+     */
     @Override
     public City getCity(int zipcode) throws SQLException {
         ICRUDDao<City> cityDao = CRUDDAOFactory.getDao(DAOType.CITY_DAO);
@@ -90,6 +111,14 @@ public class CRUDLogic implements BLLFacade {
             return cityDao.get(zipcode);
         }
     }
+
+    /**
+     * The getAllUsers method retrieves the User DAO from the CRUDDAOFactory
+     * and calls the getAll method on it to retrieve all users from the data source.
+     * @return the resulting ConcurrentMap<Integer, User>.
+     * @throws SQLException if there is an error in the database operations.
+     * @throws NullPointerException if the DAO is null.
+     */
     public ConcurrentMap<Integer, User> getAllUsers() throws SQLException{
         ICRUDDao<User> userDao = CRUDDAOFactory.getDao(DAOType.USER_DAO);
         if(userDao == null){
@@ -99,28 +128,67 @@ public class CRUDLogic implements BLLFacade {
             return userDao.getAll();
         }
     }
+
+    /**
+     * the addDocument method retrieves the Doc DAO from the CRUDDAOFactory
+     * and calls the add method on it to add a document to the data source.
+     * @return the integer value returned by the add method.
+     * @throws SQLException if there is an error in the database operation
+     */
     public int addDocument(Doc document) throws SQLException {
         ICRUDDao<Doc> documentDao = CRUDDAOFactory.getDao(DAOType.DOCUMENT_DAO);
         return documentDao.add(document);
     }
 
+    /**
+     * The updateDocument method retrieves the Doc DAO from the CRUDDAOFactory
+     * and calls the update method on it to update a document in the data source.
+     * @return the integer value returned by the update method.
+     * @throws SQLException if there is an error in the database operation.
+     */
     public int updateDocument(Doc document) throws SQLException {
         ICRUDDao<Doc> documentDao = CRUDDAOFactory.getDao(DAOType.DOCUMENT_DAO);
         return documentDao.update(document);
     }
+
+    /**
+     * Specified by: getDocument in interface BLLFacade
+     * @param id
+     * @return
+     * @throws SQLException
+     */
     public Doc getDocument(int id) throws SQLException {
         ICRUDDao<Doc> documentDao = CRUDDAOFactory.getDao(DAOType.DOCUMENT_DAO);
         return documentDao.get(id);
     }
 
+    /**
+     * The purpose of this method is to retrieve all documents from the system.
+     * It retrieves the Doc DAO from the CRUDDAOFactory and calls the getAll method
+     * on it to retrieve all documents from the data source.
+     * @return the resulting ConcurrentMap<Integer, Doc>
+     * @throws SQLException if there is an error doing the database operation.
+     */
     public ConcurrentMap<Integer, Doc> getAllDocuments() throws SQLException {
         ICRUDDao<Doc> documentDao = CRUDDAOFactory.getDao(DAOType.DOCUMENT_DAO);
         return documentDao.getAll();
     }
+
+    /**
+     * Specified by: deleteDocument in interface BLLFacade
+     * @param id
+     * @return
+     * @throws SQLException
+     */
     public int deleteDocument(int id) throws SQLException {
         ICRUDDao<Doc> documentDao = CRUDDAOFactory.getDao(DAOType.DOCUMENT_DAO);
         return documentDao.delete(id);
     }
+
+    /**
+     * @return
+     * @throws SQLException
+     */
     public ConcurrentMap<Integer, Project> getCustomerProject() throws SQLException {
         ICRUDDao<Project> projectDAO = CRUDDAOFactory.getDao(DAOType.PROJECT_DAO);
         return projectDAO.getAll();

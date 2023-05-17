@@ -1,11 +1,10 @@
 package dk.easv.gui.controllers;
 
 import dk.easv.Main;
+import dk.easv.be.Project;
 import dk.easv.be.Role;
 import dk.easv.be.User;
 import dk.easv.gui.controllerFactory.ControllerFactory;
-import dk.easv.gui.models.CustomerModel;
-import dk.easv.gui.models.DocumentModel;
 import dk.easv.gui.models.UserModel;
 import dk.easv.gui.models.interfaces.IUserModel;
 import dk.easv.gui.rootContoller.RootController;
@@ -45,10 +44,7 @@ public class WorkersViewController extends RootController {
     private HBox mainHbox;
 
     @FXML
-    private Label projectLabel;
-
-    @FXML
-    private MFXTableView<?> projectTable;
+    private MFXTableView<Project> projectTable;
 
     @FXML
     private MFXTextField searchBar;

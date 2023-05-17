@@ -32,4 +32,6 @@ public interface IDocumentLogic {
     List<Doc> showOldDocuments() throws SQLException;
 
     void generatePDF(Doc doc, String dest) throws IOException, SQLException;
+
+    ConcurrentMap<Integer, Doc> getProjectDocuments(int projectId) throws SQLException;
 }

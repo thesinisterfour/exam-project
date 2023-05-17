@@ -1,9 +1,9 @@
 package dk.easv.gui.models;
 
 import dk.easv.be.Doc;
-import dk.easv.bll.ICRUDLogic;
 import dk.easv.bll.CRUDLogic;
 import dk.easv.bll.DocumentLogic;
+import dk.easv.bll.ICRUDLogic;
 import dk.easv.gui.models.interfaces.IDocumentModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,9 +15,11 @@ import java.util.concurrent.ConcurrentMap;
 public class DocumentModel implements IDocumentModel {
     private final ICRUDLogic bll = new CRUDLogic();
     private final ObservableList<Doc> obsAllDocuments;
+    private final ObservableList<Doc> obsProjectDocuments;
 
     public DocumentModel() throws SQLException {
         obsAllDocuments= FXCollections.observableArrayList();
+        obsProjectDocuments= FXCollections.observableArrayList();
         setObsAllDocuments();
     }
     @Override
@@ -58,5 +60,16 @@ public class DocumentModel implements IDocumentModel {
     @Override
     public List<Doc> getOldDocuments() throws SQLException {
         return new DocumentLogic().showOldDocuments();
+    }
+
+
+    @Override
+    public void setObsProjectDocuments(int id) throws SQLException {
+        ConcurrentMap<Integer, Doc> projectDocuments = new DocumentLogic().getProjectDocuments(id);
+        this.obsProjectDocuments.setAll(projectDocuments.values());
+    }
+    @Override
+    public ObservableList<Doc> getObsProjectDocuments() {
+        return obsProjectDocuments;
     }
 }

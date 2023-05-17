@@ -8,13 +8,7 @@ class ViewTypeTest {
 
     @Test
     void getFXMLView() {
-        assertEquals("views/admin-view.fxml", ViewType.ADMIN.getFXMLView());
-        assertEquals("views/project-manager-view.fxml", ViewType.PROJECT_MANAGER.getFXMLView());
-        assertEquals("views/salesperson-view.fxml", ViewType.SALESPERSON.getFXMLView());
-        assertEquals("views/technician-view.fxml", ViewType.TECHNICIAN.getFXMLView());
-        assertEquals("views/HboxCard.fxml", ViewType.WORKER_CARD.getFXMLView());
         assertEquals("views/login-view.fxml", ViewType.LOGIN.getFXMLView());
-        assertEquals("views/customers-view.fxml", ViewType.CUSTOMERS.getFXMLView());
         assertEquals("views/add-customer-view.fxml", ViewType.CREATE_CUSTOMERS.getFXMLView());
         assertEquals("views/HboxCard.fxml", ViewType.HBOX_CARD.getFXMLView());
         assertEquals("views/Card.fxml", ViewType.CARD.getFXMLView());

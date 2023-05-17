@@ -1,5 +1,6 @@
 package dk.easv.dal.dao;
 
+import dk.easv.be.Doc;
 import dk.easv.be.Project;
 import dk.easv.dal.connectionManager.ConnectionManagerFactory;
 import dk.easv.dal.connectionManager.IConnectionManager;
@@ -126,5 +127,26 @@ public class ProjectDAO implements ICRUDDao<Project>, IProjectMapper {
             }
         }
         return projects;
+    }
+
+    @Override
+    public ConcurrentMap<Integer, Doc> getDocumentsByProjectId(int id) throws SQLException {
+        ConcurrentMap<Integer, Doc> documents = new ConcurrentHashMap<>();
+        try (Connection connection = cm.getConnection()){
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM dbo.documents INNER JOIN project_documents pd on documents.document_id = pd.document_id WHERE pd.project_id=?;");
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int dbId = rs.getInt("document_id");
+                String dbName = rs.getString("document_name");
+                Date dateCreated = rs.getDate("date_created");
+                Date dateEdited = rs.getDate("date_last_opened");
+                String description = rs.getString("description");
+                Doc document = new Doc(dbId,dbName,dateCreated.toLocalDate(), dateEdited == null ? null : dateEdited.toLocalDate(), description);
+                documents.put(dbId, document);
+
+            }
+        }
+        return documents;
     }
 }

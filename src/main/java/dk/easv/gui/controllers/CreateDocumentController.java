@@ -88,10 +88,10 @@ public class CreateDocumentController extends RootController {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        ICustomerModel customerModel = new CustomerModel();
-        IProjectModel projectModel = new ProjectModel();
         try {
-            customerComboBox.setItems(customerModel.getObsCustomers());
+            ICustomerModel customerModel = new CustomerModel();
+            IProjectModel projectModel = new ProjectModel();
+            customerComboBox.setItems(customerModel.getObsAllCustomers());
             customerComboBox.selectedItemProperty().addListener((observable, oldValue, newValue) -> {
                 try {
                     projectModel.getProjectsByCustomerId(newValue.getCustomerID());

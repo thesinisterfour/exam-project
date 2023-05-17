@@ -18,6 +18,7 @@ MFXTextField, MFXPasswordField, MFXTableView{
 
 .mfx-table-row:selected {
     -fx-background-color: -dark-shades;
+
 }
 MFXScrollPane {
     -fx-background-color: -dark-accent;

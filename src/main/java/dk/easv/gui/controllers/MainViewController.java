@@ -2,14 +2,16 @@ package dk.easv.gui.controllers;
 
 import dk.easv.be.Customer;
 import dk.easv.be.Doc;
+import dk.easv.be.Project;
 import dk.easv.be.Role;
 import dk.easv.gui.controllerFactory.ControllerFactory;
 import dk.easv.gui.models.ContentModel;
 import dk.easv.gui.models.CustomerModel;
 import dk.easv.gui.models.DocumentModel;
+import dk.easv.gui.models.ProjectModel;
 import dk.easv.gui.models.interfaces.IContentModel;
 import dk.easv.gui.models.interfaces.ICustomerModel;
-import dk.easv.gui.models.interfaces.IDocumentModel;
+import dk.easv.gui.models.interfaces.IProjectModel;
 import dk.easv.gui.rootContoller.RootController;
 import dk.easv.helpers.AlertHelper;
 import dk.easv.helpers.DocumentHelper;
@@ -40,55 +42,56 @@ import java.util.ResourceBundle;
 
 public class MainViewController extends RootController {
 
-        @FXML
-        public MFXButton addDocument,
-                businessLayer,
-                deleteDocument,
-                HomeLayer,
-                editDocument,
-                workersLayer;
+    @FXML
+    public MFXButton addDocument,
+            businessLayer,
+            deleteDocument,
+            HomeLayer,
+            editDocument,
+            workersLayer;
 
-        @FXML
-        public MFXTableView<Customer> customerTable;
+    @FXML
+    public MFXTableView<Customer> customerTable;
 
-        @FXML
-        public MFXTableView<Doc> documentsTable;
+    @FXML
+    public MFXTableView<Doc> documentsTable;
 
-        @FXML
-        public MFXTableView<?> projectTable;
+    @FXML
+    public MFXTableView<Project> projectTable;
 
-        @FXML
-        public MFXTextField searchBar;
+    @FXML
+    public MFXTextField searchBar;
 
-        @FXML
-        public HBox mainHbox;
+    @FXML
+    public HBox mainHbox;
 
-        @FXML
-        public VBox iconsVbox;
+    @FXML
+    public VBox iconsVbox;
 
-        @FXML
-        public GridPane tableCustomer, tableProject;
+    @FXML
+    public GridPane tableCustomer, tableProject;
 
-        @FXML
-        public Label customerLabel, projectLabel;
+    @FXML
+    public Label customerLabel, projectLabel;
 
-        private Stage stage;
+    private Stage stage;
 
-        private DocumentModel documentModel;
+    private DocumentModel documentModel;
 
-        private ICustomerModel customerModel;
+    private ICustomerModel customerModel;
 
-        private UserSingleClass actualUser = UserSingleClass.getInstance();
+    private UserSingleClass actualUser = UserSingleClass.getInstance();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
             HomeLayer.setDisable(true);
             documentModel = new DocumentModel();
-            customerModel= new CustomerModel();
+            customerModel = new CustomerModel();
             setUpDocBoard();
             roleView();
             setUpCustomerBoard();
+            setupProjectTable();
 
             documentModel = new DocumentModel();
             List<Doc> oldDocuments = documentModel.getOldDocuments();
@@ -104,29 +107,29 @@ public class MainViewController extends RootController {
 
     }
 
-    private void roleView(){
-            if(actualUser != null){
-                    if(actualUser.getRole() == Role.TECHNICIAN){
-                        iconsVbox.getChildren().remove(businessLayer);
-                        iconsVbox.getChildren().remove(workersLayer);
-                        mainHbox.getChildren().remove(deleteDocument);
-                        tableCustomer.getChildren().remove(customerTable);
-                        tableCustomer.getChildren().remove(customerLabel);
-                    }
-                    if(actualUser.getRole() == Role.SALESPERSON){
-                         iconsVbox.getChildren().remove(workersLayer);
-                         mainHbox.getChildren().remove(deleteDocument);
-                         mainHbox.getChildren().remove(editDocument);
-                         mainHbox.getChildren().remove(addDocument);
-                        tableProject.getChildren().remove(projectTable);
-                        tableProject.getChildren().remove(projectLabel);
-                    }
-                    if(actualUser.getRole() == Role.PROJECTMANAGER){
-                        iconsVbox.getChildren().remove(businessLayer);
-
-                    }
+    private void roleView() {
+        if (actualUser != null) {
+            if (actualUser.getRole() == Role.TECHNICIAN) {
+                iconsVbox.getChildren().remove(businessLayer);
+                iconsVbox.getChildren().remove(workersLayer);
+                mainHbox.getChildren().remove(deleteDocument);
+                tableCustomer.getChildren().remove(customerTable);
+                tableCustomer.getChildren().remove(customerLabel);
+            }
+            if (actualUser.getRole() == Role.SALESPERSON) {
+                iconsVbox.getChildren().remove(workersLayer);
+                mainHbox.getChildren().remove(deleteDocument);
+                mainHbox.getChildren().remove(editDocument);
+                mainHbox.getChildren().remove(addDocument);
+                tableProject.getChildren().remove(projectTable);
+                tableProject.getChildren().remove(projectLabel);
+            }
+            if (actualUser.getRole() == Role.PROJECTMANAGER) {
+                iconsVbox.getChildren().remove(businessLayer);
 
             }
+
+        }
     }
 
     @FXML
@@ -139,13 +142,14 @@ public class MainViewController extends RootController {
     }
 
     @FXML
-    private void displayBusiness() throws IOException{
+    private void displayBusiness() throws IOException {
         this.stage = this.getStage();
         RootController controller = ControllerFactory.loadFxmlFile(ViewType.BUSINESS_VIEW);
         Scene scene = new Scene(controller.getView());
         stage.setScene(scene);
         stage.show();
     }
+
     @FXML
     private void displayWorkers(ActionEvent actionEvent) throws IOException {
         this.stage = this.getStage();
@@ -203,14 +207,14 @@ public class MainViewController extends RootController {
         dateCreatedColumn.setRowCellFactory(document -> new MFXTableRowCell<>(Doc::getCreationDate));
         dateLastOpenedColumn.setRowCellFactory(document -> {
             LocalDate date = document.getLastView();
-            if (date == null){
+            if (date == null) {
                 return new MFXTableRowCell<>(doc -> "Never");
             }
             return new MFXTableRowCell<>(Doc::getLastView);
         });
-        descriptionColumn.setRowCellFactory(document ->{
+        descriptionColumn.setRowCellFactory(document -> {
             String description = document.getDescription();
-            if (description == null){
+            if (description == null) {
                 return new MFXTableRowCell<>(doc -> "No description");
             }
             return new MFXTableRowCell<>(Doc::getDescription);
@@ -218,11 +222,53 @@ public class MainViewController extends RootController {
 
         documentsTable.getTableColumns().setAll(idColumn, nameColumn, dateCreatedColumn, dateLastOpenedColumn, descriptionColumn);
         documentsTable.autosizeColumnsOnInitialization();
-        try {
-            documentsTable.setItems(documentModel.getObsAllDocuments());
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+
+
+
+        projectTable.getSelectionModel().selectionProperty().addListener(((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                try {
+                    documentModel.setObsProjectDocuments(newValue.values().stream().findFirst().get().getProjectID());
+                    documentsTable.setItems(documentModel.getObsProjectDocuments());
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }));
+    }
+
+    private void setupProjectTable(){
+        MFXTableColumn<Project> idColumn = new MFXTableColumn<>("ID", true, Comparator.comparing(Project::getProjectID));
+        MFXTableColumn<Project> nameColumn = new MFXTableColumn<>("Name", true, Comparator.comparing(Project::getProjectName));
+        MFXTableColumn<Project> dateStartColumn = new MFXTableColumn<>("Start Date", true, Comparator.comparing(Project::getStartDate));
+        MFXTableColumn<Project> dateEndColumn = new MFXTableColumn<>("End Date", true, Comparator.comparing(Project::getEndDate));
+        MFXTableColumn<Project> addressColumn = new MFXTableColumn<>("Address", true, Comparator.comparing(Project::getProjectAddress));
+        MFXTableColumn<Project> zipCodeColumn = new MFXTableColumn<>("Zip Code", true, Comparator.comparing(Project::getProjectZipcode));
+
+        idColumn.setRowCellFactory(project -> new MFXTableRowCell<>(Project::getProjectID));
+        nameColumn.setRowCellFactory(project -> new MFXTableRowCell<>(Project::getProjectName));
+        dateStartColumn.setRowCellFactory(project -> new MFXTableRowCell<>(Project::getStartDate));
+        dateEndColumn.setRowCellFactory(project -> new MFXTableRowCell<>(Project::getEndDate));
+        addressColumn.setRowCellFactory(project -> new MFXTableRowCell<>(Project::getProjectAddress));
+        zipCodeColumn.setRowCellFactory(project -> new MFXTableRowCell<>(Project::getProjectZipcode));
+
+        projectTable.getTableColumns().setAll(idColumn, nameColumn, dateStartColumn, dateEndColumn, addressColumn, zipCodeColumn);
+        projectTable.autosizeColumnsOnInitialization();
+
+
+        customerTable.getSelectionModel().selectionProperty().addListener(((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                try {
+                    documentsTable.getItems().clear();
+                    IProjectModel projectModel = new ProjectModel();
+                    projectModel.getProjectsByCustomerId(newValue.values().stream().findFirst().get().getCustomerID());
+                    projectTable.setItems(projectModel.getProjectObservableList());
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }));
+
     }
 
     private void setUpCustomerBoard() throws SQLException {
@@ -241,8 +287,8 @@ public class MainViewController extends RootController {
         customerTable.getTableColumns().setAll(idColumn, nameColumn, emailColumn, addressColumn, zipCodeColumn);
         customerTable.autosizeColumnsOnInitialization();
         customerTable.setItems(customerModel.getObsAllCustomers());
-    }
 
+    }
 
 
 }

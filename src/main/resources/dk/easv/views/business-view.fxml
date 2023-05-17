@@ -21,7 +21,7 @@
       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
    </rowConstraints>
    <children>
-      <GridPane>
+      <GridPane styleClass="backgroundNavBar">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
          </columnConstraints>
@@ -32,17 +32,17 @@
          <children>
             <VBox fx:id="iconsVbox" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
                <children>
-                  <MFXButton fx:id="HomeLayer" onAction="#displayHome" styleClass="documentTest" text="Home">
+                  <MFXButton fx:id="HomeLayer" onAction="#displayHome" styleClass="navBarButton" text="Home">
                      <VBox.margin>
                         <Insets bottom="10.0" top="10.0" />
                      </VBox.margin>
                   </MFXButton>
-                  <MFXButton fx:id="businessLayer" text="Business">
+                  <MFXButton fx:id="businessLayer" styleClass="navBarButton" text="Business">
                      <VBox.margin>
                         <Insets bottom="10.0" top="10.0" />
                      </VBox.margin>
                   </MFXButton>
-                  <MFXButton fx:id="workersLayer" onAction="#displayWorkers" text="Workers">
+                  <MFXButton fx:id="workersLayer" onAction="#displayWorkers" styleClass="navBarButton" text="Workers">
                      <VBox.margin>
                         <Insets bottom="10.0" top="10.0" />
                      </VBox.margin>
@@ -50,6 +50,12 @@
                </children>
             </VBox>
          </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <GridPane.margin>
+            <Insets />
+         </GridPane.margin>
       </GridPane>
       <GridPane GridPane.columnIndex="1">
          <columnConstraints>
@@ -157,6 +163,9 @@
                </children>
             </GridPane>
          </children>
+         <GridPane.margin>
+            <Insets left="5.0" />
+         </GridPane.margin>
       </GridPane>
    </children>
 </GridPane>

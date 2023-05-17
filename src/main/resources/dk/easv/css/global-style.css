@@ -8,21 +8,34 @@
     -main-background: #ffffff;
 }
 
-MFXTextField, MFXPasswordField, MFXPaginatedTableView{
+MFXTextField, MFXPasswordField, MFXTableView{
     -fx-background-color: -light-shades;
     -fx-border-color: -dark-accent;
 }
+MFXTableView .mfx-table-row:hover {
+    -fx-background-color: -light-accent;
+}
 
 MFXScrollPane{
-    -fx-background-color: -dark-shades-opaque;
+    -fx-background-color: -dark-accent;
+    -fx-opacity: 80%;
+}
+
+.backgroundNavBar{
+    -fx-background-color: -dark-accent;
+}
+.navBarButton{
+    -fx-background-color: -light-shades;
+    -fx-text-fill: black;
+    -fx-border-color: -dark-accent;
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
 }
 
 MFXButton{
-    -fx-background-color: -light-accent;
+    -fx-background-color: -dark-accent;
     -fx-text-fill: white;
-    -fx-background-radius: 5px;
-    -fx-border-color: -dark-accent;
-    -fx-border-radius: 5px;
+    -fx-border-color: -dark-shades;
     -fx-font-size: 10px;
     -fx-font-weight: bold;
     -fx-font-smoothing-type: gray;

@@ -12,14 +12,13 @@ MFXTextField, MFXPasswordField, MFXTableView{
     -fx-background-color: -light-shades;
     -fx-border-color: -dark-accent;
 }
-MFXTableView .mfx-table-row:hover {
+.mfx-table-row:hover {
     -fx-background-color: -light-accent;
 }
 
-MFXTableView .mfx-table-row:selected {
+.mfx-table-row:selected {
     -fx-background-color: -dark-shades;
 }
-
 MFXScrollPane {
     -fx-background-color: -dark-accent;
     -fx-opacity: 50%;

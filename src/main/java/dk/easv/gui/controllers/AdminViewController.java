@@ -8,6 +8,7 @@ import dk.easv.gui.models.interfaces.IContentModel;
 import dk.easv.gui.models.interfaces.IDocumentModel;
 import dk.easv.gui.rootContoller.RootController;
 import dk.easv.helpers.AlertHelper;
+import dk.easv.helpers.DocumentHelper;
 import dk.easv.helpers.ViewType;
 import io.github.palexdev.materialfx.controls.*;
 import io.github.palexdev.materialfx.controls.cell.MFXTableRowCell;

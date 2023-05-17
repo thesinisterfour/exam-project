@@ -1,7 +1,7 @@
 package dk.easv.helpers;
 
 import dk.easv.be.Doc;
-import dk.easv.gui.models.DocumentModel;
+import dk.easv.gui.models.interfaces.IDocumentModel;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.dialogs.MFXGenericDialog;
 import io.github.palexdev.materialfx.dialogs.MFXGenericDialogBuilder;
@@ -17,11 +17,11 @@ import java.util.Map;
 public class AlertHelper{
     //TODO add icons to alerts
     private static boolean isAlertShown = false;
-    private static DocumentModel documentModel;
+    private static IDocumentModel documentModel;
     private static MFXGenericDialog dialogContent;
     private static MFXStageDialog dialog;
 
-    public static void setDocumentModel(DocumentModel model){
+    public static void setDocumentModel(IDocumentModel model){
         documentModel = model;
     }
 

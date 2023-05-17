@@ -122,6 +122,7 @@ public class BusinessViewController extends RootController{
         Stage stage = new Stage();
         controller = ControllerFactory.loadFxmlFile(ViewType.CREATE_CUSTOMERS);
         Scene scene = new Scene(controller.getView());
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.centerOnScreen();
         stage.show();

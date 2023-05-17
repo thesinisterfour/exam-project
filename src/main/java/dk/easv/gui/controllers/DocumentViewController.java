@@ -286,7 +286,7 @@ public class DocumentViewController extends RootController {
                 es.shutdown();
 
                 if (n.isEmpty()) {
-                    vbox.getChildren().add(0, new Label("No content to display"));
+//                    vbox.getChildren().add(0, new Label("No content to display"));
                 }
 
             }));

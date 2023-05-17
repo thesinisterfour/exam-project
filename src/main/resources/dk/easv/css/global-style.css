@@ -16,7 +16,11 @@ MFXTableView .mfx-table-row:hover {
     -fx-background-color: -light-accent;
 }
 
-MFXScrollPane{
+MFXScrollPane {
+    -fx-background-color: -dark-accent;
+    -fx-opacity: 50%;
+}
+.backgroundScrollPaneBottom{
     -fx-background-color: -dark-accent;
     -fx-opacity: 80%;
 }
@@ -62,6 +66,12 @@ Label{
 .gray_content_backdrop{
     -fx-background-color: -light-shades-opaque;
     -fx-background-radius: 20px;
+    -fx-border-color: -dark-shades;
+    -fx-border-radius: 15px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 10, 0, 2, 2);
+}
+.mainBack{
+    -fx-background-color: -main-background;
 }
 
 .gray_content_bottom{

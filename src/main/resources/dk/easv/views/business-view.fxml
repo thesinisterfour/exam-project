@@ -110,16 +110,16 @@
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                     </columnConstraints>
                     <rowConstraints>
-                      <RowConstraints maxHeight="267.1999877929687" minHeight="10.0" prefHeight="267.1999877929687" vgrow="SOMETIMES" />
-                      <RowConstraints maxHeight="141.60001220703126" minHeight="10.0" prefHeight="25.600012207031284" vgrow="NEVER" />
+                      <RowConstraints maxHeight="267.1999877929687" minHeight="10.0" prefHeight="251.2" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="141.60001220703126" minHeight="10.0" prefHeight="42.39999999999998" vgrow="NEVER" />
                     </rowConstraints>
                      <children>
-                        <MFXScrollPane fx:id="customersScrollPane">
+                        <MFXScrollPane fx:id="customersScrollPane" prefWidth="830.0">
                            <content>
                               <HBox fx:id="Customers" prefHeight="100.0" prefWidth="200.0" />
                            </content>
                         </MFXScrollPane>
-                        <GridPane GridPane.rowIndex="1">
+                        <GridPane prefWidth="830.0" styleClass="backgroundScrollPaneBottom" GridPane.rowIndex="1">
                           <columnConstraints>
                             <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                               <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -145,6 +145,12 @@
                                  </GridPane.margin>
                               </MFXButton>
                            </children>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <GridPane.margin>
+                              <Insets />
+                           </GridPane.margin>
                         </GridPane>
                      </children>
                   </GridPane>

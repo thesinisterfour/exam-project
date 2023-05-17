@@ -169,7 +169,6 @@ public class MainViewController extends RootController {
     private void handleEditDocument() {
         IContentModel contentModel = ContentModel.getInstance();
         Doc document = documentsTable.getSelectionModel().getSelectedValues().get(0);
-        System.out.println(document);
         contentModel.setDocumentId(document.getId());
         try {
             this.stage = this.getStage();

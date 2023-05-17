@@ -50,14 +50,6 @@ public class CardController extends RootController {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        /*try {
-            test();
-            //System.out.println(customers.keySet());
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-         */
 
     }
 
@@ -87,7 +79,6 @@ public class CardController extends RootController {
             userAddress.setText("");
             userZipcode.setText("");
             gridLoyal.setStyle(gridLoyal.getStyle() + "-fx-background-color : red;");
-            System.out.println(card.getUserRole());
         }
     }
 }

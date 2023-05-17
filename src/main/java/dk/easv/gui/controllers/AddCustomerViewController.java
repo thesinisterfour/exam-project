@@ -63,7 +63,7 @@ public class AddCustomerViewController extends RootController {
         if (!emptyField){
             int zipCode = Integer.parseInt(ZipCodeTextField.getText());
             try {
-                System.out.println(cityModel.get(zipCode));
+                cityModel.get(zipCode);
             } catch (SQLException e) {
                 // catch if city does not exist
                 System.out.println("City does not exist");

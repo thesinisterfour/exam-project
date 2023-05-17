@@ -12,14 +12,13 @@ MFXTextField, MFXPasswordField, MFXTableView{
     -fx-background-color: -light-shades;
     -fx-border-color: -dark-accent;
 }
-MFXTableView .mfx-table-row:hover {
+.mfx-table-row:hover {
     -fx-background-color: -light-accent;
 }
 
-MFXTableView .mfx-table-row:selected {
+.mfx-table-row:selected {
     -fx-background-color: -dark-shades;
 }
-
 MFXScrollPane {
     -fx-background-color: -dark-accent;
     -fx-opacity: 50%;
@@ -53,8 +52,78 @@ MFXButton:hover{
     -fx-opacity: 90%;
 }
 
+
+.home_Button{
+    -fx-background-image: url('../icons/Home.png');
+    -fx-background-repeat: no-repeat;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-background-radius: 15px;
+    -fx-background-size: 25px 25px;
+    -fx-background-position: center;
+    -fx-text-fill: transparent;
+}
+
+.business_Button{
+    -fx-background-image: url('../icons/Business.png');
+    -fx-background-repeat: no-repeat;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-background-radius: 15px;
+    -fx-background-size: 25px 25px;
+    -fx-background-position: center;
+    -fx-text-fill: transparent;
+}
+
+.worker_Button{
+    -fx-background-image: url('../icons/workers.png');
+    -fx-background-repeat: no-repeat;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-background-radius: 15px;
+    -fx-background-size: 25px 25px;
+    -fx-background-position: center;
+    -fx-text-fill: transparent;
+}
+
+.add_Button{
+    -fx-background-image: url('../icons/Add.png');
+    -fx-background-repeat: no-repeat;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-background-radius: 15px;
+    -fx-background-size: 25px 25px;
+    -fx-background-position: center;
+    -fx-text-fill: transparent;
+}
+
+.edit_Button{
+    -fx-background-image: url('../icons/Edit.png');
+    -fx-background-repeat: no-repeat;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-background-radius: 15px;
+    -fx-background-size: 25px 25px;
+    -fx-background-position: center;
+    -fx-text-fill: transparent;
+}
+
+.delete_Button{
+    -fx-background-image: url('../icons/Remove.png');
+    -fx-background-repeat: no-repeat;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-background-radius: 15px;
+    -fx-background-size: 25px 25px;
+    -fx-background-position: center;
+    -fx-text-fill: transparent;
+}
+
+
+
 Label{
     -fx-font-weight: bold;
+
 }
 
 .main_pane{

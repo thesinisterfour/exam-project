@@ -8,21 +8,41 @@
     -main-background: #ffffff;
 }
 
-MFXTextField, MFXPasswordField, MFXPaginatedTableView{
+MFXTextField, MFXPasswordField, MFXTableView{
     -fx-background-color: -light-shades;
     -fx-border-color: -dark-accent;
 }
+.mfx-table-row:hover {
+    -fx-background-color: -light-accent;
+}
 
-MFXScrollPane{
-    -fx-background-color: -dark-shades-opaque;
+.mfx-table-row:selected {
+    -fx-background-color: -dark-shades;
+}
+MFXScrollPane {
+    -fx-background-color: -dark-accent;
+    -fx-opacity: 50%;
+}
+.backgroundScrollPaneBottom{
+    -fx-background-color: -dark-accent;
+    -fx-opacity: 80%;
+}
+
+.backgroundNavBar{
+    -fx-background-color: -dark-accent;
+}
+.navBarButton{
+    -fx-background-color: -light-shades;
+    -fx-text-fill: black;
+    -fx-border-color: -dark-accent;
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
 }
 
 MFXButton{
-    -fx-background-color: -light-accent;
+    -fx-background-color: -dark-accent;
     -fx-text-fill: white;
-    -fx-background-radius: 5px;
-    -fx-border-color: -dark-accent;
-    -fx-border-radius: 5px;
+    -fx-border-color: -dark-shades;
     -fx-font-size: 10px;
     -fx-font-weight: bold;
     -fx-font-smoothing-type: gray;
@@ -119,6 +139,12 @@ Label{
 .gray_content_backdrop{
     -fx-background-color: -light-shades-opaque;
     -fx-background-radius: 20px;
+    -fx-border-color: -dark-shades;
+    -fx-border-radius: 15px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 10, 0, 2, 2);
+}
+.mainBack{
+    -fx-background-color: -main-background;
 }
 
 .gray_content_bottom{

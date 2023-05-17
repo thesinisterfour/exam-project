@@ -121,7 +121,7 @@ MFXButton:hover{
 }
 
 .logout_Button{
-    -fx-background-image: url('../icons/LogOut.png');
+    -fx-background-image: url('../icons/Logout.png');
     -fx-background-repeat: no-repeat;
     -fx-background-color: transparent;
     -fx-border-color: transparent;

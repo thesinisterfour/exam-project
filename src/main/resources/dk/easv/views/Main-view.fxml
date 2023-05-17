@@ -52,7 +52,7 @@
                         <Font name="Book Antiqua Bold" size="12.0" />
                      </font>
                   </MFXTextField>
-                  <MFXButton fx:id="logoutButton" onAction="#handleLogout" prefHeight="62.0" prefWidth="114.0" text="Log Out" GridPane.columnIndex="1" />
+                  <MFXButton fx:id="logoutButton" styleClass="logout_Button" onAction="#handleLogout" prefHeight="62.0" prefWidth="114.0" text="Log Out" GridPane.columnIndex="1" />
                </children>
             </GridPane>
             <VBox VBox.vgrow="ALWAYS">

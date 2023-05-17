@@ -12,6 +12,7 @@ import dk.easv.gui.models.interfaces.ICustomerModel;
 import dk.easv.gui.models.interfaces.IDocumentModel;
 import dk.easv.gui.rootContoller.RootController;
 import dk.easv.helpers.AlertHelper;
+import dk.easv.helpers.DocumentHelper;
 import dk.easv.helpers.UserSingleClass;
 import dk.easv.helpers.ViewType;
 import io.github.palexdev.materialfx.controls.MFXButton;
@@ -34,6 +35,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.Comparator;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class MainViewController extends RootController {
@@ -72,7 +74,7 @@ public class MainViewController extends RootController {
 
         private Stage stage;
 
-        private IDocumentModel documentModel;
+        private DocumentModel documentModel;
 
         private ICustomerModel customerModel;
 
@@ -87,6 +89,14 @@ public class MainViewController extends RootController {
             setUpDocBoard();
             roleView();
             setUpCustomerBoard();
+
+            documentModel = new DocumentModel();
+            List<Doc> oldDocuments = documentModel.getOldDocuments();
+
+            if (!oldDocuments.isEmpty() && !AlertHelper.isAlertShown()) {
+                AlertHelper.setDocumentModel(documentModel);
+                AlertHelper.showDefaultAlert(DocumentHelper.convertToString(oldDocuments), Alert.AlertType.INFORMATION);
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

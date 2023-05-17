@@ -1,5 +1,7 @@
 package dk.easv.helpers;
 
+import dk.easv.be.Doc;
+import dk.easv.gui.models.DocumentModel;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.dialogs.MFXGenericDialog;
 import io.github.palexdev.materialfx.dialogs.MFXGenericDialogBuilder;
@@ -8,42 +10,61 @@ import io.github.palexdev.materialfx.enums.ButtonType;
 import javafx.scene.control.Alert;
 import javafx.stage.Modality;
 
+import java.sql.SQLException;
+import java.util.List;
 import java.util.Map;
 
 public class AlertHelper{
     //TODO add icons to alerts
 
+    private static boolean isAlertShown = false;
+    private static DocumentModel documentModel;
     private static MFXGenericDialog dialogContent;
     private static MFXStageDialog dialog;
 
+    public static void setDocumentModel(DocumentModel model){
+        documentModel = model;
+    }
+
     public static void showDefaultAlert(String content, Alert.AlertType alertType) {
 
-            dialogContent = MFXGenericDialogBuilder.build()
-                    .setContentText(content)
-                    .makeScrollable(true)
-                    .get();
-            dialog = MFXGenericDialogBuilder.build(dialogContent)
-                    .toStageDialogBuilder()
-                    .initModality(Modality.APPLICATION_MODAL)
-                    .setAlwaysOnTop(true)
-                    .setDraggable(true)
-                    .setTitle(alertType.name())
-                    .get();
+        if (isAlertShown()) {
+            return;
+        }
+        dialogContent = MFXGenericDialogBuilder.build()
+                .setContentText(content)
+                .makeScrollable(true)
+                .get();
+        dialog = MFXGenericDialogBuilder.build(dialogContent)
+                .toStageDialogBuilder()
+                .initModality(Modality.APPLICATION_MODAL)
+                .setAlwaysOnTop(true)
+                .setDraggable(true)
+                .setTitle(alertType.name())
+                .get();
 
 
-            MFXButton confirmButton = new MFXButton("Confirm");
-            confirmButton.setButtonType(ButtonType.RAISED);
-            MFXButton cancelButton = new MFXButton("Cancel");
-            cancelButton.setButtonType(ButtonType.RAISED);
-            dialogContent.addActions(
-
-                    Map.entry(confirmButton, event -> {
+        MFXButton confirmButton = new MFXButton("Confirm");
+        confirmButton.setButtonType(ButtonType.RAISED);
+        MFXButton cancelButton = new MFXButton("Cancel");
+        cancelButton.setButtonType(ButtonType.RAISED);
+        dialogContent.addActions(
+                Map.entry(confirmButton, event -> {
+                    try {
+                        List<Doc> oldDocuments = documentModel.getOldDocuments();
+                        for (Doc oldDocument : oldDocuments) {
+                            documentModel.deleteDocument(oldDocument.getId());
+                            documentModel.setObsAllDocuments();
+                        }
                         dialog.close();
-                    }),
-                    Map.entry(cancelButton, event -> dialog.close())
-            );
+                    }catch (SQLException e){
+                        e.printStackTrace();
+                    }
+                }),
+                Map.entry(cancelButton, event -> dialog.close())
+        );
 
-            dialogContent.setMaxSize(400, 200);
+        dialogContent.setMaxSize(400, 200);
 
         switch (alertType) {
             case INFORMATION -> openInfo();
@@ -51,6 +72,7 @@ public class AlertHelper{
             case ERROR -> openError();
             default -> openGeneric();
         }
+        isAlertShown = true;
     }
 
     private static void openInfo() {
@@ -93,5 +115,9 @@ public class AlertHelper{
 
         if (styleClass != null)
             dialogContent.getStyleClass().add(styleClass);
+    }
+
+    public static boolean isAlertShown() {
+        return isAlertShown;
     }
 }

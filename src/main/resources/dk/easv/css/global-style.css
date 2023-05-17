@@ -16,6 +16,10 @@ MFXTableView .mfx-table-row:hover {
     -fx-background-color: -light-accent;
 }
 
+MFXTableView .mfx-table-row:selected {
+    -fx-background-color: -dark-shades;
+}
+
 MFXScrollPane {
     -fx-background-color: -dark-accent;
     -fx-opacity: 50%;

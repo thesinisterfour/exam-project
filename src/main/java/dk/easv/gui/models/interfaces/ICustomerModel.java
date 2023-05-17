@@ -1,7 +1,6 @@
 package dk.easv.gui.models.interfaces;
 
 import dk.easv.be.Customer;
-import dk.easv.be.Doc;
 import javafx.collections.ObservableList;
 
 import java.sql.SQLException;

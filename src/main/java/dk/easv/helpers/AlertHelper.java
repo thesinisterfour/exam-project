@@ -1,7 +1,7 @@
 package dk.easv.helpers;
 
 import dk.easv.be.Doc;
-import dk.easv.gui.models.DocumentModel;
+import dk.easv.gui.models.interfaces.IDocumentModel;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.dialogs.MFXGenericDialog;
 import io.github.palexdev.materialfx.dialogs.MFXGenericDialogBuilder;
@@ -16,13 +16,12 @@ import java.util.Map;
 
 public class AlertHelper{
     //TODO add icons to alerts
-
     private static boolean isAlertShown = false;
-    private static DocumentModel documentModel;
+    private static IDocumentModel documentModel;
     private static MFXGenericDialog dialogContent;
     private static MFXStageDialog dialog;
 
-    public static void setDocumentModel(DocumentModel model){
+    public static void setDocumentModel(IDocumentModel model){
         documentModel = model;
     }
 
@@ -31,40 +30,40 @@ public class AlertHelper{
         if (isAlertShown()) {
             return;
         }
-        dialogContent = MFXGenericDialogBuilder.build()
-                .setContentText(content)
-                .makeScrollable(true)
-                .get();
-        dialog = MFXGenericDialogBuilder.build(dialogContent)
-                .toStageDialogBuilder()
-                .initModality(Modality.APPLICATION_MODAL)
-                .setAlwaysOnTop(true)
-                .setDraggable(true)
-                .setTitle(alertType.name())
-                .get();
+            dialogContent = MFXGenericDialogBuilder.build()
+                    .setContentText(content)
+                    .makeScrollable(true)
+                    .get();
+            dialog = MFXGenericDialogBuilder.build(dialogContent)
+                    .toStageDialogBuilder()
+                    .initModality(Modality.APPLICATION_MODAL)
+                    .setAlwaysOnTop(true)
+                    .setDraggable(true)
+                    .setTitle(alertType.name())
+                    .get();
 
 
-        MFXButton confirmButton = new MFXButton("Confirm");
-        confirmButton.setButtonType(ButtonType.RAISED);
-        MFXButton cancelButton = new MFXButton("Cancel");
-        cancelButton.setButtonType(ButtonType.RAISED);
-        dialogContent.addActions(
-                Map.entry(confirmButton, event -> {
-                    try {
-                        List<Doc> oldDocuments = documentModel.getOldDocuments();
-                        for (Doc oldDocument : oldDocuments) {
-                            documentModel.deleteDocument(oldDocument.getId());
-                            documentModel.setObsAllDocuments();
+            MFXButton confirmButton = new MFXButton("Confirm");
+            confirmButton.setButtonType(ButtonType.RAISED);
+            MFXButton cancelButton = new MFXButton("Cancel");
+            cancelButton.setButtonType(ButtonType.RAISED);
+            dialogContent.addActions(
+                    Map.entry(confirmButton, event -> {
+                        try {
+                            List<Doc> oldDocuments = documentModel.getOldDocuments();
+                            for (Doc oldDocument : oldDocuments) {
+                                documentModel.deleteDocument(oldDocument.getId());
+                                documentModel.setObsAllDocuments();
+                            }
+                            dialog.close();
+                        }catch (SQLException e){
+                            e.printStackTrace();
                         }
-                        dialog.close();
-                    }catch (SQLException e){
-                        e.printStackTrace();
-                    }
-                }),
-                Map.entry(cancelButton, event -> dialog.close())
-        );
+                    }),
+                    Map.entry(cancelButton, event -> dialog.close())
+            );
 
-        dialogContent.setMaxSize(400, 200);
+            dialogContent.setMaxSize(400, 200);
 
         switch (alertType) {
             case INFORMATION -> openInfo();
@@ -116,10 +115,7 @@ public class AlertHelper{
         if (styleClass != null)
             dialogContent.getStyleClass().add(styleClass);
     }
-
     public static boolean isAlertShown() {
         return isAlertShown;
     }
-
-    public static void resetIsAlertShown(){isAlertShown = false;}
 }

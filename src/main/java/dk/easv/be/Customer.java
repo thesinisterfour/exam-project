@@ -68,4 +68,9 @@ public class Customer {
     public int getZipCode(){
         return zipCode;
     }
+
+    @Override
+    public String toString() {
+        return customerName;
+    }
 }

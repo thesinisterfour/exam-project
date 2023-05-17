@@ -120,4 +120,6 @@ public class AlertHelper{
     public static boolean isAlertShown() {
         return isAlertShown;
     }
+
+    public static void resetIsAlertShown(){isAlertShown = false;}
 }

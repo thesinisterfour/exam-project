@@ -135,6 +135,7 @@ public class MainViewController extends RootController {
         RootController controller = ControllerFactory.loadFxmlFile(ViewType.LOGIN);
         this.stage.setScene(new Scene(controller.getView()));
         this.stage.setTitle("WUAV!!!");
+        AlertHelper.resetIsAlertShown();
     }
 
     @FXML

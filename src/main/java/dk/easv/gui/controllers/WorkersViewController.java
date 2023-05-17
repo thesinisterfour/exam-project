@@ -8,6 +8,7 @@ import dk.easv.gui.controllerFactory.ControllerFactory;
 import dk.easv.gui.models.UserModel;
 import dk.easv.gui.models.interfaces.IUserModel;
 import dk.easv.gui.rootContoller.RootController;
+import dk.easv.helpers.AlertHelper;
 import dk.easv.helpers.UserSingleClass;
 import dk.easv.helpers.ViewType;
 import io.github.palexdev.materialfx.controls.MFXButton;
@@ -74,6 +75,7 @@ public class WorkersViewController extends RootController {
         RootController controller = ControllerFactory.loadFxmlFile(ViewType.LOGIN);
         this.stage.setScene(new Scene(controller.getView()));
         this.stage.setTitle("WUAV!!!");
+        AlertHelper.resetIsAlertShown();
     }
 
     private void roleView(){

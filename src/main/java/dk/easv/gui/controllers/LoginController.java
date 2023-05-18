@@ -10,6 +10,7 @@ import dk.easv.gui.models.interfaces.ILoginModel;
 import dk.easv.gui.rootContoller.RootController;
 import dk.easv.helpers.UserSingleClass;
 import dk.easv.helpers.ViewType;
+import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -30,7 +31,7 @@ import java.util.concurrent.Future;
 
 public class LoginController extends RootController {
 
-    private final ILoginModel model = new LoginModel();
+    private final ILoginModel model = new LoginModel(this);
     @FXML
     private MFXTextField username;
     @FXML
@@ -38,6 +39,8 @@ public class LoginController extends RootController {
     private Stage stage;
 
     private UserSingleClass newUser = UserSingleClass.getInstance();
+    @FXML
+    private MFXButton loginButton;
 
     @FXML
     private void loginButtonAction(ActionEvent actionEvent) throws SQLException, IOException {
@@ -66,6 +69,7 @@ public class LoginController extends RootController {
         fo.setOnFinished(e -> {
             Platform.runLater(() -> {
                 try {
+                    System.out.println(future.isDone());
                     Parent root = future.get();
                     root.setOpacity(0);
                     stage.setTitle("WUAV!!! " + newUser.getRole().toString());
@@ -78,7 +82,7 @@ public class LoginController extends RootController {
             });
         });
 
-        fo.setSpeed(2).play();
+        fo.setSpeed(0.2).play();
 
         es.shutdown();
 
@@ -86,5 +90,12 @@ public class LoginController extends RootController {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        loginButton.setText("Loading users...");
+        loginButton.setDisable(true);
+    }
+
+    public void setLoginReady() {
+        loginButton.setText("Login");
+        loginButton.setDisable(false);
     }
 }

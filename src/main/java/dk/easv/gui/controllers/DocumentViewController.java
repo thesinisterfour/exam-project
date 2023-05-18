@@ -439,7 +439,7 @@ public class DocumentViewController extends RootController {
 
     @FXML
     private void openCanvasOnAction() throws IOException {
-        Stage stage = this.getStage();
+        Stage stage = new Stage();
         stage.setTitle("Sketch");
         RootController controller = ControllerFactory.loadFxmlFile(ViewType.CANVAS);
         Scene scene = new Scene(controller.getView());

@@ -2,24 +2,35 @@ package dk.easv.gui.controllers;
 
 import dk.easv.gui.rootContoller.RootController;
 
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import io.github.palexdev.materialfx.controls.MFXButton;
+import io.github.palexdev.materialfx.utils.SwingFXUtils;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+
+import javax.imageio.ImageIO;
 
 public class CanvasController extends RootController {
     @FXML
@@ -29,7 +40,7 @@ public class CanvasController extends RootController {
     private ChoiceBox<String> sizeChooser;
 
     @FXML
-    private Button resetButton;
+    private MFXButton resetButton;
 
     @FXML
     private Canvas canvas;
@@ -112,5 +123,44 @@ public class CanvasController extends RootController {
             graphicsContext.lineTo(event.getX(), event.getY());
             graphicsContext.stroke();
         });
+    }
+
+    @FXML
+    private void handleCancelOnAction(){
+        this.getStage().close();
+    }
+
+    @FXML
+    private void handleSaveOnAction(){
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Save Canvas Image");
+        fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("PNG Image", "*.png")
+        );
+        File file = fileChooser.showSaveDialog(canvas.getScene().getWindow());
+
+        if (file != null) {
+            try {
+                double canvasWidth = canvas.getWidth();
+                double canvasHeight = canvas.getHeight();
+
+                WritableImage writableImage = new WritableImage((int) canvasWidth, (int) canvasHeight);
+                SnapshotParameters params = new SnapshotParameters();
+                params.setFill(Color.WHITE); // Set white background
+                canvas.snapshot(params, writableImage);
+
+                BufferedImage bufferedImage = SwingFXUtils.fromFXImage(writableImage, null);
+                BufferedImage imageWithWhiteBackground = new BufferedImage(bufferedImage.getWidth(), bufferedImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
+                Graphics2D graphics = imageWithWhiteBackground.createGraphics();
+                graphics.setColor(java.awt.Color.WHITE);
+                graphics.fillRect(0, 0, imageWithWhiteBackground.getWidth(), imageWithWhiteBackground.getHeight());
+                graphics.drawImage(bufferedImage, 0, 0, null);
+                graphics.dispose();
+
+                ImageIO.write(imageWithWhiteBackground, "png", file);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

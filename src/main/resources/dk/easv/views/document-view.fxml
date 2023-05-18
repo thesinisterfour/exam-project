@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<GridPane prefHeight="650.0" prefWidth="900.0" stylesheets="@../css/global-style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.DocumentViewController">
+<GridPane prefHeight="650.0" prefWidth="900.0" stylesheets="@../css/global-style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.DocumentViewController">
    <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
    </columnConstraints>
@@ -40,15 +40,16 @@
                   <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                   <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                   <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                </columnConstraints>
                <rowConstraints>
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
                   <MFXButton onAction="#saveAsPdfOnAction" text="Save As PDF" />
-                  <MFXButton onAction="#openCanvasOnAction" text="Sketch" />
-                  <MFXButton onAction="#addTextOnAction" text="Add text" GridPane.columnIndex="2" />
-                  <MFXButton onAction="#addImageOnAction" text="Add image" GridPane.columnIndex="1" />
+                  <MFXButton onAction="#openCanvasOnAction" text="Sketch" GridPane.columnIndex="1" />
+                  <MFXButton onAction="#addTextOnAction" text="Add text" GridPane.columnIndex="3" />
+                  <MFXButton onAction="#addImageOnAction" text="Add image" GridPane.columnIndex="2" />
                </children>
             </GridPane>
             <GridPane GridPane.columnIndex="1">

@@ -37,6 +37,7 @@
                   <MFXButton onAction="#addTextOnAction" text="Add text" />
                   <MFXButton onAction="#addImageOnAction" text="Add image" />
                   <MFXButton onAction="#saveAsPdfOnAction" text="Save As PDF" />
+                  <MFXButton onAction="#openCanvasOnAction" text="Sketch" />
                </children>
                <padding>
                   <Insets left="20.0" />

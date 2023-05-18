@@ -21,7 +21,9 @@ public enum ViewType {
     USERS_VIEW("views/worker-users-view.fxml"),
 
     CREATE_DOCUMENT("views/create-document-view.fxml"),
-    DOCUMENT("views/document-view.fxml");
+    DOCUMENT("views/document-view.fxml"),
+
+    CANVAS("views/Canvas.fxml");
 
     private final String path;
     ViewType(String path){

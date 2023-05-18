@@ -18,9 +18,11 @@ import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -433,5 +435,15 @@ public class DocumentViewController extends RootController {
             }
         }
         dragEvent.consume();
+    }
+
+    @FXML
+    private void openCanvasOnAction() throws IOException {
+        Stage stage = this.getStage();
+        stage.setTitle("Sketch");
+        RootController controller = ControllerFactory.loadFxmlFile(ViewType.CANVAS);
+        Scene scene = new Scene(controller.getView());
+        stage.setScene(scene);
+        stage.show();
     }
 }

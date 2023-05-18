@@ -15,4 +15,6 @@ public interface ICustomerModel {
 
 
     ObservableList<Customer> getObsAllCustomers() throws SQLException;
+
+    void loadAllCustomers() throws SQLException;
 }

@@ -41,7 +41,7 @@ public class CreateDocumentController extends RootController {
     @FXML
     private void createOnAction(ActionEvent actionEvent) {
         try {
-            final IDocumentModel model = new DocumentModel();
+            final IDocumentModel model = DocumentModel.getInstance();
             final IDocumentMapperModel mapperModel = new DocumentMapperModel();
             boolean emptyField = false;
             Customer selectedCustomer = customerComboBox.getSelectionModel().getSelectedItem();
@@ -94,7 +94,7 @@ public class CreateDocumentController extends RootController {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
-            ICustomerModel customerModel = new CustomerModel();
+            ICustomerModel customerModel = CustomerModel.getInstance();
             IProjectModel projectModel = new ProjectModel();
             customerComboBox.setItems(customerModel.getObsAllCustomers());
             customerComboBox.selectedItemProperty().addListener((observable, oldValue, newValue) -> {

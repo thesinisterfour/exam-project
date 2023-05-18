@@ -7,6 +7,6 @@ import javafx.concurrent.Task;
 public class LoadDocumentModelTask extends Task<IDocumentModel> {
     @Override
     protected IDocumentModel call() throws Exception {
-        return new DocumentModel();
+        return DocumentModel.getInstance();
     }
 }

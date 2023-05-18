@@ -25,7 +25,7 @@ public class AddCustomerViewController extends RootController {
 
     private final ICityModel cityModel = new CityModel();
 
-    private final ICustomerModel customerModel = new CustomerModel();
+    private final ICustomerModel customerModel = CustomerModel.getInstance();
 
     private Stage stage;
     @FXML

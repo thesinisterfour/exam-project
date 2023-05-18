@@ -31,8 +31,6 @@ public class CustomerDAO implements ICRUDDao<Customer> {
                 ResultSet rs = ps.executeQuery();
                 rs.next();
                 return rs.getInt(1);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
         }
     }
 

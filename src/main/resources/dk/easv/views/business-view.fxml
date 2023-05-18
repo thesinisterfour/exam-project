@@ -24,7 +24,7 @@
          <children>
             <MFXScrollPane fx:id="customersScrollPane" prefWidth="830.0">
                <content>
-                  <HBox fx:id="Customers" prefHeight="100.0" prefWidth="200.0" />
+                  <HBox fx:id="customers" prefHeight="100.0" prefWidth="200.0" />
                </content>
             </MFXScrollPane>
             <HBox alignment="CENTER_RIGHT" spacing="8.0" GridPane.rowIndex="1">

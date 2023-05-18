@@ -22,8 +22,10 @@ import dk.easv.be.Doc;
 import dk.easv.dal.CRUDDAOFactory;
 import dk.easv.dal.dao.ContentDAO;
 import dk.easv.dal.dao.DocumentDAO;
+import dk.easv.dal.dao.ProjectDAO;
 import dk.easv.dal.interafaces.ICRUDDao;
 import dk.easv.dal.interafaces.IContentMapperDAO;
+import dk.easv.dal.interafaces.IProjectMapper;
 import dk.easv.helpers.DAOType;
 import io.github.palexdev.materialfx.utils.SwingFXUtils;
 import javafx.scene.image.Image;
@@ -155,5 +157,11 @@ public class DocumentLogic implements IDocumentLogic {
         }
 
         document.close();
+    }
+
+    @Override
+    public ConcurrentMap<Integer, Doc> getProjectDocuments(int projectId) throws SQLException {
+        IProjectMapper projectMapper = new ProjectDAO();
+        return projectMapper.getDocumentsByProjectId(projectId);
     }
 }

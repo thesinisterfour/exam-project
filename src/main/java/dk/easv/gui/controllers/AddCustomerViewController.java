@@ -11,6 +11,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -27,6 +28,12 @@ public class AddCustomerViewController extends RootController {
     private final ICustomerModel customerModel = new CustomerModel();
 
     private Stage stage;
+    @FXML
+    private GridPane rootGrid;
+
+    public AddCustomerViewController() throws SQLException {
+    }
+
     @FXML
     void cancelButtonAction(ActionEvent event) {
         getStage().close();
@@ -59,7 +66,7 @@ public class AddCustomerViewController extends RootController {
         if (!emptyField){
             int zipCode = Integer.parseInt(ZipCodeTextField.getText());
             try {
-                System.out.println(cityModel.get(zipCode));
+                cityModel.get(zipCode);
             } catch (SQLException e) {
                 // catch if city does not exist
                 System.out.println("City does not exist");

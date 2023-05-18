@@ -23,4 +23,10 @@ public interface IDocumentModel {
     void setObsAllDocuments() throws SQLException;
 
     List<Doc> getOldDocuments() throws SQLException;
+
+    void setObsProjectDocuments(int id) throws SQLException;
+
+    ObservableList<Doc> getObsProjectDocuments();
+
+    ObservableList<Doc> getObsDocuments();
 }

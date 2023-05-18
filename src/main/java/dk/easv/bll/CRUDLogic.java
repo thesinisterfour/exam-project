@@ -153,9 +153,10 @@ public class CRUDLogic implements BLLFacade {
 
     /**
      * Specified by: getDocument in interface BLLFacade
-     * @param id
-     * @return
-     * @throws SQLException
+     * The getDocument method retrieves  the Doc DAO from the CRUDDAOFactory
+     * and calls the get method on it to get a document from the data source.
+     * @return the integer value returned by the get method.
+     * @throws SQLException if there is an error doing the database operation.
      */
     public Doc getDocument(int id) throws SQLException {
         ICRUDDao<Doc> documentDao = CRUDDAOFactory.getDao(DAOType.DOCUMENT_DAO);
@@ -176,9 +177,10 @@ public class CRUDLogic implements BLLFacade {
 
     /**
      * Specified by: deleteDocument in interface BLLFacade
-     * @param id
-     * @return
-     * @throws SQLException
+     * The deleteDocument method will retrieve all the Doc DAO from the CRUDDAOFactory
+     * and then calls the delete method on a document from the data source to remove it.
+     * @return the integer value returned by the delete method.
+     * @throws SQLException if there are any problems during the database operation.
      */
     public int deleteDocument(int id) throws SQLException {
         ICRUDDao<Doc> documentDao = CRUDDAOFactory.getDao(DAOType.DOCUMENT_DAO);
@@ -186,8 +188,11 @@ public class CRUDLogic implements BLLFacade {
     }
 
     /**
-     * @return
-     * @throws SQLException
+     * The method will retrieve all the customer projects from the system. It retrieves the
+     * project DAO from the CURDDAOFactory and calls the getAll method.
+     * @return the resulting ConcurrentMap<Integer, Projects>
+     * The keys are integers representing the project IDs and the values are project objects
+     * @throws SQLException if there is an error during the database operation.
      */
     public ConcurrentMap<Integer, Project> getCustomerProject() throws SQLException {
         ICRUDDao<Project> projectDAO = CRUDDAOFactory.getDao(DAOType.PROJECT_DAO);

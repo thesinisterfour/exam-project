@@ -35,7 +35,7 @@
                   <ImageView fitHeight="65.0" fitWidth="188.0" pickOnBounds="true" preserveRatio="true" styleClass="wuav_logo" />
                   <MFXTextField fx:id="username" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="250.0" promptText="Username" GridPane.rowIndex="1" />
                   <MFXPasswordField fx:id="password" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="250.0" promptText="Password" GridPane.rowIndex="2" />
-                  <MFXButton defaultButton="true" onAction="#loginButtonAction" opacity="0.75" prefHeight="30.0" prefWidth="111.0" text="Login" GridPane.rowIndex="3" />
+                  <MFXButton fx:id="loginButton" defaultButton="true" onAction="#loginButtonAction" opacity="0.75" prefHeight="30.0" prefWidth="111.0" text="Login" GridPane.rowIndex="3" />
                </children>
                <padding>
                   <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />

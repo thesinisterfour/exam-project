@@ -18,6 +18,12 @@ public class DocumentModel implements IDocumentModel {
     private final ObservableList<Doc> obsProjectDocuments;
     private final ObservableList<Doc> obsDocuments;
 
+    /**
+     *  This is a constructor that initializes an empty ObservableList named
+     *  obsAllDocuments and calls a method named setObsAllDocuments()
+     *  to populate the list with data from the database.
+     * @throws SQLException
+     */
     public DocumentModel() throws SQLException {
         obsAllDocuments = FXCollections.observableArrayList();
         obsProjectDocuments = FXCollections.observableArrayList();

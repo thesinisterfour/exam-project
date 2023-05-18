@@ -92,6 +92,7 @@ public class CustomerDAO implements ICRUDDao<Customer> {
         return customers;
     }
 
+
     @Override
     public int delete(int id) throws SQLException {
         try(Connection connection = cm.getConnection()){

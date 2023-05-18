@@ -19,6 +19,12 @@ public class LoginModel implements ILoginModel {
         observer = loginController;
     }
 
+
+    /**
+     * @param username,password this method checks if a User object with the specified username and password exists in the database
+     * @return If user is found, it returns the User object
+     * @throws SQLException
+     */
     @Override
     public User checkForUser(String username, String password) throws SQLException {
         return bll.checkForUser(username, password);

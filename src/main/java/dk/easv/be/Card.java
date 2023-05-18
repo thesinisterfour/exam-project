@@ -16,6 +16,7 @@ public class Card {
 
 
 
+
     public void setCustomerEmail(String customerEmail) {
         this.customerEmail = customerEmail;
     }
@@ -47,6 +48,7 @@ public class Card {
     public String getCustomerAddress() {
         return customerAddress;
     }
+
 
     public String getCustomerZipCode() {
         return customerZipCode;

@@ -16,6 +16,11 @@ public class CityDAO implements ICRUDDao<City> {
 
     private final IConnectionManager cm = ConnectionManagerFactory.createConnectionManager();
 
+    /**
+     * The add() method inserts a City object into a database table named cities.
+     * @return the inserted zipcode as an integer.
+     * @throws SQLException
+     */
     public int add(City city) throws SQLException {
         try(Connection con = cm.getConnection()){
             String sql = "INSERT INTO cities (zipcode, city_name)"+
@@ -30,6 +35,11 @@ public class CityDAO implements ICRUDDao<City> {
         }
     }
 
+    /**
+     * The update() method updates a row in the cities table with new values for zipcode and city_name based on a specific zipcode value.
+     * @return the affected rows as the result of the update() method.
+     * @throws SQLException
+     */
     @Override
     public int update(City object) throws SQLException {
         try(Connection connection = cm.getConnection()){
@@ -40,9 +50,8 @@ public class CityDAO implements ICRUDDao<City> {
             ps.setString(2, object.getCityName());
             ps.setInt(3, object.getZipcode());
 
-            ps.executeQuery();
-        }
-        return 0;
+            return ps.executeUpdate();
+            }
     }
 
     @Override

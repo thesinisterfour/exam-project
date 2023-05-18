@@ -2,10 +2,10 @@ GridPane, VBox{
     -fx-background-color: darkgray;
 }
 
-.background-worker{
+.background{
     -fx-border-color: black;
 }
 
 ImageView{
-    -fx-image: url('../icons/testPerson.jpg');
+    -fx-image: url('../icons/SC-Project-Icon.png');
 }

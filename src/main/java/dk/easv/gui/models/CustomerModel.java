@@ -14,6 +14,11 @@ public class CustomerModel implements ICustomerModel {
 
     private final ICRUDLogic crudLogic = new CRUDLogic();
 
+
+    /**
+     * @returns a ConcurrentMap of Customer objects. The method retrieves the customers using an object of crudLogic class.
+     * @throws SQLException
+     */
     private final ObservableList<Customer> obsAllCustomers;
 
     public CustomerModel() throws SQLException {

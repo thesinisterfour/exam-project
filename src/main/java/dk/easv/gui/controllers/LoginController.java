@@ -42,7 +42,7 @@ public class LoginController extends RootController {
     private MFXButton loginButton;
 
     @FXML
-    private void loginButtonAction(ActionEvent actionEvent) throws SQLException, IOException {
+    private void loginButtonAction(ActionEvent actionEvent) throws SQLException {
         this.stage = this.getStage();
         User selectedUser = model.checkForUser(username.getText(), password.getText());
         newUser.setId(selectedUser.getUserID());
@@ -53,7 +53,7 @@ public class LoginController extends RootController {
         }
     }
 
-    private void displayMain() throws IOException {
+    private void displayMain() {
         ExecutorService es = Executors.newSingleThreadExecutor();
         Future<Parent> future = es.submit(() -> {
             try {
@@ -67,19 +67,18 @@ public class LoginController extends RootController {
         FadeOut fo = new FadeOut(root);
         fo.setOnFinished(e -> {
             try {
-                System.out.println(future.isDone());
                 Parent root = future.get();
                 root.setOpacity(0);
                 stage.setTitle("WUAV!!! " + newUser.getRole().toString());
                 stage.setScene(new Scene(root));
-                new FadeIn(root).setSpeed(2).play();
+                new FadeIn(root).setSpeed(1).play();
 
             } catch (InterruptedException | ExecutionException ex) {
                 throw new RuntimeException(ex);
             }
         });
 
-        fo.setSpeed(2).play();
+        fo.setSpeed(1).play();
 
         es.shutdown();
 

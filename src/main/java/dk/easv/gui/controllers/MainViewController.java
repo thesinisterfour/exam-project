@@ -87,16 +87,20 @@ public class MainViewController extends RootController {
             documentModel = newValue;
             setUpDocBoard();
 
-            List<Doc> oldDocuments = null;
             try {
-                oldDocuments = documentModel.getOldDocuments();
+                List<Doc> oldDocuments = documentModel.getOldDocuments();
+                if (!oldDocuments.isEmpty() && !DocumentHelper.isOldDocWarningShown()) {
+                    AlertHelper alertHelper = new AlertHelper(DocumentHelper.convertToString(oldDocuments), Alert.AlertType.INFORMATION);
+                    if (alertHelper.showAndWait()){
+                        for (Doc oldDocument : oldDocuments) {
+                            documentModel.deleteDocument(oldDocument.getId());
+                        }
+                        documentModel.setObsAllDocuments();
+                    }
+                    DocumentHelper.setOldDocWarningShown(true);
+                }
             } catch (SQLException e) {
                 throw new RuntimeException(e);
-            }
-
-            if (!oldDocuments.isEmpty() && !AlertHelper.isAlertShown()) {
-                AlertHelper.setDocumentModel(documentModel);
-                AlertHelper.showDefaultAlert(DocumentHelper.convertToString(oldDocuments), Alert.AlertType.INFORMATION);
             }
         });
 
@@ -152,7 +156,7 @@ public class MainViewController extends RootController {
         RootController controller = ControllerFactory.loadFxmlFile(ViewType.LOGIN);
         this.stage.setScene(new Scene(controller.getView()));
         this.stage.setTitle("WUAV!!!");
-        AlertHelper.resetIsAlertShown();
+        DocumentHelper.setOldDocWarningShown(false);
     }
 
     @FXML
@@ -186,9 +190,11 @@ public class MainViewController extends RootController {
             RootController rootController = ControllerFactory.loadFxmlFile(ViewType.DOCUMENT);
             mainBorderPane.setCenter(rootController.getView());
         } catch (IOException e) {
-            AlertHelper.showDefaultAlert("A file error occurred", Alert.AlertType.ERROR);
+            AlertHelper alertHelper = new AlertHelper("A file error occurred", Alert.AlertType.ERROR);
+            alertHelper.showAndWait();
         } catch (IndexOutOfBoundsException e) {
-            AlertHelper.showDefaultAlert("Please select a document to edit", Alert.AlertType.ERROR);
+            AlertHelper alertHelper = new AlertHelper("Please select a document to edit", Alert.AlertType.ERROR);
+            alertHelper.showAndWait();
         }
 
     }
@@ -200,7 +206,8 @@ public class MainViewController extends RootController {
             documentModel.deleteDocument(selectedDocument.getId());
             documentModel.setObsAllDocuments();
         } catch (IndexOutOfBoundsException e) {
-            AlertHelper.showDefaultAlert("Please select a document to delete", Alert.AlertType.ERROR);
+            AlertHelper alertHelper = new AlertHelper("Please select a document to delete", Alert.AlertType.ERROR);
+            alertHelper.showAndWait();
         }
     }
 

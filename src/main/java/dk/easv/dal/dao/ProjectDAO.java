@@ -58,15 +58,15 @@ public class ProjectDAO implements ICRUDDao<Project>, IProjectMapper {
     @Override
     public ConcurrentMap<Integer, Project> getAll() throws SQLException {
         ConcurrentMap<Integer, Project> projects = new ConcurrentHashMap<>();
-        try (Connection connection = cm.getConnection()){
+        try (Connection connection = cm.getConnection()) {
             PreparedStatement ps = connection.prepareStatement("SELECT * FROM dbo.[project]");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
 
                 int dbProject_id = rs.getInt("project_id");
                 String dbProject_name = rs.getString("project_name");
-                LocalDate dbProject_start_date = rs.getDate("project_start_date")!= null ? rs.getDate("project_start_date").toLocalDate() : null;
-                LocalDate dbProject_end_date = rs.getDate("project_end_date")!= null ? rs.getDate("project_end_date").toLocalDate() : null;
+                LocalDate dbProject_start_date = rs.getDate("project_start_date") != null ? rs.getDate("project_start_date").toLocalDate() : null;
+                LocalDate dbProject_end_date = rs.getDate("project_end_date") != null ? rs.getDate("project_end_date").toLocalDate() : null;
                 int dbCustomer_id = rs.getInt("customer_id");
                 String dbAddress = rs.getString("address");
                 int dbZipcode = rs.getInt("zipcode");
@@ -75,8 +75,6 @@ public class ProjectDAO implements ICRUDDao<Project>, IProjectMapper {
                 projects.put(dbProject_id, project);
 
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
         }
         return projects;
     }

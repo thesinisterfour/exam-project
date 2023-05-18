@@ -9,7 +9,6 @@ import dk.easv.gui.models.DocumentModel;
 import dk.easv.gui.models.interfaces.ICustomerModel;
 import dk.easv.gui.models.interfaces.IDocumentModel;
 import dk.easv.gui.rootContoller.RootController;
-import dk.easv.helpers.AlertHelper;
 import dk.easv.helpers.UserSingleClass;
 import dk.easv.helpers.ViewType;
 import io.github.palexdev.materialfx.controls.MFXScrollPane;
@@ -115,7 +114,7 @@ public class BusinessViewController extends RootController{
         RootController controller = ControllerFactory.loadFxmlFile(ViewType.LOGIN);
         this.stage.setScene(new Scene(controller.getView()));
         this.stage.setTitle("WUAV!!!");
-        AlertHelper.resetIsAlertShown();
+//        AlertHelper.resetIsAlertShown();
     }
 
 

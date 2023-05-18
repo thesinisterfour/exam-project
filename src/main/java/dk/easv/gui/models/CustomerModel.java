@@ -12,6 +12,8 @@ import java.util.concurrent.ConcurrentMap;
 
 public class CustomerModel implements ICustomerModel {
 
+    private static CustomerModel INSTANCE;
+
     private final ICRUDLogic crudLogic = new CRUDLogic();
 
 
@@ -21,9 +23,16 @@ public class CustomerModel implements ICustomerModel {
      */
     private final ObservableList<Customer> obsAllCustomers;
 
-    public CustomerModel() throws SQLException {
+    private CustomerModel() throws SQLException {
         obsAllCustomers= FXCollections.observableArrayList();
         setObsAllCustomers();
+    }
+
+    public static CustomerModel getInstance() throws SQLException {
+        if (INSTANCE == null){
+            INSTANCE = new CustomerModel();
+        }
+        return INSTANCE;
     }
 
     @Override

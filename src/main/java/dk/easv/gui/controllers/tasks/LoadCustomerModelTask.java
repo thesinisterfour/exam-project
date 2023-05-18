@@ -7,6 +7,6 @@ import javafx.concurrent.Task;
 public class LoadCustomerModelTask extends Task<ICustomerModel> {
     @Override
     protected ICustomerModel call() throws Exception {
-        return new CustomerModel();
+        return CustomerModel.getInstance();
     }
 }

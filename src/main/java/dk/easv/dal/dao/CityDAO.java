@@ -1,7 +1,8 @@
 package dk.easv.dal.dao;
 
 import dk.easv.be.City;
-import dk.easv.dal.ConnectionManager;
+import dk.easv.dal.connectionManager.ConnectionManagerFactory;
+import dk.easv.dal.connectionManager.IConnectionManager;
 import dk.easv.dal.interafaces.ICRUDDao;
 
 import java.sql.Connection;
@@ -13,7 +14,7 @@ import java.util.concurrent.ConcurrentMap;
 
 public class CityDAO implements ICRUDDao<City> {
 
-    private final ConnectionManager cm =ConnectionManager.getINSTANCE();
+    private final IConnectionManager cm = ConnectionManagerFactory.createConnectionManager();
 
     /**
      * The add() method inserts a City object into a database table named cities.
@@ -42,7 +43,7 @@ public class CityDAO implements ICRUDDao<City> {
     @Override
     public int update(City object) throws SQLException {
         try(Connection connection = cm.getConnection()){
-            PreparedStatement ps = connection.prepareStatement("" + "UPDATE dbo.[cities] SET zipcode=?, city_name=? " +
+            PreparedStatement ps = connection.prepareStatement("UPDATE dbo.[cities] SET zipcode=?, city_name=? " +
                     "WHERE zipcode=?;");
 
             ps.setInt(1, object.getZipcode());
@@ -69,9 +70,7 @@ public class CityDAO implements ICRUDDao<City> {
     public ConcurrentMap<Integer, City> getAll() throws SQLException {
         ConcurrentMap<Integer, City> cities = new ConcurrentHashMap<>();
         try (Connection connection = cm.getConnection()){
-            PreparedStatement ps = connection.prepareStatement("" +
-                    "SELECT * FROM dbo.[cities];"
-            );
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM dbo.[cities];");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 int dbZip = rs.getInt("customer_id");
@@ -79,8 +78,6 @@ public class CityDAO implements ICRUDDao<City> {
                 City city = new City(dbZip, dbName);
                 cities.put(dbZip, city);
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
         }
         return cities;
     }
@@ -88,7 +85,7 @@ public class CityDAO implements ICRUDDao<City> {
     @Override
     public int delete(int id) throws SQLException {
         try(Connection connection = cm.getConnection()){
-            PreparedStatement ps = connection.prepareStatement("" + "DELETE FROM dbo.[cities] WHERE zipcode=?;");
+            PreparedStatement ps = connection.prepareStatement("DELETE FROM dbo.[cities] WHERE zipcode=?;");
             ps.setInt(1, id);
 
             ps.executeQuery();

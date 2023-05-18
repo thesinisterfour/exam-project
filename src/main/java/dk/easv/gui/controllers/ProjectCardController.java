@@ -43,8 +43,6 @@ public class ProjectCardController extends RootController {
     @FXML
     private Label zipcodeLabel;
 
-    private final ProjectModel projectModel = new ProjectModel();
-
     private ConcurrentMap<Integer, Project> projects = new ConcurrentHashMap<>();
 
     private Project project;

@@ -1,21 +1,23 @@
 package dk.easv.gui.models;
 
-import dk.easv.be.Customer;
 import dk.easv.be.User;
+import dk.easv.bll.ICRUDLogic;
 import dk.easv.bll.CRUDLogic;
+import dk.easv.gui.models.interfaces.IUserModel;
 
 import java.sql.SQLException;
 import java.util.concurrent.ConcurrentMap;
 
-public class UserModel {
+public class UserModel implements IUserModel {
 
-    private CRUDLogic crudLogic = new CRUDLogic();
+    private final ICRUDLogic crudLogic = new CRUDLogic();
 
 
     /**
      * @returns a ConcurrentMap of Users with Integer keys
      * @throws SQLException
      */
+    @Override
     public ConcurrentMap<Integer, User> getAllUsers() throws SQLException {
         return crudLogic.getAllUsers();
     }

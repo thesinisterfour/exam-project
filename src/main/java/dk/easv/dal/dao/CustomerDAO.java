@@ -2,9 +2,8 @@ package dk.easv.dal.dao;
 
 import dk.easv.be.City;
 import dk.easv.be.Customer;
-import dk.easv.be.Role;
-import dk.easv.be.User;
-import dk.easv.dal.ConnectionManager;
+import dk.easv.dal.connectionManager.ConnectionManagerFactory;
+import dk.easv.dal.connectionManager.IConnectionManager;
 import dk.easv.dal.interafaces.ICRUDDao;
 
 import java.sql.Connection;
@@ -15,7 +14,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 public class CustomerDAO implements ICRUDDao<Customer> {
-    private final ConnectionManager cm = ConnectionManager.getINSTANCE();
+    private final IConnectionManager cm = ConnectionManagerFactory.createConnectionManager();
 
     @Override
     public int add(Customer customer) throws SQLException {
@@ -40,8 +39,7 @@ public class CustomerDAO implements ICRUDDao<Customer> {
     @Override
     public int update(Customer object) throws SQLException {
         try(Connection connection = cm.getConnection()){
-            PreparedStatement ps = connection.prepareStatement("" + "UPDATE dbo.[customer] SET name=?, email=?, " +
-                    "adress=?, zipcode=? WHERE customer_id=?;");
+            PreparedStatement ps = connection.prepareStatement("UPDATE dbo.[customer] SET name=?, email=?, address=?, zipcode=? WHERE customer_id=?;");
 
             ps.setString(1, object.getCustomerName());
             ps.setString(2, object.getCustomerEmail());
@@ -57,8 +55,7 @@ public class CustomerDAO implements ICRUDDao<Customer> {
     @Override
     public Customer get(int id) throws SQLException {
         try(Connection connection = cm.getConnection()) {
-            PreparedStatement ps = connection.prepareStatement("" +
-                    "SELECT * FROM dbo.[customer] WHERE customer_id=? INNER JOIN dbo.cities ON dbo.cities.zipcode = dbo.customer.zipcode;");
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM dbo.[customer] INNER JOIN dbo.cities ON dbo.cities.zipcode = dbo.customer.zipcode WHERE customer_id = ?;");
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
 
@@ -75,8 +72,7 @@ public class CustomerDAO implements ICRUDDao<Customer> {
     public ConcurrentMap<Integer, Customer> getAll() throws SQLException {
         ConcurrentMap<Integer, Customer> customers = new ConcurrentHashMap<>();
         try (Connection connection = cm.getConnection()){
-            PreparedStatement ps = connection.prepareStatement("" +
-                    "select dbo.[customer].[customer_id], dbo.[customer].[name], dbo.[customer].[email], dbo.[customer].[address], dbo.cities.city_name, dbo.cities.zipcode\n" +
+            PreparedStatement ps = connection.prepareStatement("select dbo.[customer].[customer_id], dbo.[customer].[name], dbo.[customer].[email], dbo.[customer].[address], dbo.cities.city_name, dbo.cities.zipcode\n" +
                     "from dbo.customer\n" +
                     "inner join dbo.cities on dbo.cities.zipcode = dbo.customer.zipcode;"
             );
@@ -92,8 +88,6 @@ public class CustomerDAO implements ICRUDDao<Customer> {
                 Customer customer = new Customer(dbId,dbName,dbEmail,dbAddress,city);
                 customers.put(dbId, customer);
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
         }
         return customers;
     }
@@ -102,7 +96,7 @@ public class CustomerDAO implements ICRUDDao<Customer> {
     @Override
     public int delete(int id) throws SQLException {
         try(Connection connection = cm.getConnection()){
-            PreparedStatement ps = connection.prepareStatement("" + "DELETE FROM dbo.[customer] WHERE customer_id=?;");
+            PreparedStatement ps = connection.prepareStatement("DELETE FROM dbo.[customer] WHERE customer_id=?;");
             ps.setInt(1, id);
 
             ps.executeQuery();

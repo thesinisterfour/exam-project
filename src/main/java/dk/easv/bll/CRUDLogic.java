@@ -8,7 +8,7 @@ import dk.easv.helpers.DAOType;
 import java.sql.SQLException;
 import java.util.concurrent.ConcurrentMap;
 
-public class CRUDLogic implements BLLFacade {
+public class CRUDLogic implements ICRUDLogic {
 
     /**
      * the addUser method attempts to retrieve a user DAO from the CRUDDAOFactory
@@ -26,6 +26,7 @@ public class CRUDLogic implements BLLFacade {
         }
     }
 
+
     /**
      *  the addCustomer method attempts to retrieve a customer DAO from the CRUDDAOFactory
      *  and adds the provided Customer object by invoking the add method on the DAO.
@@ -33,6 +34,8 @@ public class CRUDLogic implements BLLFacade {
      * @throws SQLException if there is an error doing the database operations.
      * @throws NullPointerException if the DAO retrieval fails.
      */
+
+    @Override
     public int addCustomer(Customer customer) throws SQLException, NullPointerException {
         ICRUDDao<Customer> customerDAO = CRUDDAOFactory.getDao(DAOType.CUSTOMER_DAO);
         if (customerDAO == null) {
@@ -48,6 +51,8 @@ public class CRUDLogic implements BLLFacade {
      * @throws SQLException if there is an error doing the database operations.
      * @throws NullPointerException if the DAO is null.
      */
+
+    @Override
     public int addCity(City city) throws SQLException, NullPointerException{
         ICRUDDao<City> cityDao = CRUDDAOFactory.getDao(DAOType.CITY_DAO);
         if(cityDao == null){
@@ -57,7 +62,6 @@ public class CRUDLogic implements BLLFacade {
             return cityDao.add(city);
         }
     }
-
 
     /**
      * Specified by: BLLFacade
@@ -85,6 +89,7 @@ public class CRUDLogic implements BLLFacade {
      * @throws SQLException if there is an error doing the database operation.
      * @throws NullPointerException if the DAO is null.
      */
+    @Override
     public ConcurrentMap<Integer, Customer> getAllCustomers() throws SQLException{
         ICRUDDao<Customer> customerDao = CRUDDAOFactory.getDao(DAOType.CUSTOMER_DAO);
         if (customerDao == null) {
@@ -119,6 +124,7 @@ public class CRUDLogic implements BLLFacade {
      * @throws SQLException if there is an error in the database operations.
      * @throws NullPointerException if the DAO is null.
      */
+    @Override
     public ConcurrentMap<Integer, User> getAllUsers() throws SQLException{
         ICRUDDao<User> userDao = CRUDDAOFactory.getDao(DAOType.USER_DAO);
         if(userDao == null){
@@ -135,10 +141,13 @@ public class CRUDLogic implements BLLFacade {
      * @return the integer value returned by the add method.
      * @throws SQLException if there is an error in the database operation
      */
+
+    @Override
     public int addDocument(Doc document) throws SQLException {
         ICRUDDao<Doc> documentDao = CRUDDAOFactory.getDao(DAOType.DOCUMENT_DAO);
         return documentDao.add(document);
     }
+
 
     /**
      * The updateDocument method retrieves the Doc DAO from the CRUDDAOFactory
@@ -146,6 +155,7 @@ public class CRUDLogic implements BLLFacade {
      * @return the integer value returned by the update method.
      * @throws SQLException if there is an error in the database operation.
      */
+    @Override
     public int updateDocument(Doc document) throws SQLException {
         ICRUDDao<Doc> documentDao = CRUDDAOFactory.getDao(DAOType.DOCUMENT_DAO);
         return documentDao.update(document);
@@ -158,10 +168,13 @@ public class CRUDLogic implements BLLFacade {
      * @return the integer value returned by the get method.
      * @throws SQLException if there is an error doing the database operation.
      */
+
+    @Override
     public Doc getDocument(int id) throws SQLException {
         ICRUDDao<Doc> documentDao = CRUDDAOFactory.getDao(DAOType.DOCUMENT_DAO);
         return documentDao.get(id);
     }
+
 
     /**
      * The purpose of this method is to retrieve all documents from the system.
@@ -170,6 +183,7 @@ public class CRUDLogic implements BLLFacade {
      * @return the resulting ConcurrentMap<Integer, Doc>
      * @throws SQLException if there is an error doing the database operation.
      */
+    @Override
     public ConcurrentMap<Integer, Doc> getAllDocuments() throws SQLException {
         ICRUDDao<Doc> documentDao = CRUDDAOFactory.getDao(DAOType.DOCUMENT_DAO);
         return documentDao.getAll();
@@ -182,10 +196,13 @@ public class CRUDLogic implements BLLFacade {
      * @return the integer value returned by the delete method.
      * @throws SQLException if there are any problems during the database operation.
      */
+
+    @Override
     public int deleteDocument(int id) throws SQLException {
         ICRUDDao<Doc> documentDao = CRUDDAOFactory.getDao(DAOType.DOCUMENT_DAO);
         return documentDao.delete(id);
     }
+
 
     /**
      * The method will retrieve all the customer projects from the system. It retrieves the
@@ -199,6 +216,16 @@ public class CRUDLogic implements BLLFacade {
         return projectDAO.getAll();
     }
 
+    @Override
+    public int addProject(Project project) throws SQLException {
+        ICRUDDao<Project> projectDao = CRUDDAOFactory.getDao(DAOType.PROJECT_DAO);
+        return  projectDao.add(project);
+    }
 
+    @Override
+    public ConcurrentMap<Integer, Project> getAllProjects() throws SQLException {
+        ICRUDDao<Project> projectDAo = CRUDDAOFactory.getDao(DAOType.PROJECT_DAO);
+        return projectDAo.getAll();
+    }
 
 }

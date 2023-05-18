@@ -1,4 +1,4 @@
-package dk.easv.dal;
+package dk.easv.dal.connectionManager;
 
 import com.microsoft.sqlserver.jdbc.SQLServerConnectionPoolDataSource;
 import dk.easv.Main;
@@ -14,16 +14,15 @@ import java.util.Optional;
 import java.util.Properties;
 import java.util.concurrent.*;
 
-public class ConnectionManager {
+public class ConnectionManager implements IConnectionManager{
     private static final String usualConfigPath = "config.cfg";
-    private static ConnectionManager INSTANCE;
     private final SQLServerConnectionPoolDataSource ds;
 
     private final ScheduledExecutorService es = Executors.newSingleThreadScheduledExecutor();
-    private final int numberOfConnections = 50;
+    private final int numberOfConnections = 20;
     private final BlockingDeque<PooledConnection> connections = new LinkedBlockingDeque<>(numberOfConnections);
 
-    private ConnectionManager() {
+    public ConnectionManager() {
         this(usualConfigPath);
     }
 
@@ -61,25 +60,12 @@ public class ConnectionManager {
     }
 
     /**
-     * This method follows the Singleton pattern, ensuring that only one instance of
-     * the ConnectionManager class is created and shared throughout the application.
-     * @return If the INSTANCE variable is already assigned, the existing instance is returned.
-     * Otherwise, a new instance is created and assigned to the INSTANCE variable before being returned.
-     */
-    public static ConnectionManager getINSTANCE() {
-        if (INSTANCE == null) {
-            INSTANCE = new ConnectionManager();
-        }
-        return INSTANCE;
-    }
-
-
-    /**
      * @return this code attempts to get a connection from a pool by taking the first available connection from the queue and returning it.
      *  it throws a .
      * @throws RuntimeException wrapping the InterruptedException, if there is an interruption while waiting for a connection.
      * @throws SQLException if there's an error during the database operation.
      */
+    @Override
     public Connection getConnection() throws SQLException {
         try {
             return connections.takeFirst().getConnection();
@@ -87,6 +73,7 @@ public class ConnectionManager {
             throw new RuntimeException(e);
         }
     }
+
 
     /**
      * @return this code attempts to create a pooled connection by invoking the getPooledConnection() method on a data source (ds).

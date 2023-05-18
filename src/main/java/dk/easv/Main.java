@@ -1,6 +1,6 @@
 package dk.easv;
 
-import dk.easv.dal.ConnectionManager;
+import dk.easv.dal.connectionManager.ConnectionManagerFactory;
 import dk.easv.gui.controllerFactory.ControllerFactory;
 import dk.easv.gui.rootContoller.RootController;
 import dk.easv.helpers.Config;
@@ -20,15 +20,14 @@ public class Main extends Application {
     public void start(Stage stage) throws IOException {
         if (Files.exists(Config.CONFIG_PATH.getUrl())){
             RootController controller = ControllerFactory.loadFxmlFile(ViewType.LOGIN);
-            Scene scene = new Scene(controller.getView(), 760, 480);
-            stage.setTitle("Hello!");
+            Scene scene = new Scene(controller.getView());
+            stage.setTitle("WUAV!!!");
             stage.setScene(scene);
             stage.show();
         } else {
             showConfigNotFoundAlert();
         }
     }
-
     private static void showConfigNotFoundAlert() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");
@@ -52,9 +51,9 @@ public class Main extends Application {
     }
 
 
+
     @Override
     public void stop() {
-        ConnectionManager cm = ConnectionManager.getINSTANCE();
-        cm.stopExecutorService();
+        ConnectionManagerFactory.stopAllConnectionManagers();
     }
 }

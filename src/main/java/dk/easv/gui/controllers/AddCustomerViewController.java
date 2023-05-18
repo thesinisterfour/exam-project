@@ -3,12 +3,15 @@ package dk.easv.gui.controllers;
 import dk.easv.be.Customer;
 import dk.easv.gui.models.CityModel;
 import dk.easv.gui.models.CustomerModel;
+import dk.easv.gui.models.interfaces.ICustomerModel;
+import dk.easv.gui.models.interfaces.ICityModel;
 import dk.easv.gui.rootContoller.RootController;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -20,11 +23,17 @@ public class AddCustomerViewController extends RootController {
     @FXML
     private MFXTextField nameTextField, emailTextField, addressTextField, cityTextField, ZipCodeTextField;
 
-    private final CityModel cityModel = new CityModel();
+    private final ICityModel cityModel = new CityModel();
 
-    private final CustomerModel customerModel = new CustomerModel();
+    private final ICustomerModel customerModel = new CustomerModel();
 
     private Stage stage;
+    @FXML
+    private GridPane rootGrid;
+
+    public AddCustomerViewController() throws SQLException {
+    }
+
     @FXML
     void cancelButtonAction(ActionEvent event) {
         getStage().close();
@@ -57,7 +66,7 @@ public class AddCustomerViewController extends RootController {
         if (!emptyField){
             int zipCode = Integer.parseInt(ZipCodeTextField.getText());
             try {
-                System.out.println(cityModel.get(zipCode));
+                cityModel.get(zipCode);
             } catch (SQLException e) {
                 // catch if city does not exist
                 System.out.println("City does not exist");

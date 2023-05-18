@@ -1,8 +1,6 @@
 package dk.easv.bll;
 
-import dk.easv.be.City;
-import dk.easv.be.Doc;
-import dk.easv.be.User;
+import dk.easv.be.*;
 
 import java.sql.SQLException;
 import java.util.concurrent.ConcurrentMap;
@@ -10,7 +8,7 @@ import java.util.concurrent.ConcurrentMap;
 /**
  *  This interface declares several methods related to database operations for User, Doc, and City objects.
  */
-public interface BLLFacade {
+public interface ICRUDLogic {
 
     /**
      * This method takes a parameter of type User.
@@ -30,6 +28,7 @@ public interface BLLFacade {
      * It is used to add a document.
      * @returns an integer
      */
+
     int addDocument(Doc document) throws SQLException;
 
     /**
@@ -65,4 +64,16 @@ public interface BLLFacade {
      * @returns a City object.
      */
     City getCity(int zipcode) throws SQLException;
+
+    int addCustomer(Customer customer) throws SQLException, NullPointerException;
+
+    int addCity(City city) throws SQLException, NullPointerException;
+
+    ConcurrentMap<Integer, Customer> getAllCustomers() throws SQLException;
+
+    ConcurrentMap<Integer, User> getAllUsers() throws SQLException;
+
+    int addProject(Project project) throws SQLException;
+
+    ConcurrentMap<Integer, Project> getAllProjects() throws SQLException;
 }

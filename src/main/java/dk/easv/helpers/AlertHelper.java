@@ -1,5 +1,7 @@
 package dk.easv.helpers;
 
+import dk.easv.be.Doc;
+import dk.easv.gui.models.interfaces.IDocumentModel;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.dialogs.MFXGenericDialog;
 import io.github.palexdev.materialfx.dialogs.MFXGenericDialogBuilder;
@@ -8,16 +10,26 @@ import io.github.palexdev.materialfx.enums.ButtonType;
 import javafx.scene.control.Alert;
 import javafx.stage.Modality;
 
+import java.sql.SQLException;
+import java.util.List;
 import java.util.Map;
 
 public class AlertHelper{
     //TODO add icons to alerts
-
+    private static boolean isAlertShown = false;
+    private static IDocumentModel documentModel;
     private static MFXGenericDialog dialogContent;
     private static MFXStageDialog dialog;
 
+    public static void setDocumentModel(IDocumentModel model){
+        documentModel = model;
+    }
+
     public static void showDefaultAlert(String content, Alert.AlertType alertType) {
 
+        if (isAlertShown()) {
+            return;
+        }
             dialogContent = MFXGenericDialogBuilder.build()
                     .setContentText(content)
                     .makeScrollable(true)
@@ -36,9 +48,17 @@ public class AlertHelper{
             MFXButton cancelButton = new MFXButton("Cancel");
             cancelButton.setButtonType(ButtonType.RAISED);
             dialogContent.addActions(
-
                     Map.entry(confirmButton, event -> {
-                        dialog.close();
+                        try {
+                            List<Doc> oldDocuments = documentModel.getOldDocuments();
+                            for (Doc oldDocument : oldDocuments) {
+                                documentModel.deleteDocument(oldDocument.getId());
+                                documentModel.setObsAllDocuments();
+                            }
+                            dialog.close();
+                        }catch (SQLException e){
+                            e.printStackTrace();
+                        }
                     }),
                     Map.entry(cancelButton, event -> dialog.close())
             );
@@ -51,6 +71,7 @@ public class AlertHelper{
             case ERROR -> openError();
             default -> openGeneric();
         }
+        isAlertShown = true;
     }
 
     private static void openInfo() {
@@ -93,5 +114,12 @@ public class AlertHelper{
 
         if (styleClass != null)
             dialogContent.getStyleClass().add(styleClass);
+    }
+    public static boolean isAlertShown() {
+        return isAlertShown;
+    }
+
+    public static void resetIsAlertShown() {
+        isAlertShown = false;
     }
 }

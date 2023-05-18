@@ -2,56 +2,69 @@
 
 <?import io.github.palexdev.materialfx.controls.MFXButton?>
 <?import io.github.palexdev.materialfx.controls.MFXScrollPane?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane styleClass="main_pane" stylesheets="@../css/global-style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.DocumentViewController">
-   <center>
-      <MFXScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true" prefHeight="348.0" prefWidth="701.0" styleClass="semi-transparent-bg" vbarPolicy="ALWAYS" BorderPane.alignment="TOP_CENTER">
+<GridPane prefHeight="650.0" prefWidth="900.0" stylesheets="@../css/global-style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.DocumentViewController">
+   <columnConstraints>
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints maxHeight="607.2000244140625" minHeight="10.0" prefHeight="607.2000244140625" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="195.60001220703126" minHeight="0.0" prefHeight="42.5999755859375" vgrow="SOMETIMES" />
+   </rowConstraints>
+   <children>
+      <MFXScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true" prefHeight="348.0" prefWidth="701.0" styleClass="semi-transparent-bg" vbarPolicy="ALWAYS">
          <content>
             <HBox fx:id="centeringHBox" alignment="TOP_CENTER" styleClass="semi-transparent-bg">
                <children>
-                  <VBox fx:id="vbox" alignment="TOP_CENTER" spacing="10.0" style="-fx-background-color: white; -fx-border-color: black; -fx-border-width: 1;" HBox.hgrow="ALWAYS" />
+                  <VBox fx:id="vbox" alignment="TOP_CENTER" onDragDropped="#vboxOnDragDropped" onDragOver="#vboxOnDragOver" spacing="10.0" HBox.hgrow="ALWAYS" />
                </children>
             </HBox>
          </content>
       </MFXScrollPane>
-   </center>
-   <bottom>
-      <GridPane BorderPane.alignment="CENTER">
+      <GridPane GridPane.rowIndex="1">
          <columnConstraints>
-            <ColumnConstraints fillWidth="false" halignment="LEFT" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="350.3999755859375" />
-            <ColumnConstraints fillWidth="false" halignment="RIGHT" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="350.40002441406244" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
          </columnConstraints>
          <rowConstraints>
-            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <HBox alignment="CENTER_LEFT" spacing="8.0">
+            <GridPane>
+               <columnConstraints>
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
                <children>
-                  <MFXButton onAction="#addTextOnAction" text="Add text" />
-                  <MFXButton onAction="#addImageOnAction" text="Add image" />
                   <MFXButton onAction="#saveAsPdfOnAction" text="Save As PDF" />
+                  <MFXButton onAction="#addTextOnAction" text="Add text" GridPane.columnIndex="2" />
+                  <MFXButton onAction="#addImageOnAction" text="Add image" GridPane.columnIndex="1" />
                </children>
-               <padding>
-                  <Insets left="20.0" />
-               </padding>
-            </HBox>
-            <HBox alignment="CENTER_RIGHT" spacing="8.0" GridPane.columnIndex="1">
+            </GridPane>
+            <GridPane GridPane.columnIndex="1">
+               <columnConstraints>
+                  <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
                <children>
-                  <MFXButton defaultButton="true" onAction="#saveOnAction" text="Save" />
-                  <MFXButton cancelButton="true" onAction="#cancelOnAction" text="Cancel" />
+                  <MFXButton defaultButton="true" onAction="#saveOnAction" text="Save" GridPane.rowIndex="1" />
+                  <MFXButton cancelButton="true" onAction="#cancelOnAction" text="Cancel" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                </children>
-               <padding>
-                  <Insets right="20.0" />
-               </padding>
-            </HBox>
+            </GridPane>
          </children>
       </GridPane>
-   </bottom>
-</BorderPane>
+   </children>
+</GridPane>

@@ -54,16 +54,15 @@ public class HBoxController extends RootController {
     private void populateUserHBox() {
         try {
                 ObservableList<Node> children = mainHboxCard.getChildren();
-                for(int i = 1; users.size() > i; i++){
+                Set<Integer> keys = users.keySet();
+                for (Integer key : keys) {
                     FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(Main.class.getResource("views/Card.fxml")));
                     Parent parent = loader.load();
                     CardController cardController = loader.getController();
                     cardController.receiveUserData(users);
-                    cardController.createCards(new Card(users.get(i).getFirstName(),users.get(i).getFirstName(), users.get(i).getRole().toString()));
+                    cardController.createCards(new Card(users.get(key).getFirstName(), users.get(key).getLastName(), users.get(key).getRole().toString()));
                     children.addAll(parent);
                 }
-
-
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -81,7 +80,6 @@ public class HBoxController extends RootController {
                 cardController.createCards(new Card(customers.get(key).getCustomerName(), customers.get(key).getCustomerAddress(), customers.get(key).getZipCode(), customers.get(key).getCustomerEmail()));
                 children.addAll(parent);
             }
-
             } catch (IOException ex) {
             throw new RuntimeException(ex);
         }

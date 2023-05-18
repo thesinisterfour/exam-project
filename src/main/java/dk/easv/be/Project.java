@@ -1,7 +1,6 @@
 package dk.easv.be;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 public class Project {
 
@@ -83,5 +82,10 @@ public class Project {
 
     public void setProjectZipcode(int projectZipcode) {
         this.projectZipcode = projectZipcode;
+    }
+
+    @Override
+    public String toString() {
+        return projectName;
     }
 }

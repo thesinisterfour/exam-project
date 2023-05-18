@@ -40,6 +40,8 @@ public class CreateWorkerController extends RootController {
     private MFXTextField passwordTXF;
     @FXML
     private ImageView image;
+    private boolean editMode = false;
+    private User selectedUser;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -53,9 +55,53 @@ public class CreateWorkerController extends RootController {
             AlertHelper.showDefaultAlert("There was an error retrieving roles from database", Alert.AlertType.ERROR);
         }
     }
+    public void setEditMode(boolean editMode) {
+        this.editMode = editMode;
+    }
+    public void setUserData(User user) {
+        this.selectedUser = user;
+        if (selectedUser != null){
+            firstNameTXF.setText(user.getFirstName());
+            lastNameTXF.setText(user.getLastName());
+            userNameTXF.setText(user.getUsername());
+            passwordTXF.setText(user.getPassword());
+            roleComboBox.setValue(user.getRole().toString());
+        }
+        editMode = true;
+    }
 
     @FXML
     private void handleCreate(){
+        if (editMode) {
+            preformEdit();
+        } else {
+            preformCreate();
+        }
+    }
+    private void preformEdit(){
+        String firstName = firstNameTXF.getText();
+        String lastName = lastNameTXF.getText();
+        String username = userNameTXF.getText();
+        String password = passwordTXF.getText();
+        String selectedRoleName = roleComboBox.getValue();
+        if (firstName.isEmpty() || lastName.isEmpty() || username.isEmpty() || password.isEmpty() || selectedRoleName == null){
+            AlertHelper.showDefaultAlert("Please fill all fields and make sure to choose the user role!", Alert.AlertType.ERROR);
+            return;
+        }
+
+        Role selectedRole = Role.valueOf(selectedRoleName.toUpperCase());
+        User user = new User(firstName, lastName, selectedRole);
+        user.setUsername(username);
+        user.setPassword(password);
+        try {
+            userModel.updateUser(selectedUser);
+            AlertHelper.showDefaultAlert("User successfully edited", Alert.AlertType.INFORMATION);
+        } catch (SQLException e){
+            AlertHelper.showDefaultAlert("Error editing user, please try again", Alert.AlertType.ERROR);
+            throw new RuntimeException(e);
+        }
+    }
+    private void preformCreate(){
         String firstName = firstNameTXF.getText();
         String lastName = lastNameTXF.getText();
         String username = userNameTXF.getText();

@@ -93,14 +93,15 @@ public class WorkersViewController extends RootController {
         }
     }
     @FXML
-    private void handleEdit(){
-        try {
+    private void handleEdit(){ //TODO
+        try { //Change View type to Create_worker when you make the FXML for it
             User selectedUser = hboxController.getSelectedUser();
             if (selectedUser == null) {
                 AlertHelper.showDefaultAlert("Pleas select a user to edit", Alert.AlertType.ERROR);
             } else {
-                RootController rootController = ControllerFactory.loadFxmlFile(ViewType.USERS_VIEW);
-                this.getStage().setScene(new Scene(rootController.getView(), 560, 440));
+                CreateWorkerController createWorkerController = (CreateWorkerController) ControllerFactory.loadFxmlFile(ViewType.USERS_VIEW);
+                createWorkerController.setUserData(selectedUser);
+                this.getStage().setScene(new Scene(createWorkerController.getView(), 560, 440));
             }
         } catch (IOException e) {
             throw new RuntimeException(e);

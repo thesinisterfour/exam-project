@@ -44,8 +44,8 @@ public class UserDAO implements ICRUDDao<User> {
         }
 
         try(Connection connection = cm.getConnection()){
-            PreparedStatement ps = connection.prepareStatement("UPDATE dbo.[users] SET first_name=?, last_name=?, " +
-                    "role_id = (SELECT role_id FROM users_role WHERE role_name = ?), username=?, password=? WHERE user_id=?;");
+            PreparedStatement ps = connection.prepareStatement("UPDATE dbo.[users] SET first_name=?, last_name=?," +
+                    " role_id=(SELECT role_id FROM users_role WHERE role_name=?), username=?, password=? WHERE user_id=?");
 
             ps.setString(1, object.getFirstName());
             ps.setString(2, object.getLastName());

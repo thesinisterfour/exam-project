@@ -32,7 +32,7 @@ public class UserDAO implements ICRUDDao<User> {
             ps.setString(4, object.getUsername());
             ps.setString(5, object.getPassword());
 
-            ps.executeQuery();
+            ps.executeUpdate();
         }
         return 0;
     }
@@ -54,7 +54,7 @@ public class UserDAO implements ICRUDDao<User> {
             ps.setString(5, object.getPassword());
             ps.setInt(6, object.getUserID());
 
-            ps.executeQuery();
+            ps.executeUpdate();
         }
         return 0;
     }
@@ -113,7 +113,7 @@ public class UserDAO implements ICRUDDao<User> {
             PreparedStatement ps = connection.prepareStatement("DELETE FROM dbo.[users] WHERE user_id=?;");
             ps.setInt(1, id);
 
-            ps.executeQuery();
+            ps.executeUpdate();
         }
 
         return 0;

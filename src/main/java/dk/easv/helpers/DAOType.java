@@ -6,5 +6,6 @@ public enum DAOType {
     USER_DAO,
     DOCUMENT_DAO,
     CONTENT_DAO,
-    PROJECT_DAO;
+    PROJECT_DAO,
+    ROLE_DAO;
 }

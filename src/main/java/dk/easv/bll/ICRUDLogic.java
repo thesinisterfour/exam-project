@@ -8,6 +8,7 @@ import java.util.concurrent.ConcurrentMap;
 public interface ICRUDLogic {
     int addUser(User user) throws SQLException;
 
+    ConcurrentMap<Integer, Role> getAllRoles() throws SQLException;
     int addDocument(Doc document) throws SQLException;
     int updateDocument(Doc document) throws SQLException;
     Doc getDocument(int id) throws SQLException;
@@ -27,4 +28,8 @@ public interface ICRUDLogic {
     int addProject(Project project) throws SQLException;
 
     ConcurrentMap<Integer, Project> getAllProjects() throws SQLException;
+
+    int updateUser(User user) throws SQLException;
+
+    int deleteUser(int id) throws SQLException;
 }

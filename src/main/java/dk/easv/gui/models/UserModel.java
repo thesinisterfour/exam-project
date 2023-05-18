@@ -16,4 +16,16 @@ public class UserModel implements IUserModel {
     public ConcurrentMap<Integer, User> getAllUsers() throws SQLException {
         return crudLogic.getAllUsers();
     }
+    @Override
+    public int addUser(User user) throws SQLException {
+        return crudLogic.addUser(user);
+    }
+    @Override
+    public int updateUser(User object) throws SQLException {
+        return crudLogic.updateUser(object);
+    }
+    @Override
+    public int deleteUser(int id) throws SQLException {
+        return crudLogic.deleteUser(id);
+    }
 }

@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane prefHeight="431.0" prefWidth="561.0" styleClass="main_pane" stylesheets="@../css/global-style.css" xmlns="http://javafx.com/javafx/19.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.CreateDocumentController">
+<GridPane fx:id="rootGrid" prefHeight="431.0" prefWidth="561.0" styleClass="main_pane" stylesheets="@../css/global-style.css" xmlns="http://javafx.com/javafx/19.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.CreateDocumentController">
    <columnConstraints>
       <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" />
    </columnConstraints>

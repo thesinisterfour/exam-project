@@ -18,7 +18,8 @@ import io.github.palexdev.materialfx.controls.MFXFilterComboBox;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 
 import java.io.IOException;
 import java.net.URL;
@@ -34,6 +35,8 @@ public class CreateDocumentController extends RootController {
     private MFXFilterComboBox<Customer> customerComboBox;
     @FXML
     private MFXFilterComboBox<Project> projectComboBox;
+    @FXML
+    private GridPane rootGrid;
 
     @FXML
     private void createOnAction(ActionEvent actionEvent) {
@@ -79,8 +82,10 @@ public class CreateDocumentController extends RootController {
     @FXML
     private void cancelOnAction(ActionEvent actionEvent) {
         try {
-            RootController rootController = ControllerFactory.loadFxmlFile(ViewType.ADMIN);
-            this.getStage().setScene(new Scene(rootController.getView(), 760, 480));
+            RootController rootController = ControllerFactory.loadFxmlFile(ViewType.MAIN);
+            BorderPane borderPane = (BorderPane) rootGrid.getParent();
+            BorderPane rootBorderPane = (BorderPane) rootController.getView();
+            borderPane.setCenter(rootBorderPane.getCenter());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -88,10 +93,10 @@ public class CreateDocumentController extends RootController {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        ICustomerModel customerModel = new CustomerModel();
-        IProjectModel projectModel = new ProjectModel();
         try {
-            customerComboBox.setItems(customerModel.getObsCustomers());
+            ICustomerModel customerModel = new CustomerModel();
+            IProjectModel projectModel = new ProjectModel();
+            customerComboBox.setItems(customerModel.getObsAllCustomers());
             customerComboBox.selectedItemProperty().addListener((observable, oldValue, newValue) -> {
                 try {
                     projectModel.getProjectsByCustomerId(newValue.getCustomerID());

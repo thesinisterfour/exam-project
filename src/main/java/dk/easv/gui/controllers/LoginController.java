@@ -53,11 +53,10 @@ public class LoginController extends RootController {
 
     private void displayMain() throws IOException {
         ExecutorService es = Executors.newSingleThreadExecutor();
-        Future<Scene> future = es.submit(() -> {
+        Future<Parent> future = es.submit(() -> {
             try {
                 RootController controller = ControllerFactory.loadFxmlFile(ViewType.MAIN);
-                Parent root = controller.getView();
-                return new Scene(root);
+                return controller.getView();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -67,10 +66,11 @@ public class LoginController extends RootController {
         fo.setOnFinished(e -> {
             Platform.runLater(() -> {
                 try {
-                    Scene scene = future.get();
+                    Parent root = future.get();
+                    root.setOpacity(0);
                     stage.setTitle("WUAV!!! " + newUser.getRole().toString());
-                    stage.setScene(scene);
-                    new FadeIn(scene.getRoot()).setSpeed(0.5).play();
+                    stage.setScene(new Scene(root));
+                    new FadeIn(root).setSpeed(2).play();
 
                 } catch (InterruptedException | ExecutionException ex) {
                     throw new RuntimeException(ex);

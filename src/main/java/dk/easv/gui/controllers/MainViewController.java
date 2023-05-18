@@ -77,24 +77,27 @@ public class MainViewController extends RootController {
     private IDocumentModel documentModel;
 
     private ICustomerModel customerModel;
+    private IProjectModel projectModel;
 
     private final UserSingleClass actualUser = UserSingleClass.getInstance();
     @FXML
     private BorderPane mainBorderPane;
     @FXML
     private VBox centerVBox;
+    @FXML
+    private MFXButton logoutButton;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
             documentModel = new DocumentModel();
             customerModel = new CustomerModel();
+            projectModel = new ProjectModel();
             setUpDocBoard();
             roleView();
             setUpCustomerBoard();
             setupProjectTable();
 
-            documentModel = new DocumentModel();
             List<Doc> oldDocuments = documentModel.getOldDocuments();
 
             if (!oldDocuments.isEmpty() && !AlertHelper.isAlertShown()) {
@@ -130,8 +133,8 @@ public class MainViewController extends RootController {
     }
 
     @FXML
-    public void handleLogout() throws IOException {
-        this.stage = (Stage) mainBorderPane.getScene().getWindow();
+    public void handleLogout(ActionEvent actionEvent) throws IOException {
+        this.stage = (Stage) logoutButton.getScene().getWindow();
         RootController controller = ControllerFactory.loadFxmlFile(ViewType.LOGIN);
         this.stage.setScene(new Scene(controller.getView()));
         this.stage.setTitle("WUAV!!!");
@@ -220,12 +223,14 @@ public class MainViewController extends RootController {
             if (newValue != null) {
                 try {
                     documentModel.setObsProjectDocuments(newValue.values().stream().findFirst().get().getProjectID());
-                    documentsTable.setItems(documentModel.getObsProjectDocuments());
+                    documentsTable.setItems(documentModel.getObsDocuments());
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
             }
         }));
+
+        documentsTable.setItems(documentModel.getObsDocuments());
     }
 
     private void setupProjectTable() {
@@ -251,7 +256,6 @@ public class MainViewController extends RootController {
             if (newValue != null) {
                 try {
                     documentsTable.getItems().clear();
-                    IProjectModel projectModel = new ProjectModel();
                     projectModel.getProjectsByCustomerId(newValue.values().stream().findFirst().get().getCustomerID());
                     projectTable.setItems(projectModel.getProjectObservableList());
                 } catch (SQLException e) {
@@ -260,6 +264,7 @@ public class MainViewController extends RootController {
             }
         }));
 
+        projectTable.setItems(projectModel.getProjectObservableList());
     }
 
     private void setUpCustomerBoard() throws SQLException {

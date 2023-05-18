@@ -17,8 +17,9 @@ public class ProjectModel implements IProjectModel {
 
     private final ObservableList<Project> projectObservableList;
 
-    public ProjectModel(){
+    public ProjectModel() throws SQLException {
         projectObservableList = FXCollections.observableArrayList();
+        getAllProjects();
     }
 
     @Override
@@ -29,7 +30,7 @@ public class ProjectModel implements IProjectModel {
     }
 
     @Override
-    public ObservableList<Project> getProjectObservableList() throws SQLException{
+    public ObservableList<Project> getProjectObservableList(){
         return projectObservableList;
     }
 

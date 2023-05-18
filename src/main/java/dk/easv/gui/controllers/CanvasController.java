@@ -1,5 +1,9 @@
 package dk.easv.gui.controllers;
 
+import dk.easv.gui.models.CanvasModel;
+import dk.easv.gui.models.ContentModel;
+import dk.easv.gui.models.interfaces.ICanvasModel;
+import dk.easv.gui.models.interfaces.IContentModel;
 import dk.easv.gui.rootContoller.RootController;
 
 import java.awt.*;
@@ -33,6 +37,8 @@ import javafx.stage.Stage;
 import javax.imageio.ImageIO;
 
 public class CanvasController extends RootController {
+
+    private final ICanvasModel model = CanvasModel.getInstance();
     @FXML
     private ChoiceBox<String> colorChooser;
 
@@ -56,6 +62,11 @@ public class CanvasController extends RootController {
                     graphicsContext.getCanvas().getHeight() - 2);
         });
 
+        initializePenSettings();
+        drawOnCanvas();
+    }
+
+    private void initializePenSettings(){
         colorChooser.setItems(FXCollections.observableArrayList("Black", "Blue", "Red", "Green", "Brown", "Orange"));
         colorChooser.getSelectionModel().selectFirst();
         colorChooser.getSelectionModel().selectedIndexProperty().addListener((ov, old, newval) -> {
@@ -112,7 +123,9 @@ public class CanvasController extends RootController {
                     break;
             }
         });
+    }
 
+    private void drawOnCanvas(){
         canvas.addEventHandler(MouseEvent.MOUSE_PRESSED, (MouseEvent event) -> {
             graphicsContext.beginPath();
             graphicsContext.moveTo(event.getX(), event.getY());
@@ -138,29 +151,6 @@ public class CanvasController extends RootController {
                 new FileChooser.ExtensionFilter("PNG Image", "*.png")
         );
         File file = fileChooser.showSaveDialog(canvas.getScene().getWindow());
-
-        if (file != null) {
-            try {
-                double canvasWidth = canvas.getWidth();
-                double canvasHeight = canvas.getHeight();
-
-                WritableImage writableImage = new WritableImage((int) canvasWidth, (int) canvasHeight);
-                SnapshotParameters params = new SnapshotParameters();
-                params.setFill(Color.WHITE); // Set white background
-                canvas.snapshot(params, writableImage);
-
-                BufferedImage bufferedImage = SwingFXUtils.fromFXImage(writableImage, null);
-                BufferedImage imageWithWhiteBackground = new BufferedImage(bufferedImage.getWidth(), bufferedImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
-                Graphics2D graphics = imageWithWhiteBackground.createGraphics();
-                graphics.setColor(java.awt.Color.WHITE);
-                graphics.fillRect(0, 0, imageWithWhiteBackground.getWidth(), imageWithWhiteBackground.getHeight());
-                graphics.drawImage(bufferedImage, 0, 0, null);
-                graphics.dispose();
-
-                ImageIO.write(imageWithWhiteBackground, "png", file);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+        model.generateImage(file, canvas);
     }
 }

@@ -39,8 +39,7 @@ public class CustomerModel implements ICustomerModel {
     }
 
     @Override
-    public ObservableList<Customer> getObsAllCustomers() throws SQLException {
-        setObsAllCustomers();
+    public ObservableList<Customer> getObsAllCustomers() {
         return obsAllCustomers;
     }
 }

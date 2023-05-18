@@ -12,7 +12,6 @@ import dk.easv.helpers.UserSingleClass;
 import dk.easv.helpers.ViewType;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXTextField;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
@@ -67,22 +66,20 @@ public class LoginController extends RootController {
 
         FadeOut fo = new FadeOut(root);
         fo.setOnFinished(e -> {
-            Platform.runLater(() -> {
-                try {
-                    System.out.println(future.isDone());
-                    Parent root = future.get();
-                    root.setOpacity(0);
-                    stage.setTitle("WUAV!!! " + newUser.getRole().toString());
-                    stage.setScene(new Scene(root));
-                    new FadeIn(root).setSpeed(2).play();
+            try {
+                System.out.println(future.isDone());
+                Parent root = future.get();
+                root.setOpacity(0);
+                stage.setTitle("WUAV!!! " + newUser.getRole().toString());
+                stage.setScene(new Scene(root));
+                new FadeIn(root).setSpeed(2).play();
 
-                } catch (InterruptedException | ExecutionException ex) {
-                    throw new RuntimeException(ex);
-                }
-            });
+            } catch (InterruptedException | ExecutionException ex) {
+                throw new RuntimeException(ex);
+            }
         });
 
-        fo.setSpeed(0.2).play();
+        fo.setSpeed(2).play();
 
         es.shutdown();
 

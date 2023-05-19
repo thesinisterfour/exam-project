@@ -5,10 +5,10 @@ import dk.easv.be.Doc;
 import dk.easv.be.Project;
 import dk.easv.be.Role;
 import dk.easv.gui.controllerFactory.ControllerFactory;
+import dk.easv.gui.controllers.tasks.LoadCustomerModelTask;
+import dk.easv.gui.controllers.tasks.LoadDocumentModelTask;
+import dk.easv.gui.controllers.tasks.LoadProjectModelTask;
 import dk.easv.gui.models.ContentModel;
-import dk.easv.gui.models.CustomerModel;
-import dk.easv.gui.models.DocumentModel;
-import dk.easv.gui.models.ProjectModel;
 import dk.easv.gui.models.interfaces.IContentModel;
 import dk.easv.gui.models.interfaces.ICustomerModel;
 import dk.easv.gui.models.interfaces.IDocumentModel;
@@ -40,9 +40,12 @@ import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class MainViewController extends RootController {
 
+    private final UserSingleClass actualUser = UserSingleClass.getInstance();
     @FXML
     public MFXButton addDocument,
             businessLayer,
@@ -50,36 +53,24 @@ public class MainViewController extends RootController {
             HomeLayer,
             editDocument,
             workersLayer;
-
     @FXML
     public MFXTableView<Customer> customerTable;
-
     @FXML
     public MFXTableView<Doc> documentsTable;
-
     @FXML
     public MFXTableView<Project> projectTable;
-
     @FXML
     public MFXTextField searchBar;
-
     @FXML
     public HBox mainHbox;
-
     @FXML
     public VBox iconsVbox;
-
     @FXML
     public Label customerLabel, projectLabel;
-
     private Stage stage;
-
     private IDocumentModel documentModel;
-
     private ICustomerModel customerModel;
     private IProjectModel projectModel;
-
-    private final UserSingleClass actualUser = UserSingleClass.getInstance();
     @FXML
     private BorderPane mainBorderPane;
     @FXML
@@ -89,25 +80,52 @@ public class MainViewController extends RootController {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        try {
-            documentModel = new DocumentModel();
-            customerModel = new CustomerModel();
-            projectModel = new ProjectModel();
+        ExecutorService es = Executors.newFixedThreadPool(10);
+
+        LoadDocumentModelTask loadDocumentModelTask = new LoadDocumentModelTask();
+        loadDocumentModelTask.valueProperty().addListener((observable, oldValue, newValue) -> {
+            documentModel = newValue;
             setUpDocBoard();
-            roleView();
-            setUpCustomerBoard();
-            setupProjectTable();
 
-            List<Doc> oldDocuments = documentModel.getOldDocuments();
-
-            if (!oldDocuments.isEmpty() && !AlertHelper.isAlertShown()) {
-                AlertHelper.setDocumentModel(documentModel);
-                AlertHelper.showDefaultAlert(DocumentHelper.convertToString(oldDocuments), Alert.AlertType.INFORMATION);
+            try {
+                List<Doc> oldDocuments = documentModel.getOldDocuments();
+                if (!oldDocuments.isEmpty() && !DocumentHelper.isOldDocWarningShown()) {
+                    AlertHelper alertHelper = new AlertHelper(DocumentHelper.convertToString(oldDocuments), Alert.AlertType.INFORMATION);
+                    if (alertHelper.showAndWait()){
+                        for (Doc oldDocument : oldDocuments) {
+                            documentModel.deleteDocument(oldDocument.getId());
+                        }
+                        documentModel.setObsAllDocuments();
+                    }
+                    DocumentHelper.setOldDocWarningShown(true);
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        });
 
+        LoadCustomerModelTask loadCustomerModelTask = new LoadCustomerModelTask();
+        loadCustomerModelTask.valueProperty().addListener((observable, oldValue, newValue) -> {
+            customerModel = newValue;
+            try {
+                setUpCustomerBoard();
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+
+        LoadProjectModelTask loadProjectModelTask = new LoadProjectModelTask();
+        loadProjectModelTask.valueProperty().addListener((observable, oldValue, newValue) -> {
+            projectModel = newValue;
+            setupProjectTable();
+        });
+
+        es.submit(loadCustomerModelTask);
+        es.submit(loadDocumentModelTask);
+        es.submit(loadProjectModelTask);
+
+        roleView();
+        es.shutdown();
 
     }
 
@@ -138,7 +156,7 @@ public class MainViewController extends RootController {
         RootController controller = ControllerFactory.loadFxmlFile(ViewType.LOGIN);
         this.stage.setScene(new Scene(controller.getView()));
         this.stage.setTitle("WUAV!!!");
-        AlertHelper.resetIsAlertShown();
+        DocumentHelper.setOldDocWarningShown(false);
     }
 
     @FXML
@@ -172,9 +190,11 @@ public class MainViewController extends RootController {
             RootController rootController = ControllerFactory.loadFxmlFile(ViewType.DOCUMENT);
             mainBorderPane.setCenter(rootController.getView());
         } catch (IOException e) {
-            AlertHelper.showDefaultAlert("A file error occurred", Alert.AlertType.ERROR);
+            AlertHelper alertHelper = new AlertHelper("A file error occurred", Alert.AlertType.ERROR);
+            alertHelper.showAndWait();
         } catch (IndexOutOfBoundsException e) {
-            AlertHelper.showDefaultAlert("Please select a document to edit", Alert.AlertType.ERROR);
+            AlertHelper alertHelper = new AlertHelper("Please select a document to edit", Alert.AlertType.ERROR);
+            alertHelper.showAndWait();
         }
 
     }
@@ -186,7 +206,8 @@ public class MainViewController extends RootController {
             documentModel.deleteDocument(selectedDocument.getId());
             documentModel.setObsAllDocuments();
         } catch (IndexOutOfBoundsException e) {
-            AlertHelper.showDefaultAlert("Please select a document to delete", Alert.AlertType.ERROR);
+            AlertHelper alertHelper = new AlertHelper("Please select a document to delete", Alert.AlertType.ERROR);
+            alertHelper.showAndWait();
         }
     }
 

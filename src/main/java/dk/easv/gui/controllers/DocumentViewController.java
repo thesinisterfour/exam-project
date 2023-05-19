@@ -249,7 +249,7 @@ public class DocumentViewController extends RootController {
      * the type of content retrieved.
      */
     private void populateContent() {
-
+        //TODO: refactoring on this
         ObservableList<Node> children = vbox.getChildren();
         children.add(new ImageView(Objects.requireNonNull(Main.class.getResource("icons/loading.gif")).toString()));
 

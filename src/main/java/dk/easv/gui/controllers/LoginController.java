@@ -10,8 +10,8 @@ import dk.easv.gui.models.interfaces.ILoginModel;
 import dk.easv.gui.rootContoller.RootController;
 import dk.easv.helpers.UserSingleClass;
 import dk.easv.helpers.ViewType;
+import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXTextField;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
@@ -30,7 +30,7 @@ import java.util.concurrent.Future;
 
 public class LoginController extends RootController {
 
-    private final ILoginModel model = new LoginModel();
+    private final ILoginModel model = new LoginModel(this);
     @FXML
     private MFXTextField username;
     @FXML
@@ -38,9 +38,11 @@ public class LoginController extends RootController {
     private Stage stage;
 
     private UserSingleClass newUser = UserSingleClass.getInstance();
+    @FXML
+    private MFXButton loginButton;
 
     @FXML
-    private void loginButtonAction(ActionEvent actionEvent) throws SQLException, IOException {
+    private void loginButtonAction(ActionEvent actionEvent) throws SQLException {
         this.stage = this.getStage();
         User selectedUser = model.checkForUser(username.getText(), password.getText());
         newUser.setId(selectedUser.getUserID());
@@ -51,7 +53,7 @@ public class LoginController extends RootController {
         }
     }
 
-    private void displayMain() throws IOException {
+    private void displayMain() {
         ExecutorService es = Executors.newSingleThreadExecutor();
         Future<Parent> future = es.submit(() -> {
             try {
@@ -64,21 +66,19 @@ public class LoginController extends RootController {
 
         FadeOut fo = new FadeOut(root);
         fo.setOnFinished(e -> {
-            Platform.runLater(() -> {
-                try {
-                    Parent root = future.get();
-                    root.setOpacity(0);
-                    stage.setTitle("WUAV!!! " + newUser.getRole().toString());
-                    stage.setScene(new Scene(root));
-                    new FadeIn(root).setSpeed(2).play();
+            try {
+                Parent root = future.get();
+                root.setOpacity(0);
+                stage.setTitle("WUAV!!! " + newUser.getRole().toString());
+                stage.setScene(new Scene(root));
+                new FadeIn(root).setSpeed(1).play();
 
-                } catch (InterruptedException | ExecutionException ex) {
-                    throw new RuntimeException(ex);
-                }
-            });
+            } catch (InterruptedException | ExecutionException ex) {
+                throw new RuntimeException(ex);
+            }
         });
 
-        fo.setSpeed(2).play();
+        fo.setSpeed(1).play();
 
         es.shutdown();
 
@@ -86,5 +86,12 @@ public class LoginController extends RootController {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        loginButton.setText("Loading users...");
+        loginButton.setDisable(true);
+    }
+
+    public void setLoginReady() {
+        loginButton.setText("Login");
+        loginButton.setDisable(false);
     }
 }

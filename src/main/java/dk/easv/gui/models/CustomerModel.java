@@ -12,35 +12,57 @@ import java.util.concurrent.ConcurrentMap;
 
 public class CustomerModel implements ICustomerModel {
 
+    private static CustomerModel INSTANCE;
+    private ConcurrentMap<Integer, Customer> allCustomers;
+
     private final ICRUDLogic crudLogic = new CRUDLogic();
 
+
+    /**
+     * @returns a ConcurrentMap of Customer objects. The method retrieves the customers using an object of crudLogic class.
+     * @throws SQLException
+     */
     private final ObservableList<Customer> obsAllCustomers;
 
-    public CustomerModel() throws SQLException {
+    private CustomerModel() throws SQLException {
         obsAllCustomers= FXCollections.observableArrayList();
+        loadAllCustomers();
         setObsAllCustomers();
+    }
+
+    public static CustomerModel getInstance() throws SQLException {
+        if (INSTANCE == null){
+            INSTANCE = new CustomerModel();
+        }
+        return INSTANCE;
     }
 
     @Override
     public ConcurrentMap<Integer, Customer> getAllCustomers() throws SQLException {
-        return crudLogic.getAllCustomers();
+        return allCustomers;
     }
 
     @Override
     public void setObsAllCustomers() throws SQLException {
-        ConcurrentMap<Integer, Customer> allCustomers = getAllCustomers();
         this.obsAllCustomers.setAll(allCustomers.values());
     }
 
 
     @Override
     public int add(Customer customer) throws SQLException {
-        return crudLogic.addCustomer(customer);
+        int id = crudLogic.addCustomer(customer);
+        loadAllCustomers();
+        setObsAllCustomers();
+        return id;
     }
 
     @Override
-    public ObservableList<Customer> getObsAllCustomers() throws SQLException {
-        setObsAllCustomers();
+    public ObservableList<Customer> getObsAllCustomers() {
         return obsAllCustomers;
+    }
+
+    @Override
+    public void loadAllCustomers() throws SQLException {
+        allCustomers = crudLogic.getAllCustomers();
     }
 }

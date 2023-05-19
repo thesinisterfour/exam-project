@@ -11,7 +11,6 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-
 <VBox spacing="8.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.BusinessViewController">
    <children>
       <GridPane VBox.vgrow="NEVER">
@@ -25,7 +24,7 @@
          <children>
             <MFXScrollPane fx:id="customersScrollPane" prefWidth="830.0">
                <content>
-                  <HBox fx:id="Customers" prefHeight="100.0" prefWidth="200.0" />
+                  <HBox fx:id="customers" prefHeight="100.0" prefWidth="200.0" />
                </content>
             </MFXScrollPane>
             <HBox alignment="CENTER_RIGHT" spacing="8.0" GridPane.rowIndex="1">
@@ -39,8 +38,8 @@
       </GridPane>
       <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
          <children>
-            <Label text="Documents" />
-            <MFXTableView fx:id="documentsTable" footerVisible="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="198.0" prefWidth="830.0" VBox.vgrow="ALWAYS" />
+            <Label text="Customers" />
+            <MFXTableView fx:id="customersTable" footerVisible="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="198.0" prefWidth="830.0" VBox.vgrow="ALWAYS" />
          </children>
       </VBox>
    </children>

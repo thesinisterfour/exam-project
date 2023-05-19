@@ -36,8 +36,9 @@
             </MFXScrollPane>
             <HBox alignment="CENTER_RIGHT" spacing="8.0" GridPane.rowIndex="1">
                <children>
-                  <MFXButton fx:id="handleEdit" text="Edit" />
-                  <MFXButton fx:id="handleDelete" text="Delete" />
+                   <MFXButton onAction="#newWorker" text="New Worker" />
+                  <MFXButton fx:id="handleEdit"  onAction="#handleEdit" text="Edit" />
+                  <MFXButton fx:id="handleDelete" onAction="#handleDelete" text="Delete" />
                </children>
             </HBox>
          </children>

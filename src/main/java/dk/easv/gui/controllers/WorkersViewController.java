@@ -10,9 +10,11 @@ import dk.easv.gui.rootContoller.RootController;
 import dk.easv.helpers.AlertHelper;
 import dk.easv.helpers.UserSingleClass;
 import dk.easv.helpers.ViewType;
+import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXScrollPane;
 import io.github.palexdev.materialfx.controls.MFXTableView;
 import io.github.palexdev.materialfx.controls.MFXTextField;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -20,6 +22,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -32,10 +35,6 @@ import java.util.concurrent.ConcurrentMap;
 public class WorkersViewController extends RootController {
 
     private UserSingleClass actualUser = UserSingleClass.getInstance();
-    @FXML
-    private VBox iconsVbox;
-    @FXML
-    private HBox mainHbox;
     @FXML
     private MFXTableView<Project> projectTable;
     @FXML
@@ -59,14 +58,12 @@ public class WorkersViewController extends RootController {
     private ConcurrentMap<Integer, User> getAllUsersMap() throws SQLException {
         return userModel.getAllUsers();
     }
-
     private void addLabelAndScrollPane(String key, HBox hBox) {
         Label label = new Label(key);
         workers.getChildren().add(label);
         workerScrollPane.setContent(hBox);
         workerScrollPane.setFitToHeight(true);
     }
-
     private void initUsers() throws SQLException {
         ConcurrentMap<Integer, User> map = getAllUsersMap();
         Set<Integer> keys = map.keySet();
@@ -83,25 +80,21 @@ public class WorkersViewController extends RootController {
         }
     }
     @FXML
-    private void handleCreate(){
-        //TODO add button to FXML
-        try { //Change View type to Create_worker when you make the FXML for it.
-            RootController rootController = ControllerFactory.loadFxmlFile(ViewType.USERS_VIEW);
-            this.getStage().setScene(new Scene(rootController.getView(), 560, 440));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-    @FXML
-    private void handleEdit(){ //TODO
-        try { //Change View type to Create_worker when you make the FXML for it
+    private void handleEdit(){
+        try {
             User selectedUser = hboxController.getSelectedUser();
             if (selectedUser == null) {
-                AlertHelper.showDefaultAlert("Pleas select a user to edit", Alert.AlertType.ERROR);
+                AlertHelper alertHelper = new AlertHelper("Pleas select a user to edit", Alert.AlertType.ERROR);
+                alertHelper.showAndWait();
             } else {
-                CreateWorkerController createWorkerController = (CreateWorkerController) ControllerFactory.loadFxmlFile(ViewType.USERS_VIEW);
-                createWorkerController.setUserData(selectedUser);
-                this.getStage().setScene(new Scene(createWorkerController.getView(), 560, 440));
+                Stage stage = new Stage();
+                CreateWorkerController controller = (CreateWorkerController) ControllerFactory.loadFxmlFile(ViewType.CREATE_WORKER);
+                controller.setUserData(selectedUser);
+                Scene scene = new Scene(controller.getView());
+                stage.setResizable(false);
+                stage.setScene(scene);
+                stage.centerOnScreen();
+                stage.show();
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -112,20 +105,26 @@ public class WorkersViewController extends RootController {
         try {
             selectedUser = hboxController.getSelectedUser();
             if (selectedUser == null) {
-                AlertHelper.showDefaultAlert("Pleas select a user to delete", Alert.AlertType.ERROR);
+                AlertHelper alertHelper = new AlertHelper("Pleas select a user to delete", Alert.AlertType.ERROR);
+                alertHelper.showAndWait();
             }else {
                 userModel.deleteUser(selectedUser.getUserID());
             }
         } catch (SQLException e) {
-            AlertHelper.showDefaultAlert("User deleted successfully", Alert.AlertType.NONE);
+                AlertHelper alertHelper = new AlertHelper("User deleted successfully", Alert.AlertType.NONE);
+                alertHelper.showAndWait();
         }
     }
-    @FXML
-    private void handleBack() {
-        //TODO add button to FXML
-        try { //Take User back to the main view.
-            RootController rootController = ControllerFactory.loadFxmlFile(ViewType.USERS_VIEW);
-            this.getStage().setScene(new Scene(rootController.getView(), 560, 440));
+
+    public void newWorker(ActionEvent actionEvent) {
+        try {
+            Stage stage = new Stage();
+            RootController controller = ControllerFactory.loadFxmlFile(ViewType.CREATE_WORKER);
+            Scene scene = new Scene(controller.getView());
+            stage.setResizable(false);
+            stage.setScene(scene);
+            stage.centerOnScreen();
+            stage.show();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

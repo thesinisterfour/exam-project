@@ -16,10 +16,8 @@ public interface ICRUDLogic {
      * @returns an integer
      */
     int addUser(User user) throws SQLException;
-
-<<<<<<< HEAD
     ConcurrentMap<Integer, Role> getAllRoles() throws SQLException;
-=======
+
     /** This method takes two parameters of type String, representing a username and password.
      * Its purpose is to check for a user in the system based on the provided username and password.
      * @returns a User object.
@@ -32,7 +30,6 @@ public interface ICRUDLogic {
      * @returns an integer
      */
 
->>>>>>> 123100806ef40248b40d1aa3d441fb096207a14f
     int addDocument(Doc document) throws SQLException;
 
     /**

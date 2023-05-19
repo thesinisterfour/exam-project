@@ -12,10 +12,10 @@ import dk.easv.helpers.AlertHelper;
 import dk.easv.helpers.ViewType;
 import io.github.palexdev.materialfx.controls.MFXComboBox;
 import io.github.palexdev.materialfx.controls.MFXTextField;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.image.ImageView;
 
 import java.io.IOException;
 import java.net.URL;
@@ -26,20 +26,13 @@ import java.util.concurrent.ConcurrentMap;
 public class CreateWorkerController extends RootController {
     private final IRoleModel roleModel = new RoleModel();
     private final IUserModel userModel = new UserModel();
-
-    //TODO  Add id for TextFields in FXML
     @FXML
-    private MFXTextField firstNameTXF;
-    @FXML
-    private MFXTextField lastNameTXF;
+    private MFXTextField nameTextField,
+            lastNameTextField,
+            usernameTextField,
+            passwordTextField;
     @FXML
     private MFXComboBox<String> roleComboBox;
-    @FXML
-    private MFXTextField userNameTXF;
-    @FXML
-    private MFXTextField passwordTXF;
-    @FXML
-    private ImageView image;
     private boolean editMode = false;
     private User selectedUser;
 
@@ -48,11 +41,14 @@ public class CreateWorkerController extends RootController {
         try {
             ConcurrentMap<Integer, Role> rolesMap = roleModel.getAllRoles();
             for(Role role : rolesMap.values()){
+                if (!role.toString().equals("ADMIN")){
                 roleComboBox.getItems().add(role.toString());
+                }
             }
-            roleComboBox.getSelectionModel().selectFirst();
+                roleComboBox.getSelectionModel().selectFirst();
         } catch (SQLException e){
-            AlertHelper.showDefaultAlert("There was an error retrieving roles from database", Alert.AlertType.ERROR);
+           AlertHelper alertHelper = new AlertHelper("There was an error retrieving roles from database", Alert.AlertType.ERROR);
+           alertHelper.showAndWait();
         }
     }
     public void setEditMode(boolean editMode) {
@@ -61,17 +57,15 @@ public class CreateWorkerController extends RootController {
     public void setUserData(User user) {
         this.selectedUser = user;
         if (selectedUser != null){
-            firstNameTXF.setText(user.getFirstName());
-            lastNameTXF.setText(user.getLastName());
-            userNameTXF.setText(user.getUsername());
-            passwordTXF.setText(user.getPassword());
+            nameTextField.setText(user.getFirstName());
+            lastNameTextField.setText(user.getLastName());
+            usernameTextField.setText(user.getUsername());
+            passwordTextField.setText(user.getPassword());
             roleComboBox.setValue(user.getRole().toString());
         }
         editMode = true;
     }
-
-    @FXML
-    private void handleCreate(){
+    public void submitButtonAction(ActionEvent actionEvent) {
         if (editMode) {
             preformEdit();
         } else {
@@ -79,36 +73,41 @@ public class CreateWorkerController extends RootController {
         }
     }
     private void preformEdit(){
-        String firstName = firstNameTXF.getText();
-        String lastName = lastNameTXF.getText();
-        String username = userNameTXF.getText();
-        String password = passwordTXF.getText();
+        String firstName = nameTextField.getText();
+        String lastName = lastNameTextField.getText();
+        String username = usernameTextField.getText();
+        String password = passwordTextField.getText();
         String selectedRoleName = roleComboBox.getValue();
         if (firstName.isEmpty() || lastName.isEmpty() || username.isEmpty() || password.isEmpty() || selectedRoleName == null){
-            AlertHelper.showDefaultAlert("Please fill all fields and make sure to choose the user role!", Alert.AlertType.ERROR);
+            AlertHelper alertHelper = new AlertHelper("Please fill all fields and make sure to choose the user role!", Alert.AlertType.ERROR);
+            alertHelper.showAndWait();
             return;
         }
-
         Role selectedRole = Role.valueOf(selectedRoleName.toUpperCase());
-        User user = new User(firstName, lastName, selectedRole);
-        user.setUsername(username);
-        user.setPassword(password);
+        selectedUser.setFirstName(firstName);
+        selectedUser.setLastName(lastName);
+        selectedUser.setUsername(username);
+        selectedUser.setPassword(password);
+        selectedUser.setRole(selectedRole);
         try {
             userModel.updateUser(selectedUser);
-            AlertHelper.showDefaultAlert("User successfully edited", Alert.AlertType.INFORMATION);
+            AlertHelper alertHelper = new AlertHelper("User successfully edited", Alert.AlertType.INFORMATION);
+            alertHelper.showAndWait();
         } catch (SQLException e){
-            AlertHelper.showDefaultAlert("Error editing user, please try again", Alert.AlertType.ERROR);
+            AlertHelper alertHelper = new AlertHelper("Error editing user, please try again", Alert.AlertType.ERROR);
+            alertHelper.showAndWait();
             throw new RuntimeException(e);
         }
     }
     private void preformCreate(){
-        String firstName = firstNameTXF.getText();
-        String lastName = lastNameTXF.getText();
-        String username = userNameTXF.getText();
-        String password = passwordTXF.getText();
+        String firstName = nameTextField.getText();
+        String lastName = lastNameTextField.getText();
+        String username = usernameTextField.getText();
+        String password = passwordTextField.getText();
         String selectedRoleName = roleComboBox.getValue();
         if(firstName.isEmpty() || lastName.isEmpty() || username.isEmpty() || password.isEmpty() || selectedRoleName == null){
-            AlertHelper.showDefaultAlert("Pleas fill all fields and make sure to choose the user role!!", Alert.AlertType.ERROR);
+            AlertHelper alertHelper = new AlertHelper("Pleas fill all fields and make sure to choose the user role!!", Alert.AlertType.ERROR);
+            alertHelper.showAndWait();
             return;
         }
         Role selectedRole = Role.valueOf(selectedRoleName.toUpperCase());
@@ -118,19 +117,20 @@ public class CreateWorkerController extends RootController {
         try {
             int userId = userModel.addUser(user);
             user.setUserID(userId);
-            AlertHelper.showDefaultAlert("User successfully created", Alert.AlertType.INFORMATION);
+            AlertHelper alertHelper = new AlertHelper("User successfully created", Alert.AlertType.INFORMATION);
+            alertHelper.showAndWait();
         } catch (SQLException e){
-            AlertHelper.showDefaultAlert("Error creating user, pleas try again", Alert.AlertType.ERROR);
+            AlertHelper alertHelper = new AlertHelper("Error creating user, pleas try again", Alert.AlertType.ERROR);
+            alertHelper.showAndWait();
         }
     }
-
-    @FXML
-    private void handleBack(){
-        try {
-            RootController rootController = ControllerFactory.loadFxmlFile(ViewType.USERS_VIEW);
-            this.getStage().setScene(new Scene(rootController.getView(), 760, 480));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+    public void removeCustomerData(ActionEvent actionEvent) {
+        nameTextField.setText("");
+        lastNameTextField.setText("");
+        usernameTextField.setText("");
+        passwordTextField.setText("");
+    }
+    public void cancelButtonAction(ActionEvent actionEvent) {
+        getStage().close();
     }
 }

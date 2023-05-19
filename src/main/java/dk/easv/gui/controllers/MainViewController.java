@@ -23,6 +23,8 @@ import io.github.palexdev.materialfx.controls.MFXTableColumn;
 import io.github.palexdev.materialfx.controls.MFXTableView;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import io.github.palexdev.materialfx.controls.cell.MFXTableRowCell;
+import io.github.palexdev.materialfx.filter.IntegerFilter;
+import io.github.palexdev.materialfx.filter.StringFilter;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -238,7 +240,12 @@ public class MainViewController extends RootController {
 
         documentsTable.getTableColumns().setAll(idColumn, nameColumn, dateCreatedColumn, dateLastOpenedColumn, descriptionColumn);
         documentsTable.autosizeColumnsOnInitialization();
+        documentsTable.getSelectionModel().setAllowsMultipleSelection(false);
 
+        documentsTable.getFilters().addAll(
+                new StringFilter<>("Name", Doc::getName),
+                new StringFilter<>("Description", Doc::getDescription)
+        );
 
         projectTable.getSelectionModel().selectionProperty().addListener(((observable, oldValue, newValue) -> {
             if (newValue != null) {
@@ -272,6 +279,10 @@ public class MainViewController extends RootController {
         projectTable.getTableColumns().setAll(idColumn, nameColumn, dateStartColumn, dateEndColumn, addressColumn, zipCodeColumn);
         projectTable.autosizeColumnsOnInitialization();
 
+        projectTable.getFilters().addAll(new StringFilter<>("Name", Project::getProjectName),
+                new StringFilter<>("Address", Project::getProjectAddress),
+                new IntegerFilter<>("Zip Code", Project::getProjectZipcode));
+
 
         customerTable.getSelectionModel().selectionProperty().addListener(((observable, oldValue, newValue) -> {
             if (newValue != null) {
@@ -301,7 +312,11 @@ public class MainViewController extends RootController {
         addressColumn.setRowCellFactory(customer -> new MFXTableRowCell<>(Customer::getCustomerAddress));
         zipCodeColumn.setRowCellFactory(customer -> new MFXTableRowCell<>(Customer::getZipCode));
 
-        customerTable.getTableColumns().setAll(idColumn, nameColumn, emailColumn, addressColumn, zipCodeColumn);
+        customerTable.getFilters().addAll(new StringFilter<>("Name", Customer::getCustomerName),
+                new StringFilter<>("Email", Customer::getCustomerEmail),
+                new StringFilter<>("Address", Customer::getCustomerAddress),
+                new IntegerFilter<>("Zip Code", Customer::getZipCode));
+        customerTable.getTableColumns().setAll(nameColumn, emailColumn, addressColumn, zipCodeColumn);
         customerTable.autosizeColumnsOnInitialization();
         customerTable.setItems(customerModel.getObsAllCustomers());
 

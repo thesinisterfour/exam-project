@@ -14,11 +14,20 @@ import java.util.concurrent.ConcurrentMap;
 public class ProjectModel implements IProjectModel {
     private ICRUDLogic logic = new CRUDLogic();
 
+    private static ProjectModel INSTANCE;
+
     private final ObservableList<Project> projectObservableList;
 
-    public ProjectModel() throws SQLException {
+    private ProjectModel() throws SQLException {
         projectObservableList = FXCollections.observableArrayList();
         getAllProjects();
+    }
+
+    public static ProjectModel getInstance() throws SQLException {
+        if (INSTANCE == null){
+            INSTANCE = new ProjectModel();
+        }
+        return INSTANCE;
     }
 
     @Override

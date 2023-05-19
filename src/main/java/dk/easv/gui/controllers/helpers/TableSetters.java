@@ -1,8 +1,14 @@
 package dk.easv.gui.controllers.helpers;
 
 import dk.easv.be.Customer;
+import dk.easv.be.Doc;
+import dk.easv.be.Project;
 import dk.easv.gui.models.CustomerModel;
+import dk.easv.gui.models.DocumentModel;
+import dk.easv.gui.models.ProjectModel;
 import dk.easv.gui.models.interfaces.ICustomerModel;
+import dk.easv.gui.models.interfaces.IDocumentModel;
+import dk.easv.gui.models.interfaces.IProjectModel;
 import io.github.palexdev.materialfx.controls.MFXTableColumn;
 import io.github.palexdev.materialfx.controls.MFXTableView;
 import io.github.palexdev.materialfx.controls.cell.MFXTableRowCell;
@@ -10,7 +16,9 @@ import io.github.palexdev.materialfx.filter.IntegerFilter;
 import io.github.palexdev.materialfx.filter.StringFilter;
 
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.Comparator;
+import java.util.NoSuchElementException;
 
 public class TableSetters {
     public static void setUpCustomerTable(MFXTableView<Customer> table) throws SQLException {
@@ -33,6 +41,90 @@ public class TableSetters {
                 new IntegerFilter<>("Zip Code", Customer::getZipCode));
         table.getTableColumns().setAll(nameColumn, emailColumn, addressColumn, zipCodeColumn);
         table.autosizeColumnsOnInitialization();
+
         table.setItems(customerModel.getObsAllCustomers());
+        try {
+            table.getSelectionModel().setAllowsMultipleSelection(false);
+        } catch (NoSuchElementException e) {
+
+        }
+    }
+
+    public static void setUpProjectTable(MFXTableView<Project> table) throws SQLException {
+        IProjectModel projectModel = ProjectModel.getInstance();
+
+
+        MFXTableColumn<Project> idColumn = new MFXTableColumn<>("ID", true, Comparator.comparing(Project::getProjectID));
+        MFXTableColumn<Project> nameColumn = new MFXTableColumn<>("Name", true, Comparator.comparing(Project::getProjectName));
+        MFXTableColumn<Project> dateStartColumn = new MFXTableColumn<>("Start Date", true, Comparator.comparing(Project::getStartDate));
+        MFXTableColumn<Project> dateEndColumn = new MFXTableColumn<>("End Date", true, Comparator.comparing(Project::getEndDate));
+        MFXTableColumn<Project> addressColumn = new MFXTableColumn<>("Address", true, Comparator.comparing(Project::getProjectAddress));
+        MFXTableColumn<Project> zipCodeColumn = new MFXTableColumn<>("Zip Code", true, Comparator.comparing(Project::getProjectZipcode));
+
+        idColumn.setRowCellFactory(project -> new MFXTableRowCell<>(Project::getProjectID));
+        nameColumn.setRowCellFactory(project -> new MFXTableRowCell<>(Project::getProjectName));
+        dateStartColumn.setRowCellFactory(project -> new MFXTableRowCell<>(Project::getStartDate));
+        dateEndColumn.setRowCellFactory(project -> new MFXTableRowCell<>(Project::getEndDate));
+        addressColumn.setRowCellFactory(project -> new MFXTableRowCell<>(Project::getProjectAddress));
+        zipCodeColumn.setRowCellFactory(project -> new MFXTableRowCell<>(Project::getProjectZipcode));
+
+        table.getTableColumns().setAll(nameColumn, dateStartColumn, dateEndColumn, addressColumn, zipCodeColumn);
+        table.autosizeColumnsOnInitialization();
+
+
+        table.getFilters().addAll(
+                new StringFilter<>("Name", Project::getProjectName),
+                new StringFilter<>("Address", Project::getProjectAddress),
+                new IntegerFilter<>("Zip Code", Project::getProjectZipcode)
+        );
+        table.setItems(projectModel.getProjectObservableList());
+        try {
+            table.getSelectionModel().setAllowsMultipleSelection(false);
+        } catch (NoSuchElementException e) {
+
+        }
+    }
+
+    public static void setUpDocumentTable(MFXTableView<Doc> documentsTable) throws SQLException {
+        IDocumentModel documentModel = DocumentModel.getInstance();
+        MFXTableColumn<Doc> idColumn = new MFXTableColumn<>("ID", true, Comparator.comparing(Doc::getId));
+        MFXTableColumn<Doc> nameColumn = new MFXTableColumn<>("Name", true, Comparator.comparing(Doc::getName));
+        MFXTableColumn<Doc> dateCreatedColumn = new MFXTableColumn<>("Date Created", true, Comparator.comparing(Doc::getCreationDate));
+        MFXTableColumn<Doc> dateLastOpenedColumn = new MFXTableColumn<>("Date Last Opened", true, Comparator.comparing(Doc::getLastView));
+        MFXTableColumn<Doc> descriptionColumn = new MFXTableColumn<>("Description", true, Comparator.comparing(Doc::getDescription));
+
+        idColumn.setRowCellFactory(document -> new MFXTableRowCell<>(Doc::getId));
+        nameColumn.setRowCellFactory(document -> new MFXTableRowCell<>(Doc::getName));
+        dateCreatedColumn.setRowCellFactory(document -> new MFXTableRowCell<>(Doc::getCreationDate));
+        dateLastOpenedColumn.setRowCellFactory(document -> {
+            LocalDate date = document.getLastView();
+            if (date == null) {
+                return new MFXTableRowCell<>(doc -> "Never");
+            }
+            return new MFXTableRowCell<>(Doc::getLastView);
+        });
+        descriptionColumn.setRowCellFactory(document -> {
+            String description = document.getDescription();
+            if (description == null) {
+                return new MFXTableRowCell<>(doc -> "No description");
+            }
+            return new MFXTableRowCell<>(Doc::getDescription);
+        });
+
+        documentsTable.getTableColumns().setAll(nameColumn, dateCreatedColumn, dateLastOpenedColumn, descriptionColumn);
+        documentsTable.autosizeColumnsOnInitialization();
+
+
+        documentsTable.getFilters().addAll(
+                new StringFilter<>("Name", Doc::getName),
+                new StringFilter<>("Description", Doc::getDescription)
+        );
+
+        documentsTable.setItems(documentModel.getObsDocuments());
+        try {
+            documentsTable.getSelectionModel().setAllowsMultipleSelection(false);
+        } catch (NoSuchElementException e) {
+
+        }
     }
 }

@@ -12,6 +12,10 @@
     -fx-border-color: red;
 }
 
+.mfx-table-view .default-footer {
+    -fx-padding: 1;
+}
+
 MFXTextField, MFXPasswordField, MFXTableView{
     -fx-background-color: -light-shades;
     -fx-border-color: -dark-accent;

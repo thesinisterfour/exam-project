@@ -95,7 +95,7 @@ public class CreateDocumentController extends RootController {
     public void initialize(URL location, ResourceBundle resources) {
         try {
             ICustomerModel customerModel = CustomerModel.getInstance();
-            IProjectModel projectModel = new ProjectModel();
+            IProjectModel projectModel = ProjectModel.getInstance();
             customerComboBox.setItems(customerModel.getObsAllCustomers());
             customerComboBox.selectedItemProperty().addListener((observable, oldValue, newValue) -> {
                 try {

@@ -1,16 +1,15 @@
 package dk.easv.gui.controllers;
 
 import dk.easv.Main;
-import dk.easv.be.Project;
 import dk.easv.be.User;
 import dk.easv.gui.controllerFactory.ControllerFactory;
+import dk.easv.gui.controllers.helpers.TableSetters;
 import dk.easv.gui.models.UserModel;
 import dk.easv.gui.models.interfaces.IUserModel;
 import dk.easv.gui.rootContoller.RootController;
 import dk.easv.helpers.AlertHelper;
 import dk.easv.helpers.UserSingleClass;
 import dk.easv.helpers.ViewType;
-import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXScrollPane;
 import io.github.palexdev.materialfx.controls.MFXTableView;
 import io.github.palexdev.materialfx.controls.MFXTextField;
@@ -21,7 +20,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -36,21 +34,22 @@ public class WorkersViewController extends RootController {
 
     private UserSingleClass actualUser = UserSingleClass.getInstance();
     @FXML
-    private MFXTableView<Project> projectTable;
-    @FXML
     private MFXTextField searchBar;
     @FXML
     private MFXScrollPane workerScrollPane;
     @FXML
     private HBox workers;
-    private final IUserModel userModel = new UserModel();
+    private final IUserModel userModel = UserModel.getInstance();
     private User selectedUser = null;
     private HBoxController hboxController;
+    @FXML
+    private MFXTableView<User> workersTable;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
             initUsers();
+            TableSetters.setupUsersTable(workersTable);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

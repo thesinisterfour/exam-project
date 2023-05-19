@@ -3,12 +3,15 @@ package dk.easv.gui.controllers.helpers;
 import dk.easv.be.Customer;
 import dk.easv.be.Doc;
 import dk.easv.be.Project;
+import dk.easv.be.User;
 import dk.easv.gui.models.CustomerModel;
 import dk.easv.gui.models.DocumentModel;
 import dk.easv.gui.models.ProjectModel;
+import dk.easv.gui.models.UserModel;
 import dk.easv.gui.models.interfaces.ICustomerModel;
 import dk.easv.gui.models.interfaces.IDocumentModel;
 import dk.easv.gui.models.interfaces.IProjectModel;
+import dk.easv.gui.models.interfaces.IUserModel;
 import io.github.palexdev.materialfx.controls.MFXTableColumn;
 import io.github.palexdev.materialfx.controls.MFXTableView;
 import io.github.palexdev.materialfx.controls.cell.MFXTableRowCell;
@@ -127,4 +130,33 @@ public class TableSetters {
 
         }
     }
+
+    public static void setupUsersTable(MFXTableView<User> table) throws SQLException {
+        IUserModel userModel = UserModel.getInstance();
+        MFXTableColumn<User> idColumn = new MFXTableColumn<>("ID", true, Comparator.comparing(User::getUserID));
+        MFXTableColumn<User> firstNameColumn = new MFXTableColumn<>("First Name", true, Comparator.comparing(User::getFirstName));
+        MFXTableColumn<User> lastNameColumn = new MFXTableColumn<>("Last Name", true, Comparator.comparing(User::getLastName));
+        MFXTableColumn<User> roleColumn = new MFXTableColumn<>("Role", true, Comparator.comparing(User::getRole));
+        MFXTableColumn<User> userNameColumn = new MFXTableColumn<>("Username", true, Comparator.comparing(User::getUsername));
+
+        idColumn.setRowCellFactory(user -> new MFXTableRowCell<>(User::getUserID));
+        firstNameColumn.setRowCellFactory(user -> new MFXTableRowCell<>(User::getFirstName));
+        lastNameColumn.setRowCellFactory(user -> new MFXTableRowCell<>(User::getLastName));
+        roleColumn.setRowCellFactory(user -> new MFXTableRowCell<>(User::getRole));
+        userNameColumn.setRowCellFactory(user -> new MFXTableRowCell<>(User::getUsername));
+
+        table.getTableColumns().setAll(firstNameColumn, lastNameColumn, roleColumn, userNameColumn);
+        table.autosizeColumnsOnInitialization();
+
+        table.getFilters().addAll(
+                new StringFilter<>("First Name", User::getFirstName),
+                new StringFilter<>("Last Name", User::getLastName),
+                new StringFilter<>("Role", user -> user.getRole().toString()),
+                new StringFilter<>("Username", User::getUsername)
+        );
+
+        table.setItems(userModel.getObsAllUsers());
+    }
+
+
 }

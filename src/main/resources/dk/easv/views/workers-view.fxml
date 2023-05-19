@@ -3,7 +3,6 @@
 <?import io.github.palexdev.materialfx.controls.MFXButton?>
 <?import io.github.palexdev.materialfx.controls.MFXScrollPane?>
 <?import io.github.palexdev.materialfx.controls.MFXTableView?>
-<?import io.github.palexdev.materialfx.controls.MFXTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -11,15 +10,9 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
-<VBox prefHeight="625.0" prefWidth="1175.0" spacing="10.0" stylesheets="@../css/global-style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.WorkersViewController">
+<VBox prefHeight="625.0" prefWidth="1175.0" spacing="10.0" stylesheets="@../css/global-style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.WorkersViewController">
    <children>
-      <MFXTextField fx:id="searchBar" floatMode="BORDER" maxWidth="1.7976931348623157E308" prefHeight="42.0" prefWidth="1154.0" promptText="Search" VBox.vgrow="ALWAYS">
-         <font>
-            <Font name="Book Antiqua Bold" size="12.0" />
-         </font>
-      </MFXTextField>
       <GridPane VBox.vgrow="NEVER">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -37,7 +30,7 @@
             <HBox alignment="CENTER_RIGHT" spacing="8.0" GridPane.rowIndex="1">
                <children>
                    <MFXButton onAction="#newWorker" text="New Worker" />
-                  <MFXButton fx:id="handleEdit"  onAction="#handleEdit" text="Edit" />
+                  <MFXButton fx:id="handleEdit" onAction="#handleEdit" text="Edit" />
                   <MFXButton fx:id="handleDelete" onAction="#handleDelete" text="Delete" />
                </children>
             </HBox>
@@ -45,8 +38,8 @@
       </GridPane>
       <VBox VBox.vgrow="ALWAYS">
          <children>
-            <Label fx:id="projectLabel" text="Project" />
-            <MFXTableView fx:id="projectTable" footerVisible="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="230.0" prefWidth="830.0" VBox.vgrow="ALWAYS" />
+            <Label fx:id="projectLabel" text="Workers" />
+            <MFXTableView fx:id="workersTable" footerVisible="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="230.0" prefWidth="830.0" VBox.vgrow="ALWAYS" />
          </children>
       </VBox>
    </children>

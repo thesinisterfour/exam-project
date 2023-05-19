@@ -2,22 +2,18 @@ package dk.easv.gui.controllers;
 
 import dk.easv.be.Role;
 import dk.easv.be.User;
-import dk.easv.gui.controllerFactory.ControllerFactory;
 import dk.easv.gui.models.RoleModel;
 import dk.easv.gui.models.UserModel;
 import dk.easv.gui.models.interfaces.IRoleModel;
 import dk.easv.gui.models.interfaces.IUserModel;
 import dk.easv.gui.rootContoller.RootController;
 import dk.easv.helpers.AlertHelper;
-import dk.easv.helpers.ViewType;
 import io.github.palexdev.materialfx.controls.MFXComboBox;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 
-import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
@@ -25,7 +21,7 @@ import java.util.concurrent.ConcurrentMap;
 
 public class CreateWorkerController extends RootController {
     private final IRoleModel roleModel = new RoleModel();
-    private final IUserModel userModel = new UserModel();
+    private final IUserModel userModel = UserModel.getInstance();
     @FXML
     private MFXTextField nameTextField,
             lastNameTextField,

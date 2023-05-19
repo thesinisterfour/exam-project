@@ -1,7 +1,9 @@
 package dk.easv.gui.controllers;
 
+import com.itextpdf.io.source.ByteArrayOutputStream;
 import dk.easv.gui.models.CanvasModel;
 import dk.easv.gui.models.ContentModel;
+import dk.easv.gui.models.DrawnImageModel;
 import dk.easv.gui.models.interfaces.ICanvasModel;
 import dk.easv.gui.models.interfaces.IContentModel;
 import dk.easv.gui.rootContoller.RootController;
@@ -25,6 +27,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
@@ -39,6 +42,8 @@ import javax.imageio.ImageIO;
 public class CanvasController extends RootController {
 
     private final ICanvasModel model = CanvasModel.getInstance();
+
+    String filePath = null;
     @FXML
     private ChoiceBox<String> colorChooser;
 
@@ -144,7 +149,7 @@ public class CanvasController extends RootController {
     }
 
     @FXML
-    private void handleSaveOnAction(){
+    private void handleSaveOnAction() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save Canvas Image");
         fileChooser.getExtensionFilters().add(
@@ -152,5 +157,11 @@ public class CanvasController extends RootController {
         );
         File file = fileChooser.showSaveDialog(canvas.getScene().getWindow());
         model.generateImage(file, canvas);
+
+        if (file != null) {
+            filePath = file.getAbsolutePath();
+            Image image = new Image("file:" + filePath);
+            DrawnImageModel.setDrawnImage(image);
+        }
     }
 }

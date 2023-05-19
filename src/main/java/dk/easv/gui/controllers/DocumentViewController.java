@@ -5,6 +5,7 @@ import dk.easv.Main;
 import dk.easv.be.Content;
 import dk.easv.gui.controllerFactory.ControllerFactory;
 import dk.easv.gui.models.ContentModel;
+import dk.easv.gui.models.DrawnImageModel;
 import dk.easv.gui.models.interfaces.IContentModel;
 import dk.easv.gui.models.tasks.RetrieveContentTask;
 import dk.easv.gui.rootContoller.RootController;
@@ -439,6 +440,7 @@ public class DocumentViewController extends RootController {
 
     @FXML
     private void openCanvasOnAction() throws IOException {
+        DrawnImageModel.setDocumentViewController(this);
         Stage stage = new Stage();
         stage.setTitle("Sketch");
         RootController controller = ControllerFactory.loadFxmlFile(ViewType.CANVAS);
@@ -446,4 +448,14 @@ public class DocumentViewController extends RootController {
         stage.setScene(scene);
         stage.show();
     }
+
+  /*
+
+  Unfinished feature for auto adding drawn image
+
+        public void setDrawnImage(Image image){
+        HBox hBox = addImage(image);
+        vbox.getChildren().add(hBox);
+        new FadeIn(hBox).play();
+    }*/
 }

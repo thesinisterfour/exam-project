@@ -1,7 +1,7 @@
 package dk.easv.helpers;
 
 public enum ViewType {
-    MAIN("views/Main-view.fxml"),
+    MAIN("views/main-view.fxml"),
     LOGIN("views/login-view.fxml"),
     CREATE_CUSTOMERS("views/add-customer-view.fxml"),
     HBOX_CARD("views/HboxCard.fxml"),

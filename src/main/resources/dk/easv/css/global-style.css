@@ -8,6 +8,10 @@
     -main-background: #ffffff;
 }
 
+.wrong-input{
+    -fx-border-color: red;
+}
+
 MFXTextField, MFXPasswordField, MFXTableView{
     -fx-background-color: -light-shades;
     -fx-border-color: -dark-accent;

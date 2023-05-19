@@ -13,8 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<VBox prefHeight="625.0" prefWidth="1175.0" spacing="10.0" stylesheets="@../css/global-style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.WorkersViewController">
+<VBox prefHeight="625.0" prefWidth="1175.0" spacing="10.0" stylesheets="@../css/global-style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.WorkersViewController">
    <children>
       <MFXTextField fx:id="searchBar" floatMode="BORDER" maxWidth="1.7976931348623157E308" prefHeight="42.0" prefWidth="1154.0" promptText="Search" VBox.vgrow="ALWAYS">
          <font>
@@ -37,8 +36,9 @@
             </MFXScrollPane>
             <HBox alignment="CENTER_RIGHT" spacing="8.0" GridPane.rowIndex="1">
                <children>
-                  <MFXButton text="Edit" />
-                  <MFXButton text="Delete" />
+                   <MFXButton onAction="#newWorker" text="New Worker" />
+                  <MFXButton fx:id="handleEdit"  onAction="#handleEdit" text="Edit" />
+                  <MFXButton fx:id="handleDelete" onAction="#handleDelete" text="Delete" />
                </children>
             </HBox>
          </children>

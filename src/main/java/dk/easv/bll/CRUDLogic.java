@@ -134,6 +134,16 @@ public class CRUDLogic implements ICRUDLogic {
             return userDao.getAll();
         }
     }
+    @Override
+    public ConcurrentMap<Integer, Role> getAllRoles() throws SQLException{
+        ICRUDDao<Role> roleDao = CRUDDAOFactory.getDao(DAOType.ROLE_DAO);
+        if (roleDao == null){
+            throw  new NullPointerException("roleDAO is null");
+        }
+        else {
+            return roleDao.getAll();
+        }
+    }
 
     /**
      * the addDocument method retrieves the Doc DAO from the CRUDDAOFactory
@@ -141,6 +151,7 @@ public class CRUDLogic implements ICRUDLogic {
      * @return the integer value returned by the add method.
      * @throws SQLException if there is an error in the database operation
      */
+
 
     @Override
     public int addDocument(Doc document) throws SQLException {
@@ -215,17 +226,25 @@ public class CRUDLogic implements ICRUDLogic {
         ICRUDDao<Project> projectDAO = CRUDDAOFactory.getDao(DAOType.PROJECT_DAO);
         return projectDAO.getAll();
     }
-
     @Override
     public int addProject(Project project) throws SQLException {
         ICRUDDao<Project> projectDao = CRUDDAOFactory.getDao(DAOType.PROJECT_DAO);
         return  projectDao.add(project);
     }
-
     @Override
     public ConcurrentMap<Integer, Project> getAllProjects() throws SQLException {
         ICRUDDao<Project> projectDAo = CRUDDAOFactory.getDao(DAOType.PROJECT_DAO);
         return projectDAo.getAll();
+    }
+    @Override
+    public int updateUser(User user) throws SQLException {
+        ICRUDDao<User> userDao = CRUDDAOFactory.getDao(DAOType.USER_DAO);
+        return userDao.update(user);
+    }
+    @Override
+    public int deleteUser(int id) throws SQLException {
+        ICRUDDao<User> userDao = CRUDDAOFactory.getDao(DAOType.USER_DAO);
+        return userDao.delete(id);
     }
 
 }

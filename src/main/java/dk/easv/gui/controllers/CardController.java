@@ -64,7 +64,7 @@ public class CardController extends RootController {
             userAddress.setText(card.getCustomerAddress());
             userZipcode.setText(card.getCustomerZipCode());
             userEmail.setText(card.getCustomerEmail());
-            gridLoyal.setStyle(gridLoyal.getStyle() + "-fx-background-color : red;");
+            gridLoyal.setStyle(gridLoyal.getStyle());
 
         }
         if(card.getUserRole() != null){
@@ -72,7 +72,7 @@ public class CardController extends RootController {
             userEmail.setText(card.getUserName());
             userAddress.setText("");
             userZipcode.setText("");
-            gridLoyal.setStyle(gridLoyal.getStyle() + "-fx-background-color : red;");
+            gridLoyal.setStyle(gridLoyal.getStyle());
         }
     }
 }

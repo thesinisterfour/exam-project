@@ -12,6 +12,7 @@ public class CRUDDAOFactory {
             case DOCUMENT_DAO -> new DocumentDAO();
             case CITY_DAO -> new CityDAO();
             case PROJECT_DAO -> new ProjectDAO();
+            case ROLE_DAO -> new RoleDAO();
             case CONTENT_DAO -> new ContentDAO();
         };
     }

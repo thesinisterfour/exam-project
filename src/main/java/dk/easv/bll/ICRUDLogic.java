@@ -16,6 +16,7 @@ public interface ICRUDLogic {
      * @returns an integer
      */
     int addUser(User user) throws SQLException;
+    ConcurrentMap<Integer, Role> getAllRoles() throws SQLException;
 
     /** This method takes two parameters of type String, representing a username and password.
      * Its purpose is to check for a user in the system based on the provided username and password.
@@ -76,4 +77,8 @@ public interface ICRUDLogic {
     int addProject(Project project) throws SQLException;
 
     ConcurrentMap<Integer, Project> getAllProjects() throws SQLException;
+
+    int updateUser(User user) throws SQLException;
+
+    int deleteUser(int id) throws SQLException;
 }

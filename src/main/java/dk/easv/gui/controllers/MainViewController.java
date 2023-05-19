@@ -5,6 +5,7 @@ import dk.easv.be.Doc;
 import dk.easv.be.Project;
 import dk.easv.be.Role;
 import dk.easv.gui.controllerFactory.ControllerFactory;
+import dk.easv.gui.controllers.helpers.TableSetters;
 import dk.easv.gui.controllers.tasks.LoadCustomerModelTask;
 import dk.easv.gui.controllers.tasks.LoadDocumentModelTask;
 import dk.easv.gui.controllers.tasks.LoadProjectModelTask;
@@ -300,25 +301,7 @@ public class MainViewController extends RootController {
     }
 
     private void setUpCustomerBoard() throws SQLException {
-        MFXTableColumn<Customer> idColumn = new MFXTableColumn<>("ID", true, Comparator.comparing(Customer::getCustomerID));
-        MFXTableColumn<Customer> nameColumn = new MFXTableColumn<>("Name", true, Comparator.comparing(Customer::getCustomerName));
-        MFXTableColumn<Customer> emailColumn = new MFXTableColumn<>("Email", true, Comparator.comparing(Customer::getCustomerEmail));
-        MFXTableColumn<Customer> addressColumn = new MFXTableColumn<>("Address", true, Comparator.comparing(Customer::getCustomerAddress));
-        MFXTableColumn<Customer> zipCodeColumn = new MFXTableColumn<>("Zip Code", true, Comparator.comparing(Customer::getZipCode));
-
-        idColumn.setRowCellFactory(customer -> new MFXTableRowCell<>(Customer::getCustomerID));
-        nameColumn.setRowCellFactory(customer -> new MFXTableRowCell<>(Customer::getCustomerName));
-        emailColumn.setRowCellFactory(customer -> new MFXTableRowCell<>(Customer::getCustomerEmail));
-        addressColumn.setRowCellFactory(customer -> new MFXTableRowCell<>(Customer::getCustomerAddress));
-        zipCodeColumn.setRowCellFactory(customer -> new MFXTableRowCell<>(Customer::getZipCode));
-
-        customerTable.getFilters().addAll(new StringFilter<>("Name", Customer::getCustomerName),
-                new StringFilter<>("Email", Customer::getCustomerEmail),
-                new StringFilter<>("Address", Customer::getCustomerAddress),
-                new IntegerFilter<>("Zip Code", Customer::getZipCode));
-        customerTable.getTableColumns().setAll(nameColumn, emailColumn, addressColumn, zipCodeColumn);
-        customerTable.autosizeColumnsOnInitialization();
-        customerTable.setItems(customerModel.getObsAllCustomers());
+        TableSetters.setUpCustomerTable(customerTable);
 
     }
 

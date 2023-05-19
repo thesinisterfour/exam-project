@@ -1,5 +1,4 @@
 package dk.easv.gui.models;
-
 import dk.easv.be.Project;
 import dk.easv.bll.CRUDLogic;
 import dk.easv.bll.ICRUDLogic;

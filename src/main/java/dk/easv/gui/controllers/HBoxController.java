@@ -3,6 +3,7 @@ package dk.easv.gui.controllers;
 import dk.easv.Main;
 import dk.easv.be.Card;
 import dk.easv.be.Customer;
+import dk.easv.be.Project;
 import dk.easv.be.User;
 import dk.easv.gui.rootContoller.RootController;
 import javafx.collections.ObservableList;
@@ -31,6 +32,8 @@ public class HBoxController extends RootController {
     private User selectedUser = null;
     private ConcurrentMap<Integer, Customer> customers = new ConcurrentHashMap<>();
 
+    private ConcurrentMap<Integer, Project> projects = new ConcurrentHashMap<>();
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
     }
@@ -44,6 +47,12 @@ public class HBoxController extends RootController {
         this.customers = customers;
         populateCustomersHBox();
     }
+
+    public void setProjectBoxes(ConcurrentMap<Integer, Project> projects){
+        this.projects = projects;
+        populateProjectHBox();
+    }
+
 
     private void populateUserHBox() {
         try {
@@ -102,6 +111,26 @@ public class HBoxController extends RootController {
 
     public User getSelectedUser(){
         return selectedUser;
+    }
+
+    private void populateProjectHBox() {
+        try {
+            ObservableList<Node> children = mainHboxCard.getChildren();
+            Set<Integer> keys = projects.keySet();
+            for (Integer key : keys) {
+                FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(Main.class.getResource("views/ProjectCard.fxml")));
+                Parent parent = loader.load();
+                ProjectCardController projectCardController = loader.getController();
+                projectCardController.receiveProjectData(projects);
+                projectCardController.createProCards(new Project(projects.get(key).getProjectID(), projects.get(key).getProjectName(),projects.get(key).getProjectAddress(), projects.get(key).getProjectZipcode()));
+                children.addAll(parent);
+            }
+
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
 }

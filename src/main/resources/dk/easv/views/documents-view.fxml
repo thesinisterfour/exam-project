@@ -15,7 +15,7 @@
             <MFXTableView fx:id="documentsTable" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="230.0" prefWidth="830.0" VBox.vgrow="ALWAYS" />
             <HBox alignment="CENTER_RIGHT" spacing="8.0">
                <children>
-                  <MFXButton onAction="#newDocument" text="Add Project" />
+                  <MFXButton onAction="#newDocument" text="Add Document" />
                   <MFXButton fx:id="handleEdit" onAction="#handleEdit" text="Edit" />
                   <MFXButton fx:id="handleDelete" onAction="#handleDelete" text="Delete" />
                </children>

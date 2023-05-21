@@ -13,7 +13,6 @@ import dk.easv.helpers.ViewType;
 import io.github.palexdev.materialfx.controls.MFXTableView;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
@@ -48,7 +47,8 @@ public class DocumentsViewController extends RootController {
             Doc document = documentsTable.getSelectionModel().getSelectedValues().get(0);
             contentModel.setDocumentId(document.getId());
             RootController rootController = ControllerFactory.loadFxmlFile(ViewType.DOCUMENT);
-            getStage().setScene(new Scene(rootController.getView()));
+            BorderPane borderPane = (BorderPane) rootVbox.getParent();
+            borderPane.setCenter(rootController.getView());
         } catch (IOException e) {
             AlertHelper alertHelper = new AlertHelper("A file error occurred", Alert.AlertType.ERROR);
             alertHelper.showAndWait();

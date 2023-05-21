@@ -82,10 +82,9 @@ public class CreateDocumentController extends RootController {
     @FXML
     private void cancelOnAction(ActionEvent actionEvent) {
         try {
-            RootController rootController = ControllerFactory.loadFxmlFile(ViewType.MAIN);
+            RootController rootController = ControllerFactory.loadFxmlFile(ViewType.DOCUMENTS_VIEW);
             BorderPane borderPane = (BorderPane) rootGrid.getParent();
-            BorderPane rootBorderPane = (BorderPane) rootController.getView();
-            borderPane.setCenter(rootBorderPane.getCenter());
+            borderPane.setCenter(rootController.getView());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

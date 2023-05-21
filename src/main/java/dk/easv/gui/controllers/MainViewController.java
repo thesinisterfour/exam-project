@@ -77,11 +77,6 @@ public class MainViewController extends RootController {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        mainBorderPane.centerProperty().addListener((observable, oldValue, newValue) -> {
-            System.out.println(newValue);
-        });
-
-
         ExecutorService es = Executors.newFixedThreadPool(10);
 
         LoadDocumentModelTask loadDocumentModelTask = new LoadDocumentModelTask();

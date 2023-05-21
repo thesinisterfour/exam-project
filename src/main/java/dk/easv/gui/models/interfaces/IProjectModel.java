@@ -12,4 +12,6 @@ public interface IProjectModel {
     ObservableList<Project> getProjectObservableList();
 
     ConcurrentMap<Integer, Project> getProjectsByCustomerId(int id) throws SQLException;
+
+    void addProject(Project project) throws SQLException;
 }

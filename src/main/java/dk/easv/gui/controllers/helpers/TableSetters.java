@@ -63,6 +63,7 @@ public class TableSetters {
         MFXTableColumn<Project> dateEndColumn = new MFXTableColumn<>("End Date", true, Comparator.comparing(Project::getEndDate));
         MFXTableColumn<Project> addressColumn = new MFXTableColumn<>("Address", true, Comparator.comparing(Project::getProjectAddress));
         MFXTableColumn<Project> zipCodeColumn = new MFXTableColumn<>("Zip Code", true, Comparator.comparing(Project::getProjectZipcode));
+        MFXTableColumn<Project> customerColumn = new MFXTableColumn<>("Customer", true, Comparator.comparing(Project::getCustomerID));
 
         idColumn.setRowCellFactory(project -> new MFXTableRowCell<>(Project::getProjectID));
         nameColumn.setRowCellFactory(project -> new MFXTableRowCell<>(Project::getProjectName));
@@ -70,15 +71,17 @@ public class TableSetters {
         dateEndColumn.setRowCellFactory(project -> new MFXTableRowCell<>(Project::getEndDate));
         addressColumn.setRowCellFactory(project -> new MFXTableRowCell<>(Project::getProjectAddress));
         zipCodeColumn.setRowCellFactory(project -> new MFXTableRowCell<>(Project::getProjectZipcode));
+        customerColumn.setRowCellFactory(project -> new MFXTableRowCell<>(Project::getCustomerID));
 
-        table.getTableColumns().setAll(nameColumn, dateStartColumn, dateEndColumn, addressColumn, zipCodeColumn);
+        table.getTableColumns().setAll(nameColumn, dateStartColumn, dateEndColumn, addressColumn, zipCodeColumn, customerColumn);
         table.autosizeColumnsOnInitialization();
 
 
         table.getFilters().addAll(
                 new StringFilter<>("Name", Project::getProjectName),
                 new StringFilter<>("Address", Project::getProjectAddress),
-                new IntegerFilter<>("Zip Code", Project::getProjectZipcode)
+                new IntegerFilter<>("Zip Code", Project::getProjectZipcode),
+                new IntegerFilter<>("Customer ID", Project::getCustomerID)
         );
         table.setItems(projectModel.getProjectObservableList());
         try {

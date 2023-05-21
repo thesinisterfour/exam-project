@@ -81,9 +81,10 @@ public class WorkersViewController extends RootController {
     @FXML
     private void handleEdit(){
         try {
-            User selectedUser = hboxController.getSelectedUser();
+//            User selectedUser = hboxController.getSelectedUser();
+            User selectedUser = workersTable.getSelectionModel().getSelectedValues().get(0);
             if (selectedUser == null) {
-                AlertHelper alertHelper = new AlertHelper("Pleas select a user to edit", Alert.AlertType.ERROR);
+                AlertHelper alertHelper = new AlertHelper("Please select a user to edit", Alert.AlertType.ERROR);
                 alertHelper.showAndWait();
             } else {
                 Stage stage = new Stage();
@@ -106,7 +107,7 @@ public class WorkersViewController extends RootController {
             if (selectedUser == null) {
                 AlertHelper alertHelper = new AlertHelper("Pleas select a user to delete", Alert.AlertType.ERROR);
                 alertHelper.showAndWait();
-            }else {
+            } else {
                 userModel.deleteUser(selectedUser.getUserID());
             }
         } catch (SQLException e) {

@@ -15,7 +15,8 @@ public enum ViewType {
     BUSINESS_VIEW("views/customers-view.fxml"),
     DOCUMENT("views/document-view.fxml"),
     PROJECTS_VIEW("views/projects-view.fxml"),
-    DOCUMENTS_VIEW("views/documents-view.fxml");
+    DOCUMENTS_VIEW("views/documents-view.fxml"),
+    ADD_PROJECT("views/add-project-view.fxml");
 
     private final String path;
     ViewType(String path){

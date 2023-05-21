@@ -18,6 +18,24 @@ public class ProjectDAO implements ICRUDDao<Project>, IProjectMapper {
 
     @Override
     public int add(Project object) throws SQLException {
+        try(Connection connection = cm.getConnection()){
+            PreparedStatement ps = connection.prepareStatement("INSERT INTO dbo.[project] (project_name, project_start_date, " +
+                    "project_end_date, customer_id, address, zipcode) VALUES (?, ?, ?, ?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
+
+            ps.setString(1, object.getProjectName());
+            ps.setDate(2, Date.valueOf(object.getStartDate()));
+            ps.setDate(3, Date.valueOf(object.getEndDate()));
+            ps.setInt(4, object.getCustomerID());
+            ps.setString(5, object.getProjectAddress());
+            ps.setInt(6, object.getProjectZipcode());
+
+            ps.executeUpdate();
+
+            ResultSet rs = ps.getGeneratedKeys();
+            if (rs.next()){
+                return rs.getInt(1);
+            }
+        }
         return 0;
     }
 
@@ -35,9 +53,8 @@ public class ProjectDAO implements ICRUDDao<Project>, IProjectMapper {
             ps.setInt(6, object.getProjectZipcode());
             ps.setInt(7, object.getProjectID());
 
-            ps.executeQuery();
+            return ps.executeUpdate();
         }
-        return 0;
     }
 
     @Override
@@ -95,7 +112,7 @@ public class ProjectDAO implements ICRUDDao<Project>, IProjectMapper {
     public ConcurrentMap<Integer, Project> getProjectsByCustomerId(int id) throws SQLException {
         ConcurrentMap<Integer, Project> projects = new ConcurrentHashMap<>();
         try (Connection connection = cm.getConnection()){
-            PreparedStatement ps = connection.prepareStatement("SELECT * FROM dbo.[project] INNER JOIN project_customer pc on project.project_id = pc.project_id WHERE pc.customer_id=?;");
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM dbo.[project] WHERE customer_id=?;");
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {

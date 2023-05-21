@@ -13,11 +13,9 @@ import java.sql.SQLException;
 import java.util.concurrent.ConcurrentMap;
 
 public class ProjectModel implements IProjectModel {
-    private ICRUDLogic logic = new CRUDLogic();
-
     private static ProjectModel INSTANCE;
-
     private final ObservableList<Project> projectObservableList;
+    private ICRUDLogic logic = new CRUDLogic();
 
     private ProjectModel() throws SQLException {
         projectObservableList = FXCollections.observableArrayList();
@@ -25,7 +23,7 @@ public class ProjectModel implements IProjectModel {
     }
 
     public static ProjectModel getInstance() throws SQLException {
-        if (INSTANCE == null){
+        if (INSTANCE == null) {
             INSTANCE = new ProjectModel();
         }
         return INSTANCE;
@@ -39,7 +37,7 @@ public class ProjectModel implements IProjectModel {
     }
 
     @Override
-    public ObservableList<Project> getProjectObservableList(){
+    public ObservableList<Project> getProjectObservableList() {
         return projectObservableList;
     }
 
@@ -47,11 +45,19 @@ public class ProjectModel implements IProjectModel {
     public ConcurrentMap<Integer, Project> getProjectsByCustomerId(int id) throws SQLException {
         IMappingLogic projectMapper = new MappingLogic();
         ConcurrentMap<Integer, Project> projectsByCustomerId = projectMapper.getProjectsByCustomerId(id);
-        if (projectsByCustomerId.isEmpty()){
+        if (projectsByCustomerId.isEmpty()) {
             projectObservableList.clear();
         } else {
             projectObservableList.setAll(projectsByCustomerId.values());
         }
         return projectsByCustomerId;
+    }
+
+    @Override
+    public void addProject(Project project) throws SQLException {
+
+        logic.addProject(project);
+        getAllProjects();
+
     }
 }

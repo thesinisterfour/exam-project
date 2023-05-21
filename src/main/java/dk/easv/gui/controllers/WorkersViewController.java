@@ -35,6 +35,7 @@ import java.util.concurrent.ConcurrentMap;
 
 public class WorkersViewController extends RootController {
 
+    private final IUserModel userModel = UserModel.getInstance();
     private UserSingleClass actualUser = UserSingleClass.getInstance();
     @FXML
     private MFXTextField searchBar;
@@ -42,7 +43,6 @@ public class WorkersViewController extends RootController {
     private MFXScrollPane workerScrollPane;
     @FXML
     private HBox workers;
-    private final IUserModel userModel = UserModel.getInstance();
     private User selectedUser = null;
     private HBoxController hboxController;
     @FXML
@@ -72,15 +72,18 @@ public class WorkersViewController extends RootController {
             throw new RuntimeException(e);
         }
     }
+
     private ConcurrentMap<Integer, User> getAllUsersMap() throws SQLException {
         return userModel.getAllUsers();
     }
+
     private void addLabelAndScrollPane(String key, HBox hBox) {
         Label label = new Label(key);
         workers.getChildren().add(label);
         workerScrollPane.setContent(hBox);
         workerScrollPane.setFitToHeight(true);
     }
+
     private void initUsers() throws SQLException {
         ConcurrentMap<Integer, User> map = getAllUsersMap();
         Set<Integer> keys = map.keySet();
@@ -96,8 +99,9 @@ public class WorkersViewController extends RootController {
             throw new RuntimeException(e);
         }
     }
+
     @FXML
-    private void handleEdit(){
+    private void handleEdit() {
         try {
 //            User selectedUser = hboxController.getSelectedUser();
             User selectedUser = workersTable.getSelectionModel().getSelectedValues().get(0);
@@ -118,8 +122,9 @@ public class WorkersViewController extends RootController {
             throw new RuntimeException(e);
         }
     }
+
     @FXML
-    private void handleDelete(){
+    private void handleDelete() {
         try {
             selectedUser = hboxController.getSelectedUser();
             if (selectedUser == null) {
@@ -129,8 +134,8 @@ public class WorkersViewController extends RootController {
                 userModel.deleteUser(selectedUser.getUserID());
             }
         } catch (SQLException e) {
-                AlertHelper alertHelper = new AlertHelper("User deleted successfully", Alert.AlertType.NONE);
-                alertHelper.showAndWait();
+            AlertHelper alertHelper = new AlertHelper("User deleted successfully", Alert.AlertType.NONE);
+            alertHelper.showAndWait();
         }
     }
 
@@ -150,25 +155,23 @@ public class WorkersViewController extends RootController {
 
     @FXML
     private void assignProject(ActionEvent actionEvent) {
-        User selectedUser = workersTable.getSelectionModel().getSelectedValues().get(0);
-        if (selectedUser == null) {
+        try {
+            User selectedUser = workersTable.getSelectionModel().getSelectedValues().get(0);
+            Stage stage = new Stage();
+            RootController controller = ControllerFactory.loadFxmlFile(ViewType.ASSIGN_PROJECT);
+            Scene scene = new Scene(controller.getView());
+            stage.setResizable(false);
+            stage.setScene(scene);
+            stage.centerOnScreen();
+            stage.show();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (IndexOutOfBoundsException o) {
             AlertHelper alertHelper = new AlertHelper("Please select a user to assign a project to", Alert.AlertType.ERROR);
             alertHelper.showAndWait();
-        } else {
-            try {
-                Stage stage = new Stage();
-                RootController controller = ControllerFactory.loadFxmlFile(ViewType.ASSIGN_PROJECT);
-                Scene scene = new Scene(controller.getView());
-                stage.setResizable(false);
-                stage.setScene(scene);
-                stage.centerOnScreen();
-                stage.show();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
         }
-
     }
+
 
     @FXML
     private void deassignProject(ActionEvent actionEvent) {

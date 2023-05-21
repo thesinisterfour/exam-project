@@ -39,7 +39,7 @@
       <VBox VBox.vgrow="ALWAYS">
          <children>
             <Label fx:id="projectLabel" text="Workers" />
-            <MFXTableView fx:id="workersTable" footerVisible="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="230.0" prefWidth="830.0" VBox.vgrow="ALWAYS" />
+            <MFXTableView fx:id="workersTable" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="230.0" prefWidth="830.0" VBox.vgrow="ALWAYS" />
          </children>
       </VBox>
    </children>

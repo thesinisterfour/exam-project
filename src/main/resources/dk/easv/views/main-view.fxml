@@ -27,6 +27,7 @@
                   <Insets />
                </VBox.margin>
             </MFXButton>
+            <MFXButton fx:id="projectsButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#displayProjects" prefHeight="60.0" styleClass="projects_Button" text="Projects" />
             <VBox alignment="BOTTOM_CENTER" maxHeight="1.7976931348623157E308" prefWidth="100.0" VBox.vgrow="ALWAYS">
                <children>
                   <MFXButton fx:id="logoutButton" onAction="#handleLogout" prefHeight="58.0" prefWidth="70.0" styleClass="logout_Button" text="Log Out" />

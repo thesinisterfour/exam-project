@@ -139,6 +139,17 @@ MFXButton:hover{
     -fx-text-fill: transparent;
 }
 
+.projects_Button {
+    /*-fx-background-image: url('../icons/Logout.png');*/
+    -fx-background-repeat: no-repeat;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-background-radius: 15px;
+    -fx-background-size: 25px 25px;
+    -fx-background-position: center;
+    -fx-text-fill: white;
+}
+
 
 
 Label{
@@ -391,3 +402,4 @@ Active Filters
     -fx-font-size: 14;
     -fx-fill: -mfx-gray;
 }
+

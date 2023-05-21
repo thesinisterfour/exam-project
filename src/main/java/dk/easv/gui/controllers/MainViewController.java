@@ -77,6 +77,11 @@ public class MainViewController extends RootController {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        mainBorderPane.centerProperty().addListener((observable, oldValue, newValue) -> {
+            System.out.println(newValue);
+        });
+
+
         ExecutorService es = Executors.newFixedThreadPool(10);
 
         LoadDocumentModelTask loadDocumentModelTask = new LoadDocumentModelTask();
@@ -217,7 +222,7 @@ public class MainViewController extends RootController {
         }
 
         projectTable.getSelectionModel().selectionProperty().addListener(((observable, oldValue, newValue) -> {
-            if (newValue != null) {
+            if (!newValue.isEmpty()) {
                 try {
                     documentModel.setObsProjectDocuments(newValue.values().stream().findFirst().get().getProjectID());
                     documentsTable.setItems(documentModel.getObsDocuments());
@@ -239,7 +244,7 @@ public class MainViewController extends RootController {
 
 
         customerTable.getSelectionModel().selectionProperty().addListener(((observable, oldValue, newValue) -> {
-            if (newValue != null) {
+            if (!newValue.isEmpty()) {
                 try {
                     documentsTable.getItems().clear();
                     projectModel.getProjectsByCustomerId(newValue.values().stream().findFirst().get().getCustomerID());
@@ -270,5 +275,16 @@ public class MainViewController extends RootController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @FXML
+    private void displayProjects(ActionEvent actionEvent) {
+        try {
+            RootController controller = ControllerFactory.loadFxmlFile(ViewType.PROJECTS_VIEW);
+            mainBorderPane.setCenter(controller.getView());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 }

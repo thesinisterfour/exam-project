@@ -1,4 +1,5 @@
 package dk.easv.gui.models;
+
 import dk.easv.be.Project;
 import dk.easv.bll.CRUDLogic;
 import dk.easv.bll.ICRUDLogic;
@@ -46,7 +47,11 @@ public class ProjectModel implements IProjectModel {
     public ConcurrentMap<Integer, Project> getProjectsByCustomerId(int id) throws SQLException {
         IMappingLogic projectMapper = new MappingLogic();
         ConcurrentMap<Integer, Project> projectsByCustomerId = projectMapper.getProjectsByCustomerId(id);
-        projectObservableList.setAll(projectsByCustomerId.values());
+        if (projectsByCustomerId.isEmpty()){
+            projectObservableList.clear();
+        } else {
+            projectObservableList.setAll(projectsByCustomerId.values());
+        }
         return projectsByCustomerId;
     }
 }

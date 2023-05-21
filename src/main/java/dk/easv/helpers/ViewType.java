@@ -13,7 +13,8 @@ public enum ViewType {
     CREATE_WORKER("views/add-worker-view.fxml"),
 
     BUSINESS_VIEW("views/customers-view.fxml"),
-    DOCUMENT("views/document-view.fxml");
+    DOCUMENT("views/document-view.fxml"),
+    PROJECTS_VIEW("views/projects-view.fxml");
 
     private final String path;
     ViewType(String path){

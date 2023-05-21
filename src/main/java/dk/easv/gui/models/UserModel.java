@@ -71,7 +71,7 @@ public class UserModel implements IUserModel {
     }
     @Override
     public ObservableList<User> getObsAllUsers() throws SQLException {
-        obsAllUsers.addAll(allUsers.values());
+        obsAllUsers.setAll(allUsers.values());
         return obsAllUsers;
     }
 }

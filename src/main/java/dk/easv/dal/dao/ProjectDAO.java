@@ -172,4 +172,14 @@ public class ProjectDAO implements ICRUDDao<Project>, IProjectMapper {
         }
         return projects;
     }
+
+    @Override
+    public int addUserToProject(int projectId, int userId) throws SQLException {
+        try (Connection con = cm.getConnection()){
+            PreparedStatement ps = con.prepareStatement("INSERT INTO dbo.projects_users (project_id, user_id) VALUES (?,?);");
+            ps.setInt(1, projectId);
+            ps.setInt(2, userId);
+            return ps.executeUpdate();
+        }
+    }
 }

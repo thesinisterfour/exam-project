@@ -11,4 +11,6 @@ public interface IProjectMapper {
     ConcurrentMap<Integer, Doc> getDocumentsByProjectId(int id) throws SQLException;
 
     ConcurrentMap<Integer, Project> getProjectsByWorkerId(int id) throws SQLException;
+
+    int addUserToProject(int projectId, int userId) throws SQLException;
 }

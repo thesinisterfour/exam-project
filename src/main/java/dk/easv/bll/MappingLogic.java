@@ -28,4 +28,10 @@ public class MappingLogic implements IMappingLogic{
         IProjectMapper projectMapper = new ProjectDAO();
         return projectMapper.getProjectsByWorkerId(id);
     }
+
+    @Override
+    public int addUserToProject(int projectId, int userId) throws SQLException {
+        IProjectMapper projectMapper = new ProjectDAO();
+        return projectMapper.addUserToProject(projectId, userId);
+    }
 }

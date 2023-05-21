@@ -66,6 +66,12 @@ public class ProjectModel implements IProjectModel {
     }
 
     @Override
+    public int addUserToProject(int projectId, int userId) throws SQLException {
+        IMappingLogic mappingLogic = new MappingLogic();
+        return mappingLogic.addUserToProject(projectId, userId);
+    }
+
+    @Override
     public void addProject(Project project) throws SQLException {
         logic.addProject(project);
         getAllProjects();

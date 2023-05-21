@@ -158,6 +158,7 @@ public class WorkersViewController extends RootController {
         try {
             User selectedUser = workersTable.getSelectionModel().getSelectedValues().get(0);
             Stage stage = new Stage();
+            stage.setUserData(selectedUser);
             RootController controller = ControllerFactory.loadFxmlFile(ViewType.ASSIGN_PROJECT);
             Scene scene = new Scene(controller.getView());
             stage.setResizable(false);

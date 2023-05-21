@@ -28,10 +28,6 @@ MFXTextField, MFXPasswordField, MFXTableView{
     -fx-background-color: #b1b1b1;
 
 }
-MFXScrollPane {
-    -fx-background-color: -dark-accent;
-    -fx-opacity: 50%;
-}
 .backgroundScrollPaneBottom{
     -fx-background-color: -dark-accent;
     -fx-opacity: 80%;

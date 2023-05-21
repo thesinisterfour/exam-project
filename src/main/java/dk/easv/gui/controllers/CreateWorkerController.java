@@ -38,10 +38,9 @@ public class CreateWorkerController extends RootController {
             ConcurrentMap<Integer, Role> rolesMap = roleModel.getAllRoles();
             for(Role role : rolesMap.values()){
                 if (!role.toString().equals("ADMIN")){
-                roleComboBox.getItems().add(role.toString());
+                    roleComboBox.getItems().add(role.toString());
                 }
             }
-                roleComboBox.getSelectionModel().selectFirst();
         } catch (SQLException e){
            AlertHelper alertHelper = new AlertHelper("There was an error retrieving roles from database", Alert.AlertType.ERROR);
            alertHelper.showAndWait();
@@ -61,7 +60,8 @@ public class CreateWorkerController extends RootController {
         }
         editMode = true;
     }
-    public void submitButtonAction(ActionEvent actionEvent) {
+    @FXML
+    private void submitButtonAction(ActionEvent actionEvent) {
         if (editMode) {
             preformEdit();
         } else {
@@ -73,26 +73,23 @@ public class CreateWorkerController extends RootController {
         String lastName = lastNameTextField.getText();
         String username = usernameTextField.getText();
         String password = passwordTextField.getText();
-        String selectedRoleName = roleComboBox.getValue();
-        if (firstName.isEmpty() || lastName.isEmpty() || username.isEmpty() || password.isEmpty() || selectedRoleName == null){
+        String selectedRole = roleComboBox.getValue();
+        if (firstName.isEmpty() || lastName.isEmpty() || username.isEmpty() || password.isEmpty() || selectedRole.isEmpty()){
             AlertHelper alertHelper = new AlertHelper("Please fill all fields and make sure to choose the user role!", Alert.AlertType.ERROR);
             alertHelper.showAndWait();
             return;
-        }
-        Role selectedRole = Role.valueOf(selectedRoleName.toUpperCase());
+        };
         selectedUser.setFirstName(firstName);
         selectedUser.setLastName(lastName);
         selectedUser.setUsername(username);
         selectedUser.setPassword(password);
-        selectedUser.setRole(selectedRole);
+        selectedUser.setRole(Role.valueOf(selectedRole));
         try {
             userModel.updateUser(selectedUser);
-            AlertHelper alertHelper = new AlertHelper("User successfully edited", Alert.AlertType.INFORMATION);
-            alertHelper.showAndWait();
+            getStage().close();
         } catch (SQLException e){
             AlertHelper alertHelper = new AlertHelper("Error editing user, please try again", Alert.AlertType.ERROR);
             alertHelper.showAndWait();
-            throw new RuntimeException(e);
         }
     }
     private void preformCreate(){
@@ -100,21 +97,19 @@ public class CreateWorkerController extends RootController {
         String lastName = lastNameTextField.getText();
         String username = usernameTextField.getText();
         String password = passwordTextField.getText();
-        String selectedRoleName = roleComboBox.getValue();
-        if(firstName.isEmpty() || lastName.isEmpty() || username.isEmpty() || password.isEmpty() || selectedRoleName == null){
+        String selectedRole = roleComboBox.getValue();
+        if(firstName.isEmpty() || lastName.isEmpty() || username.isEmpty() || password.isEmpty() || selectedRole.isEmpty()){
             AlertHelper alertHelper = new AlertHelper("Pleas fill all fields and make sure to choose the user role!!", Alert.AlertType.ERROR);
             alertHelper.showAndWait();
             return;
         }
-        Role selectedRole = Role.valueOf(selectedRoleName.toUpperCase());
-        User user = new User(firstName, lastName, selectedRole);
+        User user = new User(firstName, lastName, Role.valueOf(selectedRole));
         user.setUsername(username);
         user.setPassword(password);
         try {
             int userId = userModel.addUser(user);
             user.setUserID(userId);
-            AlertHelper alertHelper = new AlertHelper("User successfully created", Alert.AlertType.INFORMATION);
-            alertHelper.showAndWait();
+            getStage().close();
         } catch (SQLException e){
             AlertHelper alertHelper = new AlertHelper("Error creating user, pleas try again", Alert.AlertType.ERROR);
             alertHelper.showAndWait();

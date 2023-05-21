@@ -13,4 +13,6 @@ public interface IProjectMapper {
     ConcurrentMap<Integer, Project> getProjectsByWorkerId(int id) throws SQLException;
 
     int addUserToProject(int projectId, int userId) throws SQLException;
+
+    int deassignProject(int projectId, int userId) throws SQLException;
 }

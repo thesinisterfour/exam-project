@@ -18,4 +18,6 @@ public interface IProjectModel {
     int addUserToProject(int projectId, int userId) throws SQLException;
 
     void addProject(Project project) throws SQLException;
+
+    int deassignProject(int userID, int projectID) throws SQLException;
 }

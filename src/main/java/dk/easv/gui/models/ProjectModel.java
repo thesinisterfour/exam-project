@@ -76,4 +76,10 @@ public class ProjectModel implements IProjectModel {
         logic.addProject(project);
         getAllProjects();
     }
+
+    @Override
+    public int deassignProject(int projectId, int userId) throws SQLException {
+        IMappingLogic mappingLogic = new MappingLogic();
+        return mappingLogic.deassignproject(projectId, userId);
+    }
 }

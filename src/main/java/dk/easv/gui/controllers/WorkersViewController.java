@@ -176,5 +176,16 @@ public class WorkersViewController extends RootController {
 
     @FXML
     private void deassignProject(ActionEvent actionEvent) {
+        try {
+            User selectedUser = workersTable.getSelectionModel().getSelectedValues().get(0);
+            Project selectedProject = projectsTable.getSelectionModel().getSelectedValues().get(0);
+            IProjectModel projectModel = ProjectModel.getInstance();
+            projectModel.deassignProject(selectedProject.getProjectID(), selectedUser.getUserID());
+        } catch (IndexOutOfBoundsException o){
+            AlertHelper alertHelper = new AlertHelper("Please select a user and a project to deassign", Alert.AlertType.ERROR);
+            alertHelper.showAndWait();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

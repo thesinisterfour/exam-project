@@ -13,4 +13,6 @@ public interface IMappingLogic {
     ConcurrentMap<Integer, Project> getProjectsByWorkerId(int id) throws SQLException;
 
     int addUserToProject(int projectId, int userId) throws SQLException;
+
+    int deassignproject(int projectId, int userId) throws SQLException;
 }

@@ -182,4 +182,14 @@ public class ProjectDAO implements ICRUDDao<Project>, IProjectMapper {
             return ps.executeUpdate();
         }
     }
+
+    @Override
+    public int deassignProject(int projectId, int userId) throws SQLException {
+        try (Connection con = cm.getConnection()){
+            PreparedStatement ps = con.prepareStatement("DELETE FROM dbo.projects_users WHERE project_id=? AND user_id=?;");
+            ps.setInt(1, projectId);
+            ps.setInt(2, userId);
+            return ps.executeUpdate();
+        }
+    }
 }

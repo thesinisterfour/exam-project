@@ -136,15 +136,26 @@ MFXButton:hover{
 }
 
 .projects_Button {
-    /*-fx-background-image: url('../icons/Logout.png');*/
+    -fx-background-image: url('../icons/Project.png');
     -fx-background-repeat: no-repeat;
     -fx-background-color: transparent;
     -fx-border-color: transparent;
     -fx-background-radius: 15px;
     -fx-background-size: 25px 25px;
     -fx-background-position: center;
-    -fx-text-fill: white;
+    -fx-text-fill: transparent;
 }
+.documents_Button {
+    -fx-background-image: url('../icons/Document.png');
+    -fx-background-repeat: no-repeat;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-background-radius: 15px;
+    -fx-background-size: 25px 25px;
+    -fx-background-position: center;
+    -fx-text-fill: transparent;
+}
+
 
 
 

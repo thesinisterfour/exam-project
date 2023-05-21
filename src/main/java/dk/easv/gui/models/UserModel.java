@@ -4,33 +4,74 @@ import dk.easv.be.User;
 import dk.easv.bll.ICRUDLogic;
 import dk.easv.bll.CRUDLogic;
 import dk.easv.gui.models.interfaces.IUserModel;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.sql.SQLException;
 import java.util.concurrent.ConcurrentMap;
 
 public class UserModel implements IUserModel {
 
+    private static UserModel instance;
     private final ICRUDLogic crudLogic = new CRUDLogic();
 
+    private ObservableList<User> obsAllUsers;
+    private ConcurrentMap<Integer, User> allUsers;
+
+    private UserModel() {
+        obsAllUsers = FXCollections.observableArrayList();
+        loadAllUsers();
+    }
+
+
+    public static UserModel getInstance() {
+        if (instance == null) {
+            instance = new UserModel();
+        }
+        return instance;
+    }
 
     /**
-     * @returns a ConcurrentMap of Users with Integer keys
      * @throws SQLException
+     * @returns a ConcurrentMap of Users with Integer keys
      */
     @Override
     public ConcurrentMap<Integer, User> getAllUsers() throws SQLException {
-        return crudLogic.getAllUsers();
+        return allUsers;
     }
+
     @Override
     public int addUser(User user) throws SQLException {
-        return crudLogic.addUser(user);
+        int id = crudLogic.addUser(user);
+        loadAllUsers();
+        return id;
     }
+
     @Override
     public int updateUser(User object) throws SQLException {
-        return crudLogic.updateUser(object);
+        int affectedRows = crudLogic.updateUser(object);
+        loadAllUsers();
+        return affectedRows;
     }
+
     @Override
     public int deleteUser(int id) throws SQLException {
-        return crudLogic.deleteUser(id);
+        int affectedRows = crudLogic.deleteUser(id);
+        loadAllUsers();
+        return affectedRows;
+    }
+
+    @Override
+    public void loadAllUsers() {
+        try {
+            allUsers = crudLogic.getAllUsers();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    @Override
+    public ObservableList<User> getObsAllUsers() throws SQLException {
+        obsAllUsers.setAll(allUsers.values());
+        return obsAllUsers;
     }
 }

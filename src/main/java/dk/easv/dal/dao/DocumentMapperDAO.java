@@ -12,21 +12,10 @@ public class DocumentMapperDAO implements IDocumentMapperDAO {
     private final IConnectionManager cm = ConnectionManagerFactory.createConnectionManager();
     @Override
     public int addDocumentToProject(int projectID, int documentID) throws SQLException {
-        try(Connection connection = cm.getConnection()){
+        try (Connection connection = cm.getConnection()) {
             PreparedStatement ps = connection.prepareStatement("INSERT INTO dbo.project_documents (project_id, document_id) VALUES (?, ?);");
             ps.setInt(1, projectID);
             ps.setInt(2, documentID);
-
-            return ps.executeUpdate();
-        }
-    }
-
-    @Override
-    public int addProjectToCustomer(int customerId, int projectId) throws SQLException {
-        try(Connection connection = cm.getConnection()){
-            PreparedStatement ps = connection.prepareStatement("INSERT INTO dbo.project_customer (customer_id, project_id) VALUES (?, ?);");
-            ps.setInt(1, customerId);
-            ps.setInt(2, projectId);
 
             return ps.executeUpdate();
         }

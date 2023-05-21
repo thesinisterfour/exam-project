@@ -2,21 +2,18 @@ package dk.easv.gui.controllers;
 
 import dk.easv.be.Customer;
 import dk.easv.gui.controllerFactory.ControllerFactory;
+import dk.easv.gui.controllers.helpers.TableSetters;
 import dk.easv.gui.models.CustomerModel;
 import dk.easv.gui.models.interfaces.ICustomerModel;
 import dk.easv.gui.rootContoller.RootController;
-import dk.easv.helpers.AlertHelper;
 import dk.easv.helpers.UserSingleClass;
 import dk.easv.helpers.ViewType;
 import io.github.palexdev.materialfx.controls.MFXScrollPane;
-import io.github.palexdev.materialfx.controls.MFXTableColumn;
 import io.github.palexdev.materialfx.controls.MFXTableView;
 import io.github.palexdev.materialfx.controls.MFXTextField;
-import io.github.palexdev.materialfx.controls.cell.MFXTableRowCell;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -25,12 +22,11 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.Comparator;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.concurrent.ConcurrentMap;
 
-public class BusinessViewController extends RootController{
+public class CustomersViewController extends RootController{
 
     private UserSingleClass actualUser = UserSingleClass.getInstance();
     @FXML
@@ -99,36 +95,12 @@ public class BusinessViewController extends RootController{
     public void initialize(URL location, ResourceBundle resources) {
         try {
             customerModel = CustomerModel.getInstance();
-            initCustomers();
-            setUpCustomerBoard();
+//            initCustomers();
+            TableSetters.setUpCustomerTable(customersTable);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
-    }
-
-
-    private void setUpCustomerBoard() {
-        MFXTableColumn<Customer> idColumn = new MFXTableColumn<>("ID", true, Comparator.comparing(Customer::getCustomerID));
-        MFXTableColumn<Customer> nameColumn = new MFXTableColumn<>("Name", true, Comparator.comparing(Customer::getCustomerName));
-        MFXTableColumn<Customer> emailColumn = new MFXTableColumn<>("Email", true, Comparator.comparing(Customer::getCustomerEmail));
-        MFXTableColumn<Customer> addressColumn = new MFXTableColumn<>("Address", true, Comparator.comparing(Customer::getCustomerAddress));
-        MFXTableColumn<Customer> zipCodeColumn = new MFXTableColumn<>("Zip Code", true, Comparator.comparing(Customer::getZipCode));
-
-        idColumn.setRowCellFactory(customer -> new MFXTableRowCell<>(Customer::getCustomerID));
-        nameColumn.setRowCellFactory(customer -> new MFXTableRowCell<>(Customer::getCustomerName));
-        emailColumn.setRowCellFactory(customer -> new MFXTableRowCell<>(Customer::getCustomerEmail));
-        addressColumn.setRowCellFactory(customer -> new MFXTableRowCell<>(Customer::getCustomerAddress));
-        zipCodeColumn.setRowCellFactory(customer -> new MFXTableRowCell<>(Customer::getZipCode));
-
-        customersTable.getTableColumns().setAll(idColumn, nameColumn, emailColumn, addressColumn, zipCodeColumn);
-        customersTable.autosizeColumnsOnInitialization();
-        try {
-            customersTable.setItems(customerModel.getObsAllCustomers());
-        } catch (SQLException e) {
-            AlertHelper alertHelper = new AlertHelper("Data retrieval failed", Alert.AlertType.ERROR);
-            alertHelper.showAndWait();
-        }
     }
 
 

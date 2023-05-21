@@ -7,6 +7,6 @@ import javafx.concurrent.Task;
 public class LoadProjectModelTask extends Task<IProjectModel> {
     @Override
     protected IProjectModel call() throws Exception {
-        return new ProjectModel();
+        return ProjectModel.getInstance();
     }
 }

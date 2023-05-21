@@ -117,7 +117,8 @@ public class DocumentLogic implements IDocumentLogic {
         document.setHorizontalAlignment(HorizontalAlignment.CENTER);
         document.setTextAlignment(TextAlignment.CENTER);
         document.add(new Paragraph(doc.getName()).setFont(bold).setFontSize(32));
-        document.add(new Paragraph(doc.getDescription()));
+        String description = doc.getDescription();
+        document.add(new Paragraph(description == null ? "" : description).setFontSize(16));
         document.add(new Paragraph("Document created on: " + doc.getCreationDate().toString()));
         document.add(new Paragraph("PDF generated on: " + LocalDateTime.now()));
 

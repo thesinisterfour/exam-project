@@ -12,9 +12,4 @@ public class DocumentMapperModel implements IDocumentMapperModel {
     public int addDocumentToProject(int projectID, int documentID) throws SQLException {
         return mappingLogic.addDocumentToProject(projectID, documentID);
     }
-
-    @Override
-    public int addProjectToCustomer(int customerId, int projectId) throws SQLException {
-        return mappingLogic.addProjectToCustomer(customerId, projectId);
-    }
 }

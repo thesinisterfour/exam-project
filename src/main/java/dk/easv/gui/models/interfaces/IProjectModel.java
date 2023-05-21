@@ -13,5 +13,7 @@ public interface IProjectModel {
 
     ConcurrentMap<Integer, Project> getProjectsByCustomerId(int id) throws SQLException;
 
+    ConcurrentMap<Integer, Project> getProjectsByWorkerId(int id) throws SQLException;
+
     void addProject(Project project) throws SQLException;
 }

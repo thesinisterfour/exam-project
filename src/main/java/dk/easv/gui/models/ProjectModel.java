@@ -54,10 +54,20 @@ public class ProjectModel implements IProjectModel {
     }
 
     @Override
-    public void addProject(Project project) throws SQLException {
+    public ConcurrentMap<Integer, Project> getProjectsByWorkerId(int id) throws SQLException {
+        IMappingLogic projectMapper = new MappingLogic();
+        ConcurrentMap<Integer, Project> projectsByWorkerId = projectMapper.getProjectsByWorkerId(id);
+        if (projectsByWorkerId.isEmpty()) {
+            projectObservableList.clear();
+        } else {
+            projectObservableList.setAll(projectsByWorkerId.values());
+        }
+        return projectsByWorkerId;
+    }
 
+    @Override
+    public void addProject(Project project) throws SQLException {
         logic.addProject(project);
         getAllProjects();
-
     }
 }

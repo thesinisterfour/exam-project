@@ -150,4 +150,26 @@ public class ProjectDAO implements ICRUDDao<Project>, IProjectMapper {
         }
         return documents;
     }
+
+    @Override
+    public ConcurrentMap<Integer, Project> getProjectsByWorkerId(int id) throws SQLException {
+        ConcurrentMap<Integer, Project> projects = new ConcurrentHashMap<>();
+        try (Connection connection = cm.getConnection()){
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM dbo.[project] INNER JOIN projects_users pu on project.project_id = pu.project_id WHERE pu.user_id=?;");
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int dbId = rs.getInt("project_id");
+                String dbName = rs.getString("project_name");
+                Date dbStartDate = rs.getDate("project_start_date");
+                Date dbEndDate = rs.getDate("project_end_date");
+                int dbCustomerId = rs.getInt("customer_id");
+                String dbAddress = rs.getString("address");
+                int dbZipcode = rs.getInt("zipcode");
+                Project project = new Project(dbId,dbName,dbStartDate.toLocalDate(), dbEndDate.toLocalDate(), dbCustomerId, dbAddress, dbZipcode);
+                projects.put(dbId, project);
+            }
+        }
+        return projects;
+    }
 }

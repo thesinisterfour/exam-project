@@ -1,10 +1,13 @@
 package dk.easv.gui.controllers;
 
 import dk.easv.Main;
+import dk.easv.be.Project;
 import dk.easv.be.User;
 import dk.easv.gui.controllerFactory.ControllerFactory;
 import dk.easv.gui.controllers.helpers.TableSetters;
+import dk.easv.gui.models.ProjectModel;
 import dk.easv.gui.models.UserModel;
+import dk.easv.gui.models.interfaces.IProjectModel;
 import dk.easv.gui.models.interfaces.IUserModel;
 import dk.easv.gui.rootContoller.RootController;
 import dk.easv.helpers.AlertHelper;
@@ -44,12 +47,27 @@ public class WorkersViewController extends RootController {
     private HBoxController hboxController;
     @FXML
     private MFXTableView<User> workersTable;
+    @FXML
+    private MFXTableView<Project> projectsTable;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
 //            initUsers();
             TableSetters.setupUsersTable(workersTable);
+            TableSetters.setUpProjectTable(projectsTable);
+            IProjectModel projectModel = ProjectModel.getInstance();
+
+            workersTable.getSelectionModel().selectionProperty().addListener((observable, oldValue, newValue) -> {
+                if (!newValue.isEmpty()) {
+                    try {
+                        projectModel.getProjectsByWorkerId(newValue.values().stream().findFirst().get().getUserID());
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            });
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -128,5 +146,31 @@ public class WorkersViewController extends RootController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @FXML
+    private void assignProject(ActionEvent actionEvent) {
+        User selectedUser = workersTable.getSelectionModel().getSelectedValues().get(0);
+        if (selectedUser == null) {
+            AlertHelper alertHelper = new AlertHelper("Please select a user to assign a project to", Alert.AlertType.ERROR);
+            alertHelper.showAndWait();
+        } else {
+            try {
+                Stage stage = new Stage();
+                RootController controller = ControllerFactory.loadFxmlFile(ViewType.ASSIGN_PROJECT);
+                Scene scene = new Scene(controller.getView());
+                stage.setResizable(false);
+                stage.setScene(scene);
+                stage.centerOnScreen();
+                stage.show();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+    }
+
+    @FXML
+    private void deassignProject(ActionEvent actionEvent) {
     }
 }

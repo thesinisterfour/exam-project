@@ -9,4 +9,6 @@ public interface IMappingLogic {
     int addDocumentToProject(int projectID, int documentID) throws SQLException;
 
     ConcurrentMap<Integer, Project> getProjectsByCustomerId(int id) throws SQLException;
+
+    ConcurrentMap<Integer, Project> getProjectsByWorkerId(int id) throws SQLException;
 }

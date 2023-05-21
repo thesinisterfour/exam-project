@@ -48,7 +48,7 @@ public class WorkersViewController extends RootController {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
-            initUsers();
+//            initUsers();
             TableSetters.setupUsersTable(workersTable);
         } catch (SQLException e) {
             throw new RuntimeException(e);

@@ -95,7 +95,7 @@ public class CustomersViewController extends RootController{
     public void initialize(URL location, ResourceBundle resources) {
         try {
             customerModel = CustomerModel.getInstance();
-            initCustomers();
+//            initCustomers();
             TableSetters.setUpCustomerTable(customersTable);
         } catch (SQLException e) {
             throw new RuntimeException(e);

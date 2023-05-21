@@ -30,6 +30,7 @@ public class DocumentModel implements IDocumentModel {
         obsProjectDocuments = FXCollections.observableArrayList();
         obsDocuments = FXCollections.observableArrayList();
         setObsAllDocuments();
+        this.obsDocuments.setAll(obsAllDocuments);
     }
 
     public static DocumentModel getInstance() throws SQLException {
@@ -74,7 +75,7 @@ public class DocumentModel implements IDocumentModel {
     @Override
     public void setObsAllDocuments() throws SQLException {
         ConcurrentMap<Integer, Doc> allDocuments = getAllDocuments();
-        this.obsDocuments.setAll(allDocuments.values());
+        this.obsAllDocuments.setAll(allDocuments.values());
     }
 
     @Override

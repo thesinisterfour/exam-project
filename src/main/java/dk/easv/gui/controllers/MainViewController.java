@@ -287,4 +287,14 @@ public class MainViewController extends RootController {
         }
 
     }
+
+    @FXML
+    private void displayDocuments(ActionEvent actionEvent) {
+        try {
+            RootController controller = ControllerFactory.loadFxmlFile(ViewType.DOCUMENTS_VIEW);
+            mainBorderPane.setCenter(controller.getView());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

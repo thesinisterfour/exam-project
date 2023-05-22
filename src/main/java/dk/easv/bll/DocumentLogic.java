@@ -129,10 +129,9 @@ public class DocumentLogic implements IDocumentLogic {
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 ImageIO.write(bufferedImage, "png", baos);
                 com.itextpdf.layout.element.Image img = new com.itextpdf.layout.element.Image(ImageDataFactory.create(baos.toByteArray()));
-                img.setHeight(150);
-                img.setWidth(250);
-                img.setMarginLeft(137);
+                img.setWidth(document.getPdfDocument().getDefaultPageSize().getWidth() - 100);
                 img.setMarginTop(35);
+                document.setHorizontalAlignment(HorizontalAlignment.CENTER);
                 document.add(img);
             } else {
                 Color blackColor = Color.makeColor(DeviceRgb.BLACK.getColorSpace());
@@ -142,7 +141,6 @@ public class DocumentLogic implements IDocumentLogic {
         }
 
         //Logic for stamping the logo watermark on every page in the pdf
-
         String logoPath = Objects.requireNonNull(Main.class.getResource("icons/WUAV-Logo.png")).getPath();
         float logoWidth = 123;
         float logoHeight = 33;

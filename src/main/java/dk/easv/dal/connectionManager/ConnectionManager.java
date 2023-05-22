@@ -14,7 +14,7 @@ import java.util.Optional;
 import java.util.Properties;
 import java.util.concurrent.*;
 
-public class ConnectionManager implements IConnectionManager{
+public class ConnectionManager implements IConnectionManager {
     private static final String usualConfigPath = "config.cfg";
     private final SQLServerConnectionPoolDataSource ds;
 
@@ -36,7 +36,7 @@ public class ConnectionManager implements IConnectionManager{
         Properties props = new Properties();
         try (InputStream resourceStream = Main.class.getResourceAsStream(resourcePath)) {
             props.load(resourceStream);
-        } catch (NullPointerException nullPointerException){
+        } catch (NullPointerException nullPointerException) {
             showConfigNotFoundAlert(resourcePath);
         } catch (IOException e) {
             e.printStackTrace();
@@ -61,9 +61,9 @@ public class ConnectionManager implements IConnectionManager{
 
     /**
      * @return this code attempts to get a connection from a pool by taking the first available connection from the queue and returning it.
-     *  it throws a .
+     * it throws a .
      * @throws RuntimeException wrapping the InterruptedException, if there is an interruption while waiting for a connection.
-     * @throws SQLException if there's an error during the database operation.
+     * @throws SQLException     if there's an error during the database operation.
      */
     @Override
     public Connection getConnection() throws SQLException {

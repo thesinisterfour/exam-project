@@ -1,85 +1,97 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import io.github.palexdev.materialfx.controls.MFXButton?>
-<?import io.github.palexdev.materialfx.controls.MFXTableView?>
-<?import javafx.geometry.Insets?>
+<?import io.github.palexdev.materialfx.controls.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
-
-<BorderPane fx:id="mainBorderPane" prefHeight="607.0" prefWidth="908.0" stylesheets="@../css/global-style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.MainViewController">
-   <left>
-      <VBox fx:id="iconsVbox" alignment="TOP_CENTER" maxWidth="70.0" prefHeight="607.0" prefWidth="70.0" styleClass="backgroundNavBar" BorderPane.alignment="CENTER">
-         <children>
-            <MFXButton fx:id="HomeLayer" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#displayHome" prefHeight="60.0" prefWidth="78.0" styleClass="home_Button" text="Home" VBox.vgrow="NEVER">
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
-            </MFXButton>
-            <MFXButton fx:id="businessLayer" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#displayBusiness" prefHeight="60.0" styleClass="business_Button" text="Business">
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
-            </MFXButton>
-            <MFXButton fx:id="workersLayer" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#displayWorkers" prefHeight="60.0" styleClass="worker_Button" text="Workers">
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
-            </MFXButton>
-            <MFXButton fx:id="projectsButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#displayProjects" prefHeight="60.0" styleClass="projects_Button" text="Projects" />
-            <MFXButton fx:id="documentsButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#displayDocuments" prefHeight="60.0" styleClass="documents_Button" text="Documents" />
-            <VBox alignment="BOTTOM_CENTER" maxHeight="1.7976931348623157E308" prefWidth="100.0" VBox.vgrow="ALWAYS">
-               <children>
-                  <MFXButton fx:id="logoutButton" onAction="#handleLogout" prefHeight="58.0" prefWidth="70.0" styleClass="logout_Button" text="Log Out" />
-               </children>
-               <VBox.margin>
-                  <Insets bottom="10.0" />
-               </VBox.margin>
-            </VBox>
-         </children>
-      </VBox>
-   </left>
-   <center>
-      <VBox fx:id="centerVBox" alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="5.0" BorderPane.alignment="TOP_CENTER">
-         <children>
-            <VBox VBox.vgrow="ALWAYS">
-               <children>
-                  <Label fx:id="customerLabel" text="Customer" />
-                  <MFXTableView fx:id="customerTable" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS" />
-               </children>
-            </VBox>
-            <VBox VBox.vgrow="ALWAYS">
-               <children>
-                  <Label fx:id="projectLabel" text="Project" />
-                  <MFXTableView fx:id="projectTable" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS" />
-               </children>
-            </VBox>
-            <VBox VBox.vgrow="ALWAYS">
-               <children>
-                  <Label text="Documents" />
-                  <MFXTableView fx:id="documentsTable" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS" />
-               </children>
-            </VBox>
-<!--            <HBox fx:id="mainHbox" alignment="CENTER_RIGHT" nodeOrientation="LEFT_TO_RIGHT" prefHeight="30.0" prefWidth="908.0">-->
-<!--               <children>-->
-<!--                  <MFXButton fx:id="addDocument" onAction="#handleCreateDocument" styleClass="add_Button" text="add" />-->
-<!--                  <MFXButton fx:id="editDocument" onAction="#handleEditDocument" styleClass="edit_Button" text="edit">-->
-<!--                     <HBox.margin>-->
-<!--                        <Insets left="5.0" right="5.0" />-->
-<!--                     </HBox.margin>-->
-<!--                  </MFXButton>-->
-<!--                  <MFXButton fx:id="deleteDocument" onAction="#handleDelete" styleClass="delete_Button" text="delete">-->
-<!--                     <HBox.margin>-->
-<!--                        <Insets left="5.0" right="5.0" />-->
-<!--                     </HBox.margin>-->
-<!--                  </MFXButton>-->
-<!--               </children>-->
-<!--            </HBox>-->
-         </children>
-         <BorderPane.margin>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-         </BorderPane.margin>
-      </VBox>
-   </center>
+<?import javafx.scene.layout.*?>
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" fx:id="mainBorderPane" prefHeight="607.0" prefWidth="908.0"
+            stylesheets="@../css/global-style.css" xmlns="http://javafx.com/javafx/19"
+            fx:controller="dk.easv.gui.controllers.MainViewController">
+    <left>
+        <VBox fx:id="iconsVbox" alignment="TOP_CENTER" maxWidth="70.0" prefHeight="607.0" prefWidth="70.0"
+              styleClass="backgroundNavBar" BorderPane.alignment="CENTER">
+            <children>
+                <MFXButton fx:id="HomeLayer" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                           onAction="#displayHome" prefHeight="60.0" prefWidth="78.0" styleClass="home_Button"
+                           text="Home" VBox.vgrow="NEVER">
+                    <VBox.margin>
+                        <Insets/>
+                    </VBox.margin>
+                </MFXButton>
+                <MFXButton fx:id="businessLayer" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                           onAction="#displayBusiness" prefHeight="60.0" styleClass="business_Button" text="Business">
+                    <VBox.margin>
+                        <Insets/>
+                    </VBox.margin>
+                </MFXButton>
+                <MFXButton fx:id="workersLayer" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                           onAction="#displayWorkers" prefHeight="60.0" styleClass="worker_Button" text="Workers">
+                    <VBox.margin>
+                        <Insets/>
+                    </VBox.margin>
+                </MFXButton>
+                <MFXButton fx:id="projectsButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                           onAction="#displayProjects" prefHeight="60.0" styleClass="projects_Button" text="Projects"/>
+                <MFXButton fx:id="documentsButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                           onAction="#displayDocuments" prefHeight="60.0" styleClass="documents_Button"
+                           text="Documents"/>
+                <VBox alignment="BOTTOM_CENTER" maxHeight="1.7976931348623157E308" prefWidth="100.0"
+                      VBox.vgrow="ALWAYS">
+                    <children>
+                        <MFXButton fx:id="logoutButton" onAction="#handleLogout" prefHeight="58.0" prefWidth="70.0"
+                                   styleClass="logout_Button" text="Log Out"/>
+                    </children>
+                    <VBox.margin>
+                        <Insets bottom="10.0"/>
+                    </VBox.margin>
+                </VBox>
+            </children>
+        </VBox>
+    </left>
+    <center>
+        <VBox fx:id="centerVBox" alignment="TOP_CENTER" maxHeight="1.7976931348623157E308"
+              maxWidth="1.7976931348623157E308" spacing="5.0" BorderPane.alignment="TOP_CENTER">
+            <children>
+                <VBox VBox.vgrow="ALWAYS">
+                    <children>
+                        <Label fx:id="customerLabel" text="Customer"/>
+                        <MFXTableView fx:id="customerTable" maxHeight="1.7976931348623157E308"
+                                      maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS"/>
+                    </children>
+                </VBox>
+                <VBox VBox.vgrow="ALWAYS">
+                    <children>
+                        <Label fx:id="projectLabel" text="Project"/>
+                        <MFXTableView fx:id="projectTable" maxHeight="1.7976931348623157E308"
+                                      maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS"/>
+                    </children>
+                </VBox>
+                <VBox VBox.vgrow="ALWAYS">
+                    <children>
+                        <Label text="Documents"/>
+                        <MFXTableView fx:id="documentsTable" maxHeight="1.7976931348623157E308"
+                                      maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS"/>
+                    </children>
+                </VBox>
+                <!--            <HBox fx:id="mainHbox" alignment="CENTER_RIGHT" nodeOrientation="LEFT_TO_RIGHT" prefHeight="30.0" prefWidth="908.0">-->
+                <!--               <children>-->
+                <!--                  <MFXButton fx:id="addDocument" onAction="#handleCreateDocument" styleClass="add_Button" text="add" />-->
+                <!--                  <MFXButton fx:id="editDocument" onAction="#handleEditDocument" styleClass="edit_Button" text="edit">-->
+                <!--                     <HBox.margin>-->
+                <!--                        <Insets left="5.0" right="5.0" />-->
+                <!--                     </HBox.margin>-->
+                <!--                  </MFXButton>-->
+                <!--                  <MFXButton fx:id="deleteDocument" onAction="#handleDelete" styleClass="delete_Button" text="delete">-->
+                <!--                     <HBox.margin>-->
+                <!--                        <Insets left="5.0" right="5.0" />-->
+                <!--                     </HBox.margin>-->
+                <!--                  </MFXButton>-->
+                <!--               </children>-->
+                <!--            </HBox>-->
+            </children>
+            <BorderPane.margin>
+                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+            </BorderPane.margin>
+        </VBox>
+    </center>
 </BorderPane>

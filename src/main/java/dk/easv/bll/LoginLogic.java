@@ -11,7 +11,8 @@ import java.util.concurrent.Executors;
 
 public class LoginLogic implements ILoginLogic {
     ConcurrentMap<Integer, User> userMap;
-    public LoginLogic(ILoginModel loginModel){
+
+    public LoginLogic(ILoginModel loginModel) {
         ExecutorService es = Executors.newSingleThreadExecutor();
         GetAllUsersTask task = new GetAllUsersTask();
         task.valueProperty().addListener(((observable, oldValue, newValue) -> {
@@ -29,7 +30,7 @@ public class LoginLogic implements ILoginLogic {
     @Override
     public User checkForUser(String username, String password) throws SQLException {
         for (User user : userMap.values()) {
-            if (user.getUsername().equals(username) && user.getPassword().equals(password)){
+            if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
                 return user;
             }
         }

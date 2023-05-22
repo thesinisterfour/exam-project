@@ -59,8 +59,9 @@ public class DocumentLogic implements IDocumentLogic {
 
     @Override
     public void addImage(int documentId, int index, Image image) throws SQLException {
-        contentDAO.add(new Content(documentId,  index, image));
+        contentDAO.add(new Content(documentId, index, image));
     }
+
     @Override
     public void addImage(int documentId, int contentId, int index) throws SQLException {
         contentDAO.add(new Content(documentId, contentId, index));
@@ -72,7 +73,7 @@ public class DocumentLogic implements IDocumentLogic {
     }
 
     @Override
-    public Content getContent(int contentId) throws SQLException{
+    public Content getContent(int contentId) throws SQLException {
         return contentDAO.get(contentId);
     }
 
@@ -91,6 +92,7 @@ public class DocumentLogic implements IDocumentLogic {
     public ConcurrentNavigableMap<Integer, Integer> loadAllContent(int documentId) throws SQLException {
         return contentMapper.loadAllContent(documentId);
     }
+
     @Override
     public List<Doc> showOldDocuments() throws SQLException {
         LocalDateTime currentDate = LocalDateTime.now();

@@ -30,7 +30,7 @@ class CustomerTest {
 
     @Test
     void testConstructorWithCity() {
-        City city = new City(6700,"Esbjerg");
+        City city = new City(6700, "Esbjerg");
         Customer customer = new Customer(1, "John Doe", "john.doe@example.com", "123 Main St", city);
         assertEquals(6700, customer.getZipCode());
     }

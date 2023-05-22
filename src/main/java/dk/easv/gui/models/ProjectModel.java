@@ -15,7 +15,7 @@ import java.util.concurrent.ConcurrentMap;
 public class ProjectModel implements IProjectModel {
     private static ProjectModel INSTANCE;
     private final ObservableList<Project> projectObservableList;
-    private ICRUDLogic logic = new CRUDLogic();
+    private final ICRUDLogic logic = new CRUDLogic();
 
     private ProjectModel() throws SQLException {
         projectObservableList = FXCollections.observableArrayList();

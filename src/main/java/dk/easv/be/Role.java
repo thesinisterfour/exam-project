@@ -8,11 +8,11 @@ public enum Role {
 
     private final int id;
 
-    Role(int id){
+    Role(int id) {
         this.id = id;
     }
 
-    public int getId(){
+    public int getId() {
         return id;
     }
 }

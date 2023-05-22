@@ -1,8 +1,6 @@
 package dk.easv.gui.controllers;
 
-import dk.easv.be.Card;
 import dk.easv.be.Project;
-import dk.easv.gui.models.ProjectModel;
 import dk.easv.gui.rootContoller.RootController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -52,7 +50,7 @@ public class ProjectCardController extends RootController {
 
     }
 
-    public void receiveProjectData(ConcurrentMap<Integer, Project> projects){
+    public void receiveProjectData(ConcurrentMap<Integer, Project> projects) {
         this.projects = projects;
     }
 

@@ -26,16 +26,15 @@ import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.concurrent.ConcurrentMap;
 
-public class CustomersViewController extends RootController{
+public class CustomersViewController extends RootController {
 
-    private UserSingleClass actualUser = UserSingleClass.getInstance();
+    private final UserSingleClass actualUser = UserSingleClass.getInstance();
     @FXML
     private HBox customers, mainHbox;
 
 
     @FXML
     private MFXScrollPane customersScrollPane;
-
 
 
     @FXML
@@ -72,7 +71,6 @@ public class CustomersViewController extends RootController{
         customersScrollPane.setContent(hBox);
         customersScrollPane.setFitToHeight(true);
     }
-
 
 
     @FXML

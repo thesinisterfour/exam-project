@@ -16,18 +16,6 @@ import java.nio.file.Files;
 import java.util.Optional;
 
 public class Main extends Application {
-    @Override
-    public void start(Stage stage) throws IOException {
-        if (Files.exists(Config.CONFIG_PATH.getUrl())){
-            RootController controller = ControllerFactory.loadFxmlFile(ViewType.LOGIN);
-            Scene scene = new Scene(controller.getView());
-            stage.setTitle("WUAV!!!");
-            stage.setScene(scene);
-            stage.show();
-        } else {
-            showConfigNotFoundAlert();
-        }
-    }
     private static void showConfigNotFoundAlert() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");
@@ -46,11 +34,23 @@ public class Main extends Application {
             System.exit(1);
         }
     }
+
     public static void main(String[] args) {
         launch();
     }
 
-
+    @Override
+    public void start(Stage stage) throws IOException {
+        if (Files.exists(Config.CONFIG_PATH.getUrl())) {
+            RootController controller = ControllerFactory.loadFxmlFile(ViewType.LOGIN);
+            Scene scene = new Scene(controller.getView());
+            stage.setTitle("WUAV!!!");
+            stage.setScene(scene);
+            stage.show();
+        } else {
+            showConfigNotFoundAlert();
+        }
+    }
 
     @Override
     public void stop() {

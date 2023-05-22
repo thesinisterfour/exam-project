@@ -43,7 +43,7 @@ public class LoginController extends RootController {
     private MFXTextField password;
     private Stage stage;
 
-    private UserSingleClass newUser = UserSingleClass.getInstance();
+    private final UserSingleClass newUser = UserSingleClass.getInstance();
     @FXML
     private MFXButton loginButton;
     @FXML

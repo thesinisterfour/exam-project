@@ -9,7 +9,6 @@ import dk.easv.dal.interafaces.IProjectMapper;
 
 import java.sql.*;
 import java.time.LocalDate;
-
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -18,7 +17,7 @@ public class ProjectDAO implements ICRUDDao<Project>, IProjectMapper {
 
     @Override
     public int add(Project object) throws SQLException {
-        try(Connection connection = cm.getConnection()){
+        try (Connection connection = cm.getConnection()) {
             PreparedStatement ps = connection.prepareStatement("INSERT INTO dbo.[project] (project_name, project_start_date, " +
                     "project_end_date, customer_id, address, zipcode) VALUES (?, ?, ?, ?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
 
@@ -32,7 +31,7 @@ public class ProjectDAO implements ICRUDDao<Project>, IProjectMapper {
             ps.executeUpdate();
 
             ResultSet rs = ps.getGeneratedKeys();
-            if (rs.next()){
+            if (rs.next()) {
                 return rs.getInt(1);
             }
         }
@@ -41,7 +40,7 @@ public class ProjectDAO implements ICRUDDao<Project>, IProjectMapper {
 
     @Override
     public int update(Project object) throws SQLException {
-        try(Connection connection = cm.getConnection()){
+        try (Connection connection = cm.getConnection()) {
             PreparedStatement ps = connection.prepareStatement("UPDATE dbo.[project] SET project_name=?, project_start_date=?, " +
                     "project_end_date=?, customer_id=?, address=?, zipcode=? WHERE project_id=?;");
 
@@ -59,12 +58,12 @@ public class ProjectDAO implements ICRUDDao<Project>, IProjectMapper {
 
     @Override
     public Project get(int id) throws SQLException {
-        try(Connection connection = cm.getConnection()) {
+        try (Connection connection = cm.getConnection()) {
             PreparedStatement ps = connection.prepareStatement("SELECT * FROM dbo.[project] WHERE project_id=?;");
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
 
-            if (rs.next()){
+            if (rs.next()) {
                 return new Project(rs.getInt("project_id"), rs.getString("project_name"), rs.getDate("project_start_date").toLocalDate(),
                         rs.getDate("project_end_date").toLocalDate(), rs.getInt("customer_id"), rs.getString("address"), rs.getInt("zipcode"));
             }
@@ -99,7 +98,7 @@ public class ProjectDAO implements ICRUDDao<Project>, IProjectMapper {
 
     @Override
     public int delete(int id) throws SQLException {
-        try(Connection connection = cm.getConnection()){
+        try (Connection connection = cm.getConnection()) {
             PreparedStatement ps = connection.prepareStatement("DELETE FROM dbo.[project] WHERE project_id=?;");
             ps.setInt(1, id);
 
@@ -111,7 +110,7 @@ public class ProjectDAO implements ICRUDDao<Project>, IProjectMapper {
     @Override
     public ConcurrentMap<Integer, Project> getProjectsByCustomerId(int id) throws SQLException {
         ConcurrentMap<Integer, Project> projects = new ConcurrentHashMap<>();
-        try (Connection connection = cm.getConnection()){
+        try (Connection connection = cm.getConnection()) {
             PreparedStatement ps = connection.prepareStatement("SELECT * FROM dbo.[project] WHERE customer_id=?;");
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
@@ -123,7 +122,7 @@ public class ProjectDAO implements ICRUDDao<Project>, IProjectMapper {
                 int dbCustomerId = rs.getInt("customer_id");
                 String dbAddress = rs.getString("address");
                 int dbZipcode = rs.getInt("zipcode");
-                Project project = new Project(dbId,dbName,dbStartDate.toLocalDate(), dbEndDate.toLocalDate(), dbCustomerId, dbAddress, dbZipcode);
+                Project project = new Project(dbId, dbName, dbStartDate.toLocalDate(), dbEndDate.toLocalDate(), dbCustomerId, dbAddress, dbZipcode);
                 projects.put(dbId, project);
             }
         }
@@ -133,7 +132,7 @@ public class ProjectDAO implements ICRUDDao<Project>, IProjectMapper {
     @Override
     public ConcurrentMap<Integer, Doc> getDocumentsByProjectId(int id) throws SQLException {
         ConcurrentMap<Integer, Doc> documents = new ConcurrentHashMap<>();
-        try (Connection connection = cm.getConnection()){
+        try (Connection connection = cm.getConnection()) {
             PreparedStatement ps = connection.prepareStatement("SELECT * FROM dbo.documents INNER JOIN project_documents pd on documents.document_id = pd.document_id WHERE pd.project_id=?;");
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
@@ -143,7 +142,7 @@ public class ProjectDAO implements ICRUDDao<Project>, IProjectMapper {
                 Date dateCreated = rs.getDate("date_created");
                 Date dateEdited = rs.getDate("date_last_opened");
                 String description = rs.getString("description");
-                Doc document = new Doc(dbId,dbName,dateCreated.toLocalDate(), dateEdited == null ? null : dateEdited.toLocalDate(), description);
+                Doc document = new Doc(dbId, dbName, dateCreated.toLocalDate(), dateEdited == null ? null : dateEdited.toLocalDate(), description);
                 documents.put(dbId, document);
 
             }
@@ -154,7 +153,7 @@ public class ProjectDAO implements ICRUDDao<Project>, IProjectMapper {
     @Override
     public ConcurrentMap<Integer, Project> getProjectsByWorkerId(int id) throws SQLException {
         ConcurrentMap<Integer, Project> projects = new ConcurrentHashMap<>();
-        try (Connection connection = cm.getConnection()){
+        try (Connection connection = cm.getConnection()) {
             PreparedStatement ps = connection.prepareStatement("SELECT * FROM dbo.[project] INNER JOIN projects_users pu on project.project_id = pu.project_id WHERE pu.user_id=?;");
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
@@ -166,7 +165,7 @@ public class ProjectDAO implements ICRUDDao<Project>, IProjectMapper {
                 int dbCustomerId = rs.getInt("customer_id");
                 String dbAddress = rs.getString("address");
                 int dbZipcode = rs.getInt("zipcode");
-                Project project = new Project(dbId,dbName,dbStartDate.toLocalDate(), dbEndDate.toLocalDate(), dbCustomerId, dbAddress, dbZipcode);
+                Project project = new Project(dbId, dbName, dbStartDate.toLocalDate(), dbEndDate.toLocalDate(), dbCustomerId, dbAddress, dbZipcode);
                 projects.put(dbId, project);
             }
         }
@@ -175,7 +174,7 @@ public class ProjectDAO implements ICRUDDao<Project>, IProjectMapper {
 
     @Override
     public int addUserToProject(int projectId, int userId) throws SQLException {
-        try (Connection con = cm.getConnection()){
+        try (Connection con = cm.getConnection()) {
             PreparedStatement ps = con.prepareStatement("INSERT INTO dbo.projects_users (project_id, user_id) VALUES (?,?);");
             ps.setInt(1, projectId);
             ps.setInt(2, userId);
@@ -185,7 +184,7 @@ public class ProjectDAO implements ICRUDDao<Project>, IProjectMapper {
 
     @Override
     public int deassignProject(int projectId, int userId) throws SQLException {
-        try (Connection con = cm.getConnection()){
+        try (Connection con = cm.getConnection()) {
             PreparedStatement ps = con.prepareStatement("DELETE FROM dbo.projects_users WHERE project_id=? AND user_id=?;");
             ps.setInt(1, projectId);
             ps.setInt(2, userId);

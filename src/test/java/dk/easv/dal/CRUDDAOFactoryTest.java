@@ -53,7 +53,7 @@ class CRUDDAOFactoryTest {
 
     @DisplayName("Test if getDao returns null")
     @Test
-    void getDaoNull(){
+    void getDaoNull() {
         assertThrows(NullPointerException.class, () -> CRUDDAOFactory.getDao(null));
     }
 }

@@ -10,6 +10,7 @@ import java.sql.SQLException;
 
 public class DocumentMapperDAO implements IDocumentMapperDAO {
     private final IConnectionManager cm = ConnectionManagerFactory.createConnectionManager();
+
     @Override
     public int addDocumentToProject(int projectID, int documentID) throws SQLException {
         try (Connection connection = cm.getConnection()) {

@@ -1,8 +1,8 @@
 package dk.easv.gui.models;
 
 import dk.easv.be.User;
-import dk.easv.bll.ICRUDLogic;
 import dk.easv.bll.CRUDLogic;
+import dk.easv.bll.ICRUDLogic;
 import dk.easv.gui.models.interfaces.IUserModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,7 +15,7 @@ public class UserModel implements IUserModel {
     private static UserModel instance;
     private final ICRUDLogic crudLogic = new CRUDLogic();
 
-    private ObservableList<User> obsAllUsers;
+    private final ObservableList<User> obsAllUsers;
     private ConcurrentMap<Integer, User> allUsers;
 
     private UserModel() {
@@ -69,6 +69,7 @@ public class UserModel implements IUserModel {
             e.printStackTrace();
         }
     }
+
     @Override
     public ObservableList<User> getObsAllUsers() throws SQLException {
         obsAllUsers.setAll(allUsers.values());

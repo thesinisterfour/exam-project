@@ -13,25 +13,22 @@ import java.util.concurrent.ConcurrentMap;
 public class CustomerModel implements ICustomerModel {
 
     private static CustomerModel INSTANCE;
-    private ConcurrentMap<Integer, Customer> allCustomers;
-
     private final ICRUDLogic crudLogic = new CRUDLogic();
-
-
     /**
      * @returns a ConcurrentMap of Customer objects. The method retrieves the customers using an object of crudLogic class.
      * @throws SQLException
      */
     private final ObservableList<Customer> obsAllCustomers;
+    private ConcurrentMap<Integer, Customer> allCustomers;
 
     private CustomerModel() throws SQLException {
-        obsAllCustomers= FXCollections.observableArrayList();
+        obsAllCustomers = FXCollections.observableArrayList();
         loadAllCustomers();
         setObsAllCustomers();
     }
 
     public static CustomerModel getInstance() throws SQLException {
-        if (INSTANCE == null){
+        if (INSTANCE == null) {
             INSTANCE = new CustomerModel();
         }
         return INSTANCE;

@@ -34,11 +34,11 @@ public class RoleDAO implements ICRUDDao<Role> {
     @Override
     public ConcurrentMap<Integer, Role> getAll() throws SQLException {
         ConcurrentMap<Integer, Role> rolesMap = new ConcurrentHashMap<>();
-        try(Connection connection = cm.getConnection()){
+        try (Connection connection = cm.getConnection()) {
             PreparedStatement ps = connection.prepareStatement("SELECT  * FROM users_role");
             ResultSet rs = ps.executeQuery();
 
-            while (rs.next()){
+            while (rs.next()) {
                 int roleId = rs.getInt("role_id");
                 String roleName = rs.getString("role_name");
                 Role role = Role.valueOf(roleName);

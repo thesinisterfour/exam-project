@@ -15,11 +15,11 @@ public class DocumentDAO implements ICRUDDao<Doc> {
 
     @Override
     public int add(Doc document) throws SQLException {
-        try (Connection con = cm.getConnection()){
+        try (Connection con = cm.getConnection()) {
             PreparedStatement ps = con.prepareStatement("Insert Into documents (document_name, date_created, date_last_opened, description) OUTPUT inserted.document_id VALUES (?, CURRENT_TIMESTAMP, ?, ?)");
             ps.setString(1, document.getName());
 
-            if (document.getLastView() == null){
+            if (document.getLastView() == null) {
                 ps.setDate(2, null);
             } else {
                 ps.setDate(2, Date.valueOf(document.getLastView()));
@@ -34,7 +34,7 @@ public class DocumentDAO implements ICRUDDao<Doc> {
 
     @Override
     public int update(Doc document) throws SQLException {
-        try (Connection con = cm.getConnection()){
+        try (Connection con = cm.getConnection()) {
             PreparedStatement ps = con.prepareStatement("UPDATE documents SET document_name = ?, date_created = ?, date_last_opened = ?, description = ? WHERE document_id = ?");
             ps.setString(1, document.getName());
             ps.setDate(2, Date.valueOf(document.getCreationDate()));
@@ -48,12 +48,12 @@ public class DocumentDAO implements ICRUDDao<Doc> {
 
     @Override
     public Doc get(int id) throws SQLException {
-        try (Connection con = cm.getConnection()){
+        try (Connection con = cm.getConnection()) {
             PreparedStatement ps = con.prepareStatement("SELECT document_id, document_name, date_created, date_last_opened, description FROM documents WHERE document_id = ?");
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
 
-            if(rs.next()){
+            if (rs.next()) {
                 int documentID = rs.getInt("document_id");
                 String documentName = rs.getString("document_name");
                 LocalDate dateCreated = rs.getDate("date_created").toLocalDate();
@@ -71,7 +71,7 @@ public class DocumentDAO implements ICRUDDao<Doc> {
     @Override
     public ConcurrentMap<Integer, Doc> getAll() throws SQLException {
         ConcurrentMap<Integer, Doc> map = new ConcurrentHashMap<>();
-        try (Connection con = cm.getConnection()){
+        try (Connection con = cm.getConnection()) {
             PreparedStatement ps = con.prepareStatement("SELECT document_id, document_name, date_created, date_last_opened, description FROM documents");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -90,7 +90,7 @@ public class DocumentDAO implements ICRUDDao<Doc> {
 
     @Override
     public int delete(int id) throws SQLException {
-        try (Connection con = cm.getConnection()){
+        try (Connection con = cm.getConnection()) {
             PreparedStatement ps = con.prepareStatement("DELETE FROM documents WHERE document_id = ?");
             ps.setInt(1, id);
             return ps.executeUpdate();

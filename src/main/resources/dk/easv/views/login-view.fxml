@@ -5,34 +5,40 @@
 <?import io.github.palexdev.materialfx.controls.MFXTextField?>
 <?import javafx.scene.Group?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.VBox?>
-
-<GridPane alignment="CENTER" prefHeight="600.0" prefWidth="900.0" styleClass="mainBack" stylesheets="@../css/global-style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.LoginController">
-   <columnConstraints>
-      <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" />
-   </columnConstraints>
-   <rowConstraints>
-      <RowConstraints maxHeight="546.3999755859375" minHeight="10.0" prefHeight="532.0000122070312" valignment="CENTER" vgrow="SOMETIMES" />
-   </rowConstraints>
-   <children>
-      <Group>
-         <children>
-            <VBox  alignment="CENTER" layoutX="20.0" layoutY="5.0" prefHeight="302.0" prefWidth="411.0" spacing="20.0">
-               <children>
-                  <ImageView fitHeight="65.0" fitWidth="188.0" pickOnBounds="true" preserveRatio="true" styleClass="wuav_logo" />
-                  <VBox fx:id="textfieldsVbox" alignment="CENTER" spacing="8.0">
-                     <children>
-                        <MFXTextField fx:id="username" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="250.0" promptText="Username" />
-                        <MFXPasswordField fx:id="password" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="250.0" promptText="Password" />
-                     </children>
-                  </VBox>
-                  <MFXButton fx:id="loginButton" defaultButton="true" onAction="#loginButtonAction" opacity="0.75" prefHeight="30.0" prefWidth="111.0" text="Login" />
-               </children>
-            </VBox>
-         </children>
-      </Group>
-   </children>
+<?import javafx.scene.layout.*?>
+<GridPane xmlns:fx="http://javafx.com/fxml/1" alignment="CENTER" prefHeight="600.0" prefWidth="900.0"
+          styleClass="mainBack" stylesheets="@../css/global-style.css" xmlns="http://javafx.com/javafx/19"
+          fx:controller="dk.easv.gui.controllers.LoginController">
+    <columnConstraints>
+        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0"/>
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints maxHeight="546.3999755859375" minHeight="10.0" prefHeight="532.0000122070312"
+                        valignment="CENTER" vgrow="SOMETIMES"/>
+    </rowConstraints>
+    <children>
+        <Group>
+            <children>
+                <VBox alignment="CENTER" layoutX="20.0" layoutY="5.0" prefHeight="302.0" prefWidth="411.0"
+                      spacing="20.0">
+                    <children>
+                        <ImageView fitHeight="65.0" fitWidth="188.0" pickOnBounds="true" preserveRatio="true"
+                                   styleClass="wuav_logo"/>
+                        <VBox fx:id="textfieldsVbox" alignment="CENTER" spacing="8.0">
+                            <children>
+                                <MFXTextField fx:id="username" maxHeight="-Infinity" maxWidth="-Infinity"
+                                              minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0"
+                                              prefWidth="250.0" promptText="Username"/>
+                                <MFXPasswordField fx:id="password" maxHeight="-Infinity" maxWidth="-Infinity"
+                                                  minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0"
+                                                  prefWidth="250.0" promptText="Password"/>
+                            </children>
+                        </VBox>
+                        <MFXButton fx:id="loginButton" defaultButton="true" onAction="#loginButtonAction" opacity="0.75"
+                                   prefHeight="30.0" prefWidth="111.0" text="Login"/>
+                    </children>
+                </VBox>
+            </children>
+        </Group>
+    </children>
 </GridPane>

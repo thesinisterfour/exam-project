@@ -10,14 +10,14 @@ public class Doc {
     private LocalDate lastView;
     private String description;
 
-    public Doc(int id, String name, LocalDate creationDate, String description){
+    public Doc(int id, String name, LocalDate creationDate, String description) {
         this.id = id;
         this.name = name;
         this.creationDate = creationDate;
         this.description = description;
     }
 
-    public Doc(int id, String name, LocalDate creationDate, LocalDate lastView, String description){
+    public Doc(int id, String name, LocalDate creationDate, LocalDate lastView, String description) {
         this.id = id;
         this.name = name;
         this.creationDate = creationDate;
@@ -29,7 +29,8 @@ public class Doc {
         this.name = name;
         this.creationDate = creationDate;
     }
-    public Doc(String name, LocalDate creationDate, String description){
+
+    public Doc(String name, LocalDate creationDate, String description) {
         this.name = name;
         this.creationDate = creationDate;
         this.description = description;

@@ -8,8 +8,9 @@ import dk.easv.gui.models.interfaces.IRoleModel;
 import java.sql.SQLException;
 import java.util.concurrent.ConcurrentMap;
 
-public class RoleModel  implements IRoleModel {
+public class RoleModel implements IRoleModel {
     private final ICRUDLogic crudLogic = new CRUDLogic();
+
     @Override
     public ConcurrentMap<Integer, Role> getAllRoles() throws SQLException {
         return crudLogic.getAllRoles();

@@ -34,12 +34,12 @@ public class Content {
         this.index = index;
     }
 
-    public Content(int id, Image image){
+    public Content(int id, Image image) {
         this.id = id;
         this.image = image;
     }
 
-    public Content(int id, String text){
+    public Content(int id, String text) {
         this.id = id;
         this.text = text;
     }

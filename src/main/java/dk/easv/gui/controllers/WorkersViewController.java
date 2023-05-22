@@ -161,7 +161,6 @@ public class WorkersViewController extends RootController {
             stage.setUserData(selectedUser);
             RootController controller = ControllerFactory.loadFxmlFile(ViewType.ASSIGN_PROJECT);
             Scene scene = new Scene(controller.getView());
-            stage.setResizable(false);
             stage.setScene(scene);
             stage.centerOnScreen();
             stage.show();

@@ -13,16 +13,31 @@ import java.util.List;
 import java.util.concurrent.ConcurrentMap;
 
 public class DocumentModel implements IDocumentModel {
+    private static DocumentModel INSTANCE;
     private final ICRUDLogic bll = new CRUDLogic();
     private final ObservableList<Doc> obsAllDocuments;
     private final ObservableList<Doc> obsProjectDocuments;
     private final ObservableList<Doc> obsDocuments;
 
-    public DocumentModel() throws SQLException {
+    /**
+     *  This is a constructor that initializes an empty ObservableList named
+     *  obsAllDocuments and calls a method named setObsAllDocuments()
+     *  to populate the list with data from the database.
+     * @throws SQLException
+     */
+    private DocumentModel() throws SQLException {
         obsAllDocuments = FXCollections.observableArrayList();
         obsProjectDocuments = FXCollections.observableArrayList();
         obsDocuments = FXCollections.observableArrayList();
         setObsAllDocuments();
+        this.obsDocuments.setAll(obsAllDocuments);
+    }
+
+    public static DocumentModel getInstance() throws SQLException {
+        if (INSTANCE == null){
+            INSTANCE = new DocumentModel();
+        }
+        return INSTANCE;
     }
 
     @Override
@@ -60,7 +75,7 @@ public class DocumentModel implements IDocumentModel {
     @Override
     public void setObsAllDocuments() throws SQLException {
         ConcurrentMap<Integer, Doc> allDocuments = getAllDocuments();
-        this.obsDocuments.setAll(allDocuments.values());
+        this.obsAllDocuments.setAll(allDocuments.values());
     }
 
     @Override

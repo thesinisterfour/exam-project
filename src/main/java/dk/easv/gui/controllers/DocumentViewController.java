@@ -30,9 +30,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.apache.commons.io.FilenameUtils;
@@ -65,6 +63,8 @@ public class DocumentViewController extends RootController {
     @FXML
     private HBox centeringHBox;
     private Pane scaleReferencePane;
+    @FXML
+    private GridPane rootGrid;
 
     /**
      * This function initializes the URL and ResourceBundle and populates the content if the document
@@ -236,8 +236,9 @@ public class DocumentViewController extends RootController {
     private void cancelOnAction(ActionEvent actionEvent) {
         model.setDocumentId(0);
         try {
-            RootController rootController = ControllerFactory.loadFxmlFile(ViewType.MAIN);
-            this.getStage().setScene(new Scene(rootController.getView()));
+            RootController rootController = ControllerFactory.loadFxmlFile(ViewType.DOCUMENTS_VIEW);
+            BorderPane borderPane = (BorderPane) rootGrid.getParent();
+            borderPane.setCenter(rootController.getView());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -249,7 +250,7 @@ public class DocumentViewController extends RootController {
      * the type of content retrieved.
      */
     private void populateContent() {
-
+        //TODO: refactoring on this
         ObservableList<Node> children = vbox.getChildren();
         children.add(new ImageView(Objects.requireNonNull(Main.class.getResource("icons/loading.gif")).toString()));
 

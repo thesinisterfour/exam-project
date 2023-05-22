@@ -32,7 +32,7 @@ public class UserDAO implements ICRUDDao<User> {
             ps.setString(4, object.getUsername());
             ps.setString(5, object.getPassword());
 
-            ps.executeQuery();
+            ps.executeUpdate();
         }
         return 0;
     }
@@ -44,8 +44,8 @@ public class UserDAO implements ICRUDDao<User> {
         }
 
         try(Connection connection = cm.getConnection()){
-            PreparedStatement ps = connection.prepareStatement("UPDATE dbo.[users] SET first_name=?, last_name=?, " +
-                    "role_id = (SELECT role_id FROM users_role WHERE role_name = ?), username=?, password=? WHERE user_id=?;");
+            PreparedStatement ps = connection.prepareStatement("UPDATE dbo.[users] SET first_name=?, last_name=?," +
+                    " role_id=(SELECT role_id FROM users_role WHERE role_name=?), username=?, password=? WHERE user_id=?");
 
             ps.setString(1, object.getFirstName());
             ps.setString(2, object.getLastName());
@@ -54,7 +54,7 @@ public class UserDAO implements ICRUDDao<User> {
             ps.setString(5, object.getPassword());
             ps.setInt(6, object.getUserID());
 
-            ps.executeQuery();
+            ps.executeUpdate();
         }
         return 0;
     }
@@ -113,7 +113,7 @@ public class UserDAO implements ICRUDDao<User> {
             PreparedStatement ps = connection.prepareStatement("DELETE FROM dbo.[users] WHERE user_id=?;");
             ps.setInt(1, id);
 
-            ps.executeQuery();
+            ps.executeUpdate();
         }
 
         return 0;

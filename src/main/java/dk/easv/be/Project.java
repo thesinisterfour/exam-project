@@ -28,6 +28,16 @@ public class Project {
         this.projectAddress = projectAddress;
         this.projectZipcode = projectZipcode;
     }
+
+    public Project( String projectName, LocalDate startDate, LocalDate endDate, int customerID, String projectAddress, int projectZipcode){
+        this.projectName = projectName;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.customerID = customerID;
+        this.projectAddress = projectAddress;
+        this.projectZipcode = projectZipcode;
+    }
+
     public int getProjectID(){
         return projectID;
     }

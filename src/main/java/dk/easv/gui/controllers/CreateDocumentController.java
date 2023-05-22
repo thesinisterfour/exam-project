@@ -41,7 +41,7 @@ public class CreateDocumentController extends RootController {
     @FXML
     private void createOnAction(ActionEvent actionEvent) {
         try {
-            final IDocumentModel model = new DocumentModel();
+            final IDocumentModel model = DocumentModel.getInstance();
             final IDocumentMapperModel mapperModel = new DocumentMapperModel();
             boolean emptyField = false;
             Customer selectedCustomer = customerComboBox.getSelectionModel().getSelectedItem();
@@ -82,10 +82,9 @@ public class CreateDocumentController extends RootController {
     @FXML
     private void cancelOnAction(ActionEvent actionEvent) {
         try {
-            RootController rootController = ControllerFactory.loadFxmlFile(ViewType.MAIN);
+            RootController rootController = ControllerFactory.loadFxmlFile(ViewType.DOCUMENTS_VIEW);
             BorderPane borderPane = (BorderPane) rootGrid.getParent();
-            BorderPane rootBorderPane = (BorderPane) rootController.getView();
-            borderPane.setCenter(rootBorderPane.getCenter());
+            borderPane.setCenter(rootController.getView());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -94,8 +93,8 @@ public class CreateDocumentController extends RootController {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
-            ICustomerModel customerModel = new CustomerModel();
-            IProjectModel projectModel = new ProjectModel();
+            ICustomerModel customerModel = CustomerModel.getInstance();
+            IProjectModel projectModel = ProjectModel.getInstance();
             customerComboBox.setItems(customerModel.getObsAllCustomers());
             customerComboBox.selectedItemProperty().addListener((observable, oldValue, newValue) -> {
                 try {

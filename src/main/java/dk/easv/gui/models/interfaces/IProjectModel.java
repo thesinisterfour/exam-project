@@ -12,4 +12,12 @@ public interface IProjectModel {
     ObservableList<Project> getProjectObservableList();
 
     ConcurrentMap<Integer, Project> getProjectsByCustomerId(int id) throws SQLException;
+
+    ConcurrentMap<Integer, Project> getProjectsByWorkerId(int id) throws SQLException;
+
+    int addUserToProject(int projectId, int userId) throws SQLException;
+
+    void addProject(Project project) throws SQLException;
+
+    int deassignProject(int userID, int projectID) throws SQLException;
 }

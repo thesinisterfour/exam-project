@@ -3,17 +3,14 @@ package dk.easv.gui.controllers;
 import dk.easv.be.Card;
 import dk.easv.be.Customer;
 import dk.easv.be.User;
-import dk.easv.gui.models.CustomerModel;
-import dk.easv.gui.models.interfaces.IUserModel;
 import dk.easv.gui.models.UserModel;
-import dk.easv.gui.models.interfaces.ICustomerModel;
+import dk.easv.gui.models.interfaces.IUserModel;
 import dk.easv.gui.rootContoller.RootController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -37,22 +34,16 @@ public class CardController extends RootController {
     @FXML
     private GridPane gridLoyal;
 
-    private final IUserModel userModel = new UserModel();
-
-    private final ICustomerModel customerModel = new CustomerModel();
+    private final IUserModel userModel = UserModel.getInstance();
 
     private ConcurrentMap<Integer, User> users = new ConcurrentHashMap<>();
 
     private ConcurrentMap<Integer, Customer> customers = new ConcurrentHashMap<>();
 
-    public CardController() throws SQLException {
-    }
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
     }
-
 
 
     public void receiveUserData(ConcurrentMap<Integer, User> users) {
@@ -63,6 +54,7 @@ public class CardController extends RootController {
         this.customers = customers;
     }
 
+
     public void createCards(Card card){
         this.card = card;
         if(card.getCustomerZipCode() != null){
@@ -70,7 +62,7 @@ public class CardController extends RootController {
             userAddress.setText(card.getCustomerAddress());
             userZipcode.setText(card.getCustomerZipCode());
             userEmail.setText(card.getCustomerEmail());
-            gridLoyal.setStyle(gridLoyal.getStyle() + "-fx-background-color : red;");
+            gridLoyal.setStyle(gridLoyal.getStyle());
 
         }
         if(card.getUserRole() != null){
@@ -78,7 +70,7 @@ public class CardController extends RootController {
             userEmail.setText(card.getUserName());
             userAddress.setText("");
             userZipcode.setText("");
-            gridLoyal.setStyle(gridLoyal.getStyle() + "-fx-background-color : red;");
+            gridLoyal.setStyle(gridLoyal.getStyle());
         }
     }
 }

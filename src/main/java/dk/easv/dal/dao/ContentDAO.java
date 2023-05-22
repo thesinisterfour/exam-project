@@ -25,13 +25,13 @@ public class ContentDAO implements ICRUDDao<Content>, IContentMapperDAO {
     @Override
     public int add(Content content) throws SQLException {
         if (content.getImage() != null) {
-            if (content.getId() != 0){
+            if (content.getId() != 0) {
                 return addImage(content.getDocumentId(), content.getId(), content.getIndex());
             } else {
                 return addImage(content.getDocumentId(), content.getIndex(), content.getImage());
             }
         } else {
-            if (content.getId() != 0){
+            if (content.getId() != 0) {
                 return addText(content.getDocumentId(), content.getId(), content.getIndex(), content.getText());
             } else {
                 return addText(content.getDocumentId(), content.getIndex(), content.getText());
@@ -51,11 +51,11 @@ public class ContentDAO implements ICRUDDao<Content>, IContentMapperDAO {
 
     @Override
     public ConcurrentMap<Integer, Content> getAll() throws SQLException {
-        try (Connection con = cm.getConnection()){
+        try (Connection con = cm.getConnection()) {
             PreparedStatement ps = con.prepareStatement("SELECT * FROM contents");
             ResultSet rs = ps.executeQuery();
             ConcurrentMap<Integer, Content> map = new ConcurrentHashMap<>();
-            while (rs.next()){
+            while (rs.next()) {
                 int contentId = rs.getInt("id");
                 if (rs.getString("text") != null) {
                     map.put(contentId, new Content(contentId, rs.getString("text")));
@@ -69,7 +69,7 @@ public class ContentDAO implements ICRUDDao<Content>, IContentMapperDAO {
 
     @Override
     public int delete(int id) throws SQLException {
-        try (Connection con = cm.getConnection()){
+        try (Connection con = cm.getConnection()) {
             PreparedStatement ps = con.prepareStatement("DELETE FROM document_contents WHERE content_id = ?");
             ps.setInt(1, id);
             return ps.executeUpdate();
@@ -183,7 +183,7 @@ public class ContentDAO implements ICRUDDao<Content>, IContentMapperDAO {
 
 
     @Override
-    public void deleteMapping(int documentId, int id) throws SQLException{
+    public void deleteMapping(int documentId, int id) throws SQLException {
         try (Connection con = cm.getConnection()) {
             PreparedStatement ps = con.prepareStatement("DELETE FROM document_contents WHERE content_id = ? AND document_id = ?");
             ps.setInt(1, id);

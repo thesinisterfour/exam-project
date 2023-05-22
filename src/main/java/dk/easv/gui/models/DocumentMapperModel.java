@@ -8,6 +8,7 @@ import java.sql.SQLException;
 
 public class DocumentMapperModel implements IDocumentMapperModel {
     private final IMappingLogic mappingLogic = new MappingLogic();
+
     @Override
     public int addDocumentToProject(int projectID, int documentID) throws SQLException {
         return mappingLogic.addDocumentToProject(projectID, documentID);

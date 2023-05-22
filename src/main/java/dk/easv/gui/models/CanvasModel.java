@@ -10,17 +10,17 @@ public class CanvasModel implements ICanvasModel {
 
     private static CanvasModel INSTANCE;
 
-    private CanvasLogic canvasLogic = new CanvasLogic();
-
-    @Override
-    public void generateImage(File file, Canvas canvas) {
-        canvasLogic.generateImage(file, canvas);
-    }
+    private final CanvasLogic canvasLogic = new CanvasLogic();
 
     public static CanvasModel getInstance() {
         if (CanvasModel.INSTANCE == null) {
             CanvasModel.INSTANCE = new CanvasModel();
         }
         return CanvasModel.INSTANCE;
+    }
+
+    @Override
+    public void generateImage(File file, Canvas canvas) {
+        canvasLogic.generateImage(file, canvas);
     }
 }

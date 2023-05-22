@@ -1,11 +1,11 @@
-GridPane, VBox{
+GridPane, VBox {
     -fx-background-color: darkgray;
 }
 
-.background-worker{
+.background-worker {
     -fx-border-color: black;
 }
 
-ImageView{
+ImageView {
     -fx-image: url('../icons/testPerson.jpg');
 }

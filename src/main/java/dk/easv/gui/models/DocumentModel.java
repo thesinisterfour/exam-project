@@ -20,9 +20,10 @@ public class DocumentModel implements IDocumentModel {
     private final ObservableList<Doc> obsDocuments;
 
     /**
-     *  This is a constructor that initializes an empty ObservableList named
-     *  obsAllDocuments and calls a method named setObsAllDocuments()
-     *  to populate the list with data from the database.
+     * This is a constructor that initializes an empty ObservableList named
+     * obsAllDocuments and calls a method named setObsAllDocuments()
+     * to populate the list with data from the database.
+     *
      * @throws SQLException
      */
     private DocumentModel() throws SQLException {
@@ -34,7 +35,7 @@ public class DocumentModel implements IDocumentModel {
     }
 
     public static DocumentModel getInstance() throws SQLException {
-        if (INSTANCE == null){
+        if (INSTANCE == null) {
             INSTANCE = new DocumentModel();
         }
         return INSTANCE;

@@ -14,9 +14,9 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class AssignProjectViewController extends RootController {
+    IProjectModel projectModel;
     @FXML
     private MFXFilterComboBox<Project> projectsComboBox;
-    IProjectModel projectModel;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

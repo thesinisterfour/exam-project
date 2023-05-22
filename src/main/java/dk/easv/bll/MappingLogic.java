@@ -9,7 +9,7 @@ import dk.easv.dal.interafaces.IProjectMapper;
 import java.sql.SQLException;
 import java.util.concurrent.ConcurrentMap;
 
-public class MappingLogic implements IMappingLogic{
+public class MappingLogic implements IMappingLogic {
     private final IDocumentMapperDAO documentMapperDAO = new DocumentMapperDAO();
 
     @Override

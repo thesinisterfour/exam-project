@@ -7,12 +7,12 @@ import java.time.LocalDate;
 
 public class ProjectTest {
     @Test
-    public void testConstructor(){
-        Project project = new Project(1, "Project1", LocalDate.of(2022, 1,1), LocalDate.of(2022, 1,1), 1234, "Address1", 1234);
+    public void testConstructor() {
+        Project project = new Project(1, "Project1", LocalDate.of(2022, 1, 1), LocalDate.of(2022, 1, 1), 1234, "Address1", 1234);
         Assertions.assertEquals(1, project.getProjectID());
         Assertions.assertEquals("Project1", project.getProjectName());
-        Assertions.assertEquals(LocalDate.of(2022, 1,1), project.getStartDate());
-        Assertions.assertEquals(LocalDate.of(2022, 1,1), project.getEndDate());
+        Assertions.assertEquals(LocalDate.of(2022, 1, 1), project.getStartDate());
+        Assertions.assertEquals(LocalDate.of(2022, 1, 1), project.getEndDate());
         Assertions.assertEquals(1234, project.getCustomerID());
         Assertions.assertEquals("Address1", project.getProjectAddress());
         Assertions.assertEquals(1234, project.getProjectZipcode());

@@ -1,40 +1,21 @@
 package dk.easv.gui.controllers;
 
 import dk.easv.gui.models.CanvasModel;
-import dk.easv.gui.models.ContentModel;
 import dk.easv.gui.models.interfaces.ICanvasModel;
-import dk.easv.gui.models.interfaces.IContentModel;
 import dk.easv.gui.rootContoller.RootController;
-
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
-
 import io.github.palexdev.materialfx.controls.MFXButton;
-import io.github.palexdev.materialfx.utils.SwingFXUtils;
-import javafx.application.Application;
-import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
-import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 
-import javax.imageio.ImageIO;
+import java.io.File;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 public class CanvasController extends RootController {
 
@@ -66,11 +47,11 @@ public class CanvasController extends RootController {
         drawOnCanvas();
     }
 
-    private void initializePenSettings(){
+    private void initializePenSettings() {
         colorChooser.setItems(FXCollections.observableArrayList("Black", "Blue", "Red", "Green", "Brown", "Orange"));
         colorChooser.getSelectionModel().selectFirst();
         colorChooser.getSelectionModel().selectedIndexProperty().addListener((ov, old, newval) -> {
-            Number idx = (Number) newval;
+            Number idx = newval;
             Color newColor;
             switch (idx.intValue()) {
                 case 0:
@@ -101,7 +82,7 @@ public class CanvasController extends RootController {
         sizeChooser.setItems(FXCollections.observableArrayList("1", "2", "3", "4", "5"));
         sizeChooser.getSelectionModel().selectFirst();
         sizeChooser.getSelectionModel().selectedIndexProperty().addListener((ov, old, newval) -> {
-            Number idx = (Number) newval;
+            Number idx = newval;
             switch (idx.intValue()) {
                 case 0:
                     graphicsContext.setLineWidth(1);
@@ -125,7 +106,7 @@ public class CanvasController extends RootController {
         });
     }
 
-    private void drawOnCanvas(){
+    private void drawOnCanvas() {
         canvas.addEventHandler(MouseEvent.MOUSE_PRESSED, (MouseEvent event) -> {
             graphicsContext.beginPath();
             graphicsContext.moveTo(event.getX(), event.getY());
@@ -139,12 +120,12 @@ public class CanvasController extends RootController {
     }
 
     @FXML
-    private void handleCancelOnAction(){
+    private void handleCancelOnAction() {
         this.getStage().close();
     }
 
     @FXML
-    private void handleSaveOnAction(){
+    private void handleSaveOnAction() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save Canvas Image");
         fileChooser.getExtensionFilters().add(

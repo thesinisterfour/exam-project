@@ -21,11 +21,12 @@ public enum ViewType {
     CANVAS("views/Canvas.fxml");
 
     private final String path;
-    ViewType(String path){
+
+    ViewType(String path) {
         this.path = path;
     }
 
-    public String getFXMLView(){
+    public String getFXMLView() {
         return path;
     }
 }

@@ -3,8 +3,8 @@ package dk.easv.gui.controllers;
 import dk.easv.be.Customer;
 import dk.easv.gui.models.CityModel;
 import dk.easv.gui.models.CustomerModel;
-import dk.easv.gui.models.interfaces.ICustomerModel;
 import dk.easv.gui.models.interfaces.ICityModel;
+import dk.easv.gui.models.interfaces.ICustomerModel;
 import dk.easv.gui.rootContoller.RootController;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import javafx.collections.ObservableList;
@@ -20,13 +20,10 @@ import java.util.ResourceBundle;
 
 public class AddCustomerViewController extends RootController {
 
+    private final ICityModel cityModel = new CityModel();
+    private final ICustomerModel customerModel = CustomerModel.getInstance();
     @FXML
     private MFXTextField nameTextField, emailTextField, addressTextField, cityTextField, ZipCodeTextField;
-
-    private final ICityModel cityModel = new CityModel();
-
-    private final ICustomerModel customerModel = CustomerModel.getInstance();
-
     private Stage stage;
     @FXML
     private GridPane rootGrid;
@@ -54,7 +51,7 @@ public class AddCustomerViewController extends RootController {
         ObservableList<Node> nodes = this.getView().getChildrenUnmodifiable();
         boolean emptyField = false;
         for (Node node : nodes) {
-            if (node instanceof MFXTextField textField){
+            if (node instanceof MFXTextField textField) {
                 textField.setText(textField.getText().strip());
                 if (textField.getText().isEmpty()) {
                     textField.setPromptText("Fill this please");
@@ -63,7 +60,7 @@ public class AddCustomerViewController extends RootController {
                 }
             }
         }
-        if (!emptyField){
+        if (!emptyField) {
             int zipCode = Integer.parseInt(ZipCodeTextField.getText());
             try {
                 cityModel.get(zipCode);
@@ -73,7 +70,7 @@ public class AddCustomerViewController extends RootController {
                 return;
             }
             try {
-                customerModel.add(new Customer(nameTextField.getText(),emailTextField.getText(),addressTextField.getText(),zipCode));
+                customerModel.add(new Customer(nameTextField.getText(), emailTextField.getText(), addressTextField.getText(), zipCode));
             } catch (SQLException e) {
                 // catch if exception in add
                 throw new RuntimeException(e);
@@ -82,6 +79,7 @@ public class AddCustomerViewController extends RootController {
         getStage().close();
 
     }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
     }

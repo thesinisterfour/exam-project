@@ -5,6 +5,7 @@ import java.util.List;
 
 public class ConnectionManagerFactory {
     private static final List<IConnectionManager> connectionManagers = new LinkedList<>();
+
     public static IConnectionManager createConnectionManager() {
         ConnectionManager cm = new ConnectionManager();
         connectionManagers.add(cm);

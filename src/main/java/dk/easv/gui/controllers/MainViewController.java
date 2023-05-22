@@ -88,7 +88,7 @@ public class MainViewController extends RootController {
                 List<Doc> oldDocuments = documentModel.getOldDocuments();
                 if (!oldDocuments.isEmpty() && !DocumentHelper.isOldDocWarningShown()) {
                     AlertHelper alertHelper = new AlertHelper(DocumentHelper.convertToString(oldDocuments), Alert.AlertType.INFORMATION);
-                    if (alertHelper.showAndWait()){
+                    if (alertHelper.showAndWait()) {
                         for (Doc oldDocument : oldDocuments) {
                             documentModel.deleteDocument(oldDocument.getId());
                         }

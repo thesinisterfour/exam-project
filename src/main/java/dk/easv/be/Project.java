@@ -12,14 +12,14 @@ public class Project {
     private String projectAddress;
     private int projectZipcode;
 
-    public Project(int projectID, String projectName, String projectAddress, int projectZipcode){
+    public Project(int projectID, String projectName, String projectAddress, int projectZipcode) {
         this.projectID = projectID;
         this.projectName = projectName;
         this.projectAddress = projectAddress;
         this.projectZipcode = projectZipcode;
     }
 
-    public Project(int projectID, String projectName, LocalDate startDate, LocalDate endDate, int customerID, String projectAddress, int projectZipcode){
+    public Project(int projectID, String projectName, LocalDate startDate, LocalDate endDate, int customerID, String projectAddress, int projectZipcode) {
         this.projectID = projectID;
         this.projectName = projectName;
         this.startDate = startDate;
@@ -29,7 +29,7 @@ public class Project {
         this.projectZipcode = projectZipcode;
     }
 
-    public Project( String projectName, LocalDate startDate, LocalDate endDate, int customerID, String projectAddress, int projectZipcode){
+    public Project(String projectName, LocalDate startDate, LocalDate endDate, int customerID, String projectAddress, int projectZipcode) {
         this.projectName = projectName;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -38,56 +38,56 @@ public class Project {
         this.projectZipcode = projectZipcode;
     }
 
-    public int getProjectID(){
+    public int getProjectID() {
         return projectID;
-    }
-
-    public String getProjectName(){
-        return projectName;
-    }
-
-    public LocalDate getStartDate(){
-        return startDate;
-    }
-
-    public LocalDate getEndDate(){
-        return endDate;
-    }
-
-    public int getCustomerID(){
-        return customerID;
-    }
-
-    public String getProjectAddress(){
-        return projectAddress;
-    }
-
-    public int getProjectZipcode(){
-        return projectZipcode;
-    }
-
-    public void setCustomerID(int customerID) {
-        this.customerID = customerID;
-    }
-
-    public void setProjectName(String projectName) {
-        this.projectName = projectName;
     }
 
     public void setProjectID(int projectID) {
         this.projectID = projectID;
     }
 
-    public void setProjectAddress(String projectAddress) {
-        this.projectAddress = projectAddress;
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
+    }
+
+    public LocalDate getStartDate() {
+        return startDate;
     }
 
     public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
     public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
+    }
+
+    public int getCustomerID() {
+        return customerID;
+    }
+
+    public void setCustomerID(int customerID) {
+        this.customerID = customerID;
+    }
+
+    public String getProjectAddress() {
+        return projectAddress;
+    }
+
+    public void setProjectAddress(String projectAddress) {
+        this.projectAddress = projectAddress;
+    }
+
+    public int getProjectZipcode() {
+        return projectZipcode;
     }
 
     public void setProjectZipcode(int projectZipcode) {

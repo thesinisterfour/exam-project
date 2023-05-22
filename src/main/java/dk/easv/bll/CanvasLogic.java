@@ -12,7 +12,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class CanvasLogic implements ICanvasLogic{
+public class CanvasLogic implements ICanvasLogic {
     @Override
     public void generateImage(File file, Canvas canvas) {
         if (file != null) {

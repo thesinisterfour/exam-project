@@ -10,13 +10,13 @@ import javafx.scene.control.Alert;
 
 import java.util.Map;
 
-public class AlertHelper{
+public class AlertHelper {
     //TODO add icons to alerts
     private MFXGenericDialog dialogContent;
-    private MFXStageDialog dialog;
+    private final MFXStageDialog dialog;
     private boolean confirmed;
 
-    public AlertHelper(String content, Alert.AlertType alertType){
+    public AlertHelper(String content, Alert.AlertType alertType) {
 
         confirmed = false;
 
@@ -56,9 +56,10 @@ public class AlertHelper{
 
     /**
      * Shows dialog and returns a boolean after a button is pressed
+     *
      * @return true if confirm button was pressed
      */
-    public boolean showAndWait(){
+    public boolean showAndWait() {
         dialog.showAndWait();
         return confirmed;
     }

@@ -17,25 +17,18 @@ import java.util.concurrent.ConcurrentMap;
 
 public class CardController extends RootController {
 
+    private final IUserModel userModel = UserModel.getInstance();
     @FXML
     private Label userAddress;
-
     @FXML
     private Label userEmail;
-
     @FXML
     private Label userZipcode;
-
     @FXML
     private Label username;
-
     private Card card;
-
     @FXML
     private GridPane gridLoyal;
-
-    private final IUserModel userModel = UserModel.getInstance();
-
     private ConcurrentMap<Integer, User> users = new ConcurrentHashMap<>();
 
     private ConcurrentMap<Integer, Customer> customers = new ConcurrentHashMap<>();
@@ -55,9 +48,9 @@ public class CardController extends RootController {
     }
 
 
-    public void createCards(Card card){
+    public void createCards(Card card) {
         this.card = card;
-        if(card.getCustomerZipCode() != null){
+        if (card.getCustomerZipCode() != null) {
             username.setText(card.getCustomerName());
             userAddress.setText(card.getCustomerAddress());
             userZipcode.setText(card.getCustomerZipCode());
@@ -65,7 +58,7 @@ public class CardController extends RootController {
             gridLoyal.setStyle(gridLoyal.getStyle());
 
         }
-        if(card.getUserRole() != null){
+        if (card.getUserRole() != null) {
             username.setText(card.getUserName());
             userEmail.setText(card.getUserName());
             userAddress.setText("");

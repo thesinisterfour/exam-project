@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
 
-public class ControllerFactory  {
+public class ControllerFactory {
     public static RootController loadFxmlFile(ViewType fxmlFile) throws IOException {
         Objects.requireNonNull(fxmlFile, "fxmlFile must not be null.");
         final URL fxmlFileUrl = Main.class.getResource(fxmlFile.getFXMLView());

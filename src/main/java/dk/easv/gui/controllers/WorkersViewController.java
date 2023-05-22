@@ -36,7 +36,7 @@ import java.util.concurrent.ConcurrentMap;
 public class WorkersViewController extends RootController {
 
     private final IUserModel userModel = UserModel.getInstance();
-    private UserSingleClass actualUser = UserSingleClass.getInstance();
+    private final UserSingleClass actualUser = UserSingleClass.getInstance();
     @FXML
     private MFXTextField searchBar;
     @FXML
@@ -180,7 +180,7 @@ public class WorkersViewController extends RootController {
             Project selectedProject = projectsTable.getSelectionModel().getSelectedValues().get(0);
             IProjectModel projectModel = ProjectModel.getInstance();
             projectModel.deassignProject(selectedProject.getProjectID(), selectedUser.getUserID());
-        } catch (IndexOutOfBoundsException o){
+        } catch (IndexOutOfBoundsException o) {
             AlertHelper alertHelper = new AlertHelper("Please select a user and a project to deassign", Alert.AlertType.ERROR);
             alertHelper.showAndWait();
         } catch (SQLException e) {

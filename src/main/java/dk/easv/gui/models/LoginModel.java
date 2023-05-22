@@ -13,7 +13,7 @@ public class LoginModel implements ILoginModel {
     private final ILoginLogic bll = new LoginLogic(this);
 
     private boolean loginReady = false;
-    private LoginController observer;
+    private final LoginController observer;
 
     public LoginModel(LoginController loginController) {
         observer = loginController;

@@ -15,17 +15,15 @@ import java.sql.SQLException;
 import java.util.concurrent.ConcurrentNavigableMap;
 
 public class ContentModel implements IContentModel {
-    private final IDocumentLogic documentLogic = new DocumentLogic();
-
-    private int documentId;
-
     private static ContentModel INSTANCE;
-
+    private final IDocumentLogic documentLogic = new DocumentLogic();
+    private int documentId;
     private ConcurrentNavigableMap<Integer, Integer> contentMap;
 
     private BufferedImage image;
 
     private Doc document;
+
     private ContentModel() {
 
     }
@@ -49,7 +47,7 @@ public class ContentModel implements IContentModel {
 
     @Override
     public void addImage(int index, Image image) throws SQLException {
-        documentLogic.addImage(documentId,  index, image);
+        documentLogic.addImage(documentId, index, image);
     }
 
     @Override
@@ -60,7 +58,7 @@ public class ContentModel implements IContentModel {
     @Override
     public void saveAsPDF(String dest) throws SQLException, IOException {
         ICRUDDao<Doc> docDao = CRUDDAOFactory.getDao(DAOType.DOCUMENT_DAO);
-       documentLogic.generatePDF(docDao.get(documentId), dest);
+        documentLogic.generatePDF(docDao.get(documentId), dest);
     }
 
     @Override
@@ -95,12 +93,12 @@ public class ContentModel implements IContentModel {
 
 
     @Override
-    public void deleteContent(int id) throws SQLException{
+    public void deleteContent(int id) throws SQLException {
         documentLogic.deleteContent(id);
     }
 
     @Override
-    public void deleteMap(int id) throws SQLException{
+    public void deleteMap(int id) throws SQLException {
         documentLogic.deleteMapping(documentId, id);
     }
 }

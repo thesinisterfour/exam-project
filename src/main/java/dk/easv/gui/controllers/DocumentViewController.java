@@ -18,11 +18,9 @@ import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -56,6 +54,7 @@ public class DocumentViewController extends RootController {
     private final int scaleOffset = 50;
     private final Label emptyLabel = new Label("No content to display");
     private final IContentModel model = ContentModel.getInstance();
+    private final VBox dropImage = createDropImageVBox();
     @FXML
     private VBox vbox;
     @FXML
@@ -273,12 +272,12 @@ public class DocumentViewController extends RootController {
                         Content content = (Content) newValue;
                         if (content.getImage() != null) {
                             HBox hBox = addImage(content.getImage());
-                            hBox.setId(contentMap.get(key) + "");
+                            hBox.setId(String.valueOf(contentMap.get(key)));
                             children.set(key, hBox);
                             new FadeIn(hBox).play();
                         } else {
                             HBox hBox = addText(content.getText());
-                            hBox.setId(contentMap.get(key) + "");
+                            hBox.setId(String.valueOf(contentMap.get(key)));
                             children.set(key, hBox);
                             new FadeIn(hBox).play();
                         }
@@ -287,10 +286,6 @@ public class DocumentViewController extends RootController {
 
                 }
                 es.shutdown();
-
-                if (n.isEmpty()) {
-//                    vbox.getChildren().add(0, new Label("No content to display"));
-                }
 
             }));
             executorService.submit(mapTask);
@@ -357,23 +352,6 @@ public class DocumentViewController extends RootController {
         return hBox;
     }
 
-    // to be implemented
-    private void progressiveSave() {
-        scheduledSaveService.scheduleAtFixedRate(() -> saveOnAction(null), 0, 5, TimeUnit.SECONDS);
-    }
-
-    private void stopProgressiveSave() {
-        scheduledSaveService.shutdown();
-    }
-
-    private void emptyCheck() {
-        if (vbox.getChildren().size() == 0) {
-            vbox.getChildren().add(0, emptyLabel);
-        } else if (vbox.getChildren().get(0) == emptyLabel) {
-            vbox.getChildren().remove(0);
-        }
-    }
-
     @FXML
     private void vboxOnDragDropped(DragEvent dragEvent) {
         Dragboard db = dragEvent.getDragboard();
@@ -407,7 +385,7 @@ public class DocumentViewController extends RootController {
         dragEvent.consume();
     }
 
-    private VBox createDropImageVBox(){
+    private VBox createDropImageVBox() {
         VBox dropImage = new VBox(new Label("Release mouse to add image"));
         dropImage.setAlignment(Pos.CENTER);
         dropImage.setPadding(new Insets(50, 10, 50, 10));
@@ -421,8 +399,6 @@ public class DocumentViewController extends RootController {
         return dropImage;
     }
 
-
-    private final VBox dropImage = createDropImageVBox();
     @FXML
     private void vboxOnDragOver(DragEvent dragEvent) {
         scrollPane.setVvalue(1.0);
@@ -431,7 +407,7 @@ public class DocumentViewController extends RootController {
             dragEvent.acceptTransferModes(TransferMode.COPY_OR_MOVE);
 
             ObservableList<Node> children = vbox.getChildren();
-            if (!children.contains(dropImage)){
+            if (!children.contains(dropImage)) {
                 children.add(dropImage);
             }
         }

@@ -1,5 +1,6 @@
 package dk.easv.gui.controllers;
 
+import com.itextpdf.io.source.ByteArrayOutputStream;
 import dk.easv.gui.models.CanvasModel;
 import dk.easv.gui.models.interfaces.ICanvasModel;
 import dk.easv.gui.rootContoller.RootController;
@@ -16,10 +17,16 @@ import javafx.stage.FileChooser;
 import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
+import dk.easv.gui.models.ContentModel;
+import dk.easv.gui.models.DrawnImageModel;
+import javafx.scene.image.Image;
+import javafx.scene.image.WritableImage;
 
 public class CanvasController extends RootController {
 
     private final ICanvasModel model = CanvasModel.getInstance();
+
+    String filePath = null;
     @FXML
     private ChoiceBox<String> colorChooser;
 
@@ -133,5 +140,11 @@ public class CanvasController extends RootController {
         );
         File file = fileChooser.showSaveDialog(canvas.getScene().getWindow());
         model.generateImage(file, canvas);
+
+        if (file != null) {
+            filePath = file.getAbsolutePath();
+            Image image = new Image("file:" + filePath);
+            DrawnImageModel.setDrawnImage(image);
+        }
     }
 }

@@ -18,7 +18,8 @@ public enum ViewType {
     DOCUMENTS_VIEW("views/documents-view.fxml"),
     ADD_PROJECT("views/add-project-view.fxml"),
     ASSIGN_PROJECT("views/assign-project-view.fxml"),
-    CANVAS("views/Canvas.fxml");
+    CANVAS("views/Canvas.fxml"),
+    HOME("views/home-view.fxml");
 
     private final String path;
 

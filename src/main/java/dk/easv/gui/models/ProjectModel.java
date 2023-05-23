@@ -16,6 +16,7 @@ public class ProjectModel implements IProjectModel {
     private static ProjectModel INSTANCE;
     private final ObservableList<Project> projectObservableList;
     private final ICRUDLogic logic = new CRUDLogic();
+    private int selectedProjectId = 0;
 
     private ProjectModel() throws SQLException {
         projectObservableList = FXCollections.observableArrayList();
@@ -31,9 +32,14 @@ public class ProjectModel implements IProjectModel {
 
     @Override
     public ConcurrentMap<Integer, Project> getAllProjects() throws SQLException {
-        ConcurrentMap<Integer, Project> allProjects = logic.getAllProjects();
-        projectObservableList.setAll(allProjects.values());
-        return allProjects;
+        if (selectedProjectId == 0) {
+            ConcurrentMap<Integer, Project> allProjects = logic.getAllProjects();
+            projectObservableList.setAll(allProjects.values());
+            return allProjects;
+        } else {
+            return getProjectsByCustomerId(selectedProjectId);
+        }
+
     }
 
     @Override
@@ -81,5 +87,15 @@ public class ProjectModel implements IProjectModel {
     public int deassignProject(int projectId, int userId) throws SQLException {
         IMappingLogic mappingLogic = new MappingLogic();
         return mappingLogic.deassignproject(projectId, userId);
+    }
+
+    @Override
+    public int getSelectedProjectId() {
+        return selectedProjectId;
+    }
+
+    @Override
+    public void setSelectedProjectId(int selectedProjectId) {
+        this.selectedProjectId = selectedProjectId;
     }
 }

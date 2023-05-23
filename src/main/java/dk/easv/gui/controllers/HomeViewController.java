@@ -120,6 +120,13 @@ public class HomeViewController extends RootController {
 
     private void showProjectsView(ActionEvent event){
         try {
+            if (customerTable.getSelectionModel().getSelectedValues().isEmpty()) {
+                AlertHelper alertHelper = new AlertHelper("Please select a project", Alert.AlertType.WARNING);
+                alertHelper.showAndWait();
+                return;
+            }
+
+            projectModel.setSelectedProjectId(projectTable.getSelectionModel().getSelectedValues().get(0).getProjectID());
             mainBorderPane = (BorderPane) rootVBox.getParent();
             RootController rootController = ControllerFactory.loadFxmlFile(ViewType.PROJECTS_VIEW);
             mainBorderPane.setCenter(rootController.getView());

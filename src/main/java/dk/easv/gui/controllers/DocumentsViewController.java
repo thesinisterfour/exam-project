@@ -63,7 +63,6 @@ public class DocumentsViewController extends RootController {
         try {
             Doc selectedDocument = documentsTable.getSelectionModel().getSelectedValues().get(0);
             model.deleteDocument(selectedDocument.getId());
-            model.setObsAllDocuments();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -74,9 +73,8 @@ public class DocumentsViewController extends RootController {
     public void initialize(URL location, ResourceBundle resources) {
         try {
             model = DocumentModel.getInstance();
-            model.getObsAllDocuments();
+            model.setObsAllDocuments();
             TableSetters.setUpDocumentTable(documentsTable);
-            documentsTable.setItems(model.getObsAllDocuments());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

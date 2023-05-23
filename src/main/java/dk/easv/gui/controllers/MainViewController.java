@@ -140,6 +140,7 @@ public class MainViewController extends RootController {
     @FXML
     private void displayProjects(ActionEvent actionEvent) {
         try {
+            projectModel.setSelectedProjectId(0);
             RootController controller = ControllerFactory.loadFxmlFile(ViewType.PROJECTS_VIEW);
             mainBorderPane.setCenter(controller.getView());
         } catch (IOException e) {

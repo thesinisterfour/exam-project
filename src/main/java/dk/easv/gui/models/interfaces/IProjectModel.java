@@ -20,4 +20,8 @@ public interface IProjectModel {
     void addProject(Project project) throws SQLException;
 
     int deassignProject(int userID, int projectID) throws SQLException;
+
+    int getSelectedProjectId();
+
+    void setSelectedProjectId(int selectedProjectId);
 }

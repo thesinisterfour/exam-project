@@ -13,10 +13,8 @@ import java.util.List;
 import java.util.concurrent.ConcurrentMap;
 
 public class DocumentModel implements IDocumentModel {
-    private static DocumentModel INSTANCE;
+    private static IDocumentModel INSTANCE;
     private final ICRUDLogic bll = new CRUDLogic();
-    private final ObservableList<Doc> obsAllDocuments;
-    private final ObservableList<Doc> obsProjectDocuments;
     private final ObservableList<Doc> obsDocuments;
 
     /**
@@ -27,14 +25,11 @@ public class DocumentModel implements IDocumentModel {
      * @throws SQLException
      */
     private DocumentModel() throws SQLException {
-        obsAllDocuments = FXCollections.observableArrayList();
-        obsProjectDocuments = FXCollections.observableArrayList();
         obsDocuments = FXCollections.observableArrayList();
         setObsAllDocuments();
-        this.obsDocuments.setAll(obsAllDocuments);
     }
 
-    public static DocumentModel getInstance() throws SQLException {
+    public static IDocumentModel getInstance() throws SQLException {
         if (INSTANCE == null) {
             INSTANCE = new DocumentModel();
         }
@@ -63,30 +58,21 @@ public class DocumentModel implements IDocumentModel {
 
     @Override
     public int deleteDocument(int id) throws SQLException {
+        int i = bll.deleteDocument(id);
         setObsAllDocuments();
-        return bll.deleteDocument(id);
-    }
-
-    @Override
-    public ObservableList<Doc> getObsAllDocuments() throws SQLException {
-        setObsAllDocuments();
-        return obsAllDocuments;
+        return i;
     }
 
     @Override
     public void setObsAllDocuments() throws SQLException {
         ConcurrentMap<Integer, Doc> allDocuments = getAllDocuments();
-        this.obsAllDocuments.setAll(allDocuments.values());
+        this.obsDocuments.setAll(allDocuments.values());
     }
+
 
     @Override
     public List<Doc> getOldDocuments() throws SQLException {
         return new DocumentLogic().showOldDocuments();
-    }
-
-    @Override
-    public ObservableList<Doc> getObsProjectDocuments() {
-        return obsProjectDocuments;
     }
 
     @Override

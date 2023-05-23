@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
 <?import io.github.palexdev.materialfx.controls.MFXRectangleToggleNode?>
 <?import io.github.palexdev.materialfx.controls.MFXTableView?>
 <?import javafx.geometry.Insets?>
@@ -12,7 +13,7 @@
 
 <VBox fx:id="rootVBox" prefHeight="607.0" prefWidth="908.0" stylesheets="@../css/global-style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.HomeViewController">
         <children>
-            <VBox fx:id="customersVBox" VBox.vgrow="ALWAYS">
+            <VBox fx:id="customersVBox" spacing="8.0" VBox.vgrow="ALWAYS">
                 <children>
                     <GridPane>
                         <columnConstraints>
@@ -33,6 +34,7 @@
                             <MFXTableView fx:id="projectTable" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
                         </children>
                     </StackPane>
+            <MFXButton fx:id="showDetailsButton" maxWidth="1.7976931348623157E308" text="Show Projects" VBox.vgrow="ALWAYS" />
                 </children>
          <VBox.margin>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />

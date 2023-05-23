@@ -15,6 +15,7 @@ import dk.easv.gui.rootContoller.RootController;
 import dk.easv.helpers.AlertHelper;
 import dk.easv.helpers.DocumentHelper;
 import dk.easv.helpers.ViewType;
+import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXRectangleToggleNode;
 import io.github.palexdev.materialfx.controls.MFXTableView;
 import javafx.event.ActionEvent;
@@ -24,6 +25,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.List;
@@ -48,6 +50,8 @@ public class HomeViewController extends RootController {
     @FXML
     private MFXTableView<Project> projectTable;
     private BorderPane mainBorderPane;
+    @FXML
+    private MFXButton showDetailsButton;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -98,28 +102,12 @@ public class HomeViewController extends RootController {
 
 
         es.shutdown();
+
+        showDetailsButton.setOnAction(this::showProjectsView);
     }
 
     private void setUpCustomerTable() throws SQLException {
         TableSetters.setUpCustomerTable(customerTable);
-
-        customerTable.getCells().forEach((key, value)-> {
-            System.out.println(value);
-            mainBorderPane = (BorderPane) rootVBox.getParent();
-            System.out.println(value.getOnMouseClicked());
-            value.setOnMouseClicked(event -> {
-                if (event.getClickCount() == 2) {
-                    try {
-                        Customer customer = value.getData();
-                        RootController rootController = ControllerFactory.loadFxmlFile(ViewType.BUSINESS_VIEW);
-                        mainBorderPane.setCenter(rootController.getView());
-                    } catch (Exception e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-            });
-            System.out.println(value.getOnMouseClicked());
-        });
     }
 
     private void setupProjectTable() {
@@ -130,16 +118,40 @@ public class HomeViewController extends RootController {
         }
     }
 
+    private void showProjectsView(ActionEvent event){
+        try {
+            mainBorderPane = (BorderPane) rootVBox.getParent();
+            RootController rootController = ControllerFactory.loadFxmlFile(ViewType.PROJECTS_VIEW);
+            mainBorderPane.setCenter(rootController.getView());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void showDocumentsView(ActionEvent event){
+        try {
+            mainBorderPane = (BorderPane) rootVBox.getParent();
+            RootController rootController = ControllerFactory.loadFxmlFile(ViewType.DOCUMENTS_VIEW);
+            mainBorderPane.setCenter(rootController.getView());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     @FXML
     private void toggleAction(ActionEvent actionEvent) {
         if (projectsToggle.isSelected()) {
             customerLabel.setText("Projects");
             customerTable.setVisible(false);
             projectTable.setVisible(true);
+            showDetailsButton.setText("Show Documents");
+            showDetailsButton.setOnAction(this::showDocumentsView);
         } else {
             customerLabel.setText("Customers");
             projectTable.setVisible(false);
             customerTable.setVisible(true);
+            showDetailsButton.setText("Show Projects");
+            showDetailsButton.setOnAction(this::showProjectsView);
         }
     }
 }

@@ -24,7 +24,6 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 
-import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.List;
@@ -104,23 +103,22 @@ public class HomeViewController extends RootController {
     private void setUpCustomerTable() throws SQLException {
         TableSetters.setUpCustomerTable(customerTable);
 
-        customerTable.setOnMouseClicked(event -> {
+        customerTable.getCells().forEach((key, value)-> {
+            System.out.println(value);
             mainBorderPane = (BorderPane) rootVBox.getParent();
-            if (event.getClickCount() == 2) {
-                try {
-                    Customer customer = customerTable.getSelectionModel().getSelectedValues().get(0);
-                    System.out.println(customer);
-                    if (customer != null) {
-                        RootController controller = ControllerFactory.loadFxmlFile(ViewType.PROJECTS_VIEW);
-                        projectModel.getProjectsByCustomerId(customer.getCustomerID());
-                        mainBorderPane.setCenter(controller.getView());
+            System.out.println(value.getOnMouseClicked());
+            value.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2) {
+                    try {
+                        Customer customer = value.getData();
+                        RootController rootController = ControllerFactory.loadFxmlFile(ViewType.BUSINESS_VIEW);
+                        mainBorderPane.setCenter(rootController.getView());
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
                     }
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
                 }
-            }
+            });
+            System.out.println(value.getOnMouseClicked());
         });
     }
 

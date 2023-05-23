@@ -65,7 +65,6 @@ public class TableSetters {
         MFXTableColumn<Project> zipCodeColumn = new MFXTableColumn<>("Zip Code", true, Comparator.comparing(Project::getProjectZipcode));
         MFXTableColumn<Project> customerColumn = new MFXTableColumn<>("Customer", true, Comparator.comparing(Project::getCustomerID));
 
-        idColumn.setRowCellFactory(project -> new MFXTableRowCell<>(Project::getProjectID));
         nameColumn.setRowCellFactory(project -> new MFXTableRowCell<>(Project::getProjectName));
         dateStartColumn.setRowCellFactory(project -> new MFXTableRowCell<>(Project::getStartDate));
         dateEndColumn.setRowCellFactory(project -> new MFXTableRowCell<>(Project::getEndDate));

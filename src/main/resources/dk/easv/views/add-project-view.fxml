@@ -1,55 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import io.github.palexdev.materialfx.controls.*?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.layout.*?>
-<GridPane xmlns:fx="http://javafx.com/fxml/1" fx:id="rootGrid" prefHeight="431.0" prefWidth="561.0"
-          stylesheets="@../css/global-style.css" xmlns="http://javafx.com/javafx/19"
-          fx:controller="dk.easv.gui.controllers.AddProjectController">
-    <columnConstraints>
-        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0"/>
-    </columnConstraints>
-    <rowConstraints>
-        <RowConstraints minHeight="10.0" valignment="CENTER" vgrow="SOMETIMES"/>
-    </rowConstraints>
-    <children>
-        <GridPane alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-                  minWidth="-Infinity" prefHeight="284.0" prefWidth="427.0" vgap="5.0">
-            <columnConstraints>
-                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-            </columnConstraints>
-            <rowConstraints>
-                <RowConstraints maxHeight="236.8000129699707" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES"/>
-                <RowConstraints maxHeight="231.5999969482422" minHeight="10.0" prefHeight="33.0" vgrow="SOMETIMES"/>
-                <RowConstraints maxHeight="226.80002441406253" minHeight="10.0" prefHeight="48.0" vgrow="SOMETIMES"/>
-                <RowConstraints maxHeight="226.80002441406253" minHeight="10.0" prefHeight="48.0" vgrow="SOMETIMES"/>
-                <RowConstraints maxHeight="226.80002441406253" minHeight="10.0" prefHeight="48.0" vgrow="SOMETIMES"/>
-                <RowConstraints maxHeight="226.80002441406253" minHeight="10.0" prefHeight="48.0" vgrow="SOMETIMES"/>
-                <RowConstraints maxHeight="226.80002441406253" minHeight="0.0" prefHeight="27.0" vgrow="SOMETIMES"/>
-            </rowConstraints>
-            <children>
-                <MFXTextField fx:id="nameTextField" floatMode="BORDER" prefHeight="38.0" prefWidth="286.0"
-                              promptText="Project name"/>
-                <MFXDatePicker fx:id="startDatePicker" floatMode="BORDER" prefHeight="38.0" prefWidth="254.0"
-                               promptText="Start" GridPane.rowIndex="1"/>
-                <MFXDatePicker fx:id="endDatePicker" prefHeight="38.0" prefWidth="258.0" promptText="End"
-                               GridPane.rowIndex="2"/>
-                <MFXFilterComboBox fx:id="customerComboBox" GridPane.rowIndex="3"/>
-                <MFXTextField fx:id="addressTextField" alignment="TOP_LEFT" floatMode="DISABLED" prefHeight="40.0"
-                              prefWidth="286.0" promptText="Address" GridPane.rowIndex="4"/>
-                <MFXTextField fx:id="zipcodeTextField" alignment="TOP_LEFT" floatMode="DISABLED" prefHeight="40.0"
-                              prefWidth="286.0" promptText="Address" GridPane.rowIndex="5"/>
-                <HBox alignment="BOTTOM_CENTER" prefHeight="87.0" prefWidth="563.0" spacing="20.0"
-                      GridPane.rowIndex="6">
-                    <children>
-                        <MFXButton defaultButton="true" onAction="#createOnAction" text="Create"/>
-                        <MFXButton cancelButton="true" onAction="#cancelOnAction" text="Cancel"/>
-                    </children>
-                </HBox>
-            </children>
-            <padding>
-                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
-            </padding>
-        </GridPane>
-    </children>
-</GridPane>
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import io.github.palexdev.materialfx.controls.MFXDatePicker?>
+<?import io.github.palexdev.materialfx.controls.MFXFilterComboBox?>
+<?import io.github.palexdev.materialfx.controls.MFXTextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox alignment="CENTER" prefHeight="425.0" prefWidth="531.0" spacing="8.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.AddProjectController">
+   <children>
+          <MFXTextField fx:id="nameTextField" floatMode="BORDER" prefWidth="200.0" promptText="Project name" />
+          <MFXDatePicker fx:id="startDatePicker" allowEdit="false" floatMode="BORDER" prefWidth="200.0" promptText="Start" />
+          <MFXDatePicker fx:id="endDatePicker" allowEdit="false" prefWidth="200.0" promptText="End" />
+          <MFXFilterComboBox fx:id="customerComboBox" prefWidth="200.0" />
+          <MFXTextField fx:id="addressTextField" alignment="TOP_LEFT" floatMode="DISABLED" prefWidth="200.0" promptText="Address" />
+          <MFXTextField fx:id="zipcodeTextField" alignment="TOP_LEFT" floatMode="DISABLED" prefWidth="200.0" promptText="Zipcode" />
+          <HBox alignment="BOTTOM_CENTER" spacing="20.0">
+              <children>
+                  <MFXButton fx:id="submitButton" defaultButton="true" onAction="#createOnAction" text="Create" />
+                  <MFXButton cancelButton="true" onAction="#cancelOnAction" text="Cancel" />
+              </children>
+          </HBox>
+   </children>
+</VBox>

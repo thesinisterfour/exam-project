@@ -24,4 +24,6 @@ public interface IProjectModel {
     int getSelectedProjectId();
 
     void setSelectedProjectId(int selectedProjectId);
+
+    void updateProject(Project project) throws SQLException;
 }

@@ -80,6 +80,6 @@ public class Customer {
 
     @Override
     public String toString() {
-        return customerName;
+        return "ID = " + customerID + " Name = " + customerName;
     }
 }

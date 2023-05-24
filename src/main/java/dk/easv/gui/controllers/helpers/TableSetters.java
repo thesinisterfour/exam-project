@@ -42,7 +42,7 @@ public class TableSetters {
                 new StringFilter<>("Email", Customer::getCustomerEmail),
                 new StringFilter<>("Address", Customer::getCustomerAddress),
                 new IntegerFilter<>("Zip Code", Customer::getZipCode));
-        table.getTableColumns().setAll(nameColumn, emailColumn, addressColumn, zipCodeColumn);
+        table.getTableColumns().setAll(idColumn, nameColumn, emailColumn, addressColumn, zipCodeColumn);
         table.autosizeColumnsOnInitialization();
 
         table.setItems(customerModel.getObsAllCustomers());

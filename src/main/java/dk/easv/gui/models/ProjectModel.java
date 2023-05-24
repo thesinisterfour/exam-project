@@ -100,4 +100,10 @@ public class ProjectModel implements IProjectModel {
     public void setSelectedProjectId(int selectedProjectId) {
         this.selectedProjectId = selectedProjectId;
     }
+
+    @Override
+    public void updateProject(Project project) throws SQLException {
+        logic.updateProject(project);
+        getAllProjects();
+    }
 }

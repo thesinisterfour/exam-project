@@ -1,19 +1,18 @@
 package dk.easv.gui.controllers;
 
 import dk.easv.be.Customer;
+import dk.easv.gui.controllers.helpers.ZipCodeChecker;
 import dk.easv.gui.models.CityModel;
 import dk.easv.gui.models.CustomerModel;
 import dk.easv.gui.models.interfaces.ICityModel;
 import dk.easv.gui.models.interfaces.ICustomerModel;
 import dk.easv.gui.rootContoller.RootController;
-import dk.easv.helpers.AlertHelper;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.Alert;
 import javafx.scene.layout.VBox;
 
 import java.net.URL;
@@ -25,7 +24,7 @@ public class AddCustomerViewController extends RootController {
     private final ICityModel cityModel = new CityModel();
     private final ICustomerModel customerModel = CustomerModel.getInstance();
     @FXML
-    private MFXTextField nameTextField, emailTextField, addressTextField, ZipCodeTextField;
+    private MFXTextField nameTextField, emailTextField, addressTextField, zipCodeTextField;
     @FXML
     private VBox rootVBox;
     @FXML
@@ -45,13 +44,14 @@ public class AddCustomerViewController extends RootController {
         nameTextField.setText("");
         emailTextField.setText("");
         addressTextField.setText("");
-        ZipCodeTextField.setText("");
+        zipCodeTextField.setText("");
     }
 
     @FXML
     private void submitButtonAction(ActionEvent event) {
+
         if (!isEmptyField()) {
-            int zipCode = checkZipCode();
+            int zipCode = ZipCodeChecker.checkZipCode(zipCodeTextField.getText());
             if (zipCode == 0) return;
             try {
                 customerModel.add(new Customer(nameTextField.getText(), emailTextField.getText(), addressTextField.getText(), zipCode));
@@ -65,18 +65,7 @@ public class AddCustomerViewController extends RootController {
 
     }
 
-    private int checkZipCode() {
-        int zipCode = Integer.parseInt(ZipCodeTextField.getText());
-        try {
-            cityModel.get(zipCode);
-        } catch (SQLException e) {
-            // catch if city does not exist
-            AlertHelper alertHelper = new AlertHelper("City does not exist", Alert.AlertType.ERROR);
-            alertHelper.showAndWait();
-            return 0;
-        }
-        return zipCode;
-    }
+
 
     private boolean isEmptyField() {
         ObservableList<Node> nodes = this.getView().getChildrenUnmodifiable();
@@ -101,7 +90,7 @@ public class AddCustomerViewController extends RootController {
         nameTextField.setText(customer.getCustomerName());
         emailTextField.setText(customer.getCustomerEmail());
         addressTextField.setText(customer.getCustomerAddress());
-        ZipCodeTextField.setText(String.valueOf(customer.getZipCode()));
+        zipCodeTextField.setText(String.valueOf(customer.getZipCode()));
 
         submitButton.setText("Edit Customer");
         submitButton.setOnAction(event -> {
@@ -109,7 +98,7 @@ public class AddCustomerViewController extends RootController {
                 if (isEmptyField()) {
                     return;
                 }
-                int zipcode = checkZipCode();
+                int zipcode = ZipCodeChecker.checkZipCode(zipCodeTextField.getText());
                 if (zipcode == 0) return;
                 customerModel.updateCustomer(new Customer(customer.getCustomerID(), nameTextField.getText(), emailTextField.getText(), addressTextField.getText(), zipcode));
             } catch (SQLException e) {

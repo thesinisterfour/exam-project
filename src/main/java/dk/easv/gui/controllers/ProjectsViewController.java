@@ -44,6 +44,19 @@ public class ProjectsViewController extends RootController {
 
     @FXML
     private void handleEdit(ActionEvent actionEvent) {
+        try {
+            Stage stage = new Stage();
+            RootController controller = ControllerFactory.loadFxmlFile(ViewType.ADD_PROJECT);
+            AddProjectController addProjectViewController = (AddProjectController) controller;
+            addProjectViewController.setProjectData(projectsTable.getSelectionModel().getSelectedValues().get(0));
+            Scene scene = new Scene(controller.getView());
+            stage.setResizable(false);
+            stage.setScene(scene);
+            stage.centerOnScreen();
+            stage.show();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML

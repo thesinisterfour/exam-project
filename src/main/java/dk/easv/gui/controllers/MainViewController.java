@@ -47,6 +47,11 @@ public class MainViewController extends RootController {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        loadModels();
+        setViewByRole();
+    }
+
+    private void loadModels() {
         ExecutorService es = Executors.newFixedThreadPool(10);
 
         LoadDocumentModelTask loadDocumentModelTask = new LoadDocumentModelTask();
@@ -72,23 +77,13 @@ public class MainViewController extends RootController {
         es.submit(new LoadCustomerModelTask());
         es.submit(loadDocumentModelTask);
         es.submit( new LoadProjectModelTask());
-
-
         es.shutdown();
-
-
-
-
-
-        roleView();
-
     }
 
-    private void roleView() {
+    private void setViewByRole() {
         if (actualUser != null) {
             if (actualUser.getRole() == Role.TECHNICIAN) {
                 setupTechnician();
-
             }
             if (actualUser.getRole() == Role.SALESPERSON) {
                 iconsVbox.getChildren().remove(workersLayer);
@@ -103,20 +98,27 @@ public class MainViewController extends RootController {
     private void setupTechnician() {
         iconsVbox.getChildren().remove(businessLayer);
         iconsVbox.getChildren().remove(workersLayer);
+        iconsVbox.getChildren().remove(documentsButton);
 
         projectsButton.setOnAction(event -> {
-            try {
-                ProjectModel.getInstance().getProjectsByWorkerId(actualUser.getId());
-                RootController controller = ControllerFactory.loadFxmlFile(ViewType.PROJECTS_VIEW);
-                mainBorderPane.setCenter(controller.getView());
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
+            setTechnicianMainView();
         });
 
+        setTechnicianMainView();
 
+
+    }
+
+    private void setTechnicianMainView() {
+        try {
+            ProjectModel.getInstance().getProjectsByWorkerId(actualUser.getId());
+            RootController controller = ControllerFactory.loadFxmlFile(ViewType.PROJECTS_VIEW);
+            mainBorderPane.setCenter(controller.getView());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML

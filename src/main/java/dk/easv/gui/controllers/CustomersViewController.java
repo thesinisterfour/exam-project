@@ -4,6 +4,7 @@ import dk.easv.be.Customer;
 import dk.easv.gui.controllerFactory.ControllerFactory;
 import dk.easv.gui.controllers.helpers.TableSetters;
 import dk.easv.gui.models.CustomerModel;
+import dk.easv.gui.models.ProjectModel;
 import dk.easv.gui.models.interfaces.ICustomerModel;
 import dk.easv.gui.rootContoller.RootController;
 import dk.easv.helpers.AlertHelper;
@@ -100,10 +101,13 @@ public class CustomersViewController extends RootController {
             }
 
             customerModel.setSelectedCustomerId(customersTable.getSelectionModel().getSelectedValues().get(0).getCustomerID());
+            ProjectModel.getInstance().getAllProjects();
             BorderPane mainBorderPane = (BorderPane) rootVBox.getParent();
             RootController rootController = ControllerFactory.loadFxmlFile(ViewType.PROJECTS_VIEW);
             mainBorderPane.setCenter(rootController.getView());
         } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }

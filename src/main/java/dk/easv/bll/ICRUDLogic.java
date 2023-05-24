@@ -91,4 +91,8 @@ public interface ICRUDLogic {
     int updateUser(User user) throws SQLException;
 
     int deleteUser(int id) throws SQLException;
+
+    int updateCustomer(Customer customer) throws SQLException;
+
+    int deleteCustomer(Customer customer) throws SQLException;
 }

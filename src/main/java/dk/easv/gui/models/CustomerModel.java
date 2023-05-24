@@ -21,6 +21,8 @@ public class CustomerModel implements ICustomerModel {
     private final ObservableList<Customer> obsAllCustomers;
     private ConcurrentMap<Integer, Customer> allCustomers;
 
+    private int selectedCustomerId = 0;
+
     private CustomerModel() throws SQLException {
         obsAllCustomers = FXCollections.observableArrayList();
         loadAllCustomers();
@@ -61,5 +63,28 @@ public class CustomerModel implements ICustomerModel {
     @Override
     public void loadAllCustomers() throws SQLException {
         allCustomers = crudLogic.getAllCustomers();
+    }
+
+    @Override
+    public int getSelectedCustomerId() {
+        return selectedCustomerId;
+    }
+
+    @Override
+    public void setSelectedCustomerId(int selectedCustomerId) {
+        this.selectedCustomerId = selectedCustomerId;
+    }
+
+    @Override
+    public int deleteCustomer(Customer customer) throws SQLException {
+        int rows = crudLogic.deleteCustomer(customer);
+        loadAllCustomers();
+        setObsAllCustomers();
+        return rows;
+    }
+
+    @Override
+    public int updateCustomer(Customer customer) throws SQLException {
+        return crudLogic.updateCustomer(customer);
     }
 }

@@ -5,6 +5,7 @@ import dk.easv.bll.CRUDLogic;
 import dk.easv.bll.DocumentLogic;
 import dk.easv.bll.ICRUDLogic;
 import dk.easv.gui.models.interfaces.IDocumentModel;
+import dk.easv.gui.models.interfaces.IProjectModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -65,8 +66,14 @@ public class DocumentModel implements IDocumentModel {
 
     @Override
     public void setObsAllDocuments() throws SQLException {
-        ConcurrentMap<Integer, Doc> allDocuments = getAllDocuments();
-        this.obsDocuments.setAll(allDocuments.values());
+        IProjectModel model = ProjectModel.getInstance();
+        if (model.getSelectedProjectId() == 0) {
+            ConcurrentMap<Integer, Doc> allDocuments = getAllDocuments();
+            this.obsDocuments.setAll(allDocuments.values());
+        } else {
+            setObsProjectDocuments(model.getSelectedProjectId());
+        }
+
     }
 
 

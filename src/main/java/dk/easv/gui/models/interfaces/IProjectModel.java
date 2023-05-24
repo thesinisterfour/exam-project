@@ -9,7 +9,7 @@ import java.util.concurrent.ConcurrentMap;
 public interface IProjectModel {
     ConcurrentMap<Integer, Project> getAllProjects() throws SQLException;
 
-    ObservableList<Project> getProjectObservableList();
+    ObservableList<Project> getProjectObservableList() throws SQLException;
 
     ConcurrentMap<Integer, Project> getProjectsByCustomerId(int id) throws SQLException;
 

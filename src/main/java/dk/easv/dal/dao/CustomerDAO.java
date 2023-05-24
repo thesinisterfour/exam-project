@@ -45,9 +45,8 @@ public class CustomerDAO implements ICRUDDao<Customer> {
             ps.setInt(4, object.getZipCode());
             ps.setInt(5, object.getCustomerID());
 
-            ps.executeQuery();
+            return ps.executeUpdate();
         }
-        return 0;
     }
 
     @Override
@@ -97,8 +96,7 @@ public class CustomerDAO implements ICRUDDao<Customer> {
             PreparedStatement ps = connection.prepareStatement("DELETE FROM dbo.[customer] WHERE customer_id=?;");
             ps.setInt(1, id);
 
-            ps.executeQuery();
+            return ps.executeUpdate();
         }
-        return 0;
     }
 }

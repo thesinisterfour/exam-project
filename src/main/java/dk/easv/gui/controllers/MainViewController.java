@@ -5,6 +5,8 @@ import dk.easv.be.Doc;
 import dk.easv.be.Project;
 import dk.easv.be.Role;
 import dk.easv.gui.controllerFactory.ControllerFactory;
+import dk.easv.gui.models.CustomerModel;
+import dk.easv.gui.models.ProjectModel;
 import dk.easv.gui.models.interfaces.ICustomerModel;
 import dk.easv.gui.models.interfaces.IDocumentModel;
 import dk.easv.gui.models.interfaces.IProjectModel;
@@ -28,6 +30,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class MainViewController extends RootController {
@@ -76,7 +79,7 @@ public class MainViewController extends RootController {
         });
 
         try {
-            IRootController controller = ControllerFactory.loadFxmlFile(ViewType.HOME);
+            IRootController controller = ControllerFactory.loadFxmlFile(ViewType.BUSINESS_VIEW);
             mainBorderPane.setCenter(controller.getView());
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -124,26 +127,15 @@ public class MainViewController extends RootController {
         mainBorderPane.setCenter(controller.getView());
     }
 
-
-
-
-    @FXML
-    private void displayHome(ActionEvent actionEvent) {
-        try {
-            RootController rootController = ControllerFactory.loadFxmlFile(ViewType.HOME);
-            mainBorderPane.setCenter(rootController.getView());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     @FXML
     private void displayProjects(ActionEvent actionEvent) {
         try {
-            projectModel.setSelectedProjectId(0);
+            CustomerModel.getInstance().setSelectedCustomerId(0);
             RootController controller = ControllerFactory.loadFxmlFile(ViewType.PROJECTS_VIEW);
             mainBorderPane.setCenter(controller.getView());
         } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
@@ -152,9 +144,12 @@ public class MainViewController extends RootController {
     @FXML
     private void displayDocuments(ActionEvent actionEvent) {
         try {
+            ProjectModel.getInstance().setSelectedProjectId(0);
             RootController controller = ControllerFactory.loadFxmlFile(ViewType.DOCUMENTS_VIEW);
             mainBorderPane.setCenter(controller.getView());
         } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }

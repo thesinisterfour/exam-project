@@ -32,18 +32,20 @@ public class ProjectModel implements IProjectModel {
 
     @Override
     public ConcurrentMap<Integer, Project> getAllProjects() throws SQLException {
-        if (selectedProjectId == 0) {
+        int selectedCustomerId = CustomerModel.getInstance().getSelectedCustomerId();
+        if (selectedCustomerId == 0) {
             ConcurrentMap<Integer, Project> allProjects = logic.getAllProjects();
             projectObservableList.setAll(allProjects.values());
             return allProjects;
         } else {
-            return getProjectsByCustomerId(selectedProjectId);
+            return getProjectsByCustomerId(selectedCustomerId);
         }
 
     }
 
     @Override
-    public ObservableList<Project> getProjectObservableList() {
+    public ObservableList<Project> getProjectObservableList() throws SQLException {
+        getAllProjects();
         return projectObservableList;
     }
 

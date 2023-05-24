@@ -12,7 +12,7 @@ public enum ViewType {
     CREATE_DOCUMENT("views/create-document-view.fxml"),
     CREATE_WORKER("views/add-worker-view.fxml"),
 
-    BUSINESS_VIEW("views/customers-view.fxml"),
+    CUSTOMERS_VIEW("views/customers-view.fxml"),
     DOCUMENT("views/document-view.fxml"),
     PROJECTS_VIEW("views/projects-view.fxml"),
     DOCUMENTS_VIEW("views/documents-view.fxml"),

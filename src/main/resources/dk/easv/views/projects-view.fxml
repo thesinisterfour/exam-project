@@ -25,14 +25,14 @@
                   <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                      <HBox alignment="CENTER_RIGHT" spacing="8.0" GridPane.columnIndex="1">
+                  <MFXButton onAction="#viewDocumentsOnAction" text="View documents" />
+                      <HBox fx:id="crudHBox" alignment="CENTER_RIGHT" spacing="8.0" GridPane.columnIndex="1">
                           <children>
                               <MFXButton onAction="#newProject" text="Add Project" />
                               <MFXButton fx:id="handleEdit" onAction="#handleEdit" text="Edit" />
                               <MFXButton fx:id="handleDelete" onAction="#handleDelete" text="Delete" />
                           </children>
                       </HBox>
-                  <MFXButton onAction="#viewDocumentsOnAction" text="View documents" />
                </children>
             </GridPane>
             </children>

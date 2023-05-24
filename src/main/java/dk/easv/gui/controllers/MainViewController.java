@@ -49,6 +49,8 @@ public class MainViewController extends RootController {
     public void initialize(URL location, ResourceBundle resources) {
         loadModels();
         setViewByRole();
+
+
     }
 
     private void loadModels() {
@@ -84,14 +86,22 @@ public class MainViewController extends RootController {
         if (actualUser != null) {
             if (actualUser.getRole() == Role.TECHNICIAN) {
                 setupTechnician();
+                return;
             }
-            if (actualUser.getRole() == Role.SALESPERSON) {
+            else if (actualUser.getRole() == Role.SALESPERSON) {
                 iconsVbox.getChildren().remove(workersLayer);
             }
-            if (actualUser.getRole() == Role.PROJECTMANAGER) {
+            else if (actualUser.getRole() == Role.PROJECTMANAGER) {
                 iconsVbox.getChildren().remove(businessLayer);
 
             }
+            try {
+                RootController controller = ControllerFactory.loadFxmlFile(ViewType.CUSTOMERS_VIEW);
+                mainBorderPane.setCenter(controller.getView());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
         }
     }
 
@@ -133,7 +143,7 @@ public class MainViewController extends RootController {
 
     @FXML
     private void displayBusiness() throws IOException {
-        RootController controller = ControllerFactory.loadFxmlFile(ViewType.BUSINESS_VIEW);
+        RootController controller = ControllerFactory.loadFxmlFile(ViewType.CUSTOMERS_VIEW);
         mainBorderPane.setCenter(controller.getView());
     }
 

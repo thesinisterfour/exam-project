@@ -17,9 +17,9 @@
                               VBox.vgrow="ALWAYS"/>
                 <HBox alignment="CENTER_RIGHT" spacing="8.0">
                     <children>
-                        <MFXButton onAction="#newDocument" text="Add Document"/>
-                        <MFXButton fx:id="handleEdit" onAction="#handleEdit" text="Edit"/>
-                        <MFXButton fx:id="handleDelete" onAction="#handleDelete" text="Delete"/>
+                        <MFXButton fx:id="addDocumentButton" onAction="#newDocument" text="Add Document"/>
+                        <MFXButton fx:id="editDocumentButton" onAction="#handleEdit" text="Edit"/>
+                        <MFXButton fx:id="deleteDocumentButton" onAction="#handleDelete" text="Delete"/>
                     </children>
                 </HBox>
             </children>

@@ -1,6 +1,7 @@
 package dk.easv.gui.controllers;
 
 import dk.easv.be.Doc;
+import dk.easv.be.Role;
 import dk.easv.gui.controllerFactory.ControllerFactory;
 import dk.easv.gui.controllers.helpers.TableSetters;
 import dk.easv.gui.models.ContentModel;
@@ -9,7 +10,9 @@ import dk.easv.gui.models.interfaces.IContentModel;
 import dk.easv.gui.models.interfaces.IDocumentModel;
 import dk.easv.gui.rootContoller.RootController;
 import dk.easv.helpers.AlertHelper;
+import dk.easv.helpers.UserSingleClass;
 import dk.easv.helpers.ViewType;
+import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXTableView;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -28,6 +31,12 @@ public class DocumentsViewController extends RootController {
     private MFXTableView<Doc> documentsTable;
     @FXML
     private VBox rootVbox;
+    @FXML
+    private MFXButton addDocumentButton;
+    @FXML
+    private MFXButton editDocumentButton;
+    @FXML
+    private MFXButton deleteDocumentButton;
 
     @FXML
     private void newDocument(ActionEvent actionEvent) {
@@ -71,6 +80,12 @@ public class DocumentsViewController extends RootController {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        UserSingleClass actualUser = UserSingleClass.getInstance();
+        if (actualUser.getRole() == Role.SALESPERSON){
+            addDocumentButton.setDisable(true);
+            editDocumentButton.setText("View");
+            deleteDocumentButton.setDisable(true);
+        }
         try {
             model = DocumentModel.getInstance();
             model.setObsAllDocuments();

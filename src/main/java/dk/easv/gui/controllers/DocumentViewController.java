@@ -3,12 +3,14 @@ package dk.easv.gui.controllers;
 import animatefx.animation.FadeIn;
 import dk.easv.Main;
 import dk.easv.be.Content;
+import dk.easv.be.Role;
 import dk.easv.gui.controllerFactory.ControllerFactory;
 import dk.easv.gui.models.ContentModel;
 import dk.easv.gui.models.DrawnImageModel;
 import dk.easv.gui.models.interfaces.IContentModel;
 import dk.easv.gui.models.tasks.RetrieveContentTask;
 import dk.easv.gui.rootContoller.RootController;
+import dk.easv.helpers.UserSingleClass;
 import dk.easv.helpers.ViewType;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXScrollPane;
@@ -65,6 +67,10 @@ public class DocumentViewController extends RootController {
     private Pane scaleReferencePane;
     @FXML
     private GridPane rootGrid;
+    @FXML
+    private HBox controlsHbox;
+    @FXML
+    private MFXButton saveButton;
 
     /**
      * This function initializes the URL and ResourceBundle and populates the content if the document
@@ -76,6 +82,7 @@ public class DocumentViewController extends RootController {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
         if (model.getDocumentId() != 0) {
             populateContent();
         }
@@ -87,7 +94,11 @@ public class DocumentViewController extends RootController {
 
         scaleReferencePane = vbox;
 
-//        progressiveSave();
+        UserSingleClass actualUser = UserSingleClass.getInstance();
+        if (actualUser.getRole() == Role.SALESPERSON){
+            controlsHbox.setVisible(false);
+            saveButton.setDisable(true);
+        }
     }
 
     /**

@@ -1,11 +1,13 @@
 package dk.easv.gui.controllers;
 
 import dk.easv.be.Project;
+import dk.easv.be.Role;
 import dk.easv.gui.controllerFactory.ControllerFactory;
 import dk.easv.gui.controllers.helpers.TableSetters;
 import dk.easv.gui.models.ProjectModel;
 import dk.easv.gui.rootContoller.RootController;
 import dk.easv.helpers.AlertHelper;
+import dk.easv.helpers.UserSingleClass;
 import dk.easv.helpers.ViewType;
 import io.github.palexdev.materialfx.controls.MFXTableView;
 import javafx.event.ActionEvent;
@@ -13,6 +15,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -26,6 +29,8 @@ public class ProjectsViewController extends RootController {
     private MFXTableView<Project> projectsTable;
     @FXML
     private VBox rootVBox;
+    @FXML
+    private HBox crudHBox;
 
     @FXML
     private void newProject(ActionEvent actionEvent) {
@@ -71,14 +76,7 @@ public class ProjectsViewController extends RootController {
         }
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        try {
-            TableSetters.setUpProjectTable(projectsTable);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
+
 
     @FXML
     private void viewDocumentsOnAction(ActionEvent actionEvent) {
@@ -92,6 +90,19 @@ public class ProjectsViewController extends RootController {
             AlertHelper alertHelper = new AlertHelper( "No project selected", Alert.AlertType.WARNING);
             alertHelper.showAndWait();
         } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        UserSingleClass actualUser = UserSingleClass.getInstance();
+        if (actualUser.getRole() == Role.SALESPERSON){
+            crudHBox.setVisible(false);
+        }
+        try {
+            TableSetters.setUpProjectTable(projectsTable);
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }

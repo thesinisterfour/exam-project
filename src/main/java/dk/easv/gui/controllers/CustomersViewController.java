@@ -1,6 +1,7 @@
 package dk.easv.gui.controllers;
 
 import dk.easv.be.Customer;
+import dk.easv.be.Role;
 import dk.easv.gui.controllerFactory.ControllerFactory;
 import dk.easv.gui.controllers.helpers.TableSetters;
 import dk.easv.gui.models.CustomerModel;
@@ -8,6 +9,7 @@ import dk.easv.gui.models.ProjectModel;
 import dk.easv.gui.models.interfaces.ICustomerModel;
 import dk.easv.gui.rootContoller.RootController;
 import dk.easv.helpers.AlertHelper;
+import dk.easv.helpers.UserSingleClass;
 import dk.easv.helpers.ViewType;
 import io.github.palexdev.materialfx.controls.MFXTableView;
 import javafx.event.ActionEvent;
@@ -15,6 +17,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -30,6 +33,8 @@ public class CustomersViewController extends RootController {
     private MFXTableView<Customer> customersTable;
     @FXML
     private VBox rootVBox;
+    @FXML
+    private HBox crudHBox;
 
 
     @FXML
@@ -79,18 +84,6 @@ public class CustomersViewController extends RootController {
         }
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-
-        try {
-            customerModel = CustomerModel.getInstance();
-            TableSetters.setUpCustomerTable(customersTable);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-
     @FXML
     private void viewProjectsAction(ActionEvent actionEvent) {
         try {
@@ -107,6 +100,20 @@ public class CustomersViewController extends RootController {
             mainBorderPane.setCenter(rootController.getView());
         } catch (IOException e) {
             throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        UserSingleClass actualUser = UserSingleClass.getInstance();
+        if (actualUser.getRole() == Role.SALESPERSON){
+            crudHBox.setVisible(false);
+        }
+        try {
+            customerModel = CustomerModel.getInstance();
+            TableSetters.setUpCustomerTable(customersTable);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

@@ -12,29 +12,6 @@
 
 <VBox fx:id="rootVBox" spacing="8.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.CustomersViewController">
     <children>
-        <!--      <GridPane VBox.vgrow="NEVER">-->
-        <!--        <columnConstraints>-->
-        <!--          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />-->
-        <!--        </columnConstraints>-->
-        <!--        <rowConstraints>-->
-        <!--          <RowConstraints maxHeight="267.1999877929687" minHeight="10.0" prefHeight="251.2" vgrow="SOMETIMES" />-->
-        <!--          <RowConstraints maxHeight="141.60001220703126" minHeight="10.0" prefHeight="42.39999999999998" vgrow="NEVER" />-->
-        <!--        </rowConstraints>-->
-        <!--         <children>-->
-        <!--            <MFXScrollPane fx:id="customersScrollPane" prefWidth="830.0">-->
-        <!--               <content>-->
-        <!--                  <HBox fx:id="customers" prefHeight="100.0" prefWidth="200.0" />-->
-        <!--               </content>-->
-        <!--            </MFXScrollPane>-->
-        <!--            <HBox alignment="CENTER_RIGHT" spacing="8.0" GridPane.rowIndex="1">-->
-        <!--               <children>-->
-        <!--                  <MFXButton fx:id="createCustomer" onAction="#createCustomer" text="New Customer" />-->
-        <!--                  <MFXButton fx:id="edit" text="Edit" />-->
-        <!--                  <MFXButton fx:id="delete" text="Delete" />-->
-        <!--               </children>-->
-        <!--            </HBox>-->
-        <!--         </children>-->
-        <!--      </GridPane>-->
         <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="8.0" VBox.vgrow="ALWAYS">
             <children>
                 <Label text="Customers" />
@@ -48,14 +25,14 @@
                   <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                      <HBox alignment="CENTER_RIGHT" spacing="8.0" GridPane.columnIndex="1">
+                  <MFXButton onAction="#viewProjectsAction" text="View Projects" />
+                      <HBox fx:id="crudHBox" alignment="CENTER_RIGHT" spacing="8.0" GridPane.columnIndex="1">
                           <children>
                               <MFXButton fx:id="createCustomer" onAction="#createCustomer" text="New Customer" />
                               <MFXButton fx:id="edit" onAction="#editCustomer" text="Edit" />
                               <MFXButton fx:id="delete" onAction="#deleteCustomer" text="Delete" />
                           </children>
                       </HBox>
-                  <MFXButton onAction="#viewProjectsAction" text="View Projects" />
                </children>
             </GridPane>
             </children>

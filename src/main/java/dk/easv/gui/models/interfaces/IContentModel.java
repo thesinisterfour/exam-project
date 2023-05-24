@@ -1,5 +1,6 @@
 package dk.easv.gui.models.interfaces;
 
+import dk.easv.helpers.CustomerType;
 import javafx.scene.image.Image;
 
 import java.io.IOException;
@@ -16,7 +17,7 @@ public interface IContentModel {
 
     void addImage(int contentId, int index) throws SQLException;
 
-    void saveAsPDF(String dest) throws SQLException, IOException;
+    void saveAsPDF(CustomerType aPrivate, String dest) throws SQLException, IOException;
 
     int getDocumentId();
 

@@ -2,6 +2,7 @@ package dk.easv.bll;
 
 import dk.easv.be.Content;
 import dk.easv.be.Doc;
+import dk.easv.helpers.CustomerType;
 import javafx.scene.image.Image;
 
 import java.io.IOException;
@@ -31,7 +32,7 @@ public interface IDocumentLogic {
 
     List<Doc> showOldDocuments() throws SQLException;
 
-    void generatePDF(Doc doc, String dest) throws IOException, SQLException;
+    void generatePDF(CustomerType type, int id, String dest) throws IOException, SQLException;
 
     ConcurrentMap<Integer, Doc> getProjectDocuments(int projectId) throws SQLException;
 }

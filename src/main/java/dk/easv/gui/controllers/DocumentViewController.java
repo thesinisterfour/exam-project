@@ -10,6 +10,7 @@ import dk.easv.gui.models.DrawnImageModel;
 import dk.easv.gui.models.interfaces.IContentModel;
 import dk.easv.gui.models.tasks.RetrieveContentTask;
 import dk.easv.gui.rootContoller.RootController;
+import dk.easv.helpers.CustomerType;
 import dk.easv.helpers.UserSingleClass;
 import dk.easv.helpers.ViewType;
 import io.github.palexdev.materialfx.controls.MFXButton;
@@ -341,21 +342,8 @@ public class DocumentViewController extends RootController {
     }
 
     @FXML
-    private void saveAsPdfOnAction() {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Save PDF File");
-        fileChooser.getExtensionFilters().add(
-                new FileChooser.ExtensionFilter("PDF files", "*.pdf"));
-        File file = fileChooser.showSaveDialog(new Stage());
-        if (file != null) {
-            try {
-                model.saveAsPDF(file.getAbsolutePath());
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
+    private void saveAsPdfPublicOnAction() {
+        saveAsPDF(CustomerType.PUBLIC);
     }
 
     private HBox getHBoxWithNavButtons(Node node) {
@@ -435,6 +423,28 @@ public class DocumentViewController extends RootController {
         Scene scene = new Scene(controller.getView());
         stage.setScene(scene);
         stage.show();
+    }
+
+    @FXML
+    private void saveAsPdfPrivateOnAction(ActionEvent actionEvent) {
+        saveAsPDF(CustomerType.PRIVATE);
+    }
+
+    private void saveAsPDF(CustomerType type) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Save PDF File");
+        fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("PDF files", "*.pdf"));
+        File file = fileChooser.showSaveDialog(new Stage());
+        if (file != null) {
+            try {
+                model.saveAsPDF(type, file.getAbsolutePath());
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
   /*

@@ -4,6 +4,7 @@ import dk.easv.be.Customer;
 import dk.easv.be.Doc;
 import dk.easv.be.Project;
 import dk.easv.gui.controllerFactory.ControllerFactory;
+import dk.easv.gui.controllers.helpers.InputValidators;
 import dk.easv.gui.models.CustomerModel;
 import dk.easv.gui.models.DocumentMapperModel;
 import dk.easv.gui.models.DocumentModel;
@@ -19,7 +20,7 @@ import io.github.palexdev.materialfx.controls.MFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.net.URL;
@@ -36,44 +37,18 @@ public class CreateDocumentController extends RootController {
     @FXML
     private MFXFilterComboBox<Project> projectComboBox;
     @FXML
-    private GridPane rootGrid;
+    private VBox rootVBox;
 
     @FXML
     private void createOnAction(ActionEvent actionEvent) {
         try {
             final IDocumentModel model = DocumentModel.getInstance();
             final IDocumentMapperModel mapperModel = new DocumentMapperModel();
-            boolean emptyField = false;
-            Customer selectedCustomer = customerComboBox.getSelectionModel().getSelectedItem();
-            Project selectedProject = projectComboBox.getSelectionModel().getSelectedItem();
-            String name = nameTextField.getText();
-            if (name.isEmpty()) {
-                nameTextField.setPromptText("Required");
-                emptyField = true;
+            if (!InputValidators.isEmptyField(rootVBox.getChildren())) {
+                Project selectedProject = projectComboBox.getSelectionModel().getSelectedItem();
+                int docId = model.addDocument(new Doc(nameTextField.getText(),descriptionTextField.getText()));
+                mapperModel.addDocumentToProject(selectedProject.getProjectID(), docId);
             }
-            if (selectedCustomer == null) {
-                customerComboBox.setPromptText("Required");
-                emptyField = true;
-            }
-            if (selectedProject == null) {
-                projectComboBox.setPromptText("Required");
-                emptyField = true;
-            }
-            if (emptyField) {
-                return;
-            }
-
-
-            int docId;
-            String description = descriptionTextField.getText();
-
-            if (description.isEmpty()) {
-                docId = model.addDocument(new Doc(name));
-
-            } else {
-                docId = model.addDocument(new Doc(name, description));
-            }
-            mapperModel.addDocumentToProject(selectedProject.getProjectID(), docId);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -83,7 +58,7 @@ public class CreateDocumentController extends RootController {
     private void cancelOnAction(ActionEvent actionEvent) {
         try {
             RootController rootController = ControllerFactory.loadFxmlFile(ViewType.DOCUMENTS_VIEW);
-            BorderPane borderPane = (BorderPane) rootGrid.getParent();
+            BorderPane borderPane = (BorderPane) rootVBox.getParent();
             borderPane.setCenter(rootController.getView());
         } catch (IOException e) {
             throw new RuntimeException(e);

@@ -5,8 +5,10 @@
 <?import io.github.palexdev.materialfx.controls.MFXFilterComboBox?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<VBox xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.AssignProjectViewController" alignment="CENTER"
-      maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0"
+<VBox xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.AssignProjectViewController"
+      stylesheets="@../css/global-style.css" alignment="CENTER"
+      maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
+      prefWidth="600.0"
       spacing="8.0" xmlns="http://javafx.com/javafx/19">
     <children>
         <MFXFilterComboBox fx:id="projectsComboBox"/>

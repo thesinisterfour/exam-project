@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 
 
-<VBox fx:id="rootVBox" alignment="CENTER" prefHeight="538.0" prefWidth="702.0" spacing="8.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.AddCustomerViewController">
+<VBox fx:id="rootVBox" alignment="CENTER" prefHeight="538.0" prefWidth="702.0" spacing="8.0" stylesheets="@../css/global-style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.AddCustomerViewController">
    <children>
           <Label text="Create New Customer" />
           <MFXTextField fx:id="nameTextField" floatMode="BORDER" prefHeight="0.0" prefWidth="350.0" promptText="Name" />

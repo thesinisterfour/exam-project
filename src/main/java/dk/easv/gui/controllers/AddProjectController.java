@@ -2,20 +2,19 @@ package dk.easv.gui.controllers;
 
 import dk.easv.be.Customer;
 import dk.easv.be.Project;
-import dk.easv.gui.controllers.helpers.ZipCodeChecker;
+import dk.easv.gui.controllers.helpers.InputValidators;
 import dk.easv.gui.models.CustomerModel;
 import dk.easv.gui.models.ProjectModel;
 import dk.easv.gui.models.interfaces.ICustomerModel;
 import dk.easv.gui.models.interfaces.IProjectModel;
 import dk.easv.gui.rootContoller.RootController;
-import dk.easv.helpers.AlertHelper;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXDatePicker;
 import io.github.palexdev.materialfx.controls.MFXFilterComboBox;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
+import javafx.scene.layout.VBox;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -38,6 +37,8 @@ public class AddProjectController extends RootController {
     private MFXFilterComboBox<Customer> customerComboBox;
     @FXML
     private MFXButton submitButton;
+    @FXML
+    private VBox rootVBox;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -53,8 +54,8 @@ public class AddProjectController extends RootController {
 
     @FXML
     private void createOnAction(ActionEvent actionEvent) {
-        if (checkEmptyFields()) return;
-        int zipCode = ZipCodeChecker.checkZipCode(zipcodeTextField.getText());
+        if (InputValidators.isEmptyField(rootVBox.getChildren())) return;
+        int zipCode = InputValidators.checkZipCode(zipcodeTextField.getText());
         if (zipCode == 0) return;
         try {
             projectModel.addProject(new Project(nameTextField.getText(), startDatePicker.getValue(), endDatePicker.getValue(), customerComboBox.getSelectionModel().getSelectedItem().getCustomerID(), addressTextField.getText(), zipCode));
@@ -81,10 +82,11 @@ public class AddProjectController extends RootController {
         submitButton.setText("Update");
         submitButton.setOnAction(event -> {
             try {
-                if (checkEmptyFields()) return;
-                int zip = ZipCodeChecker.checkZipCode(zipcodeTextField.getText());
-                if (zip == 0) return;
-                projectModel.updateProject(new Project(project.getProjectID(), nameTextField.getText(), startDatePicker.getValue(), endDatePicker.getValue(), customerComboBox.getSelectionModel().getSelectedItem().getCustomerID(), addressTextField.getText(), Integer.parseInt(zipcodeTextField.getText())));
+                if (InputValidators.isEmptyField(rootVBox.getChildren())) return;
+                int zip = InputValidators.checkZipCode(zipcodeTextField.getText());
+                if (zip != 0) {
+                    projectModel.updateProject(new Project(project.getProjectID(), nameTextField.getText(), startDatePicker.getValue(), endDatePicker.getValue(), customerComboBox.getSelectionModel().getSelectedItem().getCustomerID(), addressTextField.getText(), Integer.parseInt(zipcodeTextField.getText())));
+                }
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
@@ -92,14 +94,4 @@ public class AddProjectController extends RootController {
         });
     }
 
-    //a method to check if all fields are filled out
-    private boolean checkEmptyFields(){
-        if (nameTextField.getText().isEmpty() || startDatePicker.getValue() == null || endDatePicker.getValue() == null || addressTextField.getText().isEmpty() || zipcodeTextField.getText().isEmpty() || customerComboBox.getSelectionModel().getSelectedItem() == null){
-            AlertHelper alertHelper = new AlertHelper("Please fill out all fields", Alert.AlertType.WARNING);
-            alertHelper.showAndWait();
-            return true;
-        } else{
-            return false;
-        }
-    }
 }

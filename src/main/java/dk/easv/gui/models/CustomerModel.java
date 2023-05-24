@@ -85,6 +85,9 @@ public class CustomerModel implements ICustomerModel {
 
     @Override
     public int updateCustomer(Customer customer) throws SQLException {
-        return crudLogic.updateCustomer(customer);
+        int rows = crudLogic.updateCustomer(customer);
+        loadAllCustomers();
+        setObsAllCustomers();
+        return rows;
     }
 }

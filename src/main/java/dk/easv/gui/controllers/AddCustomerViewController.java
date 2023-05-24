@@ -6,13 +6,15 @@ import dk.easv.gui.models.CustomerModel;
 import dk.easv.gui.models.interfaces.ICityModel;
 import dk.easv.gui.models.interfaces.ICustomerModel;
 import dk.easv.gui.rootContoller.RootController;
+import dk.easv.helpers.AlertHelper;
+import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.layout.GridPane;
-import javafx.stage.Stage;
+import javafx.scene.control.Alert;
+import javafx.scene.layout.VBox;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -23,10 +25,11 @@ public class AddCustomerViewController extends RootController {
     private final ICityModel cityModel = new CityModel();
     private final ICustomerModel customerModel = CustomerModel.getInstance();
     @FXML
-    private MFXTextField nameTextField, emailTextField, addressTextField, cityTextField, ZipCodeTextField;
-    private Stage stage;
+    private MFXTextField nameTextField, emailTextField, addressTextField, ZipCodeTextField;
     @FXML
-    private GridPane rootGrid;
+    private VBox rootVBox;
+    @FXML
+    private MFXButton submitButton;
 
     public AddCustomerViewController() throws SQLException {
     }
@@ -42,12 +45,40 @@ public class AddCustomerViewController extends RootController {
         nameTextField.setText("");
         emailTextField.setText("");
         addressTextField.setText("");
-        cityTextField.setText("");
         ZipCodeTextField.setText("");
     }
 
     @FXML
-    void submitButtonAction(ActionEvent event) {
+    private void submitButtonAction(ActionEvent event) {
+        if (!isEmptyField()) {
+            int zipCode = checkZipCode();
+            if (zipCode == 0) return;
+            try {
+                customerModel.add(new Customer(nameTextField.getText(), emailTextField.getText(), addressTextField.getText(), zipCode));
+            } catch (SQLException e) {
+                // catch if exception in add
+                throw new RuntimeException(e);
+            }
+            getStage().close();
+        }
+
+
+    }
+
+    private int checkZipCode() {
+        int zipCode = Integer.parseInt(ZipCodeTextField.getText());
+        try {
+            cityModel.get(zipCode);
+        } catch (SQLException e) {
+            // catch if city does not exist
+            AlertHelper alertHelper = new AlertHelper("City does not exist", Alert.AlertType.ERROR);
+            alertHelper.showAndWait();
+            return 0;
+        }
+        return zipCode;
+    }
+
+    private boolean isEmptyField() {
         ObservableList<Node> nodes = this.getView().getChildrenUnmodifiable();
         boolean emptyField = false;
         for (Node node : nodes) {
@@ -60,26 +91,34 @@ public class AddCustomerViewController extends RootController {
                 }
             }
         }
-        if (!emptyField) {
-            int zipCode = Integer.parseInt(ZipCodeTextField.getText());
-            try {
-                cityModel.get(zipCode);
-            } catch (SQLException e) {
-                // catch if city does not exist
-                System.out.println("City does not exist");
-                return;
-            }
-            try {
-                customerModel.add(new Customer(nameTextField.getText(), emailTextField.getText(), addressTextField.getText(), zipCode));
-            } catch (SQLException e) {
-                // catch if exception in add
-                throw new RuntimeException(e);
-            }
-        }
-        getStage().close();
-
+        return emptyField;
     }
 
+
+    public void setCustomerData(Customer customer) {
+
+
+        nameTextField.setText(customer.getCustomerName());
+        emailTextField.setText(customer.getCustomerEmail());
+        addressTextField.setText(customer.getCustomerAddress());
+        ZipCodeTextField.setText(String.valueOf(customer.getZipCode()));
+
+        submitButton.setText("Edit Customer");
+        submitButton.setOnAction(event -> {
+            try {
+                if (isEmptyField()) {
+                    return;
+                }
+                int zipcode = checkZipCode();
+                if (zipcode == 0) return;
+                customerModel.updateCustomer(new Customer(customer.getCustomerID(), nameTextField.getText(), emailTextField.getText(), addressTextField.getText(), zipcode));
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            getStage().close();
+        });
+
+    }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
     }

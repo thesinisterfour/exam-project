@@ -1,8 +1,6 @@
 package dk.easv.gui.controllers;
 
-import dk.easv.be.Customer;
 import dk.easv.be.Doc;
-import dk.easv.be.Project;
 import dk.easv.be.Role;
 import dk.easv.gui.controllerFactory.ControllerFactory;
 import dk.easv.gui.controllers.tasks.LoadCustomerModelTask;
@@ -10,23 +8,17 @@ import dk.easv.gui.controllers.tasks.LoadDocumentModelTask;
 import dk.easv.gui.controllers.tasks.LoadProjectModelTask;
 import dk.easv.gui.models.CustomerModel;
 import dk.easv.gui.models.ProjectModel;
-import dk.easv.gui.rootContoller.IRootController;
 import dk.easv.gui.rootContoller.RootController;
 import dk.easv.helpers.AlertHelper;
 import dk.easv.helpers.DocumentHelper;
 import dk.easv.helpers.UserSingleClass;
 import dk.easv.helpers.ViewType;
 import io.github.palexdev.materialfx.controls.MFXButton;
-import io.github.palexdev.materialfx.controls.MFXRectangleToggleNode;
-import io.github.palexdev.materialfx.controls.MFXTableView;
-import io.github.palexdev.materialfx.controls.MFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -42,37 +34,16 @@ public class MainViewController extends RootController {
 
     private final UserSingleClass actualUser = UserSingleClass.getInstance();
     @FXML
-    public MFXButton addDocument,
-            businessLayer,
-            deleteDocument,
-            HomeLayer,
-            editDocument,
-            workersLayer;
-    @FXML
-    public MFXTableView<Customer> customerTable;
-    @FXML
-    public MFXTableView<Doc> documentsTable;
-    @FXML
-    public MFXTableView<Project> projectTable;
-    @FXML
-    public MFXTextField searchBar;
-    @FXML
-    public HBox mainHbox;
+    public MFXButton businessLayer,
+            workersLayer,
+            projectsButton,
+            documentsButton,
+            logoutButton;
     @FXML
     public VBox iconsVbox;
-    @FXML
-    public Label customerLabel, projectLabel;
     private Stage stage;
     @FXML
     private BorderPane mainBorderPane;
-    @FXML
-    private VBox centerVBox;
-    @FXML
-    private MFXButton logoutButton;
-    @FXML
-    private MFXRectangleToggleNode projectsToggle;
-    @FXML
-    private VBox customersVBox;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -107,12 +78,7 @@ public class MainViewController extends RootController {
 
 
 
-        try {
-            IRootController controller = ControllerFactory.loadFxmlFile(ViewType.BUSINESS_VIEW);
-            mainBorderPane.setCenter(controller.getView());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+
 
         roleView();
 
@@ -121,8 +87,8 @@ public class MainViewController extends RootController {
     private void roleView() {
         if (actualUser != null) {
             if (actualUser.getRole() == Role.TECHNICIAN) {
-                iconsVbox.getChildren().remove(businessLayer);
-                iconsVbox.getChildren().remove(workersLayer);
+                setupTechnician();
+
             }
             if (actualUser.getRole() == Role.SALESPERSON) {
                 iconsVbox.getChildren().remove(workersLayer);
@@ -132,6 +98,25 @@ public class MainViewController extends RootController {
 
             }
         }
+    }
+
+    private void setupTechnician() {
+        iconsVbox.getChildren().remove(businessLayer);
+        iconsVbox.getChildren().remove(workersLayer);
+
+        projectsButton.setOnAction(event -> {
+            try {
+                ProjectModel.getInstance().getProjectsByWorkerId(actualUser.getId());
+                RootController controller = ControllerFactory.loadFxmlFile(ViewType.PROJECTS_VIEW);
+                mainBorderPane.setCenter(controller.getView());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+
     }
 
     @FXML
@@ -160,6 +145,7 @@ public class MainViewController extends RootController {
     private void displayProjects(ActionEvent actionEvent) {
         try {
             CustomerModel.getInstance().setSelectedCustomerId(0);
+            ProjectModel.getInstance().getAllProjects();
             RootController controller = ControllerFactory.loadFxmlFile(ViewType.PROJECTS_VIEW);
             mainBorderPane.setCenter(controller.getView());
         } catch (IOException e) {

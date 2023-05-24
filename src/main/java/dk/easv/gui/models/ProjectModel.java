@@ -45,7 +45,6 @@ public class ProjectModel implements IProjectModel {
 
     @Override
     public ObservableList<Project> getProjectObservableList() throws SQLException {
-        getAllProjects();
         return projectObservableList;
     }
 

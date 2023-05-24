@@ -62,6 +62,7 @@ public class AddProjectController extends RootController {
             // catch if exception in add
             throw new RuntimeException(e);
         }
+        getStage().close();
     }
 
 

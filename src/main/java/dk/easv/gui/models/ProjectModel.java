@@ -13,7 +13,7 @@ import java.sql.SQLException;
 import java.util.concurrent.ConcurrentMap;
 
 public class ProjectModel implements IProjectModel {
-    private static ProjectModel INSTANCE;
+    private static IProjectModel INSTANCE;
     private final ObservableList<Project> projectObservableList;
     private final ICRUDLogic logic = new CRUDLogic();
     private int selectedProjectId = 0;
@@ -23,7 +23,7 @@ public class ProjectModel implements IProjectModel {
         getAllProjects();
     }
 
-    public static ProjectModel getInstance() throws SQLException {
+    public static IProjectModel getInstance() throws SQLException {
         if (INSTANCE == null) {
             INSTANCE = new ProjectModel();
         }
@@ -104,6 +104,12 @@ public class ProjectModel implements IProjectModel {
     @Override
     public void updateProject(Project project) throws SQLException {
         logic.updateProject(project);
+        getAllProjects();
+    }
+
+    @Override
+    public void deleteProject(Project project) throws SQLException {
+        logic.deleteProject(project);
         getAllProjects();
     }
 }

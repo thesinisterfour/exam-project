@@ -97,4 +97,6 @@ public interface ICRUDLogic {
     int deleteCustomer(Customer customer) throws SQLException;
 
     void updateProject(Project project) throws SQLException;
+
+    void deleteProject(Project project) throws SQLException;
 }

@@ -280,4 +280,10 @@ public class CRUDLogic implements ICRUDLogic {
         projectDao.update(project);
     }
 
+    @Override
+    public void deleteProject(Project project) throws SQLException {
+        ICRUDDao<Project> projectDao = CRUDDAOFactory.getDao(DAOType.PROJECT_DAO);
+        projectDao.delete(project.getProjectID());
+    }
+
 }

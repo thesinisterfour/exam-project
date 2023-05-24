@@ -61,6 +61,14 @@ public class ProjectsViewController extends RootController {
 
     @FXML
     private void handleDelete(ActionEvent actionEvent) {
+        try {
+            ProjectModel.getInstance().deleteProject(projectsTable.getSelectionModel().getSelectedValues().get(0));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (IndexOutOfBoundsException e) {
+            AlertHelper alertHelper = new AlertHelper( "No project selected", Alert.AlertType.WARNING);
+            alertHelper.showAndWait();
+        }
     }
 
     @Override

@@ -12,7 +12,7 @@ import java.util.concurrent.ConcurrentMap;
 
 public class CustomerModel implements ICustomerModel {
 
-    private static CustomerModel INSTANCE;
+    private static ICustomerModel INSTANCE;
     private final ICRUDLogic crudLogic = new CRUDLogic();
     /**
      * @returns a ConcurrentMap of Customer objects. The method retrieves the customers using an object of crudLogic class.
@@ -29,7 +29,7 @@ public class CustomerModel implements ICustomerModel {
         setObsAllCustomers();
     }
 
-    public static CustomerModel getInstance() throws SQLException {
+    public static ICustomerModel getInstance() throws SQLException {
         if (INSTANCE == null) {
             INSTANCE = new CustomerModel();
         }

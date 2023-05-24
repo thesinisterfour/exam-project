@@ -3,6 +3,7 @@ package dk.easv.gui.controllers;
 import dk.easv.be.Customer;
 import dk.easv.gui.controllerFactory.ControllerFactory;
 import dk.easv.gui.controllers.helpers.TableSetters;
+import dk.easv.gui.models.CustomerModel;
 import dk.easv.gui.models.interfaces.ICustomerModel;
 import dk.easv.gui.rootContoller.RootController;
 import dk.easv.helpers.AlertHelper;
@@ -79,7 +80,9 @@ public class CustomersViewController extends RootController {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
         try {
+            customerModel = CustomerModel.getInstance();
             TableSetters.setUpCustomerTable(customersTable);
         } catch (SQLException e) {
             throw new RuntimeException(e);

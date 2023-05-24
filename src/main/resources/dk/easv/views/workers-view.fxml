@@ -8,23 +8,6 @@
       stylesheets="@../css/global-style.css" xmlns="http://javafx.com/javafx/19"
       fx:controller="dk.easv.gui.controllers.WorkersViewController">
     <children>
-        <!--      <GridPane VBox.vgrow="NEVER">-->
-        <!--        <columnConstraints>-->
-        <!--          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />-->
-        <!--        </columnConstraints>-->
-        <!--        <rowConstraints>-->
-        <!--          <RowConstraints maxHeight="239.19998779296876" minHeight="10.0" prefHeight="239.19998779296876" vgrow="SOMETIMES" />-->
-        <!--          <RowConstraints maxHeight="129.60001220703126" minHeight="10.0" prefHeight="29.600012207031256" vgrow="SOMETIMES" />-->
-        <!--        </rowConstraints>-->
-        <!--         <children>-->
-        <!--            <MFXScrollPane fx:id="workerScrollPane">-->
-        <!--               <content>-->
-        <!--                  <HBox fx:id="workers" prefHeight="100.0" prefWidth="200.0" />-->
-        <!--               </content>-->
-        <!--            </MFXScrollPane>-->
-        <!--
-        <!-                 </children>-->
-        <!--      </GridPane>-->
         <VBox VBox.vgrow="ALWAYS">
             <children>
                 <Label fx:id="projectLabel" text="Workers"/>
@@ -39,7 +22,7 @@
                 </HBox>
             </children>
         </VBox>
-        <VBox>
+        <VBox VBox.vgrow="ALWAYS">
             <children>
                 <Label fx:id="Projects" text="Projects"/>
                 <MFXTableView fx:id="projectsTable" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
@@ -47,7 +30,7 @@
                 <HBox alignment="CENTER_RIGHT" spacing="8.0" GridPane.rowIndex="1">
                     <children>
                         <MFXButton onAction="#assignProject" text="Assign new project"/>
-                        <MFXButton fx:id="handleDelete1" onAction="#deassignProject" text="Deassign"/>
+                        <MFXButton onAction="#deassignProject" text="Deassign"/>
                     </children>
                 </HBox>
             </children>

@@ -131,7 +131,7 @@ public class DocumentLogic implements IDocumentLogic {
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 ImageIO.write(bufferedImage, "png", baos);
                 com.itextpdf.layout.element.Image img = new com.itextpdf.layout.element.Image(ImageDataFactory.create(baos.toByteArray()));
-                img.setWidth(document.getPdfDocument().getDefaultPageSize().getWidth() - 100);
+                img.setWidth(document.getPdfDocument().getDefaultPageSize().getWidth() - 1);
                 img.setMarginTop(35);
                 document.setHorizontalAlignment(HorizontalAlignment.CENTER);
                 document.add(img);

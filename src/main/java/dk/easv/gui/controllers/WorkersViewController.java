@@ -10,34 +10,24 @@ import dk.easv.gui.models.interfaces.IProjectModel;
 import dk.easv.gui.models.interfaces.IUserModel;
 import dk.easv.gui.rootContoller.RootController;
 import dk.easv.helpers.AlertHelper;
-import dk.easv.helpers.UserSingleClass;
 import dk.easv.helpers.ViewType;
-import io.github.palexdev.materialfx.controls.MFXScrollPane;
 import io.github.palexdev.materialfx.controls.MFXTableView;
-import io.github.palexdev.materialfx.controls.MFXTextField;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.concurrent.ConcurrentMap;
 
 public class WorkersViewController extends RootController {
 
     private final IUserModel userModel = UserModel.getInstance();
-    private final UserSingleClass actualUser = UserSingleClass.getInstance();
-    @FXML
-    private MFXTextField searchBar;
-    @FXML
-    private MFXScrollPane workerScrollPane;
-    @FXML
-    private HBox workers;
-    private User selectedUser = null;
     @FXML
     private MFXTableView<User> workersTable;
     @FXML
@@ -46,15 +36,15 @@ public class WorkersViewController extends RootController {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
-//            initUsers();
             TableSetters.setupUsersTable(workersTable);
             TableSetters.setUpProjectTable(projectsTable);
             IProjectModel projectModel = ProjectModel.getInstance();
-
+            projectModel.setSelectedUserId(0);
             workersTable.getSelectionModel().selectionProperty().addListener((observable, oldValue, newValue) -> {
                 if (!newValue.isEmpty()) {
                     try {
-                        projectModel.getProjectsByWorkerId(newValue.values().stream().findFirst().get().getUserID());
+                        ConcurrentMap<Integer, Project> map = projectModel.getProjectsByWorkerId(newValue.values().stream().findFirst().get().getUserID());
+                        projectsTable.setItems(FXCollections.observableArrayList(map.values()));
                     } catch (SQLException e) {
                         throw new RuntimeException(e);
                     }
@@ -69,7 +59,6 @@ public class WorkersViewController extends RootController {
     @FXML
     private void handleEdit() {
         try {
-//            User selectedUser = hboxController.getSelectedUser();
             User selectedUser = workersTable.getSelectionModel().getSelectedValues().get(0);
             if (selectedUser == null) {
                 AlertHelper alertHelper = new AlertHelper("Please select a user to edit", Alert.AlertType.ERROR);

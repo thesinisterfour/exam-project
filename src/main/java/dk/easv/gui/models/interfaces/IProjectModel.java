@@ -9,6 +9,8 @@ import java.util.concurrent.ConcurrentMap;
 public interface IProjectModel {
     ConcurrentMap<Integer, Project> getAllProjects() throws SQLException;
 
+    void loadAllProjects() throws SQLException;
+
     ObservableList<Project> getProjectObservableList() throws SQLException;
 
     ConcurrentMap<Integer, Project> getProjectsByCustomerId(int id) throws SQLException;
@@ -28,4 +30,8 @@ public interface IProjectModel {
     void updateProject(Project project) throws SQLException;
 
     void deleteProject(Project project) throws SQLException;
+
+    int getSelectedUserId();
+
+    void setSelectedUserId(int selectedUserId);
 }

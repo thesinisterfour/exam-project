@@ -94,7 +94,7 @@ public class CustomersViewController extends RootController {
             }
 
             customerModel.setSelectedCustomerId(customersTable.getSelectionModel().getSelectedValues().get(0).getCustomerID());
-            ProjectModel.getInstance().getAllProjects();
+            ProjectModel.getInstance().loadAllProjects();
             BorderPane mainBorderPane = (BorderPane) rootVBox.getParent();
             RootController rootController = ControllerFactory.loadFxmlFile(ViewType.PROJECTS_VIEW);
             mainBorderPane.setCenter(rootController.getView());

@@ -9,6 +9,9 @@ public interface ICustomerModel {
 
     int add(Customer customer) throws SQLException;
 
+    int updateCustomer(Customer customer) throws SQLException;
+
+    int deleteCustomer(Customer customer) throws SQLException;
 
     ObservableList<Customer> getObsCustomers() throws SQLException;
 
@@ -18,7 +21,4 @@ public interface ICustomerModel {
 
     void setSelectedCustomerId(int selectedCustomerId);
 
-    int deleteCustomer(Customer customer) throws SQLException;
-
-    int updateCustomer(Customer customer) throws SQLException;
 }

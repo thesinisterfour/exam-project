@@ -70,7 +70,7 @@ public class CreateDocumentController extends RootController {
         try {
             ICustomerModel customerModel = CustomerModel.getInstance();
             IProjectModel projectModel = ProjectModel.getInstance();
-            customerComboBox.setItems(customerModel.getObsAllCustomers());
+            customerComboBox.setItems(customerModel.getObsCustomers());
             customerComboBox.selectedItemProperty().addListener((observable, oldValue, newValue) -> {
                 try {
                     projectModel.getProjectsByCustomerId(newValue.getCustomerID());

@@ -45,7 +45,7 @@ public class AddProjectController extends RootController {
         try {
             ICustomerModel customerModel = CustomerModel.getInstance();
             projectModel = ProjectModel.getInstance();
-            customerComboBox.setItems(customerModel.getObsAllCustomers());
+            customerComboBox.setItems(customerModel.getObsCustomers());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

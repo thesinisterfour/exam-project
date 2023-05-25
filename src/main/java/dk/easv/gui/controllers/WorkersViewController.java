@@ -142,4 +142,20 @@ public class WorkersViewController extends RootController {
             throw new RuntimeException(e);
         }
     }
+
+    @FXML
+    private void viewDocuments(ActionEvent actionEvent) {
+        try {
+            ProjectModel.getInstance().setSelectedProjectId(projectsTable.getSelectionModel().getSelectedValues().get(0).getProjectID());
+            BorderPane rootBorderPane = (BorderPane) rootVBox.getParent();
+            rootBorderPane.setCenter(ControllerFactory.loadFxmlFile(ViewType.DOCUMENTS_VIEW).getView());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (IndexOutOfBoundsException e) {
+            AlertHelper alertHelper = new AlertHelper("No project selected", Alert.AlertType.WARNING);
+            alertHelper.showAndWait();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

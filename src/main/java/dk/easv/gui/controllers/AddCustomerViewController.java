@@ -47,7 +47,6 @@ public class AddCustomerViewController extends RootController {
 
     @FXML
     private void submitButtonAction(ActionEvent event) {
-
         if (!InputValidators.isEmptyField(rootVBox.getChildren())) {
             int zipCode = InputValidators.checkZipCode(zipCodeTextField.getText());
             if (zipCode == 0) return;

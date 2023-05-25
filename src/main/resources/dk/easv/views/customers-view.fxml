@@ -4,7 +4,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.*?>
-<VBox xmlns:fx="http://javafx.com/fxml/1" fx:id="rootVBox" spacing="8.0" xmlns="http://javafx.com/javafx/19"
+<VBox xmlns:fx="http://javafx.com/fxml/1" fx:id="rootVBox" spacing="10.0" xmlns="http://javafx.com/javafx/19"
       fx:controller="dk.easv.gui.controllers.CustomersViewController">
     <children>
         <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="8.0" VBox.vgrow="ALWAYS">

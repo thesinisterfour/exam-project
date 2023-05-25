@@ -45,7 +45,7 @@ public class TableSetters {
         table.getTableColumns().setAll(idColumn, nameColumn, emailColumn, addressColumn, zipCodeColumn);
         table.autosizeColumnsOnInitialization();
 
-        table.setItems(customerModel.getObsAllCustomers());
+        table.setItems(customerModel.getObsCustomers());
         try {
             table.getSelectionModel().setAllowsMultipleSelection(false);
         } catch (NoSuchElementException e) {

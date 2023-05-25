@@ -19,6 +19,17 @@ public class ProjectTest {
     }
 
     @Test
+    public void testConstructor2() {
+        Project project = new Project("Project1", LocalDate.of(2022, 1, 1), LocalDate.of(2022, 1, 1), 1234, "Address1", 1234);
+        Assertions.assertEquals("Project1", project.getProjectName());
+        Assertions.assertEquals(LocalDate.of(2022, 1, 1), project.getStartDate());
+        Assertions.assertEquals(LocalDate.of(2022, 1, 1), project.getEndDate());
+        Assertions.assertEquals(1234, project.getCustomerID());
+        Assertions.assertEquals("Address1", project.getProjectAddress());
+        Assertions.assertEquals(1234, project.getProjectZipcode());
+    }
+
+    @Test
     public void testProjectID() {
         Project project = new Project(1, "Project1", "Address1", 1234);
         Assertions.assertEquals(1, project.getProjectID());
@@ -69,5 +80,11 @@ public class ProjectTest {
         Project project = new Project(1, "Project1", "Address1", 1234);
         project.setProjectZipcode(5678);
         Assertions.assertEquals(5678, project.getProjectZipcode());
+    }
+
+    @Test
+    public void testToString() {
+        Project project = new Project(1, "Project1", "Address1", 1234);
+        Assertions.assertEquals("Project1", project.toString());
     }
 }

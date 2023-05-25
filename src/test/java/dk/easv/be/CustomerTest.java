@@ -44,4 +44,22 @@ class CustomerTest {
         assertEquals(1000, customer.getZipCode());
     }
 
+    @Test
+    void testConstructorWithIdAndZipCode() {
+        Customer customer = new Customer(1, "Jane Smith", "jane.smith@example.com", "456 High St", 1000);
+        assertEquals(1, customer.getCustomerID());
+        assertEquals("Jane Smith", customer.getCustomerName());
+        assertEquals("jane.smith@example.com", customer.getCustomerEmail());
+        assertEquals("456 High St", customer.getCustomerAddress());
+        assertEquals(1000, customer.getZipCode());
+    }
+
+    @Test
+    void testToString() {
+        Customer customer = new Customer(1, "John Doe", "john.doe@example.com", "123 Main St");
+        assertEquals("ID = 1 Name = John Doe", customer.toString());
+    }
+
+
+
 }

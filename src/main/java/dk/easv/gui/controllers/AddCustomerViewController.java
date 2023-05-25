@@ -1,18 +1,22 @@
 package dk.easv.gui.controllers;
 
 import dk.easv.be.Customer;
+import dk.easv.gui.controllerFactory.ControllerFactory;
 import dk.easv.gui.controllers.helpers.InputValidators;
 import dk.easv.gui.models.CityModel;
 import dk.easv.gui.models.CustomerModel;
 import dk.easv.gui.models.interfaces.ICityModel;
 import dk.easv.gui.models.interfaces.ICustomerModel;
 import dk.easv.gui.rootContoller.RootController;
+import dk.easv.helpers.ViewType;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
@@ -33,8 +37,7 @@ public class AddCustomerViewController extends RootController {
 
     @FXML
     void cancelButtonAction(ActionEvent event) {
-        getStage().close();
-
+        goBack();
     }
 
     @FXML
@@ -57,13 +60,19 @@ public class AddCustomerViewController extends RootController {
                 // catch if exception in add
                 throw new RuntimeException(e);
             }
-            getStage().close();
+            goBack();
         }
-
-
     }
 
-
+    private void goBack() {
+        try {
+            RootController rootController = ControllerFactory.loadFxmlFile(ViewType.CUSTOMERS_VIEW);
+            BorderPane borderPane = (BorderPane) rootVBox.getParent();
+            borderPane.setCenter(rootController.getView());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 
     public void setCustomerData(Customer customer) {
@@ -79,11 +88,11 @@ public class AddCustomerViewController extends RootController {
                     int zipcode = InputValidators.checkZipCode(zipCodeTextField.getText());
                     if (zipcode == 0) return;
                     customerModel.updateCustomer(new Customer(customer.getCustomerID(), nameTextField.getText(), emailTextField.getText(), addressTextField.getText(), zipcode));
+                    goBack();
                 }
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
-            getStage().close();
         });
 
     }

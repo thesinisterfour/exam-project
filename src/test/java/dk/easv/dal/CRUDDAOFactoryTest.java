@@ -51,6 +51,22 @@ class CRUDDAOFactoryTest {
         assertEquals(expected.getClass(), actual.getClass());
     }
 
+    @Test
+    void getDaoProject(){
+        ICRUDDao<Project> expected = new ProjectDAO();
+        ICRUDDao<Project> actual = CRUDDAOFactory.getDao(DAOType.PROJECT_DAO);
+        assert actual != null;
+        assertEquals(expected.getClass(), actual.getClass());
+    }
+
+    @Test
+    void getDaoRole(){
+        ICRUDDao<Role> expected = new RoleDAO();
+        ICRUDDao<Role> actual = CRUDDAOFactory.getDao(DAOType.ROLE_DAO);
+        assert actual != null;
+        assertEquals(expected.getClass(), actual.getClass());
+    }
+
     @DisplayName("Test if getDao returns null")
     @Test
     void getDaoNull() {

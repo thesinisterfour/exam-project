@@ -10,7 +10,7 @@ import dk.easv.gui.models.interfaces.IContentModel;
 import dk.easv.gui.models.interfaces.IDocumentModel;
 import dk.easv.gui.rootContoller.RootController;
 import dk.easv.helpers.AlertHelper;
-import dk.easv.helpers.UserSingleClass;
+import dk.easv.helpers.CurrentUser;
 import dk.easv.helpers.ViewType;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXTableView;
@@ -80,7 +80,7 @@ public class DocumentsViewController extends RootController {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        UserSingleClass actualUser = UserSingleClass.getInstance();
+        CurrentUser actualUser = CurrentUser.getInstance();
         if (actualUser.getRole() == Role.SALESPERSON){
             addDocumentButton.setDisable(true);
             editDocumentButton.setText("View");

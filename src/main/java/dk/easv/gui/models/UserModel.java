@@ -8,7 +8,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.sql.SQLException;
-import java.util.concurrent.ConcurrentMap;
 
 public class UserModel implements IUserModel {
 
@@ -16,11 +15,14 @@ public class UserModel implements IUserModel {
     private final ICRUDLogic crudLogic = new CRUDLogic();
 
     private final ObservableList<User> obsAllUsers;
-    private ConcurrentMap<Integer, User> allUsers;
 
     private UserModel() {
         obsAllUsers = FXCollections.observableArrayList();
-        loadAllUsers();
+        try {
+            loadAllUsers();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 
@@ -35,10 +37,6 @@ public class UserModel implements IUserModel {
      * @throws SQLException
      * @returns a ConcurrentMap of Users with Integer keys
      */
-    @Override
-    public ConcurrentMap<Integer, User> getAllUsers() throws SQLException {
-        return allUsers;
-    }
 
     @Override
     public int addUser(User user) throws SQLException {
@@ -62,17 +60,12 @@ public class UserModel implements IUserModel {
     }
 
     @Override
-    public void loadAllUsers() {
-        try {
-            allUsers = crudLogic.getAllUsers();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public void loadAllUsers() throws SQLException {
+        obsAllUsers.setAll(crudLogic.getAllUsers().values());
     }
 
     @Override
-    public ObservableList<User> getObsAllUsers() throws SQLException {
-        obsAllUsers.setAll(allUsers.values());
+    public ObservableList<User> getObsAllUsers() {
         return obsAllUsers;
     }
 }

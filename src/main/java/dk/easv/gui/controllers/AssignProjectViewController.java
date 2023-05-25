@@ -6,12 +6,14 @@ import dk.easv.gui.models.ProjectModel;
 import dk.easv.gui.models.interfaces.IProjectModel;
 import dk.easv.gui.rootContoller.RootController;
 import io.github.palexdev.materialfx.controls.MFXFilterComboBox;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.concurrent.ConcurrentMap;
 
 public class AssignProjectViewController extends RootController {
     IProjectModel projectModel;
@@ -22,8 +24,8 @@ public class AssignProjectViewController extends RootController {
     public void initialize(URL location, ResourceBundle resources) {
         try {
             projectModel = ProjectModel.getInstance();
-            projectModel.getAllProjects();
-            projectsComboBox.setItems(projectModel.getProjectObservableList());
+            ConcurrentMap<Integer, Project> projects = projectModel.getAllProjects();
+            projectsComboBox.setItems(FXCollections.observableArrayList(projects.values()));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

@@ -4,10 +4,8 @@ import dk.easv.be.User;
 import javafx.collections.ObservableList;
 
 import java.sql.SQLException;
-import java.util.concurrent.ConcurrentMap;
 
 public interface IUserModel {
-    ConcurrentMap<Integer, User> getAllUsers() throws SQLException;
 
     int addUser(User user) throws SQLException;
 
@@ -15,7 +13,7 @@ public interface IUserModel {
 
     int deleteUser(int id) throws SQLException;
 
-    void loadAllUsers();
+    void loadAllUsers() throws SQLException;
 
-    ObservableList<User> getObsAllUsers() throws SQLException;
+    ObservableList<User> getObsAllUsers();
 }

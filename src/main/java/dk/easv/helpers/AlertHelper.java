@@ -11,7 +11,6 @@ import javafx.scene.control.Alert;
 import java.util.Map;
 
 public class AlertHelper {
-    //TODO add icons to alerts
     private MFXGenericDialog dialogContent;
     private final MFXStageDialog dialog;
     private boolean confirmed;

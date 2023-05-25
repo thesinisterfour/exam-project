@@ -2,18 +2,18 @@ package dk.easv.helpers;
 
 import dk.easv.be.Role;
 
-public class UserSingleClass {
-    private static UserSingleClass instance;
+public class CurrentUser {
+    private static CurrentUser instance;
     private int id;
     private String name;
     private Role role;
 
-    private UserSingleClass() {
+    private CurrentUser() {
     }
 
-    public static UserSingleClass getInstance() {
+    public static CurrentUser getInstance() {
         if (instance == null) {
-            instance = new UserSingleClass();
+            instance = new CurrentUser();
         }
         return instance;
     }

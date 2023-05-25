@@ -8,10 +8,11 @@ import dk.easv.gui.controllers.tasks.LoadDocumentModelTask;
 import dk.easv.gui.controllers.tasks.LoadProjectModelTask;
 import dk.easv.gui.models.CustomerModel;
 import dk.easv.gui.models.ProjectModel;
+import dk.easv.gui.models.interfaces.IProjectModel;
 import dk.easv.gui.rootContoller.RootController;
 import dk.easv.helpers.AlertHelper;
 import dk.easv.helpers.DocumentHelper;
-import dk.easv.helpers.UserSingleClass;
+import dk.easv.helpers.CurrentUser;
 import dk.easv.helpers.ViewType;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import javafx.event.ActionEvent;
@@ -32,7 +33,8 @@ import java.util.concurrent.Executors;
 
 public class MainViewController extends RootController {
 
-    private final UserSingleClass actualUser = UserSingleClass.getInstance();
+    private final CurrentUser actualUser = CurrentUser.getInstance();
+    private IProjectModel projectModel;
     @FXML
     public MFXButton businessLayer,
             workersLayer,
@@ -49,8 +51,6 @@ public class MainViewController extends RootController {
     public void initialize(URL location, ResourceBundle resources) {
         loadModels();
         setViewByRole();
-
-
     }
 
     private void loadModels() {
@@ -76,9 +76,22 @@ public class MainViewController extends RootController {
             }
         });
 
+        LoadProjectModelTask loadProjectModelTask = new LoadProjectModelTask();
+        loadProjectModelTask.valueProperty().addListener((observable, oldValue, newValue) -> {
+            projectModel = newValue;
+            if (actualUser.getRole() == Role.TECHNICIAN) {
+                projectModel.setSelectedUserId(actualUser.getId());
+            }
+            try {
+                projectModel.loadAllProjects();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
         es.submit(new LoadCustomerModelTask());
         es.submit(loadDocumentModelTask);
-        es.submit( new LoadProjectModelTask());
+        es.submit(loadProjectModelTask);
         es.shutdown();
     }
 
@@ -121,12 +134,9 @@ public class MainViewController extends RootController {
 
     private void setTechnicianMainView() {
         try {
-            ProjectModel.getInstance().getProjectsByWorkerId(actualUser.getId());
             RootController controller = ControllerFactory.loadFxmlFile(ViewType.PROJECTS_VIEW);
             mainBorderPane.setCenter(controller.getView());
         } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
@@ -139,6 +149,7 @@ public class MainViewController extends RootController {
         this.stage.setTitle("WUAV!!!");
         this.stage.centerOnScreen();
         DocumentHelper.setOldDocWarningShown(false);
+        projectModel.setSelectedUserId(0);
     }
 
     @FXML
@@ -157,7 +168,7 @@ public class MainViewController extends RootController {
     private void displayProjects(ActionEvent actionEvent) {
         try {
             CustomerModel.getInstance().setSelectedCustomerId(0);
-            ProjectModel.getInstance().getAllProjects();
+            ProjectModel.getInstance().loadAllProjects();
             RootController controller = ControllerFactory.loadFxmlFile(ViewType.PROJECTS_VIEW);
             mainBorderPane.setCenter(controller.getView());
         } catch (IOException e) {

@@ -9,17 +9,15 @@ import dk.easv.gui.models.ProjectModel;
 import dk.easv.gui.models.interfaces.ICustomerModel;
 import dk.easv.gui.rootContoller.RootController;
 import dk.easv.helpers.AlertHelper;
-import dk.easv.helpers.UserSingleClass;
+import dk.easv.helpers.CurrentUser;
 import dk.easv.helpers.ViewType;
 import io.github.palexdev.materialfx.controls.MFXTableView;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -40,13 +38,10 @@ public class CustomersViewController extends RootController {
     @FXML
     private void createCustomer(ActionEvent actionEvent) {
         try {
-            Stage stage = new Stage();
-            RootController controller = ControllerFactory.loadFxmlFile(ViewType.CREATE_CUSTOMERS);
-            Scene scene = new Scene(controller.getView());
-            stage.setResizable(false);
-            stage.setScene(scene);
-            stage.centerOnScreen();
-            stage.show();
+
+            RootController rootController = ControllerFactory.loadFxmlFile(ViewType.CREATE_CUSTOMER);
+            BorderPane borderPane = (BorderPane) rootVBox.getParent();
+            borderPane.setCenter(rootController.getView());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -55,15 +50,11 @@ public class CustomersViewController extends RootController {
     @FXML
     private void editCustomer(ActionEvent actionEvent) {
         try {
-            Stage stage = new Stage();
-            RootController controller = ControllerFactory.loadFxmlFile(ViewType.CREATE_CUSTOMERS);
+            RootController controller = ControllerFactory.loadFxmlFile(ViewType.CREATE_CUSTOMER);
             AddCustomerViewController addCustomerViewController = (AddCustomerViewController) controller;
             addCustomerViewController.setCustomerData(customersTable.getSelectionModel().getSelectedValues().get(0));
-            Scene scene = new Scene(controller.getView());
-            stage.setResizable(false);
-            stage.setScene(scene);
-            stage.centerOnScreen();
-            stage.show();
+            BorderPane borderPane = (BorderPane) rootVBox.getParent();
+            borderPane.setCenter(controller.getView());
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (IndexOutOfBoundsException e) {
@@ -94,7 +85,7 @@ public class CustomersViewController extends RootController {
             }
 
             customerModel.setSelectedCustomerId(customersTable.getSelectionModel().getSelectedValues().get(0).getCustomerID());
-            ProjectModel.getInstance().getAllProjects();
+            ProjectModel.getInstance().loadAllProjects();
             BorderPane mainBorderPane = (BorderPane) rootVBox.getParent();
             RootController rootController = ControllerFactory.loadFxmlFile(ViewType.PROJECTS_VIEW);
             mainBorderPane.setCenter(rootController.getView());
@@ -107,7 +98,7 @@ public class CustomersViewController extends RootController {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        UserSingleClass actualUser = UserSingleClass.getInstance();
+        CurrentUser actualUser = CurrentUser.getInstance();
         if (actualUser.getRole() == Role.SALESPERSON){
             crudHBox.setVisible(false);
         }

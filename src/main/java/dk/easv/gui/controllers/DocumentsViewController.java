@@ -81,7 +81,7 @@ public class DocumentsViewController extends RootController {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         CurrentUser actualUser = CurrentUser.getInstance();
-        if (actualUser.getRole() == Role.SALESPERSON){
+        if (actualUser.getRole() == Role.SALESPERSON) {
             addDocumentButton.setDisable(true);
             editDocumentButton.setText("View");
             deleteDocumentButton.setDisable(true);

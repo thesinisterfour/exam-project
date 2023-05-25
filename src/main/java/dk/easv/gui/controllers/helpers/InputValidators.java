@@ -24,7 +24,7 @@ public class InputValidators {
             AlertHelper alertHelper = new AlertHelper("City does not exist", Alert.AlertType.ERROR);
             alertHelper.showAndWait();
             return 0;
-        } catch (Exception e){
+        } catch (Exception e) {
             // catch if zip is not a number
             AlertHelper alertHelper = new AlertHelper("Zip code must be a number", Alert.AlertType.ERROR);
             alertHelper.showAndWait();

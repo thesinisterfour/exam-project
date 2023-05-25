@@ -46,7 +46,7 @@ public class AddDocumentViewController extends RootController {
             final IDocumentMapperModel mapperModel = new DocumentMapperModel();
             if (!InputValidators.isEmptyField(rootVBox.getChildren())) {
                 Project selectedProject = projectComboBox.getSelectionModel().getSelectedItem();
-                int docId = model.addDocument(new Doc(nameTextField.getText(),descriptionTextField.getText()));
+                int docId = model.addDocument(new Doc(nameTextField.getText(), descriptionTextField.getText()));
                 mapperModel.addDocumentToProject(selectedProject.getProjectID(), docId);
                 goBack();
             }

@@ -21,8 +21,6 @@ import java.util.stream.IntStream;
 public class CanvasViewController extends RootController {
 
     private final ICanvasModel model = CanvasModel.getInstance();
-
-//    String filePath = null;
     @FXML
     private ChoiceBox<String> colorChooser;
 

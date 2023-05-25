@@ -1,25 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import io.github.palexdev.materialfx.controls.MFXButton?>
-<?import io.github.palexdev.materialfx.controls.MFXDatePicker?>
-<?import io.github.palexdev.materialfx.controls.MFXFilterComboBox?>
-<?import io.github.palexdev.materialfx.controls.MFXTextField?>
+<?import io.github.palexdev.materialfx.controls.*?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-
-<VBox fx:id="rootVBox" alignment="CENTER" prefHeight="425.0" prefWidth="531.0" spacing="8.0" stylesheets="@../css/global-style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.AddProjectViewController">
-   <children>
-          <MFXTextField fx:id="nameTextField" floatMode="BORDER" prefWidth="200.0" promptText="Project name" />
-          <MFXDatePicker fx:id="startDatePicker" allowEdit="false" floatMode="BORDER" prefWidth="200.0" promptText="Start" />
-          <MFXDatePicker fx:id="endDatePicker" allowEdit="false" prefWidth="200.0" promptText="End" />
-          <MFXFilterComboBox fx:id="customerComboBox" prefWidth="200.0" />
-          <MFXTextField fx:id="addressTextField" alignment="TOP_LEFT" floatMode="DISABLED" prefWidth="200.0" promptText="Address" />
-          <MFXTextField fx:id="zipcodeTextField" alignment="TOP_LEFT" floatMode="DISABLED" prefWidth="200.0" promptText="Zipcode" />
-          <HBox alignment="BOTTOM_CENTER" spacing="20.0">
-              <children>
-                  <MFXButton fx:id="submitButton" defaultButton="true" onAction="#createOnAction" text="Create" />
-                  <MFXButton cancelButton="true" onAction="#cancelOnAction" text="Cancel" />
-              </children>
-          </HBox>
-   </children>
+<VBox xmlns:fx="http://javafx.com/fxml/1" fx:id="rootVBox" alignment="CENTER" prefHeight="425.0" prefWidth="531.0"
+      spacing="8.0" stylesheets="@../css/global-style.css" xmlns="http://javafx.com/javafx/19"
+      fx:controller="dk.easv.gui.controllers.AddProjectViewController">
+    <children>
+        <MFXTextField fx:id="nameTextField" floatMode="BORDER" prefWidth="200.0" promptText="Project name"/>
+        <MFXDatePicker fx:id="startDatePicker" allowEdit="false" floatMode="BORDER" prefWidth="200.0"
+                       promptText="Start"/>
+        <MFXDatePicker fx:id="endDatePicker" allowEdit="false" prefWidth="200.0" promptText="End"/>
+        <MFXFilterComboBox fx:id="customerComboBox" prefWidth="200.0"/>
+        <MFXTextField fx:id="addressTextField" alignment="TOP_LEFT" floatMode="DISABLED" prefWidth="200.0"
+                      promptText="Address"/>
+        <MFXTextField fx:id="zipcodeTextField" alignment="TOP_LEFT" floatMode="DISABLED" prefWidth="200.0"
+                      promptText="Zipcode"/>
+        <HBox alignment="BOTTOM_CENTER" spacing="20.0">
+            <children>
+                <MFXButton fx:id="submitButton" defaultButton="true" onAction="#createOnAction" text="Create"/>
+                <MFXButton cancelButton="true" onAction="#cancelOnAction" text="Cancel"/>
+            </children>
+        </HBox>
+    </children>
 </VBox>

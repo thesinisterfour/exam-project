@@ -52,7 +52,7 @@ class CRUDDAOFactoryTest {
     }
 
     @Test
-    void getDaoProject(){
+    void getDaoProject() {
         ICRUDDao<Project> expected = new ProjectDAO();
         ICRUDDao<Project> actual = CRUDDAOFactory.getDao(DAOType.PROJECT_DAO);
         assert actual != null;
@@ -60,7 +60,7 @@ class CRUDDAOFactoryTest {
     }
 
     @Test
-    void getDaoRole(){
+    void getDaoRole() {
         ICRUDDao<Role> expected = new RoleDAO();
         ICRUDDao<Role> actual = CRUDDAOFactory.getDao(DAOType.ROLE_DAO);
         assert actual != null;

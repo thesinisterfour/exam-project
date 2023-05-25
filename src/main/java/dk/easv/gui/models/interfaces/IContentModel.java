@@ -11,6 +11,7 @@ public interface IContentModel {
 
     /**
      * Adds a text to the database
+     *
      * @param index
      * @param content
      * @throws SQLException
@@ -19,6 +20,7 @@ public interface IContentModel {
 
     /**
      * Updates the index of the text and the text in the database
+     *
      * @param contentId
      * @param index
      * @param content
@@ -28,6 +30,7 @@ public interface IContentModel {
 
     /**
      * Adds an image to the database
+     *
      * @param index
      * @param image
      * @throws SQLException
@@ -36,6 +39,7 @@ public interface IContentModel {
 
     /**
      * Updates the index of the image in the database
+     *
      * @param contentId
      * @param index
      * @throws SQLException
@@ -44,6 +48,7 @@ public interface IContentModel {
 
     /**
      * Saves the document as a PDF
+     *
      * @param type Public or Private customer
      * @param dest The destination of the PDF
      * @throws SQLException
@@ -63,6 +68,7 @@ public interface IContentModel {
 
     /**
      * Loads all the content from the database
+     *
      * @param documentId The id of the document
      * @throws SQLException
      */
@@ -76,6 +82,7 @@ public interface IContentModel {
 
     /**
      * Deletes the mapping from the database
+     *
      * @param id The id of the content
      * @throws SQLException
      */

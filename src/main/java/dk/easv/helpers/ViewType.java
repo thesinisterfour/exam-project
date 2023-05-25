@@ -14,7 +14,7 @@ public enum ViewType {
     DOCUMENTS_VIEW("views/documents-view.fxml"),
     WORKERS("views/workers-view.fxml"),
     PROJECTS_VIEW("views/projects-view.fxml"),
-   ;
+    ;
 
     private final String path;
 

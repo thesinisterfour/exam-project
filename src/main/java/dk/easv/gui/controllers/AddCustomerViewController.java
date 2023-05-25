@@ -3,9 +3,7 @@ package dk.easv.gui.controllers;
 import dk.easv.be.Customer;
 import dk.easv.gui.controllerFactory.ControllerFactory;
 import dk.easv.gui.controllers.helpers.InputValidators;
-import dk.easv.gui.models.CityModel;
 import dk.easv.gui.models.CustomerModel;
-import dk.easv.gui.models.interfaces.ICityModel;
 import dk.easv.gui.models.interfaces.ICustomerModel;
 import dk.easv.gui.rootContoller.RootController;
 import dk.easv.helpers.ViewType;
@@ -22,9 +20,7 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class AddCustomerViewController extends RootController {
-
-    private final ICityModel cityModel = new CityModel();
-    private final ICustomerModel customerModel = CustomerModel.getInstance();
+    private final ICustomerModel customerModel;
     @FXML
     private MFXTextField nameTextField, emailTextField, addressTextField, zipCodeTextField;
     @FXML
@@ -33,6 +29,7 @@ public class AddCustomerViewController extends RootController {
     private MFXButton submitButton;
 
     public AddCustomerViewController() throws SQLException {
+        customerModel = CustomerModel.getInstance();
     }
 
     @FXML
@@ -96,6 +93,7 @@ public class AddCustomerViewController extends RootController {
         });
 
     }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
     }

@@ -99,7 +99,7 @@ public class CustomersViewController extends RootController {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         CurrentUser actualUser = CurrentUser.getInstance();
-        if (actualUser.getRole() == Role.SALESPERSON){
+        if (actualUser.getRole() == Role.SALESPERSON) {
             crudHBox.setVisible(false);
         }
         try {

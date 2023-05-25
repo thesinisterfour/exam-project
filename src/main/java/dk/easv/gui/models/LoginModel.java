@@ -11,9 +11,8 @@ import java.sql.SQLException;
 public class LoginModel implements ILoginModel {
 
     private final ILoginLogic bll = new LoginLogic(this);
-
-    private boolean loginReady = false;
     private final LoginViewController observer;
+    private boolean loginReady = false;
 
     public LoginModel(LoginViewController loginViewController) {
         observer = loginViewController;

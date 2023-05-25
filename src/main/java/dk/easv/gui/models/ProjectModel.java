@@ -20,7 +20,7 @@ public class ProjectModel implements IProjectModel {
     private int selectedUserId = 0;
     private int selectedProjectId = 0;
 
-    private ProjectModel(){
+    private ProjectModel() {
         projectObservableList = FXCollections.observableArrayList();
     }
 

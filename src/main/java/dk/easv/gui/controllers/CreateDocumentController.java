@@ -48,6 +48,7 @@ public class CreateDocumentController extends RootController {
                 Project selectedProject = projectComboBox.getSelectionModel().getSelectedItem();
                 int docId = model.addDocument(new Doc(nameTextField.getText(),descriptionTextField.getText()));
                 mapperModel.addDocumentToProject(selectedProject.getProjectID(), docId);
+                goBack();
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -56,6 +57,10 @@ public class CreateDocumentController extends RootController {
 
     @FXML
     private void cancelOnAction(ActionEvent actionEvent) {
+        goBack();
+    }
+
+    private void goBack() {
         try {
             RootController rootController = ControllerFactory.loadFxmlFile(ViewType.DOCUMENTS_VIEW);
             BorderPane borderPane = (BorderPane) rootVBox.getParent();

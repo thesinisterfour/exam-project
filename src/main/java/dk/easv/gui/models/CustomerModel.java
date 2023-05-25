@@ -24,7 +24,6 @@ public class CustomerModel implements ICustomerModel {
     private CustomerModel() throws SQLException {
         obsCustomers = FXCollections.observableArrayList();
         loadAllCustomers();
-        loadAllCustomers();
     }
 
     public static ICustomerModel getInstance() throws SQLException {

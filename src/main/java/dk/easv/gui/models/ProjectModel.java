@@ -75,19 +75,19 @@ public class ProjectModel implements IProjectModel {
     @Override
     public void addProject(Project project) throws SQLException {
         logic.addProject(project);
-        getAllProjects();
+        loadAllProjects();
     }
 
     @Override
     public void updateProject(Project project) throws SQLException {
         logic.updateProject(project);
-        getAllProjects();
+        loadAllProjects();
     }
 
     @Override
     public void deleteProject(Project project) throws SQLException {
         logic.deleteProject(project);
-        getAllProjects();
+        loadAllProjects();
     }
 
     @Override

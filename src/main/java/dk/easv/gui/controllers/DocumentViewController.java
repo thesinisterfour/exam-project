@@ -6,7 +6,6 @@ import dk.easv.be.Content;
 import dk.easv.be.Role;
 import dk.easv.gui.controllerFactory.ControllerFactory;
 import dk.easv.gui.models.ContentModel;
-import dk.easv.gui.models.DrawnImageModel;
 import dk.easv.gui.models.interfaces.IContentModel;
 import dk.easv.gui.models.tasks.RetrieveContentTask;
 import dk.easv.gui.rootContoller.RootController;
@@ -416,7 +415,6 @@ public class DocumentViewController extends RootController {
 
     @FXML
     private void openCanvasOnAction() throws IOException {
-        DrawnImageModel.setDocumentViewController(this);
         Stage stage = new Stage();
         stage.setTitle("Sketch");
         RootController controller = ControllerFactory.loadFxmlFile(ViewType.CANVAS);

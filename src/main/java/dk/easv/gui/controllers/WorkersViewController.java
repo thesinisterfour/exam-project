@@ -17,6 +17,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -32,6 +34,8 @@ public class WorkersViewController extends RootController {
     private MFXTableView<User> workersTable;
     @FXML
     private MFXTableView<Project> projectsTable;
+    @FXML
+    private VBox rootVBox;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -64,14 +68,10 @@ public class WorkersViewController extends RootController {
                 AlertHelper alertHelper = new AlertHelper("Please select a user to edit", Alert.AlertType.ERROR);
                 alertHelper.showAndWait();
             } else {
-                Stage stage = new Stage();
                 CreateWorkerController controller = (CreateWorkerController) ControllerFactory.loadFxmlFile(ViewType.CREATE_WORKER);
                 controller.setUserData(selectedUser);
-                Scene scene = new Scene(controller.getView());
-                stage.setResizable(false);
-                stage.setScene(scene);
-                stage.centerOnScreen();
-                stage.show();
+                BorderPane borderPane = (BorderPane) rootVBox.getParent();
+                borderPane.setCenter(controller.getView());
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -100,13 +100,9 @@ public class WorkersViewController extends RootController {
     @FXML
     private void newWorker(ActionEvent actionEvent) {
         try {
-            Stage stage = new Stage();
             RootController controller = ControllerFactory.loadFxmlFile(ViewType.CREATE_WORKER);
-            Scene scene = new Scene(controller.getView());
-            stage.setResizable(false);
-            stage.setScene(scene);
-            stage.centerOnScreen();
-            stage.show();
+            BorderPane borderPane = (BorderPane) rootVBox.getParent();
+            borderPane.setCenter(controller.getView());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

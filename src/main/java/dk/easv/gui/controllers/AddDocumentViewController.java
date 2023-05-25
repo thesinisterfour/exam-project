@@ -27,7 +27,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class CreateDocumentController extends RootController {
+public class AddDocumentViewController extends RootController {
     @FXML
     private MFXTextField nameTextField;
     @FXML

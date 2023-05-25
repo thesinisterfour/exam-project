@@ -3,6 +3,7 @@ package dk.easv.gui.controllers;
 import dk.easv.be.Role;
 import dk.easv.be.User;
 import dk.easv.gui.controllerFactory.ControllerFactory;
+import dk.easv.gui.controllers.helpers.InputValidators;
 import dk.easv.gui.models.RoleModel;
 import dk.easv.gui.models.UserModel;
 import dk.easv.gui.models.interfaces.IRoleModel;
@@ -16,7 +17,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.net.URL;
@@ -24,7 +25,7 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.concurrent.ConcurrentMap;
 
-public class CreateWorkerController extends RootController {
+public class AddWorkerViewController extends RootController {
     private final IRoleModel roleModel = new RoleModel();
     private final IUserModel userModel = UserModel.getInstance();
     @FXML
@@ -37,7 +38,7 @@ public class CreateWorkerController extends RootController {
     private boolean editMode = false;
     private User selectedUser;
     @FXML
-    private GridPane rootGrid;
+    private VBox rootVBox;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -78,7 +79,7 @@ public class CreateWorkerController extends RootController {
     private void goBack() {
         try {
             RootController rootController = ControllerFactory.loadFxmlFile(ViewType.WORKERS);
-            BorderPane borderPane = (BorderPane) rootGrid.getParent();
+            BorderPane borderPane = (BorderPane) rootVBox.getParent();
             borderPane.setCenter(rootController.getView());
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -86,21 +87,14 @@ public class CreateWorkerController extends RootController {
     }
 
     private void preformEdit() {
-        String firstName = nameTextField.getText();
-        String lastName = lastNameTextField.getText();
-        String username = usernameTextField.getText();
-        String password = passwordTextField.getText();
-        String selectedRole = roleComboBox.getValue();
-        if (firstName.isEmpty() || lastName.isEmpty() || username.isEmpty() || password.isEmpty() || selectedRole.isEmpty()) {
-            AlertHelper alertHelper = new AlertHelper("Please fill all fields and make sure to choose the user role!", Alert.AlertType.ERROR);
-            alertHelper.showAndWait();
+        if (InputValidators.isEmptyField(rootVBox.getChildren())) {
             return;
         }
-        selectedUser.setFirstName(firstName);
-        selectedUser.setLastName(lastName);
-        selectedUser.setUsername(username);
-        selectedUser.setPassword(password);
-        selectedUser.setRole(Role.valueOf(selectedRole));
+        selectedUser.setFirstName(nameTextField.getText());
+        selectedUser.setLastName(lastNameTextField.getText());
+        selectedUser.setUsername(usernameTextField.getText());
+        selectedUser.setPassword(passwordTextField.getText());
+        selectedUser.setRole(Role.valueOf(roleComboBox.getValue()));
         try {
             userModel.updateUser(selectedUser);
             goBack();
@@ -111,16 +105,16 @@ public class CreateWorkerController extends RootController {
     }
 
     private void preformCreate() {
+        if (InputValidators.isEmptyField(rootVBox.getChildren())) {
+            return;
+        }
+
         String firstName = nameTextField.getText();
         String lastName = lastNameTextField.getText();
         String username = usernameTextField.getText();
         String password = passwordTextField.getText();
         String selectedRole = roleComboBox.getValue();
-        if (firstName.isEmpty() || lastName.isEmpty() || username.isEmpty() || password.isEmpty() || selectedRole.isEmpty()) {
-            AlertHelper alertHelper = new AlertHelper("Pleas fill all fields and make sure to choose the user role!!", Alert.AlertType.ERROR);
-            alertHelper.showAndWait();
-            return;
-        }
+
         User user = new User(firstName, lastName, Role.valueOf(selectedRole));
         user.setUsername(username);
         user.setPassword(password);

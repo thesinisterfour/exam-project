@@ -34,7 +34,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 
-public class LoginController extends RootController {
+public class LoginViewController extends RootController {
 
     private final ILoginModel model = new LoginModel(this);
     @FXML

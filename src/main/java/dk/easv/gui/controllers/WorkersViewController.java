@@ -68,7 +68,7 @@ public class WorkersViewController extends RootController {
                 AlertHelper alertHelper = new AlertHelper("Please select a user to edit", Alert.AlertType.ERROR);
                 alertHelper.showAndWait();
             } else {
-                CreateWorkerController controller = (CreateWorkerController) ControllerFactory.loadFxmlFile(ViewType.CREATE_WORKER);
+                AddWorkerViewController controller = (AddWorkerViewController) ControllerFactory.loadFxmlFile(ViewType.ADD_WORKER);
                 controller.setUserData(selectedUser);
                 BorderPane borderPane = (BorderPane) rootVBox.getParent();
                 borderPane.setCenter(controller.getView());
@@ -100,7 +100,7 @@ public class WorkersViewController extends RootController {
     @FXML
     private void newWorker(ActionEvent actionEvent) {
         try {
-            RootController controller = ControllerFactory.loadFxmlFile(ViewType.CREATE_WORKER);
+            RootController controller = ControllerFactory.loadFxmlFile(ViewType.ADD_WORKER);
             BorderPane borderPane = (BorderPane) rootVBox.getParent();
             borderPane.setCenter(controller.getView());
         } catch (IOException e) {

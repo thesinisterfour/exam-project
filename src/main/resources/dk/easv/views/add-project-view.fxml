@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox fx:id="rootVBox" alignment="CENTER" prefHeight="425.0" prefWidth="531.0" spacing="8.0" stylesheets="@../css/global-style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.AddProjectController">
+<VBox fx:id="rootVBox" alignment="CENTER" prefHeight="425.0" prefWidth="531.0" spacing="8.0" stylesheets="@../css/global-style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.AddProjectViewController">
    <children>
           <MFXTextField fx:id="nameTextField" floatMode="BORDER" prefWidth="200.0" promptText="Project name" />
           <MFXDatePicker fx:id="startDatePicker" allowEdit="false" floatMode="BORDER" prefWidth="200.0" promptText="Start" />

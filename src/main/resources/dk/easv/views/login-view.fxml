@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.*?>
 <GridPane xmlns:fx="http://javafx.com/fxml/1" alignment="CENTER" prefHeight="600.0" prefWidth="900.0"
           styleClass="mainBack" stylesheets="@../css/global-style.css" xmlns="http://javafx.com/javafx/19"
-          fx:controller="dk.easv.gui.controllers.LoginController">
+          fx:controller="dk.easv.gui.controllers.LoginViewController">
     <columnConstraints>
         <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0"/>
     </columnConstraints>

@@ -3,7 +3,7 @@ package dk.easv.gui.models;
 import dk.easv.be.User;
 import dk.easv.bll.ILoginLogic;
 import dk.easv.bll.LoginLogic;
-import dk.easv.gui.controllers.LoginController;
+import dk.easv.gui.controllers.LoginViewController;
 import dk.easv.gui.models.interfaces.ILoginModel;
 
 import java.sql.SQLException;
@@ -13,10 +13,10 @@ public class LoginModel implements ILoginModel {
     private final ILoginLogic bll = new LoginLogic(this);
 
     private boolean loginReady = false;
-    private final LoginController observer;
+    private final LoginViewController observer;
 
-    public LoginModel(LoginController loginController) {
-        observer = loginController;
+    public LoginModel(LoginViewController loginViewController) {
+        observer = loginViewController;
     }
 
 

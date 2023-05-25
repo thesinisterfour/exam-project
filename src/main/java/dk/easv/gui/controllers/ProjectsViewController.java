@@ -45,7 +45,7 @@ public class ProjectsViewController extends RootController {
     private void handleEdit(ActionEvent actionEvent) {
         try {
             RootController controller = ControllerFactory.loadFxmlFile(ViewType.ADD_PROJECT);
-            AddProjectController addProjectViewController = (AddProjectController) controller;
+            AddProjectViewController addProjectViewController = (AddProjectViewController) controller;
             addProjectViewController.setProjectData(projectsTable.getSelectionModel().getSelectedValues().get(0));
             BorderPane borderPane = (BorderPane) rootVBox.getParent();
             borderPane.setCenter(controller.getView());

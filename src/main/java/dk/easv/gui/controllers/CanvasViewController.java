@@ -18,7 +18,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.stream.IntStream;
 
-public class CanvasController extends RootController {
+public class CanvasViewController extends RootController {
 
     private final ICanvasModel model = CanvasModel.getInstance();
 

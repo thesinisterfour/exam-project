@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.VBox?>
 
 
-<VBox fx:id="rootVBox" alignment="CENTER" prefHeight="331.0" prefWidth="485.0" spacing="8.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.CreateDocumentController">
+<VBox fx:id="rootVBox" alignment="CENTER" prefHeight="331.0" prefWidth="485.0" spacing="8.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.AddDocumentViewController">
    <children>
           <MFXTextField fx:id="nameTextField" floatMode="BORDER" maxWidth="-Infinity" prefHeight="38.0" prefWidth="300.0" promptText="Document name" />
           <MFXFilterComboBox fx:id="customerComboBox" floatMode="BORDER" maxWidth="-Infinity" prefHeight="40.0" prefWidth="300.0" promptText="Customer" />

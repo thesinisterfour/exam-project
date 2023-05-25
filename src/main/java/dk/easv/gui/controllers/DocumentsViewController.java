@@ -41,7 +41,7 @@ public class DocumentsViewController extends RootController {
     @FXML
     private void newDocument(ActionEvent actionEvent) {
         try {
-            RootController rootController = ControllerFactory.loadFxmlFile(ViewType.CREATE_DOCUMENT);
+            RootController rootController = ControllerFactory.loadFxmlFile(ViewType.ADD_DOCUMENT);
             BorderPane borderPane = (BorderPane) rootVbox.getParent();
             borderPane.setCenter(rootController.getView());
         } catch (IOException e) {

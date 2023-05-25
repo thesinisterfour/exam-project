@@ -102,9 +102,8 @@ public class ProjectDAO implements ICRUDDao<Project>, IProjectMapper {
             PreparedStatement ps = connection.prepareStatement("DELETE FROM dbo.[project] WHERE project_id=?;");
             ps.setInt(1, id);
 
-            ps.executeQuery();
+            return ps.executeUpdate();
         }
-        return 0;
     }
 
     @Override

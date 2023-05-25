@@ -17,4 +17,12 @@ public interface ICustomerModel {
     ObservableList<Customer> getObsAllCustomers() throws SQLException;
 
     void loadAllCustomers() throws SQLException;
+
+    int getSelectedCustomerId();
+
+    void setSelectedCustomerId(int selectedCustomerId);
+
+    int deleteCustomer(Customer customer) throws SQLException;
+
+    int updateCustomer(Customer customer) throws SQLException;
 }

@@ -262,4 +262,28 @@ public class CRUDLogic implements ICRUDLogic {
         return userDao.delete(id);
     }
 
+    @Override
+    public int updateCustomer(Customer customer) throws SQLException {
+        ICRUDDao<Customer> customerDao = CRUDDAOFactory.getDao(DAOType.CUSTOMER_DAO);
+        return customerDao.update(customer);
+    }
+
+    @Override
+    public int deleteCustomer(Customer customer) throws SQLException {
+        ICRUDDao<Customer> customerDao = CRUDDAOFactory.getDao(DAOType.CUSTOMER_DAO);
+        return customerDao.delete(customer.getCustomerID());
+    }
+
+    @Override
+    public void updateProject(Project project) throws SQLException {
+        ICRUDDao<Project> projectDao = CRUDDAOFactory.getDao(DAOType.PROJECT_DAO);
+        projectDao.update(project);
+    }
+
+    @Override
+    public void deleteProject(Project project) throws SQLException {
+        ICRUDDao<Project> projectDao = CRUDDAOFactory.getDao(DAOType.PROJECT_DAO);
+        projectDao.delete(project.getProjectID());
+    }
+
 }

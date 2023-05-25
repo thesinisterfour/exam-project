@@ -9,7 +9,13 @@ class DAOTypeTest {
 
     @Test
     void values() {
-        DAOType[] expected = {DAOType.CUSTOMER_DAO, DAOType.CITY_DAO, DAOType.USER_DAO, DAOType.DOCUMENT_DAO, DAOType.CONTENT_DAO};
+        DAOType[] expected = {DAOType.CUSTOMER_DAO,
+                DAOType.CITY_DAO,
+                DAOType.USER_DAO,
+                DAOType.DOCUMENT_DAO,
+                DAOType.CONTENT_DAO,
+                DAOType.PROJECT_DAO,
+                DAOType.ROLE_DAO};
         DAOType[] actual = DAOType.values();
 
         assertArrayEquals(expected, actual);

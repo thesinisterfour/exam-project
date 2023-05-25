@@ -3,10 +3,8 @@ package dk.easv.gui.models;
 import dk.easv.be.Doc;
 import dk.easv.bll.DocumentLogic;
 import dk.easv.bll.IDocumentLogic;
-import dk.easv.dal.CRUDDAOFactory;
-import dk.easv.dal.interafaces.ICRUDDao;
 import dk.easv.gui.models.interfaces.IContentModel;
-import dk.easv.helpers.DAOType;
+import dk.easv.helpers.CustomerType;
 import javafx.scene.image.Image;
 
 import java.awt.image.BufferedImage;
@@ -56,9 +54,8 @@ public class ContentModel implements IContentModel {
     }
 
     @Override
-    public void saveAsPDF(String dest) throws SQLException, IOException {
-        ICRUDDao<Doc> docDao = CRUDDAOFactory.getDao(DAOType.DOCUMENT_DAO);
-        documentLogic.generatePDF(docDao.get(documentId), dest);
+    public void saveAsPDF(CustomerType type, String dest) throws SQLException, IOException {
+        documentLogic.generatePDF(type, documentId, dest);
     }
 
     @Override

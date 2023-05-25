@@ -26,6 +26,7 @@ import dk.easv.dal.dao.ProjectDAO;
 import dk.easv.dal.interafaces.ICRUDDao;
 import dk.easv.dal.interafaces.IContentMapperDAO;
 import dk.easv.dal.interafaces.IProjectMapper;
+import dk.easv.helpers.CustomerType;
 import dk.easv.helpers.DAOType;
 import io.github.palexdev.materialfx.utils.SwingFXUtils;
 import javafx.scene.image.Image;
@@ -108,7 +109,10 @@ public class DocumentLogic implements IDocumentLogic {
     }
 
     @Override
-    public void generatePDF(Doc doc, String dest) throws IOException, SQLException {
+    public void generatePDF(CustomerType type, int id, String dest) throws IOException, SQLException {
+
+        ICRUDDao<Doc> documentDAO = CRUDDAOFactory.getDao(DAOType.DOCUMENT_DAO);
+        Doc doc = documentDAO.get(id);
         ConcurrentNavigableMap<Integer, Integer> contentMap = loadAllContent(doc.getId());
         PdfWriter writer = new PdfWriter(dest);
         PdfDocument pdf = new PdfDocument(writer);
@@ -118,11 +122,18 @@ public class DocumentLogic implements IDocumentLogic {
         document.setFont(font);
         document.setHorizontalAlignment(HorizontalAlignment.CENTER);
         document.setTextAlignment(TextAlignment.CENTER);
-        document.add(new Paragraph(doc.getName()).setFont(bold).setFontSize(32));
-        String description = doc.getDescription();
-        document.add(new Paragraph(description == null ? "" : description).setFontSize(16));
-        document.add(new Paragraph("Document created on: " + doc.getCreationDate().toString()));
-        document.add(new Paragraph("PDF generated on: " + LocalDateTime.now()));
+
+        // since difference between private and business pdf was not properly defined this is a base solution that can be extended
+        if (type == CustomerType.PRIVATE) {
+            document.add(new Paragraph(doc.getName()).setFont(bold).setFontSize(32));
+            String description = doc.getDescription();
+            document.add(new Paragraph(description == null ? "" : description).setFontSize(16));
+            document.add(new Paragraph("Document created on: " + doc.getCreationDate().toString()));
+            document.add(new Paragraph("PDF generated on: " + LocalDateTime.now()));
+        } else {
+            document.add(new Paragraph(doc.getName()).setFont(bold).setFontSize(32));
+            document.add(new Paragraph("Document created on: " + doc.getCreationDate().toString()));
+        }
 
         for (Integer contentId : contentMap.values()) {
             Content content = getContent(contentId);
@@ -131,7 +142,7 @@ public class DocumentLogic implements IDocumentLogic {
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 ImageIO.write(bufferedImage, "png", baos);
                 com.itextpdf.layout.element.Image img = new com.itextpdf.layout.element.Image(ImageDataFactory.create(baos.toByteArray()));
-                img.setWidth(document.getPdfDocument().getDefaultPageSize().getWidth() - 100);
+                img.setWidth(document.getPdfDocument().getDefaultPageSize().getWidth() - 1);
                 img.setMarginTop(35);
                 document.setHorizontalAlignment(HorizontalAlignment.CENTER);
                 document.add(img);

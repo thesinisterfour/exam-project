@@ -13,16 +13,17 @@ import java.sql.SQLException;
 import java.util.concurrent.ConcurrentMap;
 
 public class ProjectModel implements IProjectModel {
-    private static ProjectModel INSTANCE;
+    private static IProjectModel INSTANCE;
     private final ObservableList<Project> projectObservableList;
     private final ICRUDLogic logic = new CRUDLogic();
+    private int selectedProjectId = 0;
 
     private ProjectModel() throws SQLException {
         projectObservableList = FXCollections.observableArrayList();
         getAllProjects();
     }
 
-    public static ProjectModel getInstance() throws SQLException {
+    public static IProjectModel getInstance() throws SQLException {
         if (INSTANCE == null) {
             INSTANCE = new ProjectModel();
         }
@@ -31,13 +32,19 @@ public class ProjectModel implements IProjectModel {
 
     @Override
     public ConcurrentMap<Integer, Project> getAllProjects() throws SQLException {
-        ConcurrentMap<Integer, Project> allProjects = logic.getAllProjects();
-        projectObservableList.setAll(allProjects.values());
-        return allProjects;
+        int selectedCustomerId = CustomerModel.getInstance().getSelectedCustomerId();
+        if (selectedCustomerId == 0) {
+            ConcurrentMap<Integer, Project> allProjects = logic.getAllProjects();
+            projectObservableList.setAll(allProjects.values());
+            return allProjects;
+        } else {
+            return getProjectsByCustomerId(selectedCustomerId);
+        }
+
     }
 
     @Override
-    public ObservableList<Project> getProjectObservableList() {
+    public ObservableList<Project> getProjectObservableList() throws SQLException {
         return projectObservableList;
     }
 
@@ -81,5 +88,27 @@ public class ProjectModel implements IProjectModel {
     public int deassignProject(int projectId, int userId) throws SQLException {
         IMappingLogic mappingLogic = new MappingLogic();
         return mappingLogic.deassignproject(projectId, userId);
+    }
+
+    @Override
+    public int getSelectedProjectId() {
+        return selectedProjectId;
+    }
+
+    @Override
+    public void setSelectedProjectId(int selectedProjectId) {
+        this.selectedProjectId = selectedProjectId;
+    }
+
+    @Override
+    public void updateProject(Project project) throws SQLException {
+        logic.updateProject(project);
+        getAllProjects();
+    }
+
+    @Override
+    public void deleteProject(Project project) throws SQLException {
+        logic.deleteProject(project);
+        getAllProjects();
     }
 }

@@ -30,6 +30,14 @@ public class Customer {
         this.zipCode = zipCode;
     }
 
+    public Customer(int id, String customerName, String customerEmail, String customerAddress, int zipCode) {
+        this.customerID = id;
+        this.customerName = customerName;
+        this.customerEmail = customerEmail;
+        this.customerAddress = customerAddress;
+        this.zipCode = zipCode;
+    }
+
     public int getCustomerID() {
         return customerID;
     }
@@ -72,6 +80,6 @@ public class Customer {
 
     @Override
     public String toString() {
-        return customerName;
+        return "ID = " + customerID + " Name = " + customerName;
     }
 }

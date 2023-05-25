@@ -12,13 +12,14 @@ public enum ViewType {
     CREATE_DOCUMENT("views/create-document-view.fxml"),
     CREATE_WORKER("views/add-worker-view.fxml"),
 
-    BUSINESS_VIEW("views/customers-view.fxml"),
+    CUSTOMERS_VIEW("views/customers-view.fxml"),
     DOCUMENT("views/document-view.fxml"),
     PROJECTS_VIEW("views/projects-view.fxml"),
     DOCUMENTS_VIEW("views/documents-view.fxml"),
     ADD_PROJECT("views/add-project-view.fxml"),
     ASSIGN_PROJECT("views/assign-project-view.fxml"),
-    CANVAS("views/Canvas.fxml");
+    CANVAS("views/Canvas.fxml"),
+    HOME("views/home-view.fxml");
 
     private final String path;
 

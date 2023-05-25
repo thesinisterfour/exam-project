@@ -1,6 +1,5 @@
 package dk.easv.gui.controllers;
 
-import dk.easv.Main;
 import dk.easv.be.Project;
 import dk.easv.be.User;
 import dk.easv.gui.controllerFactory.ControllerFactory;
@@ -18,20 +17,15 @@ import io.github.palexdev.materialfx.controls.MFXTableView;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.Objects;
 import java.util.ResourceBundle;
-import java.util.Set;
-import java.util.concurrent.ConcurrentMap;
 
 public class WorkersViewController extends RootController {
 
@@ -44,7 +38,6 @@ public class WorkersViewController extends RootController {
     @FXML
     private HBox workers;
     private User selectedUser = null;
-    private HBoxController hboxController;
     @FXML
     private MFXTableView<User> workersTable;
     @FXML
@@ -69,33 +62,6 @@ public class WorkersViewController extends RootController {
             });
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private ConcurrentMap<Integer, User> getAllUsersMap() throws SQLException {
-        return userModel.getAllUsers();
-    }
-
-    private void addLabelAndScrollPane(String key, HBox hBox) {
-        Label label = new Label(key);
-        workers.getChildren().add(label);
-        workerScrollPane.setContent(hBox);
-        workerScrollPane.setFitToHeight(true);
-    }
-
-    private void initUsers() throws SQLException {
-        ConcurrentMap<Integer, User> map = getAllUsersMap();
-        Set<Integer> keys = map.keySet();
-        try {
-            for (Integer key : keys) {
-                FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(Main.class.getResource("views/HboxCard.fxml")));
-                HBox hBox = loader.load();
-                hboxController = loader.getController();
-                hboxController.setUserBoxes(map);
-                addLabelAndScrollPane(key.toString(), hBox);
-            }
-        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
@@ -126,7 +92,7 @@ public class WorkersViewController extends RootController {
     @FXML
     private void handleDelete() {
         try {
-            selectedUser = hboxController.getSelectedUser();
+            User selectedUser = workersTable.getSelectionModel().getSelectedValues().get(0);
             if (selectedUser == null) {
                 AlertHelper alertHelper = new AlertHelper("Pleas select a user to delete", Alert.AlertType.ERROR);
                 alertHelper.showAndWait();
@@ -136,10 +102,14 @@ public class WorkersViewController extends RootController {
         } catch (SQLException e) {
             AlertHelper alertHelper = new AlertHelper("User deleted successfully", Alert.AlertType.NONE);
             alertHelper.showAndWait();
+        } catch (IndexOutOfBoundsException o) {
+            AlertHelper alertHelper = new AlertHelper("Please select a user to delete", Alert.AlertType.ERROR);
+            alertHelper.showAndWait();
         }
     }
 
-    public void newWorker(ActionEvent actionEvent) {
+    @FXML
+    private void newWorker(ActionEvent actionEvent) {
         try {
             Stage stage = new Stage();
             RootController controller = ControllerFactory.loadFxmlFile(ViewType.CREATE_WORKER);

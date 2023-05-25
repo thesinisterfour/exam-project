@@ -9,7 +9,7 @@ import dk.easv.gui.controllerFactory.ControllerFactory;
 import dk.easv.gui.models.LoginModel;
 import dk.easv.gui.models.interfaces.ILoginModel;
 import dk.easv.gui.rootContoller.RootController;
-import dk.easv.helpers.UserSingleClass;
+import dk.easv.helpers.CurrentUser;
 import dk.easv.helpers.ViewType;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXTextField;
@@ -43,7 +43,7 @@ public class LoginController extends RootController {
     private MFXTextField password;
     private Stage stage;
 
-    private final UserSingleClass newUser = UserSingleClass.getInstance();
+    private final CurrentUser newUser = CurrentUser.getInstance();
     @FXML
     private MFXButton loginButton;
     @FXML
@@ -59,6 +59,7 @@ public class LoginController extends RootController {
             newUser.setName(selectedUser.getFirstName());
             displayMain();
         } else {
+            // Display wrong input message on top of the textfields
             ObservableList<Node> children = textfieldsVbox.getChildren();
             if (children.size() == 2) {
                 Label wrongInput = new Label("Wrong username or password");
@@ -67,6 +68,8 @@ public class LoginController extends RootController {
                 wrongInput.setPrefWidth(username.getPrefWidth());
                 children.add(0, wrongInput);
             }
+
+            // Clear textfields, add styling and shake them
             username.setText("");
             password.setText("");
             username.getStyleClass().add("wrong-input");
@@ -94,6 +97,7 @@ public class LoginController extends RootController {
                 Parent root = future.get();
                 root.setOpacity(0);
                 stage.setTitle("WUAV!!! " + newUser.getRole().toString());
+
                 stage.setScene(new Scene(root));
                 new FadeIn(root).setSpeed(1).play();
 
@@ -112,6 +116,7 @@ public class LoginController extends RootController {
     public void initialize(URL location, ResourceBundle resources) {
         loginButton.setText("Loading users...");
         loginButton.setDisable(true);
+
     }
 
     public void setLoginReady() {

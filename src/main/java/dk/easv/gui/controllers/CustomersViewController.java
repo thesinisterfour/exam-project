@@ -9,7 +9,7 @@ import dk.easv.gui.models.ProjectModel;
 import dk.easv.gui.models.interfaces.ICustomerModel;
 import dk.easv.gui.rootContoller.RootController;
 import dk.easv.helpers.AlertHelper;
-import dk.easv.helpers.UserSingleClass;
+import dk.easv.helpers.CurrentUser;
 import dk.easv.helpers.ViewType;
 import io.github.palexdev.materialfx.controls.MFXTableView;
 import javafx.event.ActionEvent;
@@ -98,7 +98,7 @@ public class CustomersViewController extends RootController {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        UserSingleClass actualUser = UserSingleClass.getInstance();
+        CurrentUser actualUser = CurrentUser.getInstance();
         if (actualUser.getRole() == Role.SALESPERSON){
             crudHBox.setVisible(false);
         }

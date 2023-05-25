@@ -4,19 +4,19 @@ import dk.easv.be.Role;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class UserSingleClassTest {
+public class CurrentUserTest {
 
     @Test
     public void testGetInstance() {
-        UserSingleClass instance1 = UserSingleClass.getInstance();
-        UserSingleClass instance2 = UserSingleClass.getInstance();
+        CurrentUser instance1 = CurrentUser.getInstance();
+        CurrentUser instance2 = CurrentUser.getInstance();
 
         Assertions.assertSame(instance1, instance2);
     }
 
     @Test
     public void testGettersAndSetters() {
-        UserSingleClass user = UserSingleClass.getInstance();
+        CurrentUser user = CurrentUser.getInstance();
 
         user.setId(1);
         Assertions.assertEquals(1, user.getId());

@@ -10,7 +10,7 @@ import dk.easv.gui.models.interfaces.IContentModel;
 import dk.easv.gui.models.tasks.RetrieveContentTask;
 import dk.easv.gui.rootContoller.RootController;
 import dk.easv.helpers.CustomerType;
-import dk.easv.helpers.UserSingleClass;
+import dk.easv.helpers.CurrentUser;
 import dk.easv.helpers.ViewType;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXScrollPane;
@@ -94,7 +94,7 @@ public class DocumentViewController extends RootController {
 
         scaleReferencePane = vbox;
 
-        UserSingleClass actualUser = UserSingleClass.getInstance();
+        CurrentUser actualUser = CurrentUser.getInstance();
         if (actualUser.getRole() == Role.SALESPERSON){
             controlsHbox.setVisible(false);
             saveButton.setDisable(true);

@@ -3,23 +3,31 @@
 <?import io.github.palexdev.materialfx.controls.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.*?>
-<BorderPane fx:id="mainBorderPane" prefHeight="607.0" prefWidth="908.0" stylesheets="@../css/global-style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.MainViewController">
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" fx:id="mainBorderPane" prefHeight="607.0" prefWidth="908.0"
+            stylesheets="@../css/global-style.css" xmlns="http://javafx.com/javafx/19"
+            fx:controller="dk.easv.gui.controllers.MainViewController">
     <left>
-        <VBox fx:id="iconsVbox" alignment="TOP_CENTER" maxWidth="70.0" prefHeight="607.0" prefWidth="70.0" styleClass="backgroundNavBar" BorderPane.alignment="CENTER">
+        <VBox fx:id="iconsVbox" alignment="TOP_CENTER" maxWidth="70.0" prefHeight="607.0" prefWidth="70.0"
+              styleClass="backgroundNavBar" BorderPane.alignment="CENTER">
             <children>
                 <MFXButton fx:id="businessLayer" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
                            onAction="#displayBusiness" prefHeight="60.0" styleClass="business_Button" text="Business"/>
 
-                <MFXButton fx:id="projectsButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#displayProjects" prefHeight="60.0" styleClass="projects_Button" text="Projects" />
-                <MFXButton fx:id="documentsButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#displayDocuments" prefHeight="60.0" styleClass="documents_Button" text="Documents" />
+                <MFXButton fx:id="projectsButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                           onAction="#displayProjects" prefHeight="60.0" styleClass="projects_Button" text="Projects"/>
+                <MFXButton fx:id="documentsButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                           onAction="#displayDocuments" prefHeight="60.0" styleClass="documents_Button"
+                           text="Documents"/>
                 <MFXButton fx:id="workersLayer" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
                            onAction="#displayWorkers" prefHeight="60.0" styleClass="worker_Button" text="Workers"/>
-                <VBox alignment="BOTTOM_CENTER" maxHeight="1.7976931348623157E308" prefWidth="100.0" VBox.vgrow="ALWAYS">
+                <VBox alignment="BOTTOM_CENTER" maxHeight="1.7976931348623157E308" prefWidth="100.0"
+                      VBox.vgrow="ALWAYS">
                     <children>
-                        <MFXButton fx:id="logoutButton" onAction="#handleLogout" prefHeight="58.0" prefWidth="70.0" styleClass="logout_Button" text="Log Out" />
+                        <MFXButton fx:id="logoutButton" onAction="#handleLogout" prefHeight="58.0" prefWidth="70.0"
+                                   styleClass="logout_Button" text="Log Out"/>
                     </children>
                     <VBox.margin>
-                        <Insets bottom="10.0" />
+                        <Insets bottom="10.0"/>
                     </VBox.margin>
                 </VBox>
             </children>

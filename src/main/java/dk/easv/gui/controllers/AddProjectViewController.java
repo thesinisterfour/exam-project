@@ -24,7 +24,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class AddProjectController extends RootController {
+public class AddProjectViewController extends RootController {
     @FXML
     private MFXTextField nameTextField;
     @FXML

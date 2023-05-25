@@ -45,7 +45,7 @@ public class ProjectsViewController extends RootController {
     private void handleEdit(ActionEvent actionEvent) {
         try {
             RootController controller = ControllerFactory.loadFxmlFile(ViewType.ADD_PROJECT);
-            AddProjectController addProjectViewController = (AddProjectController) controller;
+            AddProjectViewController addProjectViewController = (AddProjectViewController) controller;
             addProjectViewController.setProjectData(projectsTable.getSelectionModel().getSelectedValues().get(0));
             BorderPane borderPane = (BorderPane) rootVBox.getParent();
             borderPane.setCenter(controller.getView());
@@ -61,11 +61,10 @@ public class ProjectsViewController extends RootController {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (IndexOutOfBoundsException e) {
-            AlertHelper alertHelper = new AlertHelper( "No project selected", Alert.AlertType.WARNING);
+            AlertHelper alertHelper = new AlertHelper("No project selected", Alert.AlertType.WARNING);
             alertHelper.showAndWait();
         }
     }
-
 
 
     @FXML
@@ -77,7 +76,7 @@ public class ProjectsViewController extends RootController {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (IndexOutOfBoundsException e) {
-            AlertHelper alertHelper = new AlertHelper( "No project selected", Alert.AlertType.WARNING);
+            AlertHelper alertHelper = new AlertHelper("No project selected", Alert.AlertType.WARNING);
             alertHelper.showAndWait();
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -87,7 +86,7 @@ public class ProjectsViewController extends RootController {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         CurrentUser actualUser = CurrentUser.getInstance();
-        if (actualUser.getRole() == Role.SALESPERSON){
+        if (actualUser.getRole() == Role.SALESPERSON) {
             crudHBox.setVisible(false);
         }
         try {

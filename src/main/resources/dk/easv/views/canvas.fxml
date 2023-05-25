@@ -5,7 +5,7 @@
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.layout.*?>
 <StackPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="600" prefWidth="600" stylesheets="@../css/global-style.css"
-           xmlns="http://javafx.com/javafx/19" fx:controller="dk.easv.gui.controllers.CanvasController">
+           xmlns="http://javafx.com/javafx/19" fx:controller="dk.easv.gui.controllers.CanvasViewController">
     <children>
         <BorderPane>
             <top>

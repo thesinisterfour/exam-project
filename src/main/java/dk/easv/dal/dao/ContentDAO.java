@@ -26,12 +26,15 @@ public class ContentDAO implements ICRUDDao<Content>, IContentMapperDAO {
     public int add(Content content) throws SQLException {
         if (content.getImage() != null) {
             if (content.getId() != 0) {
+                // if the image is already in the database update the index
                 return addImage(content.getDocumentId(), content.getId(), content.getIndex());
             } else {
+                // if the image is not in the database add it to contents table and its index into document_contents table
                 return addImage(content.getDocumentId(), content.getIndex(), content.getImage());
             }
         } else {
             if (content.getId() != 0) {
+                // same procedure as above except with also updating the content
                 return addText(content.getDocumentId(), content.getId(), content.getIndex(), content.getText());
             } else {
                 return addText(content.getDocumentId(), content.getIndex(), content.getText());
@@ -70,7 +73,7 @@ public class ContentDAO implements ICRUDDao<Content>, IContentMapperDAO {
     @Override
     public int delete(int id) throws SQLException {
         try (Connection con = cm.getConnection()) {
-            PreparedStatement ps = con.prepareStatement("DELETE FROM document_contents WHERE content_id = ?");
+            PreparedStatement ps = con.prepareStatement("DELETE FROM contents WHERE id = ?");
             ps.setInt(1, id);
             return ps.executeUpdate();
         }

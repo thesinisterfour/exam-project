@@ -6,6 +6,9 @@ import javafx.concurrent.Task;
 
 import java.sql.SQLException;
 
+/**
+ * A task that retrieves content from the database based on the id
+ */
 public class RetrieveContentTask extends Task<Object> {
     private final IDocumentLogic documentLogic = new DocumentLogic();
     private final int id;

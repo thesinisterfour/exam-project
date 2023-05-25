@@ -34,16 +34,15 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 
-public class LoginController extends RootController {
+public class LoginViewController extends RootController {
 
     private final ILoginModel model = new LoginModel(this);
+    private final CurrentUser newUser = CurrentUser.getInstance();
     @FXML
     private MFXTextField username;
     @FXML
     private MFXTextField password;
     private Stage stage;
-
-    private final CurrentUser newUser = CurrentUser.getInstance();
     @FXML
     private MFXButton loginButton;
     @FXML

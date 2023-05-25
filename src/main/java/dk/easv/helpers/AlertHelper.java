@@ -11,8 +11,8 @@ import javafx.scene.control.Alert;
 import java.util.Map;
 
 public class AlertHelper {
-    private MFXGenericDialog dialogContent;
     private final MFXStageDialog dialog;
+    private MFXGenericDialog dialogContent;
     private boolean confirmed;
 
     public AlertHelper(String content, Alert.AlertType alertType) {

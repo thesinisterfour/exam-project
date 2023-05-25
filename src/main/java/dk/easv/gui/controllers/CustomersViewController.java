@@ -39,7 +39,7 @@ public class CustomersViewController extends RootController {
     private void createCustomer(ActionEvent actionEvent) {
         try {
 
-            RootController rootController = ControllerFactory.loadFxmlFile(ViewType.CREATE_CUSTOMER);
+            RootController rootController = ControllerFactory.loadFxmlFile(ViewType.ADD_CUSTOMER);
             BorderPane borderPane = (BorderPane) rootVBox.getParent();
             borderPane.setCenter(rootController.getView());
         } catch (IOException e) {
@@ -50,7 +50,7 @@ public class CustomersViewController extends RootController {
     @FXML
     private void editCustomer(ActionEvent actionEvent) {
         try {
-            RootController controller = ControllerFactory.loadFxmlFile(ViewType.CREATE_CUSTOMER);
+            RootController controller = ControllerFactory.loadFxmlFile(ViewType.ADD_CUSTOMER);
             AddCustomerViewController addCustomerViewController = (AddCustomerViewController) controller;
             addCustomerViewController.setCustomerData(customersTable.getSelectionModel().getSelectedValues().get(0));
             BorderPane borderPane = (BorderPane) rootVBox.getParent();
@@ -99,7 +99,7 @@ public class CustomersViewController extends RootController {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         CurrentUser actualUser = CurrentUser.getInstance();
-        if (actualUser.getRole() == Role.SALESPERSON){
+        if (actualUser.getRole() == Role.SALESPERSON) {
             crudHBox.setVisible(false);
         }
         try {

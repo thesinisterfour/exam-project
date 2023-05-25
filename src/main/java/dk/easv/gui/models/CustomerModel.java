@@ -47,6 +47,7 @@ public class CustomerModel implements ICustomerModel {
         loadAllCustomers();
         return rows;
     }
+
     @Override
     public int deleteCustomer(Customer customer) throws SQLException {
         int rows = crudLogic.deleteCustomer(customer);

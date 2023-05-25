@@ -11,8 +11,8 @@ import dk.easv.gui.models.ProjectModel;
 import dk.easv.gui.models.interfaces.IProjectModel;
 import dk.easv.gui.rootContoller.RootController;
 import dk.easv.helpers.AlertHelper;
-import dk.easv.helpers.DocumentHelper;
 import dk.easv.helpers.CurrentUser;
+import dk.easv.helpers.DocumentHelper;
 import dk.easv.helpers.ViewType;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import javafx.event.ActionEvent;
@@ -34,7 +34,6 @@ import java.util.concurrent.Executors;
 public class MainViewController extends RootController {
 
     private final CurrentUser actualUser = CurrentUser.getInstance();
-    private IProjectModel projectModel;
     @FXML
     public MFXButton businessLayer,
             workersLayer,
@@ -43,7 +42,7 @@ public class MainViewController extends RootController {
             logoutButton;
     @FXML
     public VBox iconsVbox;
-    private Stage stage;
+    private IProjectModel projectModel;
     @FXML
     private BorderPane mainBorderPane;
 
@@ -100,11 +99,9 @@ public class MainViewController extends RootController {
             if (actualUser.getRole() == Role.TECHNICIAN) {
                 setupTechnician();
                 return;
-            }
-            else if (actualUser.getRole() == Role.SALESPERSON) {
+            } else if (actualUser.getRole() == Role.SALESPERSON) {
                 iconsVbox.getChildren().remove(workersLayer);
-            }
-            else if (actualUser.getRole() == Role.PROJECTMANAGER) {
+            } else if (actualUser.getRole() == Role.PROJECTMANAGER) {
                 iconsVbox.getChildren().remove(businessLayer);
 
             }
@@ -143,11 +140,11 @@ public class MainViewController extends RootController {
 
     @FXML
     public void handleLogout(ActionEvent actionEvent) throws IOException {
-        this.stage = (Stage) logoutButton.getScene().getWindow();
+        Stage stage = getStage();
         RootController controller = ControllerFactory.loadFxmlFile(ViewType.LOGIN);
-        this.stage.setScene(new Scene(controller.getView()));
-        this.stage.setTitle("WUAV!!!");
-        this.stage.centerOnScreen();
+        stage.setScene(new Scene(controller.getView()));
+        stage.setTitle("WUAV!!!");
+        stage.centerOnScreen();
         DocumentHelper.setOldDocWarningShown(false);
         projectModel.setSelectedUserId(0);
     }

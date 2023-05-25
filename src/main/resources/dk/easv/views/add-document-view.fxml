@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import io.github.palexdev.materialfx.controls.*?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<VBox xmlns:fx="http://javafx.com/fxml/1" fx:id="rootVBox" alignment="CENTER" prefHeight="331.0" prefWidth="485.0"
+      spacing="8.0" xmlns="http://javafx.com/javafx/19"
+      fx:controller="dk.easv.gui.controllers.AddDocumentViewController">
+    <children>
+        <MFXTextField fx:id="nameTextField" floatMode="BORDER" maxWidth="-Infinity" prefHeight="38.0" prefWidth="300.0"
+                      promptText="Document name"/>
+        <MFXFilterComboBox fx:id="customerComboBox" floatMode="BORDER" maxWidth="-Infinity" prefHeight="40.0"
+                           prefWidth="300.0" promptText="Customer"/>
+        <MFXFilterComboBox fx:id="projectComboBox" floatMode="BORDER" maxWidth="-Infinity" prefHeight="40.0"
+                           prefWidth="300.0" promptText="Project"/>
+        <MFXTextField fx:id="descriptionTextField" alignment="TOP_LEFT" floatMode="DISABLED" maxWidth="-Infinity"
+                      prefHeight="40.0" prefWidth="300.0" promptText="Description"/>
+        <HBox alignment="BOTTOM_CENTER" maxWidth="-Infinity" prefWidth="300.0" spacing="20.0">
+            <children>
+                <MFXButton defaultButton="true" onAction="#createOnAction" text="Create"/>
+                <MFXButton cancelButton="true" onAction="#cancelOnAction" text="Cancel"/>
+            </children>
+        </HBox>
+    </children>
+</VBox>

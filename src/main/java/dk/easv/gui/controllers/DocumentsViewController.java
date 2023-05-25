@@ -41,7 +41,7 @@ public class DocumentsViewController extends RootController {
     @FXML
     private void newDocument(ActionEvent actionEvent) {
         try {
-            RootController rootController = ControllerFactory.loadFxmlFile(ViewType.CREATE_DOCUMENT);
+            RootController rootController = ControllerFactory.loadFxmlFile(ViewType.ADD_DOCUMENT);
             BorderPane borderPane = (BorderPane) rootVbox.getParent();
             borderPane.setCenter(rootController.getView());
         } catch (IOException e) {
@@ -81,7 +81,7 @@ public class DocumentsViewController extends RootController {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         CurrentUser actualUser = CurrentUser.getInstance();
-        if (actualUser.getRole() == Role.SALESPERSON){
+        if (actualUser.getRole() == Role.SALESPERSON) {
             addDocumentButton.setDisable(true);
             editDocumentButton.setText("View");
             deleteDocumentButton.setDisable(true);

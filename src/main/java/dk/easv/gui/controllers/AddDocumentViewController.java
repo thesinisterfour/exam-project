@@ -27,7 +27,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class CreateDocumentController extends RootController {
+public class AddDocumentViewController extends RootController {
     @FXML
     private MFXTextField nameTextField;
     @FXML
@@ -46,7 +46,7 @@ public class CreateDocumentController extends RootController {
             final IDocumentMapperModel mapperModel = new DocumentMapperModel();
             if (!InputValidators.isEmptyField(rootVBox.getChildren())) {
                 Project selectedProject = projectComboBox.getSelectionModel().getSelectedItem();
-                int docId = model.addDocument(new Doc(nameTextField.getText(),descriptionTextField.getText()));
+                int docId = model.addDocument(new Doc(nameTextField.getText(), descriptionTextField.getText()));
                 mapperModel.addDocumentToProject(selectedProject.getProjectID(), docId);
                 goBack();
             }

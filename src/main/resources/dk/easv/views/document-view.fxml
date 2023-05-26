@@ -23,7 +23,7 @@
             <content>
                 <HBox fx:id="centeringHBox" alignment="TOP_CENTER">
                     <children>
-                        <VBox fx:id="vbox" alignment="TOP_CENTER" onDragDropped="#vboxOnDragDropped" onDragOver="#vboxOnDragOver" spacing="10.0" HBox.hgrow="ALWAYS" />
+                        <VBox fx:id="vbox" alignment="TOP_CENTER" minHeight="-Infinity" onDragDropped="#vboxOnDragDropped" onDragOver="#vboxOnDragOver" prefHeight="574.0" spacing="10.0" HBox.hgrow="ALWAYS" />
                     </children>
                 </HBox>
             </content>

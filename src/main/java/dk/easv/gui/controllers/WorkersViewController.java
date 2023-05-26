@@ -3,13 +3,13 @@ package dk.easv.gui.controllers;
 import dk.easv.be.Project;
 import dk.easv.be.User;
 import dk.easv.gui.controllerFactory.ControllerFactory;
+import dk.easv.gui.controllers.helpers.AlertHelper;
 import dk.easv.gui.controllers.helpers.TableSetters;
 import dk.easv.gui.models.ProjectModel;
 import dk.easv.gui.models.UserModel;
 import dk.easv.gui.models.interfaces.IProjectModel;
 import dk.easv.gui.models.interfaces.IUserModel;
 import dk.easv.gui.rootContoller.RootController;
-import dk.easv.helpers.AlertHelper;
 import dk.easv.helpers.ViewType;
 import io.github.palexdev.materialfx.controls.MFXTableView;
 import javafx.collections.FXCollections;
@@ -29,7 +29,7 @@ import java.util.concurrent.ConcurrentMap;
 
 public class WorkersViewController extends RootController {
 
-    private final IUserModel userModel = UserModel.getInstance();
+    private IUserModel userModel;
     @FXML
     private MFXTableView<User> workersTable;
     @FXML
@@ -40,6 +40,7 @@ public class WorkersViewController extends RootController {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
+            userModel = UserModel.getInstance();
             TableSetters.setupUsersTable(workersTable);
             TableSetters.setUpProjectTable(projectsTable);
             IProjectModel projectModel = ProjectModel.getInstance();
@@ -50,13 +51,15 @@ public class WorkersViewController extends RootController {
                         ConcurrentMap<Integer, Project> map = projectModel.getProjectsByWorkerId(newValue.values().stream().findFirst().get().getUserID());
                         projectsTable.setItems(FXCollections.observableArrayList(map.values()));
                     } catch (SQLException e) {
-                        throw new RuntimeException(e);
+                        AlertHelper alertHelper = new AlertHelper("An error occurred while loading the projects", e);
+                        alertHelper.showAndWait();
                     }
                 }
             });
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            AlertHelper alertHelper = new AlertHelper("An error occurred while loading the users", e);
+            alertHelper.showAndWait();
         }
     }
 
@@ -74,7 +77,14 @@ public class WorkersViewController extends RootController {
                 borderPane.setCenter(controller.getView());
             }
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            AlertHelper alertHelper = new AlertHelper("An error occurred while loading a new view", e);
+            alertHelper.showAndWait();
+        } catch (NullPointerException ex) {
+            AlertHelper alertHelper = new AlertHelper("The view you selected does not exist", ex);
+            alertHelper.showAndWait();
+        } catch (IndexOutOfBoundsException o) {
+            AlertHelper alertHelper = new AlertHelper("Please select a user to edit", Alert.AlertType.ERROR);
+            alertHelper.showAndWait();
         }
     }
 
@@ -104,7 +114,11 @@ public class WorkersViewController extends RootController {
             BorderPane borderPane = (BorderPane) rootVBox.getParent();
             borderPane.setCenter(controller.getView());
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            AlertHelper alertHelper = new AlertHelper("An error occurred while loading a new view", e);
+            alertHelper.showAndWait();
+        } catch (NullPointerException ex) {
+            AlertHelper alertHelper = new AlertHelper("The view you selected does not exist", ex);
+            alertHelper.showAndWait();
         }
     }
 
@@ -118,9 +132,25 @@ public class WorkersViewController extends RootController {
             Scene scene = new Scene(controller.getView());
             stage.setScene(scene);
             stage.centerOnScreen();
+            stage.setTitle("Assign project to " + selectedUser.getFirstName() + " " + selectedUser.getLastName());
+            // Update the table when the window is closed
+            stage.onCloseRequestProperty().addListener((observable, oldValue, newValue) -> {
+                try {
+                    IProjectModel projectModel = ProjectModel.getInstance();
+                    ConcurrentMap<Integer, Project> map = projectModel.getProjectsByWorkerId(selectedUser.getUserID());
+                    projectsTable.setItems(FXCollections.observableArrayList(map.values()));
+                } catch (SQLException e) {
+                    AlertHelper alertHelper = new AlertHelper("An error occurred while loading the projects", e);
+                    alertHelper.showAndWait();
+                }
+            });
             stage.show();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            AlertHelper alertHelper = new AlertHelper("An error occurred while loading a new view", e);
+            alertHelper.showAndWait();
+        } catch (NullPointerException ex) {
+            AlertHelper alertHelper = new AlertHelper("A view does not exist", ex);
+            alertHelper.showAndWait();
         } catch (IndexOutOfBoundsException o) {
             AlertHelper alertHelper = new AlertHelper("Please select a user to assign a project to", Alert.AlertType.ERROR);
             alertHelper.showAndWait();
@@ -139,7 +169,29 @@ public class WorkersViewController extends RootController {
             AlertHelper alertHelper = new AlertHelper("Please select a user and a project to deassign", Alert.AlertType.ERROR);
             alertHelper.showAndWait();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            AlertHelper alertHelper = new AlertHelper("An error occurred while deassigning a project", Alert.AlertType.ERROR);
+            alertHelper.showAndWait();
+        }
+    }
+
+    @FXML
+    private void viewDocuments(ActionEvent actionEvent) {
+        try {
+            ProjectModel.getInstance().setSelectedProjectId(projectsTable.getSelectionModel().getSelectedValues().get(0).getProjectID());
+            BorderPane rootBorderPane = (BorderPane) rootVBox.getParent();
+            rootBorderPane.setCenter(ControllerFactory.loadFxmlFile(ViewType.DOCUMENTS_VIEW).getView());
+        } catch (SQLException e) {
+            AlertHelper alertHelper = new AlertHelper("An error occurred while getting a project", Alert.AlertType.WARNING);
+            alertHelper.showAndWait();
+        } catch (IndexOutOfBoundsException e) {
+            AlertHelper alertHelper = new AlertHelper("No project selected", Alert.AlertType.WARNING);
+            alertHelper.showAndWait();
+        } catch (IOException e) {
+            AlertHelper alertHelper = new AlertHelper("An error occurred while loading a new view", e);
+            alertHelper.showAndWait();
+        } catch (NullPointerException ex) {
+            AlertHelper alertHelper = new AlertHelper("The view you selected does not exist", ex);
+            alertHelper.showAndWait();
         }
     }
 }

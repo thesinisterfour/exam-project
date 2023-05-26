@@ -2,6 +2,7 @@ package dk.easv.gui.controllers;
 
 import dk.easv.be.Project;
 import dk.easv.be.User;
+import dk.easv.gui.controllers.helpers.AlertHelper;
 import dk.easv.gui.models.ProjectModel;
 import dk.easv.gui.models.interfaces.IProjectModel;
 import dk.easv.gui.rootContoller.RootController;
@@ -27,7 +28,8 @@ public class AssignProjectViewController extends RootController {
             ConcurrentMap<Integer, Project> projects = projectModel.getAllProjects();
             projectsComboBox.setItems(FXCollections.observableArrayList(projects.values()));
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            AlertHelper alertHelper = new AlertHelper("An error occurred while loading data", e);
+            alertHelper.showAndWait();
         }
 
     }
@@ -40,14 +42,19 @@ public class AssignProjectViewController extends RootController {
             try {
                 projectModel.addUserToProject(project.getProjectID(), user.getUserID());
             } catch (SQLException e) {
-                throw new RuntimeException(e);
+                AlertHelper alertHelper = new AlertHelper("An error occurred while assigning project", e);
+                alertHelper.showAndWait();
             }
+            // needed to fire an event to update the table
+            getStage().onCloseRequestProperty().set(event -> getStage().setUserData(null));
             getStage().close();
         }
     }
 
     @FXML
     private void cancel(ActionEvent actionEvent) {
+        // needed to fire an event to update the table
+        getStage().onCloseRequestProperty().set(event -> getStage().setUserData(null));
         getStage().close();
     }
 }

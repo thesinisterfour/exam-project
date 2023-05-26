@@ -69,9 +69,10 @@ public class CustomerDAO implements ICRUDDao<Customer> {
     public ConcurrentMap<Integer, Customer> getAll() throws SQLException {
         ConcurrentMap<Integer, Customer> customers = new ConcurrentHashMap<>();
         try (Connection connection = cm.getConnection()) {
-            PreparedStatement ps = connection.prepareStatement("select dbo.[customer].[customer_id], dbo.[customer].[name], dbo.[customer].[email], dbo.[customer].[address], dbo.cities.city_name, dbo.cities.zipcode\n" +
-                    "from dbo.customer\n" +
-                    "inner join dbo.cities on dbo.cities.zipcode = dbo.customer.zipcode;"
+            PreparedStatement ps = connection.prepareStatement("""
+                    select dbo.[customer].[customer_id], dbo.[customer].[name], dbo.[customer].[email], dbo.[customer].[address], dbo.cities.city_name, dbo.cities.zipcode
+                    from dbo.customer
+                    inner join dbo.cities on dbo.cities.zipcode = dbo.customer.zipcode;"""
             );
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {

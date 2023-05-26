@@ -50,6 +50,3 @@ public interface ICRUDDao<T> {
     int delete(int id) throws SQLException;
 }
 
-/**
- * By implementing this interface, you can create classes that provide the implementation for these CRUD operations for a specific type T.
- */

@@ -20,11 +20,7 @@ public class CRUDLogic implements ICRUDLogic {
     @Override
     public int addUser(User user) throws SQLException {
         ICRUDDao<User> userDAO = CRUDDAOFactory.getDao(DAOType.USER_DAO);
-        if (userDAO == null) {
-            return -1;
-        } else {
-            return userDAO.add(user);
-        }
+        return userDAO.add(user);
     }
 
 
@@ -40,11 +36,7 @@ public class CRUDLogic implements ICRUDLogic {
     @Override
     public int addCustomer(Customer customer) throws SQLException, NullPointerException {
         ICRUDDao<Customer> customerDAO = CRUDDAOFactory.getDao(DAOType.CUSTOMER_DAO);
-        if (customerDAO == null) {
-            throw new NullPointerException("CustomerDAO is null");
-        } else {
-            return customerDAO.add(customer);
-        }
+        return customerDAO.add(customer);
     }
 
     /**
@@ -58,31 +50,7 @@ public class CRUDLogic implements ICRUDLogic {
     @Override
     public int addCity(City city) throws SQLException, NullPointerException {
         ICRUDDao<City> cityDao = CRUDDAOFactory.getDao(DAOType.CITY_DAO);
-        if (cityDao == null) {
-            throw new NullPointerException("CityDAO is null");
-        } else {
-            return cityDao.add(city);
-        }
-    }
-
-    /**
-     * Specified by: BLLFacade
-     * the checkForUser method retrieves the User DAO, gets all users from the data source,
-     * and iterates through them to find a user with the given username and password.
-     *
-     * @return User object if a matching user is found or null otherwise.
-     * @throws SQLException if there is errors doing the operations.
-     */
-    @Override
-    public User checkForUser(String username, String password) throws SQLException {
-        ICRUDDao<User> userDAO = CRUDDAOFactory.getDao(DAOType.USER_DAO);
-        ConcurrentMap<Integer, User> userMap = userDAO.getAll();
-        for (User user : userMap.values()) {
-            if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
-                return user;
-            }
-        }
-        return null;
+        return cityDao.add(city);
     }
 
     /**
@@ -96,11 +64,7 @@ public class CRUDLogic implements ICRUDLogic {
     @Override
     public ConcurrentMap<Integer, Customer> getAllCustomers() throws SQLException {
         ICRUDDao<Customer> customerDao = CRUDDAOFactory.getDao(DAOType.CUSTOMER_DAO);
-        if (customerDao == null) {
-            throw new NullPointerException("CustomerDAO is null");
-        } else {
-            return customerDao.getAll();
-        }
+        return customerDao.getAll();
     }
 
     /**
@@ -115,11 +79,7 @@ public class CRUDLogic implements ICRUDLogic {
     @Override
     public City getCity(int zipcode) throws SQLException {
         ICRUDDao<City> cityDao = CRUDDAOFactory.getDao(DAOType.CITY_DAO);
-        if (cityDao == null) {
-            throw new NullPointerException("CityDAO is null");
-        } else {
-            return cityDao.get(zipcode);
-        }
+        return cityDao.get(zipcode);
     }
 
     /**
@@ -137,16 +97,6 @@ public class CRUDLogic implements ICRUDLogic {
             throw new NullPointerException("userDAO is null");
         } else {
             return userDao.getAll();
-        }
-    }
-
-    @Override
-    public ConcurrentMap<Integer, Role> getAllRoles() throws SQLException {
-        ICRUDDao<Role> roleDao = CRUDDAOFactory.getDao(DAOType.ROLE_DAO);
-        if (roleDao == null) {
-            throw new NullPointerException("roleDAO is null");
-        } else {
-            return roleDao.getAll();
         }
     }
 
@@ -224,19 +174,6 @@ public class CRUDLogic implements ICRUDLogic {
         return documentDao.delete(id);
     }
 
-
-    /**
-     * The method will retrieve all the customer projects from the system. It retrieves the
-     * project DAO from the CURDDAOFactory and calls the getAll method.
-     *
-     * @return the resulting ConcurrentMap<Integer, Projects>
-     * The keys are integers representing the project IDs and the values are project objects
-     * @throws SQLException if there is an error during the database operation.
-     */
-    public ConcurrentMap<Integer, Project> getCustomerProject() throws SQLException {
-        ICRUDDao<Project> projectDAO = CRUDDAOFactory.getDao(DAOType.PROJECT_DAO);
-        return projectDAO.getAll();
-    }
 
     @Override
     public int addProject(Project project) throws SQLException {

@@ -2,6 +2,7 @@ package dk.easv.gui.controllers;
 
 import dk.easv.be.Customer;
 import dk.easv.gui.controllerFactory.ControllerFactory;
+import dk.easv.gui.controllers.helpers.AlertHelper;
 import dk.easv.gui.controllers.helpers.InputValidators;
 import dk.easv.gui.models.CustomerModel;
 import dk.easv.gui.models.interfaces.ICustomerModel;
@@ -11,6 +12,7 @@ import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 
@@ -49,13 +51,20 @@ public class AddCustomerViewController extends RootController {
     private void submitButtonAction(ActionEvent event) {
 
         if (!InputValidators.isEmptyField(rootVBox.getChildren())) {
+            if (!emailTextField.getText().matches("[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}")) {
+                AlertHelper alertHelper = new AlertHelper("Email is not valid", Alert.AlertType.ERROR);
+                alertHelper.showAndWait();
+                return;
+            }
             int zipCode = InputValidators.checkZipCode(zipCodeTextField.getText());
             if (zipCode == 0) return;
             try {
                 customerModel.add(new Customer(nameTextField.getText(), emailTextField.getText(), addressTextField.getText(), zipCode));
             } catch (SQLException e) {
                 // catch if exception in add
-                throw new RuntimeException(e);
+                AlertHelper alertHelper = new AlertHelper("Error adding customer", Alert.AlertType.ERROR);
+                alertHelper.showAndWait();
+                return;
             }
             goBack();
         }
@@ -67,7 +76,11 @@ public class AddCustomerViewController extends RootController {
             BorderPane borderPane = (BorderPane) rootVBox.getParent();
             borderPane.setCenter(rootController.getView());
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            AlertHelper alertHelper = new AlertHelper("An error occurred while loading a new view", e);
+            alertHelper.showAndWait();
+        } catch (NullPointerException ex) {
+            AlertHelper alertHelper = new AlertHelper("The view you selected does not exist", ex);
+            alertHelper.showAndWait();
         }
     }
 
@@ -88,7 +101,8 @@ public class AddCustomerViewController extends RootController {
                     goBack();
                 }
             } catch (SQLException e) {
-                throw new RuntimeException(e);
+                AlertHelper alertHelper = new AlertHelper("Error updating customer", Alert.AlertType.ERROR);
+                alertHelper.showAndWait();
             }
         });
 
@@ -96,5 +110,12 @@ public class AddCustomerViewController extends RootController {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        emailTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.matches("[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}") || newValue.isEmpty()) {
+                emailTextField.setFloatingText("Email");
+            } else {
+                emailTextField.setFloatingText("Invalid email");
+            }
+        });
     }
 }

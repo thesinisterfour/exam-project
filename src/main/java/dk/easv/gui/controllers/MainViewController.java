@@ -3,6 +3,7 @@ package dk.easv.gui.controllers;
 import dk.easv.be.Doc;
 import dk.easv.be.Role;
 import dk.easv.gui.controllerFactory.ControllerFactory;
+import dk.easv.gui.controllers.helpers.AlertHelper;
 import dk.easv.gui.controllers.tasks.LoadCustomerModelTask;
 import dk.easv.gui.controllers.tasks.LoadDocumentModelTask;
 import dk.easv.gui.controllers.tasks.LoadProjectModelTask;
@@ -10,7 +11,6 @@ import dk.easv.gui.models.CustomerModel;
 import dk.easv.gui.models.ProjectModel;
 import dk.easv.gui.models.interfaces.IProjectModel;
 import dk.easv.gui.rootContoller.RootController;
-import dk.easv.helpers.AlertHelper;
 import dk.easv.helpers.CurrentUser;
 import dk.easv.helpers.DocumentHelper;
 import dk.easv.helpers.ViewType;
@@ -71,7 +71,8 @@ public class MainViewController extends RootController {
                     DocumentHelper.setOldDocWarningShown(true);
                 }
             } catch (SQLException e) {
-                throw new RuntimeException(e);
+                AlertHelper alertHelper = new AlertHelper("Old documents could not be loaded", Alert.AlertType.WARNING);
+                alertHelper.showAndWait();
             }
         });
 
@@ -84,7 +85,8 @@ public class MainViewController extends RootController {
             try {
                 projectModel.loadAllProjects();
             } catch (SQLException e) {
-                throw new RuntimeException(e);
+                AlertHelper alertHelper = new AlertHelper("An error occurred during loading of projects", e);
+                alertHelper.showAndWait();
             }
         });
 
@@ -109,7 +111,11 @@ public class MainViewController extends RootController {
                 RootController controller = ControllerFactory.loadFxmlFile(ViewType.CUSTOMERS_VIEW);
                 mainBorderPane.setCenter(controller.getView());
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                AlertHelper alertHelper = new AlertHelper("An error occurred while loading a new view", e);
+                alertHelper.showAndWait();
+            } catch (NullPointerException ex) {
+                AlertHelper alertHelper = new AlertHelper("The view you selected does not exist", ex);
+                alertHelper.showAndWait();
             }
 
         }
@@ -120,9 +126,7 @@ public class MainViewController extends RootController {
         iconsVbox.getChildren().remove(workersLayer);
         iconsVbox.getChildren().remove(documentsButton);
 
-        projectsButton.setOnAction(event -> {
-            setTechnicianMainView();
-        });
+        projectsButton.setOnAction(event -> setTechnicianMainView());
 
         setTechnicianMainView();
 
@@ -134,31 +138,60 @@ public class MainViewController extends RootController {
             RootController controller = ControllerFactory.loadFxmlFile(ViewType.PROJECTS_VIEW);
             mainBorderPane.setCenter(controller.getView());
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            AlertHelper alertHelper = new AlertHelper("An error occurred while loading a new view", e);
+            alertHelper.showAndWait();
+        } catch (NullPointerException ex) {
+            AlertHelper alertHelper = new AlertHelper("The view you selected does not exist", ex);
+            alertHelper.showAndWait();
         }
     }
 
     @FXML
-    public void handleLogout(ActionEvent actionEvent) throws IOException {
-        Stage stage = getStage();
-        RootController controller = ControllerFactory.loadFxmlFile(ViewType.LOGIN);
-        stage.setScene(new Scene(controller.getView()));
-        stage.setTitle("WUAV!!!");
-        stage.centerOnScreen();
-        DocumentHelper.setOldDocWarningShown(false);
-        projectModel.setSelectedUserId(0);
+    public void handleLogout(ActionEvent ignoredActionEvent) {
+        try {
+            Stage stage = getStage();
+            RootController controller = ControllerFactory.loadFxmlFile(ViewType.LOGIN);
+            stage.setScene(new Scene(controller.getView()));
+            stage.setTitle("WUAV!!!");
+            stage.centerOnScreen();
+            DocumentHelper.setOldDocWarningShown(false);
+            projectModel.setSelectedUserId(0);
+        } catch (IOException e) {
+            AlertHelper alertHelper = new AlertHelper("An error occurred while loading a new view", e);
+            alertHelper.showAndWait();
+        } catch (NullPointerException ex) {
+            AlertHelper alertHelper = new AlertHelper("The view you selected does not exist", ex);
+            alertHelper.showAndWait();
+        }
     }
 
     @FXML
-    private void displayBusiness() throws IOException {
-        RootController controller = ControllerFactory.loadFxmlFile(ViewType.CUSTOMERS_VIEW);
-        mainBorderPane.setCenter(controller.getView());
+    private void displayBusiness() {
+        try {
+            RootController controller = ControllerFactory.loadFxmlFile(ViewType.CUSTOMERS_VIEW);
+            mainBorderPane.setCenter(controller.getView());
+        } catch (IOException e) {
+            AlertHelper alertHelper = new AlertHelper("An error occurred while loading a new view", e);
+            alertHelper.showAndWait();
+        } catch (NullPointerException ex) {
+            AlertHelper alertHelper = new AlertHelper("The view you selected does not exist", ex);
+            alertHelper.showAndWait();
+        }
     }
 
     @FXML
-    private void displayWorkers(ActionEvent actionEvent) throws IOException {
-        RootController controller = ControllerFactory.loadFxmlFile(ViewType.WORKERS);
-        mainBorderPane.setCenter(controller.getView());
+    private void displayWorkers(ActionEvent actionEvent) {
+        try {
+            RootController controller = ControllerFactory.loadFxmlFile(ViewType.WORKERS);
+            mainBorderPane.setCenter(controller.getView());
+        } catch (IOException e) {
+            AlertHelper alertHelper = new AlertHelper("An error occurred while loading a new view", e);
+            alertHelper.showAndWait();
+        } catch (NullPointerException ex) {
+            AlertHelper alertHelper = new AlertHelper("The view you selected does not exist", ex);
+            alertHelper.showAndWait();
+        }
+
     }
 
     @FXML
@@ -169,9 +202,14 @@ public class MainViewController extends RootController {
             RootController controller = ControllerFactory.loadFxmlFile(ViewType.PROJECTS_VIEW);
             mainBorderPane.setCenter(controller.getView());
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            AlertHelper alertHelper = new AlertHelper("An error occurred while loading a new view", e);
+            alertHelper.showAndWait();
+        } catch (NullPointerException ex) {
+            AlertHelper alertHelper = new AlertHelper("The view you selected does not exist", ex);
+            alertHelper.showAndWait();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            AlertHelper alertHelper = new AlertHelper("An error occurred while loading projects", e);
+            alertHelper.showAndWait();
         }
 
     }
@@ -183,9 +221,14 @@ public class MainViewController extends RootController {
             RootController controller = ControllerFactory.loadFxmlFile(ViewType.DOCUMENTS_VIEW);
             mainBorderPane.setCenter(controller.getView());
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            AlertHelper alertHelper = new AlertHelper("An error occurred while loading a new view", e);
+            alertHelper.showAndWait();
+        } catch (NullPointerException ex) {
+            AlertHelper alertHelper = new AlertHelper("The view you selected does not exist", ex);
+            alertHelper.showAndWait();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            AlertHelper alertHelper = new AlertHelper("An error occurred while loading projects", e);
+            alertHelper.showAndWait();
         }
     }
 }

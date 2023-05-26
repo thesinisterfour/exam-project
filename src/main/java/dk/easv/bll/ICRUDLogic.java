@@ -18,16 +18,6 @@ public interface ICRUDLogic {
      */
     int addUser(User user) throws SQLException;
 
-    ConcurrentMap<Integer, Role> getAllRoles() throws SQLException;
-
-    /**
-     * This method takes two parameters of type String, representing a username and password.
-     * Its purpose is to check for a user in the system based on the provided username and password.
-     *
-     * @returns a User object.
-     */
-    User checkForUser(String username, String password) throws SQLException;
-
     /**
      * This method takes a parameter of type Doc.
      * It is used to add a document.

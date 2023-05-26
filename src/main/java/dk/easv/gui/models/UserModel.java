@@ -16,17 +16,13 @@ public class UserModel implements IUserModel {
 
     private final ObservableList<User> obsAllUsers;
 
-    private UserModel() {
+    private UserModel() throws SQLException {
         obsAllUsers = FXCollections.observableArrayList();
-        try {
-            loadAllUsers();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        loadAllUsers();
     }
 
 
-    public static UserModel getInstance() {
+    public static UserModel getInstance() throws SQLException {
         if (instance == null) {
             instance = new UserModel();
         }

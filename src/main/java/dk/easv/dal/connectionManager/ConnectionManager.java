@@ -88,12 +88,18 @@ public class ConnectionManager implements IConnectionManager {
     }
 
     /**
-     * this methode stops the executor service by calling shutdownNow().
+     * this method stops the executor service by calling shutdownNow().
      * This will attempt to stop the running tasks and return the list of pending tasks.
      */
     public void stopExecutorService() {
         es.shutdownNow();
-
+        connections.forEach(pooledConnection -> {
+            try {
+                pooledConnection.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
     /**

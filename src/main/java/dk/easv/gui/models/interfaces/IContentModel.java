@@ -74,7 +74,7 @@ public interface IContentModel {
      */
     void loadAllContent(int documentId) throws SQLException;
 
-    ConcurrentNavigableMap<Integer, Integer> getContentMap();
+    ConcurrentNavigableMap<Integer, Integer> getContentMap() throws SQLException;
 
     void setContentMap(ConcurrentNavigableMap<Integer, Integer> contentMap);
 

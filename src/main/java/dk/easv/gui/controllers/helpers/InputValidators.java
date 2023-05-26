@@ -2,7 +2,6 @@ package dk.easv.gui.controllers.helpers;
 
 import dk.easv.gui.models.CityModel;
 import dk.easv.gui.models.interfaces.ICityModel;
-import dk.easv.helpers.AlertHelper;
 import io.github.palexdev.materialfx.controls.MFXComboBox;
 import io.github.palexdev.materialfx.controls.MFXDatePicker;
 import io.github.palexdev.materialfx.controls.MFXTextField;

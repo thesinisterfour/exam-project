@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
 <?import io.github.palexdev.materialfx.controls.*?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.*?>
@@ -9,12 +8,13 @@
       fx:controller="dk.easv.gui.controllers.AddCustomerViewController">
     <children>
         <Label text="Create New Customer"/>
-        <MFXTextField fx:id="nameTextField" floatMode="BORDER" prefHeight="0.0" prefWidth="350.0" promptText="Name"/>
-        <MFXTextField fx:id="addressTextField" floatMode="BORDER" prefHeight="0.0" prefWidth="350.0"
-                      promptText="Address"/>
-        <MFXTextField fx:id="emailTextField" floatMode="BORDER" prefHeight="0.0" prefWidth="350.0" promptText="Email"/>
-        <MFXTextField fx:id="zipCodeTextField" floatMode="BORDER" prefHeight="0.0" prefWidth="350.0"
-                      promptText="ZipCode"/>
+        <MFXTextField fx:id="nameTextField" floatMode="BORDER" floatingText="Name" prefHeight="0.0" prefWidth="350.0"/>
+        <MFXTextField fx:id="addressTextField" floatMode="BORDER" floatingText="Address" prefHeight="0.0"
+                      prefWidth="350.0"/>
+        <MFXTextField fx:id="emailTextField" floatMode="BORDER" floatingText="Email" prefHeight="0.0"
+                      prefWidth="350.0"/>
+        <MFXTextField fx:id="zipCodeTextField" floatMode="BORDER" floatingText="ZipCode" prefHeight="0.0"
+                      prefWidth="350.0"/>
         <GridPane maxWidth="350.0" VBox.vgrow="NEVER">
             <columnConstraints>
                 <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>

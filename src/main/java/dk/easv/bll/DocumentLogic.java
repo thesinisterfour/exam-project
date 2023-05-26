@@ -37,6 +37,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Objects;
@@ -110,7 +111,6 @@ public class DocumentLogic implements IDocumentLogic {
 
     @Override
     public void generatePDF(CustomerType type, int id, String dest) throws IOException, SQLException {
-
         ICRUDDao<Doc> documentDAO = CRUDDAOFactory.getDao(DAOType.DOCUMENT_DAO);
         Doc doc = documentDAO.get(id);
         ConcurrentNavigableMap<Integer, Integer> contentMap = loadAllContent(doc.getId());
@@ -128,11 +128,11 @@ public class DocumentLogic implements IDocumentLogic {
             document.add(new Paragraph(doc.getName()).setFont(bold).setFontSize(32));
             String description = doc.getDescription();
             document.add(new Paragraph(description == null ? "" : description).setFontSize(16));
-            document.add(new Paragraph("Document created on: " + doc.getCreationDate().toString()));
-            document.add(new Paragraph("PDF generated on: " + LocalDateTime.now()));
+            document.add(new Paragraph("Document created on: " + doc.getCreationDate().format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))));
+            document.add(new Paragraph("PDF generated on: " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss"))));
         } else {
             document.add(new Paragraph(doc.getName()).setFont(bold).setFontSize(32));
-            document.add(new Paragraph("Document created on: " + doc.getCreationDate().toString()));
+            document.add(new Paragraph("Document created on: " + doc.getCreationDate().format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))));
         }
 
         for (Integer contentId : contentMap.values()) {
@@ -142,9 +142,8 @@ public class DocumentLogic implements IDocumentLogic {
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 ImageIO.write(bufferedImage, "png", baos);
                 com.itextpdf.layout.element.Image img = new com.itextpdf.layout.element.Image(ImageDataFactory.create(baos.toByteArray()));
-                img.setWidth(document.getPdfDocument().getDefaultPageSize().getWidth() - 1);
+                img.setWidth(pdf.getDefaultPageSize().getWidth() - document.getRightMargin() - document.getLeftMargin());
                 img.setMarginTop(35);
-                document.setHorizontalAlignment(HorizontalAlignment.CENTER);
                 document.add(img);
             } else {
                 Color blackColor = Color.makeColor(DeviceRgb.BLACK.getColorSpace());
@@ -167,7 +166,6 @@ public class DocumentLogic implements IDocumentLogic {
             PdfCanvas pdfCanvas = new PdfCanvas(page);
             pdfCanvas.addImageFittedIntoRectangle(ImageDataFactory.create(logoPath), new Rectangle(logoX, logoY, logoWidth, logoHeight), false);
         }
-
         document.close();
     }
 

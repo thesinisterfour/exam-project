@@ -14,29 +14,25 @@ import java.io.IOException;
 
 public class CanvasLogic implements ICanvasLogic {
     @Override
-    public void generateImage(File file, Canvas canvas) {
+    public void generateImage(File file, Canvas canvas) throws IOException {
         if (file != null) {
-            try {
-                double canvasWidth = canvas.getWidth();
-                double canvasHeight = canvas.getHeight();
+            double canvasWidth = canvas.getWidth();
+            double canvasHeight = canvas.getHeight();
 
-                WritableImage writableImage = new WritableImage((int) canvasWidth, (int) canvasHeight);
-                SnapshotParameters params = new SnapshotParameters();
-                params.setFill(Color.WHITE); // Set white background
-                canvas.snapshot(params, writableImage);
+            WritableImage writableImage = new WritableImage((int) canvasWidth, (int) canvasHeight);
+            SnapshotParameters params = new SnapshotParameters();
+            params.setFill(Color.WHITE); // Set white background
+            canvas.snapshot(params, writableImage);
 
-                BufferedImage bufferedImage = SwingFXUtils.fromFXImage(writableImage, null);
-                BufferedImage imageWithWhiteBackground = new BufferedImage(bufferedImage.getWidth(), bufferedImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
-                Graphics2D graphics = imageWithWhiteBackground.createGraphics();
-                graphics.setColor(java.awt.Color.WHITE);
-                graphics.fillRect(0, 0, imageWithWhiteBackground.getWidth(), imageWithWhiteBackground.getHeight());
-                graphics.drawImage(bufferedImage, 0, 0, null);
-                graphics.dispose();
+            BufferedImage bufferedImage = SwingFXUtils.fromFXImage(writableImage, null);
+            BufferedImage imageWithWhiteBackground = new BufferedImage(bufferedImage.getWidth(), bufferedImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
+            Graphics2D graphics = imageWithWhiteBackground.createGraphics();
+            graphics.setColor(java.awt.Color.WHITE);
+            graphics.fillRect(0, 0, imageWithWhiteBackground.getWidth(), imageWithWhiteBackground.getHeight());
+            graphics.drawImage(bufferedImage, 0, 0, null);
+            graphics.dispose();
 
-                ImageIO.write(imageWithWhiteBackground, "png", file);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            ImageIO.write(imageWithWhiteBackground, "png", file);
         }
     }
 }

@@ -5,6 +5,7 @@ import dk.easv.Main;
 import dk.easv.be.Content;
 import dk.easv.be.Role;
 import dk.easv.gui.controllerFactory.ControllerFactory;
+import dk.easv.gui.controllers.helpers.AlertHelper;
 import dk.easv.gui.models.ContentModel;
 import dk.easv.gui.models.interfaces.IContentModel;
 import dk.easv.gui.models.tasks.RetrieveContentTask;
@@ -25,6 +26,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -68,9 +70,13 @@ public class DocumentViewController extends RootController {
     @FXML
     private GridPane rootGrid;
     @FXML
-    private HBox controlsHbox;
-    @FXML
     private MFXButton saveButton;
+    @FXML
+    private MFXButton sketchButton;
+    @FXML
+    private MFXButton addImageButton;
+    @FXML
+    private MFXButton addTextButton;
 
     /**
      * This function initializes the URL and ResourceBundle and populates the content if the document
@@ -87,17 +93,17 @@ public class DocumentViewController extends RootController {
             populateContent();
         }
 
-        scrollPane.widthProperty().addListener((observable, oldValue, newValue) -> {
-            centeringHBox.setMinWidth(newValue.doubleValue() - 14);
-        });
+        scrollPane.widthProperty().addListener((observable, oldValue, newValue) -> centeringHBox.setMinWidth(newValue.doubleValue() - 14));
         vbox.setMaxWidth(1000);
 
         scaleReferencePane = vbox;
 
         CurrentUser actualUser = CurrentUser.getInstance();
         if (actualUser.getRole() == Role.SALESPERSON) {
-            controlsHbox.setVisible(false);
             saveButton.setDisable(true);
+            sketchButton.setDisable(true);
+            addImageButton.setDisable(true);
+            addTextButton.setDisable(true);
         }
     }
 
@@ -131,8 +137,6 @@ public class DocumentViewController extends RootController {
     private void addTextOnAction(ActionEvent actionEvent) {
         ObservableList<Node> children = vbox.getChildren();
         children.add(addText(""));
-//        emptyCheck();;
-
     }
 
     /**
@@ -202,8 +206,12 @@ public class DocumentViewController extends RootController {
             RootController rootController = ControllerFactory.loadFxmlFile(ViewType.DOCUMENTS_VIEW);
             BorderPane borderPane = (BorderPane) rootGrid.getParent();
             borderPane.setCenter(rootController.getView());
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        } catch (IOException e) {
+            AlertHelper alertHelper = new AlertHelper("An error occurred while loading a new view", e);
+            alertHelper.showAndWait();
+        } catch (NullPointerException ex) {
+            AlertHelper alertHelper = new AlertHelper("The view you selected does not exist", ex);
+            alertHelper.showAndWait();
         }
     }
 
@@ -228,7 +236,8 @@ public class DocumentViewController extends RootController {
                 if (imageExtensions.contains(FilenameUtils.getExtension(file.getAbsolutePath()))) {
                     children.add(addImage(new Image(file.getAbsolutePath())));
                 } else {
-                    System.out.println("Filetype not compatible");
+                    AlertHelper alertHelper = new AlertHelper("The file you dropped is not compatible", Alert.AlertType.WARNING);
+                    alertHelper.showAndWait();
                 }
             }
         }
@@ -297,13 +306,19 @@ public class DocumentViewController extends RootController {
                 new FileChooser.ExtensionFilter("PDF files", "*.pdf"));
         File file = fileChooser.showSaveDialog(new Stage());
         if (file != null) {
-            try {
-                model.saveAsPDF(type, file.getAbsolutePath());
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            ExecutorService es = Executors.newSingleThreadExecutor();
+            es.submit(() -> {
+                try {
+                    model.saveAsPDF(type, file.getAbsolutePath());
+                } catch (SQLException e) {
+                    AlertHelper alertHelper = new AlertHelper("An error occurred while loading database data", e);
+                    alertHelper.showAndWait();
+                } catch (IOException e) {
+                    AlertHelper alertHelper = new AlertHelper("An error occurred while saving the PDF file", e);
+                    alertHelper.showAndWait();
+                }
+            });
+            es.shutdown();
         }
     }
 
@@ -354,7 +369,8 @@ public class DocumentViewController extends RootController {
             try {
                 model.deleteContent(id);
             } catch (SQLException e) {
-                throw new RuntimeException(e);
+                AlertHelper alertHelper = new AlertHelper("An error occurred while deleting the content", e);
+                alertHelper.showAndWait();
             }
         }
         children.remove(hBox);
@@ -383,14 +399,13 @@ public class DocumentViewController extends RootController {
             // bind the end of task to the start of adding the content
             mapTask.valueProperty().addListener(((obs, o, n) -> {
                 // assign the map
-                ConcurrentNavigableMap<Integer, Integer> contentMap = n;
                 ExecutorService es = Executors.newFixedThreadPool(50);
                 // add loading icons for each content
-                contentMap.forEach((k, v) -> children.add(new ImageView(Objects.requireNonNull(Main.class.getResource("icons/loading.gif")).toString())));
+                n.forEach((k, v) -> children.add(new ImageView(Objects.requireNonNull(Main.class.getResource("icons/loading.gif")).toString())));
                 // submit a task for each content
-                for (Integer key : contentMap.keySet()) {
+                for (Integer key : n.keySet()) {
                     // create the task
-                    RetrieveContentTask task = new RetrieveContentTask(contentMap.get(key));
+                    RetrieveContentTask task = new RetrieveContentTask(n.get(key));
                     // This code is checking if the content is an image or text and updates the VBox on change of the value property.
                     task.valueProperty().addListener((observable, oldValue, newValue) ->
                             // run this on main thread
@@ -401,14 +416,14 @@ public class DocumentViewController extends RootController {
                                     // create hbox with side control buttons
                                     HBox hBox = addImage(content.getImage());
                                     // set id that is used for later use
-                                    hBox.setId(String.valueOf(contentMap.get(key)));
+                                    hBox.setId(String.valueOf(n.get(key)));
                                     // replace the loading icon with the content on the given index
                                     children.set(key, hBox);
                                     new FadeIn(hBox).play();
                                 } else {
                                     // same as above but use a text instead
                                     HBox hBox = addText(content.getText());
-                                    hBox.setId(String.valueOf(contentMap.get(key)));
+                                    hBox.setId(String.valueOf(n.get(key)));
                                     children.set(key, hBox);
                                     new FadeIn(hBox).play();
                                 }
@@ -431,7 +446,8 @@ public class DocumentViewController extends RootController {
                 }
 
             } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+                AlertHelper alertHelper = new AlertHelper("An error occurred in another thread", e);
+                alertHelper.showAndWait();
             }
             // remove the base loading icon
             children.remove(children.size() - 1);

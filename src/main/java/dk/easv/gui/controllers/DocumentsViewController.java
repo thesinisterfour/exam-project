@@ -3,13 +3,13 @@ package dk.easv.gui.controllers;
 import dk.easv.be.Doc;
 import dk.easv.be.Role;
 import dk.easv.gui.controllerFactory.ControllerFactory;
+import dk.easv.gui.controllers.helpers.AlertHelper;
 import dk.easv.gui.controllers.helpers.TableSetters;
 import dk.easv.gui.models.ContentModel;
 import dk.easv.gui.models.DocumentModel;
 import dk.easv.gui.models.interfaces.IContentModel;
 import dk.easv.gui.models.interfaces.IDocumentModel;
 import dk.easv.gui.rootContoller.RootController;
-import dk.easv.helpers.AlertHelper;
 import dk.easv.helpers.CurrentUser;
 import dk.easv.helpers.ViewType;
 import io.github.palexdev.materialfx.controls.MFXButton;
@@ -45,7 +45,11 @@ public class DocumentsViewController extends RootController {
             BorderPane borderPane = (BorderPane) rootVbox.getParent();
             borderPane.setCenter(rootController.getView());
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            AlertHelper alertHelper = new AlertHelper("An error occurred while loading a new view", e);
+            alertHelper.showAndWait();
+        } catch (NullPointerException ex) {
+            AlertHelper alertHelper = new AlertHelper("The view you selected does not exist", ex);
+            alertHelper.showAndWait();
         }
     }
 
@@ -59,7 +63,10 @@ public class DocumentsViewController extends RootController {
             BorderPane borderPane = (BorderPane) rootVbox.getParent();
             borderPane.setCenter(rootController.getView());
         } catch (IOException e) {
-            AlertHelper alertHelper = new AlertHelper("A file error occurred", Alert.AlertType.ERROR);
+            AlertHelper alertHelper = new AlertHelper("An error occurred while loading a new view", e);
+            alertHelper.showAndWait();
+        } catch (NullPointerException ex) {
+            AlertHelper alertHelper = new AlertHelper("The view you selected does not exist", ex);
             alertHelper.showAndWait();
         } catch (IndexOutOfBoundsException e) {
             AlertHelper alertHelper = new AlertHelper("Please select a document to edit", Alert.AlertType.ERROR);
@@ -73,7 +80,8 @@ public class DocumentsViewController extends RootController {
             Doc selectedDocument = documentsTable.getSelectionModel().getSelectedValues().get(0);
             model.deleteDocument(selectedDocument.getId());
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            AlertHelper alertHelper = new AlertHelper("An error occurred while deleting the document", e);
+            alertHelper.showAndWait();
         }
 
     }
@@ -91,7 +99,8 @@ public class DocumentsViewController extends RootController {
             model.setObsAllDocuments();
             TableSetters.setUpDocumentTable(documentsTable);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            AlertHelper alertHelper = new AlertHelper("An error occurred while loading the documents", e);
+            alertHelper.showAndWait();
         }
     }
 }

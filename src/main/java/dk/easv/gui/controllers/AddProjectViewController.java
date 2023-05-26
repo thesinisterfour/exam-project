@@ -3,6 +3,7 @@ package dk.easv.gui.controllers;
 import dk.easv.be.Customer;
 import dk.easv.be.Project;
 import dk.easv.gui.controllerFactory.ControllerFactory;
+import dk.easv.gui.controllers.helpers.AlertHelper;
 import dk.easv.gui.controllers.helpers.InputValidators;
 import dk.easv.gui.models.CustomerModel;
 import dk.easv.gui.models.ProjectModel;
@@ -16,6 +17,7 @@ import io.github.palexdev.materialfx.controls.MFXFilterComboBox;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 
@@ -51,7 +53,8 @@ public class AddProjectViewController extends RootController {
             projectModel = ProjectModel.getInstance();
             customerComboBox.setItems(customerModel.getObsCustomers());
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            AlertHelper alertHelper = new AlertHelper("An error occurred while loading data", e);
+            alertHelper.showAndWait();
         }
 
     }
@@ -61,11 +64,17 @@ public class AddProjectViewController extends RootController {
         if (InputValidators.isEmptyField(rootVBox.getChildren())) return;
         int zipCode = InputValidators.checkZipCode(zipcodeTextField.getText());
         if (zipCode == 0) return;
+        if (startDatePicker.getValue().isAfter(endDatePicker.getValue())) {
+            AlertHelper alertHelper = new AlertHelper("Start date cannot be after end date", Alert.AlertType.INFORMATION);
+            alertHelper.showAndWait();
+            return;
+        }
         try {
             projectModel.addProject(new Project(nameTextField.getText(), startDatePicker.getValue(), endDatePicker.getValue(), customerComboBox.getSelectionModel().getSelectedItem().getCustomerID(), addressTextField.getText(), zipCode));
         } catch (SQLException e) {
             // catch if exception in add
-            throw new RuntimeException(e);
+            AlertHelper alertHelper = new AlertHelper("An error occurred while creating a project", e);
+            alertHelper.showAndWait();
         }
         goBack();
     }
@@ -82,7 +91,11 @@ public class AddProjectViewController extends RootController {
             BorderPane borderPane = (BorderPane) rootVBox.getParent();
             borderPane.setCenter(rootController.getView());
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            AlertHelper alertHelper = new AlertHelper("An error occurred while loading a new view", e);
+            alertHelper.showAndWait();
+        } catch (NullPointerException ex) {
+            AlertHelper alertHelper = new AlertHelper("The view you selected does not exist", ex);
+            alertHelper.showAndWait();
         }
     }
 
@@ -92,6 +105,7 @@ public class AddProjectViewController extends RootController {
         endDatePicker.setValue(project.getEndDate());
         addressTextField.setText(project.getProjectAddress());
         zipcodeTextField.setText(String.valueOf(project.getProjectZipcode()));
+        customerComboBox.getSelectionModel().selectItem(getCustomerById(project.getCustomerID()));
 
         submitButton.setText("Update");
         submitButton.setOnAction(event -> {
@@ -99,14 +113,29 @@ public class AddProjectViewController extends RootController {
                 if (InputValidators.isEmptyField(rootVBox.getChildren())) return;
                 int zip = InputValidators.checkZipCode(zipcodeTextField.getText());
                 if (zip != 0) {
+                    if (startDatePicker.getValue().isAfter(endDatePicker.getValue())) {
+                        AlertHelper alertHelper = new AlertHelper("Start date cannot be after end date", Alert.AlertType.INFORMATION);
+                        alertHelper.showAndWait();
+                        return;
+                    }
                     projectModel.updateProject(new Project(project.getProjectID(), nameTextField.getText(), startDatePicker.getValue(), endDatePicker.getValue(), customerComboBox.getSelectionModel().getSelectedItem().getCustomerID(), addressTextField.getText(), Integer.parseInt(zipcodeTextField.getText())));
                 }
                 goBack();
             } catch (SQLException e) {
-                throw new RuntimeException(e);
+                AlertHelper alertHelper = new AlertHelper("An error occurred while updating a project", e);
+                alertHelper.showAndWait();
             }
             getStage().close();
         });
+    }
+
+    private Customer getCustomerById(int customerID) {
+        for (Customer customer : customerComboBox.getItems()) {
+            if (customer.getCustomerID() == customerID) {
+                return customer;
+            }
+        }
+        return null;
     }
 
 }

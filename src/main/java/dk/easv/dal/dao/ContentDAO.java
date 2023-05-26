@@ -132,7 +132,7 @@ public class ContentDAO implements ICRUDDao<Content>, IContentMapperDAO {
                 ps.executeUpdate();
             }
         } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
+            throw new SQLException("File not found");
         }
         return documentId;
     }
@@ -151,11 +151,9 @@ public class ContentDAO implements ICRUDDao<Content>, IContentMapperDAO {
     @Override
     public ConcurrentNavigableMap<Integer, Integer> loadAllContent(int documentId) throws SQLException {
         try (Connection con = cm.getConnection()) {
-            PreparedStatement ps = con.prepareStatement("UPDATE documents SET date_last_opened = CURRENT_TIMESTAMP WHERE document_id = ?");
+            PreparedStatement ps = con.prepareStatement("UPDATE documents SET date_last_opened = CURRENT_TIMESTAMP WHERE document_id = ?; SELECT * FROM document_contents INNER JOIN contents ON document_contents.content_id = contents.id WHERE document_id = ? ORDER BY content_index ASC");
             ps.setInt(1, documentId);
-            ps.executeUpdate();
-            ps = con.prepareStatement("SELECT * FROM document_contents INNER JOIN contents ON document_contents.content_id = contents.id WHERE document_id = ? ORDER BY content_index ASC");
-            ps.setInt(1, documentId);
+            ps.setInt(2, documentId);
             ResultSet rs = ps.executeQuery();
             ConcurrentSkipListMap<Integer, Integer> cslm = new ConcurrentSkipListMap<>();
             while (rs.next()) {

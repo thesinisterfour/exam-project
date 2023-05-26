@@ -1,4 +1,4 @@
-package dk.easv.helpers;
+package dk.easv.gui.controllers.helpers;
 
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.dialogs.MFXDialogs;
@@ -26,7 +26,7 @@ public class AlertHelper {
             default -> createGeneric();
         }
 
-        dialogContent.setContentText(content);
+        dialogContent.setHeaderText(content);
         dialog = new MFXStageDialog(dialogContent);
         dialog.setAlwaysOnTop(true);
         dialog.setDraggable(true);
@@ -51,6 +51,12 @@ public class AlertHelper {
         dialogContent.setMaxSize(400, 200);
 
 
+    }
+
+    public AlertHelper(String content, Exception e) {
+        this(content, Alert.AlertType.ERROR);
+        dialogContent.setContentText(e.getMessage());
+        dialog.setResizable(true);
     }
 
     /**

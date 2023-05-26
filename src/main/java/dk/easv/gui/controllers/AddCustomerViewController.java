@@ -6,11 +6,13 @@ import dk.easv.gui.controllers.helpers.InputValidators;
 import dk.easv.gui.models.CustomerModel;
 import dk.easv.gui.models.interfaces.ICustomerModel;
 import dk.easv.gui.rootContoller.RootController;
+import dk.easv.helpers.AlertHelper;
 import dk.easv.helpers.ViewType;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 
@@ -47,7 +49,13 @@ public class AddCustomerViewController extends RootController {
 
     @FXML
     private void submitButtonAction(ActionEvent event) {
+
         if (!InputValidators.isEmptyField(rootVBox.getChildren())) {
+            if (!emailTextField.getText().matches("[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}")){
+                AlertHelper alertHelper = new AlertHelper("Email is not valid", Alert.AlertType.ERROR);
+                alertHelper.showAndWait();
+                return;
+            }
             int zipCode = InputValidators.checkZipCode(zipCodeTextField.getText());
             if (zipCode == 0) return;
             try {
@@ -95,5 +103,12 @@ public class AddCustomerViewController extends RootController {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        emailTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.matches("[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}") || newValue.isEmpty()) {
+                emailTextField.setFloatingText("Email");
+            } else {
+                emailTextField.setFloatingText("Invalid email");
+            }
+        });
     }
 }

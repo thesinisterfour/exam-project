@@ -21,9 +21,9 @@
     <children>
         <MFXScrollPane fx:id="scrollPane" fitToWidth="true" vbarPolicy="ALWAYS" GridPane.columnSpan="2147483647">
             <content>
-                <HBox fx:id="centeringHBox" alignment="TOP_CENTER">
+                <HBox fx:id="centeringHBox" alignment="CENTER">
                     <children>
-                        <VBox fx:id="vbox" alignment="TOP_CENTER" minHeight="-Infinity" onDragDropped="#vboxOnDragDropped" onDragOver="#vboxOnDragOver" prefHeight="574.0" spacing="10.0" HBox.hgrow="ALWAYS" />
+                        <VBox fx:id="vbox" alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" onDragDropped="#vboxOnDragDropped" onDragOver="#vboxOnDragOver" prefHeight="574.0" spacing="10.0" HBox.hgrow="ALWAYS" />
                     </children>
                 </HBox>
             </content>

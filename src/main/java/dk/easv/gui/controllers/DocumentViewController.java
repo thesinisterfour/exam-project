@@ -310,15 +310,19 @@ public class DocumentViewController extends RootController {
                 new FileChooser.ExtensionFilter("PDF files", "*.pdf"));
         File file = fileChooser.showSaveDialog(new Stage());
         if (file != null) {
-            try {
-                model.saveAsPDF(type, file.getAbsolutePath());
-            } catch (SQLException e) {
-                AlertHelper alertHelper = new AlertHelper("An error occurred while loading database data", e);
-                alertHelper.showAndWait();
-            } catch (IOException e) {
-                AlertHelper alertHelper = new AlertHelper("An error occurred while saving the PDF file", e);
-                alertHelper.showAndWait();
-            }
+            ExecutorService es = Executors.newSingleThreadExecutor();
+            es.submit(() -> {
+                try {
+                    model.saveAsPDF(type, file.getAbsolutePath());
+                } catch (SQLException e) {
+                    AlertHelper alertHelper = new AlertHelper("An error occurred while loading database data", e);
+                    alertHelper.showAndWait();
+                } catch (IOException e) {
+                    AlertHelper alertHelper = new AlertHelper("An error occurred while saving the PDF file", e);
+                    alertHelper.showAndWait();
+                }
+            });
+            es.shutdown();
         }
     }
 

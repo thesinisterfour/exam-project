@@ -131,6 +131,18 @@ public class WorkersViewController extends RootController {
             Scene scene = new Scene(controller.getView());
             stage.setScene(scene);
             stage.centerOnScreen();
+            stage.setTitle("Assign project to " + selectedUser.getFirstName() + " " + selectedUser.getLastName());
+            // Update the table when the window is closed
+            stage.onCloseRequestProperty().addListener((observable, oldValue, newValue) -> {
+                try {
+                    IProjectModel projectModel = ProjectModel.getInstance();
+                    ConcurrentMap<Integer, Project> map = projectModel.getProjectsByWorkerId(selectedUser.getUserID());
+                    projectsTable.setItems(FXCollections.observableArrayList(map.values()));
+                } catch (SQLException e) {
+                    AlertHelper alertHelper = new AlertHelper("An error occurred while loading the projects", e);
+                    alertHelper.showAndWait();
+                }
+            });
             stage.show();
         } catch (IOException e) {
             AlertHelper alertHelper = new AlertHelper("An error occurred while loading a new view", e);

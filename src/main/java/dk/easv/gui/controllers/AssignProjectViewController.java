@@ -45,12 +45,20 @@ public class AssignProjectViewController extends RootController {
                 AlertHelper alertHelper = new AlertHelper("An error occurred while assigning project", e);
                 alertHelper.showAndWait();
             }
+            // needed to fire a event to update the table
+            getStage().onCloseRequestProperty().set(event -> {
+                getStage().setUserData(null);
+            });
             getStage().close();
         }
     }
 
     @FXML
     private void cancel(ActionEvent actionEvent) {
+        // needed to fire a event to update the table
+        getStage().onCloseRequestProperty().set(event -> {
+            getStage().setUserData(null);
+        });
         getStage().close();
     }
 }

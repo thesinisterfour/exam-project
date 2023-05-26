@@ -71,6 +71,12 @@ public class DocumentViewController extends RootController {
     private HBox controlsHbox;
     @FXML
     private MFXButton saveButton;
+    @FXML
+    private MFXButton sketchButton;
+    @FXML
+    private MFXButton addImageButton;
+    @FXML
+    private MFXButton addTextButton;
 
     /**
      * This function initializes the URL and ResourceBundle and populates the content if the document
@@ -96,8 +102,10 @@ public class DocumentViewController extends RootController {
 
         CurrentUser actualUser = CurrentUser.getInstance();
         if (actualUser.getRole() == Role.SALESPERSON) {
-            controlsHbox.setVisible(false);
             saveButton.setDisable(true);
+            sketchButton.setDisable(true);
+            addImageButton.setDisable(true);
+            addTextButton.setDisable(true);
         }
     }
 

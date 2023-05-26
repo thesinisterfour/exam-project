@@ -1,5 +1,6 @@
 package dk.easv.gui.controllers;
 
+import dk.easv.gui.controllers.helpers.AlertHelper;
 import dk.easv.gui.models.CanvasModel;
 import dk.easv.gui.models.interfaces.ICanvasModel;
 import dk.easv.gui.rootContoller.RootController;
@@ -14,6 +15,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.stream.IntStream;
@@ -88,12 +90,11 @@ public class CanvasViewController extends RootController {
                 new FileChooser.ExtensionFilter("PNG Image", "*.png")
         );
         File file = fileChooser.showSaveDialog(canvas.getScene().getWindow());
-        model.generateImage(file, canvas);
-
-//        if (file != null) {
-//            filePath = file.getAbsolutePath();
-//            Image image = new Image("file:" + filePath);
-//            DrawnImageModel.setDrawnImage(image);
-//        }
+        try {
+            model.generateImage(file, canvas);
+        } catch (IOException e) {
+            AlertHelper alertHelper = new AlertHelper("An error occurred while saving image", e);
+            alertHelper.showAndWait();
+        }
     }
 }

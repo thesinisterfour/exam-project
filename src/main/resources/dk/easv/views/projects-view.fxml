@@ -8,7 +8,7 @@
 <VBox xmlns:fx="http://javafx.com/fxml/1" fx:id="rootVBox" spacing="8.0" xmlns="http://javafx.com/javafx/19"
       fx:controller="dk.easv.gui.controllers.ProjectsViewController">
     <children>
-        <Label fx:id="projectLabel" text="Projects"/>
+        <Label text="Projects"/>
         <MFXTableView fx:id="projectsTable" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
                       prefHeight="230.0" prefWidth="830.0" VBox.vgrow="ALWAYS"/>
         <GridPane>
@@ -24,8 +24,8 @@
                 <HBox fx:id="crudHBox" alignment="CENTER_RIGHT" spacing="8.0" GridPane.columnIndex="1">
                     <children>
                         <MFXButton onAction="#newProject" text="Add Project"/>
-                        <MFXButton fx:id="handleEdit" onAction="#handleEdit" text="Edit"/>
-                        <MFXButton fx:id="handleDelete" onAction="#handleDelete" text="Delete"/>
+                        <MFXButton onAction="#handleEdit" text="Edit"/>
+                        <MFXButton onAction="#handleDelete" text="Delete"/>
                     </children>
                 </HBox>
             </children>

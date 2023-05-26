@@ -4,5 +4,5 @@ public enum Role {
     SALESPERSON,
     ADMIN,
     TECHNICIAN,
-    PROJECTMANAGER;
+    PROJECTMANAGER
 }

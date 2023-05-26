@@ -25,9 +25,9 @@
                         <MFXButton onAction="#viewProjectsAction" text="View Projects"/>
                         <HBox fx:id="crudHBox" alignment="CENTER_RIGHT" spacing="8.0" GridPane.columnIndex="1">
                             <children>
-                                <MFXButton fx:id="createCustomer" onAction="#createCustomer" text="New Customer"/>
-                                <MFXButton fx:id="edit" onAction="#editCustomer" text="Edit"/>
-                                <MFXButton fx:id="delete" onAction="#deleteCustomer" text="Delete"/>
+                                <MFXButton onAction="#createCustomer" text="New Customer"/>
+                                <MFXButton onAction="#editCustomer" text="Edit"/>
+                                <MFXButton onAction="#deleteCustomer" text="Delete"/>
                             </children>
                         </HBox>
                     </children>

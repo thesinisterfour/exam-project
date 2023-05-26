@@ -94,39 +94,6 @@ MFXButton:hover {
     -fx-text-fill: transparent;
 }
 
-.add_Button {
-    -fx-background-image: url('../icons/Add.png');
-    -fx-background-repeat: no-repeat;
-    -fx-background-color: transparent;
-    -fx-border-color: transparent;
-    -fx-background-radius: 15px;
-    -fx-background-size: 25px 25px;
-    -fx-background-position: center;
-    -fx-text-fill: transparent;
-}
-
-.edit_Button {
-    -fx-background-image: url('../icons/Edit.png');
-    -fx-background-repeat: no-repeat;
-    -fx-background-color: transparent;
-    -fx-border-color: transparent;
-    -fx-background-radius: 15px;
-    -fx-background-size: 25px 25px;
-    -fx-background-position: center;
-    -fx-text-fill: transparent;
-}
-
-.delete_Button {
-    -fx-background-image: url('../icons/Remove.png');
-    -fx-background-repeat: no-repeat;
-    -fx-background-color: transparent;
-    -fx-border-color: transparent;
-    -fx-background-radius: 15px;
-    -fx-background-size: 25px 25px;
-    -fx-background-position: center;
-    -fx-text-fill: transparent;
-}
-
 .logout_Button {
     -fx-background-image: url('../icons/Logout.png');
     -fx-background-repeat: no-repeat;
@@ -159,17 +126,9 @@ MFXButton:hover {
     -fx-background-position: center;
     -fx-text-fill: transparent;
 }
-
-
 Label {
     -fx-font-weight: bold;
 
-}
-
-.main_pane {
-    -fx-background-image: url('../icons/backdrop.png');
-    -fx-background-repeat: no-repeat;
-    -fx-background-size: cover;
 }
 
 .wuav_logo {

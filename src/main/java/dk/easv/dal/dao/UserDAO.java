@@ -83,9 +83,10 @@ public class UserDAO implements ICRUDDao<User> {
     public ConcurrentMap<Integer, User> getAll() throws SQLException {
         ConcurrentMap<Integer, User> userMap = new ConcurrentHashMap<>();
         try (Connection connection = cm.getConnection()) {
-            PreparedStatement ps = connection.prepareStatement("SELECT dbo.[users].user_id, dbo.[users].first_name, dbo.[users].last_name, dbo.[users].username, dbo.[users].[password], dbo.users_role.role_name\n" +
-                    "FROM dbo.[users]\n" +
-                    "INNER JOIN dbo.users_role ON dbo.users_role.role_id = dbo.[users].role_id;");
+            PreparedStatement ps = connection.prepareStatement("""
+                    SELECT dbo.[users].user_id, dbo.[users].first_name, dbo.[users].last_name, dbo.[users].username, dbo.[users].[password], dbo.users_role.role_name
+                    FROM dbo.[users]
+                    INNER JOIN dbo.users_role ON dbo.users_role.role_id = dbo.[users].role_id;""");
 
             ResultSet rs = ps.executeQuery();
 

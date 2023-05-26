@@ -94,9 +94,7 @@ public class DocumentViewController extends RootController {
             populateContent();
         }
 
-        scrollPane.widthProperty().addListener((observable, oldValue, newValue) -> {
-            centeringHBox.setMinWidth(newValue.doubleValue() - 14);
-        });
+        scrollPane.widthProperty().addListener((observable, oldValue, newValue) -> centeringHBox.setMinWidth(newValue.doubleValue() - 14));
         vbox.setMaxWidth(1000);
 
         scaleReferencePane = vbox;
@@ -403,14 +401,13 @@ public class DocumentViewController extends RootController {
             // bind the end of task to the start of adding the content
             mapTask.valueProperty().addListener(((obs, o, n) -> {
                 // assign the map
-                ConcurrentNavigableMap<Integer, Integer> contentMap = n;
                 ExecutorService es = Executors.newFixedThreadPool(50);
                 // add loading icons for each content
-                contentMap.forEach((k, v) -> children.add(new ImageView(Objects.requireNonNull(Main.class.getResource("icons/loading.gif")).toString())));
+                n.forEach((k, v) -> children.add(new ImageView(Objects.requireNonNull(Main.class.getResource("icons/loading.gif")).toString())));
                 // submit a task for each content
-                for (Integer key : contentMap.keySet()) {
+                for (Integer key : n.keySet()) {
                     // create the task
-                    RetrieveContentTask task = new RetrieveContentTask(contentMap.get(key));
+                    RetrieveContentTask task = new RetrieveContentTask(n.get(key));
                     // This code is checking if the content is an image or text and updates the VBox on change of the value property.
                     task.valueProperty().addListener((observable, oldValue, newValue) ->
                             // run this on main thread
@@ -421,14 +418,14 @@ public class DocumentViewController extends RootController {
                                     // create hbox with side control buttons
                                     HBox hBox = addImage(content.getImage());
                                     // set id that is used for later use
-                                    hBox.setId(String.valueOf(contentMap.get(key)));
+                                    hBox.setId(String.valueOf(n.get(key)));
                                     // replace the loading icon with the content on the given index
                                     children.set(key, hBox);
                                     new FadeIn(hBox).play();
                                 } else {
                                     // same as above but use a text instead
                                     HBox hBox = addText(content.getText());
-                                    hBox.setId(String.valueOf(contentMap.get(key)));
+                                    hBox.setId(String.valueOf(n.get(key)));
                                     children.set(key, hBox);
                                     new FadeIn(hBox).play();
                                 }

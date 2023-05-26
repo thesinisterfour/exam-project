@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.Objects;
 import java.util.Optional;
 
 public class Main extends Application {
@@ -47,7 +48,7 @@ public class Main extends Application {
             Scene scene = new Scene(controller.getView());
             stage.setTitle("WUAV!!!");
             stage.setScene(scene);
-            stage.getIcons().add(new Image(Main.class.getResource("icons/WUAV-Logo.png").toExternalForm()));
+            stage.getIcons().add(new Image(Objects.requireNonNull(Main.class.getResource("icons/WUAV-Logo.png")).toExternalForm()));
             stage.show();
         } else {
             showConfigNotFoundAlert();

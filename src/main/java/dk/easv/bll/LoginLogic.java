@@ -4,7 +4,6 @@ import dk.easv.be.User;
 import dk.easv.bll.tasks.GetAllUsersTask;
 import dk.easv.gui.models.interfaces.ILoginModel;
 
-import java.sql.SQLException;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -34,7 +33,7 @@ public class LoginLogic implements ILoginLogic {
     }
 
     @Override
-    public User checkForUser(String username, String password) throws SQLException {
+    public User checkForUser(String username, String password) {
         for (User user : userMap.values()) {
             if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
                 return user;

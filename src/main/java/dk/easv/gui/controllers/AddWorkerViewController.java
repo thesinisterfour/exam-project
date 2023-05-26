@@ -125,7 +125,7 @@ public class AddWorkerViewController extends RootController {
         }
     }
 
-    public void removeCustomerData(ActionEvent actionEvent) {
+    public void removeCustomerData(ActionEvent ignoredActionEvent) {
         nameTextField.setText("");
         lastNameTextField.setText("");
         usernameTextField.setText("");

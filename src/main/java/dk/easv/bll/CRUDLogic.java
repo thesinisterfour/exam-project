@@ -54,26 +54,6 @@ public class CRUDLogic implements ICRUDLogic {
     }
 
     /**
-     * Specified by: BLLFacade
-     * the checkForUser method retrieves the User DAO, gets all users from the data source,
-     * and iterates through them to find a user with the given username and password.
-     *
-     * @return User object if a matching user is found or null otherwise.
-     * @throws SQLException if there is errors doing the operations.
-     */
-    @Override
-    public User checkForUser(String username, String password) throws SQLException {
-        ICRUDDao<User> userDAO = CRUDDAOFactory.getDao(DAOType.USER_DAO);
-        ConcurrentMap<Integer, User> userMap = userDAO.getAll();
-        for (User user : userMap.values()) {
-            if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
-                return user;
-            }
-        }
-        return null;
-    }
-
-    /**
      * The getAllCustomers method retrieves the Customer DAO from the CRUDDAOFactory
      * and calls the getAll method on it to retrieve all customers from the data source.
      *
@@ -194,19 +174,6 @@ public class CRUDLogic implements ICRUDLogic {
         return documentDao.delete(id);
     }
 
-
-    /**
-     * The method will retrieve all the customer projects from the system. It retrieves the
-     * project DAO from the CURDDAOFactory and calls the getAll method.
-     *
-     * @return the resulting ConcurrentMap<Integer, Projects>
-     * The keys are integers representing the project IDs and the values are project objects
-     * @throws SQLException if there is an error during the database operation.
-     */
-    public ConcurrentMap<Integer, Project> getCustomerProject() throws SQLException {
-        ICRUDDao<Project> projectDAO = CRUDDAOFactory.getDao(DAOType.PROJECT_DAO);
-        return projectDAO.getAll();
-    }
 
     @Override
     public int addProject(Project project) throws SQLException {

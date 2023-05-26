@@ -41,10 +41,8 @@ public class CanvasViewController extends RootController {
     public void initialize(URL location, ResourceBundle resources) {
         graphicsContext = canvas.getGraphicsContext2D();
 
-        resetButton.setOnAction(actionEvent -> {
-            graphicsContext.clearRect(1, 1, graphicsContext.getCanvas().getWidth() - 2,
-                    graphicsContext.getCanvas().getHeight() - 2);
-        });
+        resetButton.setOnAction(actionEvent -> graphicsContext.clearRect(1, 1, graphicsContext.getCanvas().getWidth() - 2,
+                graphicsContext.getCanvas().getHeight() - 2));
 
         initializePenSettings();
         drawOnCanvas();
@@ -53,15 +51,11 @@ public class CanvasViewController extends RootController {
     private void initializePenSettings() {
         colorChooser.setItems(FXCollections.observableArrayList("Black", "Blue", "Red", "Green", "Brown", "Orange"));
         colorChooser.getSelectionModel().selectFirst();
-        colorChooser.valueProperty().addListener((ov, old, newVal) -> {
-            graphicsContext.setStroke(Color.web(newVal));
-        });
+        colorChooser.valueProperty().addListener((ov, old, newVal) -> graphicsContext.setStroke(Color.web(newVal)));
 
         sizeChooser.setItems(FXCollections.observableList(IntStream.rangeClosed(1, 5).boxed().toList()));
         sizeChooser.getSelectionModel().selectFirst();
-        sizeChooser.valueProperty().addListener((ov, old, newVal) -> {
-            graphicsContext.setLineWidth(newVal);
-        });
+        sizeChooser.valueProperty().addListener((ov, old, newVal) -> graphicsContext.setLineWidth(newVal));
     }
 
     private void drawOnCanvas() {

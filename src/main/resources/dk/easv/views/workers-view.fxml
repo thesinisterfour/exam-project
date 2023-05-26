@@ -10,7 +10,7 @@
     <children>
         <VBox spacing="5.0" VBox.vgrow="ALWAYS">
             <children>
-                <Label fx:id="projectLabel" text="Workers"/>
+                <Label text="Workers"/>
                 <MFXTableView fx:id="workersTable" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
                               prefHeight="230.0" prefWidth="830.0" VBox.vgrow="ALWAYS"/>
                 <HBox alignment="CENTER_RIGHT" spacing="8.0" GridPane.rowIndex="1">
@@ -24,7 +24,7 @@
         </VBox>
         <VBox spacing="5.0" VBox.vgrow="ALWAYS">
             <children>
-                <Label fx:id="Projects" text="Projects"/>
+                <Label text="Projects"/>
                 <MFXTableView fx:id="projectsTable" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
                               prefHeight="230.0" prefWidth="830.0" VBox.vgrow="ALWAYS"/>
                 <GridPane GridPane.rowIndex="1">

@@ -4,6 +4,7 @@ import dk.easv.be.Doc;
 import dk.easv.bll.CRUDLogic;
 import dk.easv.bll.DocumentLogic;
 import dk.easv.bll.ICRUDLogic;
+import dk.easv.bll.IDocumentLogic;
 import dk.easv.gui.models.interfaces.IDocumentModel;
 import dk.easv.gui.models.interfaces.IProjectModel;
 import javafx.collections.FXCollections;
@@ -79,7 +80,8 @@ public class DocumentModel implements IDocumentModel {
 
     @Override
     public List<Doc> getOldDocuments() throws SQLException {
-        return new DocumentLogic().showOldDocuments();
+        IDocumentLogic logic = new DocumentLogic();
+        return logic.showOldDocuments();
     }
 
     @Override

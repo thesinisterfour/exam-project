@@ -126,9 +126,7 @@ public class MainViewController extends RootController {
         iconsVbox.getChildren().remove(workersLayer);
         iconsVbox.getChildren().remove(documentsButton);
 
-        projectsButton.setOnAction(event -> {
-            setTechnicianMainView();
-        });
+        projectsButton.setOnAction(event -> setTechnicianMainView());
 
         setTechnicianMainView();
 
@@ -149,7 +147,7 @@ public class MainViewController extends RootController {
     }
 
     @FXML
-    public void handleLogout(ActionEvent actionEvent) {
+    public void handleLogout(ActionEvent ignoredActionEvent) {
         try {
             Stage stage = getStage();
             RootController controller = ControllerFactory.loadFxmlFile(ViewType.LOGIN);

@@ -30,11 +30,6 @@ public class LoginModel implements ILoginModel {
     }
 
     @Override
-    public boolean isLoginReady() {
-        return loginReady;
-    }
-
-    @Override
     public void setLoginReady(boolean loginReady) {
         this.loginReady = loginReady;
         notifyObserver();

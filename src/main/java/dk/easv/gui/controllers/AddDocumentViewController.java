@@ -92,7 +92,7 @@ public class AddDocumentViewController extends RootController {
                 }
             });
         } catch (SQLException e) {
-            AlertHelper alertHelper = new AlertHelper("An error occurred while loading the properties", e);
+            AlertHelper alertHelper = new AlertHelper("An error occurred while loading the customers", e);
             alertHelper.showAndWait();
         }
     }

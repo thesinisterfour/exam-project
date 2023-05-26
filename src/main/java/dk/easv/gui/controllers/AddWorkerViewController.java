@@ -3,16 +3,15 @@ package dk.easv.gui.controllers;
 import dk.easv.be.Role;
 import dk.easv.be.User;
 import dk.easv.gui.controllerFactory.ControllerFactory;
+import dk.easv.gui.controllers.helpers.AlertHelper;
 import dk.easv.gui.controllers.helpers.InputValidators;
-import dk.easv.gui.models.RoleModel;
 import dk.easv.gui.models.UserModel;
-import dk.easv.gui.models.interfaces.IRoleModel;
 import dk.easv.gui.models.interfaces.IUserModel;
 import dk.easv.gui.rootContoller.RootController;
-import dk.easv.gui.controllers.helpers.AlertHelper;
 import dk.easv.helpers.ViewType;
 import io.github.palexdev.materialfx.controls.MFXComboBox;
 import io.github.palexdev.materialfx.controls.MFXTextField;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -23,10 +22,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
-import java.util.concurrent.ConcurrentMap;
 
 public class AddWorkerViewController extends RootController {
-    private final IRoleModel roleModel = new RoleModel();
     private final IUserModel userModel = UserModel.getInstance();
     @FXML
     private MFXTextField nameTextField,
@@ -34,7 +31,7 @@ public class AddWorkerViewController extends RootController {
             usernameTextField,
             passwordTextField;
     @FXML
-    private MFXComboBox<String> roleComboBox;
+    private MFXComboBox<Role> roleComboBox;
     private boolean editMode = false;
     private User selectedUser;
     @FXML
@@ -42,17 +39,7 @@ public class AddWorkerViewController extends RootController {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        try {
-            ConcurrentMap<Integer, Role> rolesMap = roleModel.getAllRoles();
-            for (Role role : rolesMap.values()) {
-                if (!role.toString().equals("ADMIN")) {
-                    roleComboBox.getItems().add(role.toString());
-                }
-            }
-        } catch (SQLException e) {
-            AlertHelper alertHelper = new AlertHelper("There was an error retrieving roles from database", e);
-            alertHelper.showAndWait();
-        }
+        roleComboBox.setItems(FXCollections.observableArrayList(Role.values()));
     }
 
     public void setUserData(User user) {
@@ -62,7 +49,7 @@ public class AddWorkerViewController extends RootController {
             lastNameTextField.setText(user.getLastName());
             usernameTextField.setText(user.getUsername());
             passwordTextField.setText(user.getPassword());
-            roleComboBox.setValue(user.getRole().toString());
+            roleComboBox.getSelectionModel().selectItem(user.getRole());
         }
         editMode = true;
     }
@@ -98,7 +85,7 @@ public class AddWorkerViewController extends RootController {
         selectedUser.setLastName(lastNameTextField.getText());
         selectedUser.setUsername(usernameTextField.getText());
         selectedUser.setPassword(passwordTextField.getText());
-        selectedUser.setRole(Role.valueOf(roleComboBox.getValue()));
+        selectedUser.setRole(roleComboBox.getValue());
         try {
             userModel.updateUser(selectedUser);
             goBack();
@@ -117,9 +104,9 @@ public class AddWorkerViewController extends RootController {
         String lastName = lastNameTextField.getText();
         String username = usernameTextField.getText();
         String password = passwordTextField.getText();
-        String selectedRole = roleComboBox.getValue();
+        Role selectedRole = roleComboBox.getValue();
 
-        User user = new User(firstName, lastName, Role.valueOf(selectedRole));
+        User user = new User(firstName, lastName, selectedRole);
         user.setUsername(username);
         user.setPassword(password);
         try {

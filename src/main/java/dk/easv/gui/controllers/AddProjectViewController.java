@@ -99,6 +99,7 @@ public class AddProjectViewController extends RootController {
         endDatePicker.setValue(project.getEndDate());
         addressTextField.setText(project.getProjectAddress());
         zipcodeTextField.setText(String.valueOf(project.getProjectZipcode()));
+        customerComboBox.getSelectionModel().selectItem(getCustomerById(project.getCustomerID()));
 
         submitButton.setText("Update");
         submitButton.setOnAction(event -> {
@@ -115,6 +116,15 @@ public class AddProjectViewController extends RootController {
             }
             getStage().close();
         });
+    }
+
+    private Customer getCustomerById(int customerID) {
+        for (Customer customer : customerComboBox.getItems()) {
+            if (customer.getCustomerID() == customerID) {
+                return customer;
+            }
+        }
+        return null;
     }
 
 }

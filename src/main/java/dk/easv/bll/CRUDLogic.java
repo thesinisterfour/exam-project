@@ -140,16 +140,6 @@ public class CRUDLogic implements ICRUDLogic {
         }
     }
 
-    @Override
-    public ConcurrentMap<Integer, Role> getAllRoles() throws SQLException {
-        ICRUDDao<Role> roleDao = CRUDDAOFactory.getDao(DAOType.ROLE_DAO);
-        if (roleDao == null) {
-            throw new NullPointerException("roleDAO is null");
-        } else {
-            return roleDao.getAll();
-        }
-    }
-
     /**
      * the addDocument method retrieves the Doc DAO from the CRUDDAOFactory
      * and calls the add method on it to add a document to the data source.

@@ -14,8 +14,7 @@ class DAOTypeTest {
                 DAOType.USER_DAO,
                 DAOType.DOCUMENT_DAO,
                 DAOType.CONTENT_DAO,
-                DAOType.PROJECT_DAO,
-                DAOType.ROLE_DAO};
+                DAOType.PROJECT_DAO};
         DAOType[] actual = DAOType.values();
 
         assertArrayEquals(expected, actual);

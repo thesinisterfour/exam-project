@@ -7,5 +7,4 @@ public enum DAOType {
     DOCUMENT_DAO,
     CONTENT_DAO,
     PROJECT_DAO,
-    ROLE_DAO
 }

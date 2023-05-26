@@ -29,7 +29,7 @@ import java.util.concurrent.ConcurrentMap;
 
 public class WorkersViewController extends RootController {
 
-    private final IUserModel userModel = UserModel.getInstance();
+    private IUserModel userModel;
     @FXML
     private MFXTableView<User> workersTable;
     @FXML
@@ -40,6 +40,7 @@ public class WorkersViewController extends RootController {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
+            userModel = UserModel.getInstance();
             TableSetters.setupUsersTable(workersTable);
             TableSetters.setUpProjectTable(projectsTable);
             IProjectModel projectModel = ProjectModel.getInstance();

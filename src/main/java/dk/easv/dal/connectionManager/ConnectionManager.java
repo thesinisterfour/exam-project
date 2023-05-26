@@ -97,7 +97,7 @@ public class ConnectionManager implements IConnectionManager {
             try {
                 pooledConnection.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                throw new RuntimeException(e);
             }
         });
     }

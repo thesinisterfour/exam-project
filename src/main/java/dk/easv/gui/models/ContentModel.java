@@ -1,13 +1,11 @@
 package dk.easv.gui.models;
 
-import dk.easv.be.Doc;
 import dk.easv.bll.DocumentLogic;
 import dk.easv.bll.IDocumentLogic;
 import dk.easv.gui.models.interfaces.IContentModel;
 import dk.easv.helpers.CustomerType;
 import javafx.scene.image.Image;
 
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.concurrent.ConcurrentNavigableMap;
@@ -17,10 +15,6 @@ public class ContentModel implements IContentModel {
     private final IDocumentLogic documentLogic = new DocumentLogic();
     private int documentId;
     private ConcurrentNavigableMap<Integer, Integer> contentMap;
-
-    private BufferedImage image;
-
-    private Doc document;
 
     private ContentModel() {
 
@@ -74,12 +68,8 @@ public class ContentModel implements IContentModel {
     }
 
     @Override
-    public ConcurrentNavigableMap<Integer, Integer> getContentMap() {
-        try {
-            loadAllContent(documentId);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+    public ConcurrentNavigableMap<Integer, Integer> getContentMap() throws SQLException {
+        loadAllContent(documentId);
         return contentMap;
     }
 

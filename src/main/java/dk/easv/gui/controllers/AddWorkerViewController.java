@@ -24,7 +24,7 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class AddWorkerViewController extends RootController {
-    private final IUserModel userModel = UserModel.getInstance();
+    private IUserModel userModel;
     @FXML
     private MFXTextField nameTextField,
             lastNameTextField,
@@ -39,6 +39,12 @@ public class AddWorkerViewController extends RootController {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        try {
+            userModel = UserModel.getInstance();
+        } catch (SQLException e) {
+            AlertHelper alertHelper = new AlertHelper("An error occurred while loading the users", e);
+            alertHelper.showAndWait();
+        }
         roleComboBox.setItems(FXCollections.observableArrayList(Role.values()));
     }
 

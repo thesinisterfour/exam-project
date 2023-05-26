@@ -132,7 +132,7 @@ public class ContentDAO implements ICRUDDao<Content>, IContentMapperDAO {
                 ps.executeUpdate();
             }
         } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
+            throw new SQLException("File not found");
         }
         return documentId;
     }

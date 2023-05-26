@@ -17,6 +17,7 @@ import io.github.palexdev.materialfx.controls.MFXFilterComboBox;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 
@@ -63,6 +64,11 @@ public class AddProjectViewController extends RootController {
         if (InputValidators.isEmptyField(rootVBox.getChildren())) return;
         int zipCode = InputValidators.checkZipCode(zipcodeTextField.getText());
         if (zipCode == 0) return;
+        if (startDatePicker.getValue().isAfter(endDatePicker.getValue())) {
+            AlertHelper alertHelper = new AlertHelper("Start date cannot be after end date", Alert.AlertType.INFORMATION);
+            alertHelper.showAndWait();
+            return;
+        }
         try {
             projectModel.addProject(new Project(nameTextField.getText(), startDatePicker.getValue(), endDatePicker.getValue(), customerComboBox.getSelectionModel().getSelectedItem().getCustomerID(), addressTextField.getText(), zipCode));
         } catch (SQLException e) {
@@ -107,6 +113,11 @@ public class AddProjectViewController extends RootController {
                 if (InputValidators.isEmptyField(rootVBox.getChildren())) return;
                 int zip = InputValidators.checkZipCode(zipcodeTextField.getText());
                 if (zip != 0) {
+                    if (startDatePicker.getValue().isAfter(endDatePicker.getValue())) {
+                        AlertHelper alertHelper = new AlertHelper("Start date cannot be after end date", Alert.AlertType.INFORMATION);
+                        alertHelper.showAndWait();
+                        return;
+                    }
                     projectModel.updateProject(new Project(project.getProjectID(), nameTextField.getText(), startDatePicker.getValue(), endDatePicker.getValue(), customerComboBox.getSelectionModel().getSelectedItem().getCustomerID(), addressTextField.getText(), Integer.parseInt(zipcodeTextField.getText())));
                 }
                 goBack();

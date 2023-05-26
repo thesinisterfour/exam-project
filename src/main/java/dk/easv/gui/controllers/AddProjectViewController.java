@@ -3,6 +3,7 @@ package dk.easv.gui.controllers;
 import dk.easv.be.Customer;
 import dk.easv.be.Project;
 import dk.easv.gui.controllerFactory.ControllerFactory;
+import dk.easv.gui.controllers.helpers.AlertHelper;
 import dk.easv.gui.controllers.helpers.InputValidators;
 import dk.easv.gui.models.CustomerModel;
 import dk.easv.gui.models.ProjectModel;
@@ -51,7 +52,8 @@ public class AddProjectViewController extends RootController {
             projectModel = ProjectModel.getInstance();
             customerComboBox.setItems(customerModel.getObsCustomers());
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            AlertHelper alertHelper = new AlertHelper("An error occurred while loading data", e);
+            alertHelper.showAndWait();
         }
 
     }
@@ -65,7 +67,8 @@ public class AddProjectViewController extends RootController {
             projectModel.addProject(new Project(nameTextField.getText(), startDatePicker.getValue(), endDatePicker.getValue(), customerComboBox.getSelectionModel().getSelectedItem().getCustomerID(), addressTextField.getText(), zipCode));
         } catch (SQLException e) {
             // catch if exception in add
-            throw new RuntimeException(e);
+            AlertHelper alertHelper = new AlertHelper("An error occurred while creating a project", e);
+            alertHelper.showAndWait();
         }
         goBack();
     }
@@ -82,7 +85,11 @@ public class AddProjectViewController extends RootController {
             BorderPane borderPane = (BorderPane) rootVBox.getParent();
             borderPane.setCenter(rootController.getView());
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            AlertHelper alertHelper = new AlertHelper("An error occurred while loading a new view", e);
+            alertHelper.showAndWait();
+        } catch (NullPointerException ex){
+            AlertHelper alertHelper = new AlertHelper("The view you selected does not exist", ex);
+            alertHelper.showAndWait();
         }
     }
 
@@ -103,7 +110,8 @@ public class AddProjectViewController extends RootController {
                 }
                 goBack();
             } catch (SQLException e) {
-                throw new RuntimeException(e);
+                AlertHelper alertHelper = new AlertHelper("An error occurred while updating a project", e);
+                alertHelper.showAndWait();
             }
             getStage().close();
         });

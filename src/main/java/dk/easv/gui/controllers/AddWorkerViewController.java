@@ -9,7 +9,7 @@ import dk.easv.gui.models.UserModel;
 import dk.easv.gui.models.interfaces.IRoleModel;
 import dk.easv.gui.models.interfaces.IUserModel;
 import dk.easv.gui.rootContoller.RootController;
-import dk.easv.helpers.AlertHelper;
+import dk.easv.gui.controllers.helpers.AlertHelper;
 import dk.easv.helpers.ViewType;
 import io.github.palexdev.materialfx.controls.MFXComboBox;
 import io.github.palexdev.materialfx.controls.MFXTextField;
@@ -50,7 +50,7 @@ public class AddWorkerViewController extends RootController {
                 }
             }
         } catch (SQLException e) {
-            AlertHelper alertHelper = new AlertHelper("There was an error retrieving roles from database", Alert.AlertType.ERROR);
+            AlertHelper alertHelper = new AlertHelper("There was an error retrieving roles from database", e);
             alertHelper.showAndWait();
         }
     }
@@ -82,7 +82,11 @@ public class AddWorkerViewController extends RootController {
             BorderPane borderPane = (BorderPane) rootVBox.getParent();
             borderPane.setCenter(rootController.getView());
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            AlertHelper alertHelper = new AlertHelper("An error occurred while loading a new view", e);
+            alertHelper.showAndWait();
+        } catch (NullPointerException ex){
+            AlertHelper alertHelper = new AlertHelper("The view you selected does not exist", ex);
+            alertHelper.showAndWait();
         }
     }
 
@@ -123,7 +127,7 @@ public class AddWorkerViewController extends RootController {
             user.setUserID(userId);
             goBack();
         } catch (SQLException e) {
-            AlertHelper alertHelper = new AlertHelper("Error creating user, pleas try again", Alert.AlertType.ERROR);
+            AlertHelper alertHelper = new AlertHelper("Error creating user, please try again", Alert.AlertType.ERROR);
             alertHelper.showAndWait();
         }
     }

@@ -11,14 +11,14 @@ import java.net.URL;
 import java.util.Objects;
 
 public class ControllerFactory {
-    public static RootController loadFxmlFile(ViewType fxmlFile) throws IOException {
-        Objects.requireNonNull(fxmlFile, "fxmlFile must not be null.");
-        final URL fxmlFileUrl = Main.class.getResource(fxmlFile.getFXMLView());
+    public static RootController loadFxmlFile(ViewType fxmlFile) throws IOException, NullPointerException {
+        final URL fxmlFileUrl = Objects.requireNonNull(Main.class.getResource(fxmlFile.getFXMLView()), fxmlFile.getFXMLView() + " does not exist");
         final FXMLLoader loader = new FXMLLoader(fxmlFileUrl);
         final Parent view = loader.load();
         final RootController controller = loader.getController();
         controller.setView(view);
 
         return controller;
+
     }
 }

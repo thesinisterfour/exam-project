@@ -8,7 +8,7 @@ import dk.easv.gui.models.CustomerModel;
 import dk.easv.gui.models.ProjectModel;
 import dk.easv.gui.models.interfaces.ICustomerModel;
 import dk.easv.gui.rootContoller.RootController;
-import dk.easv.helpers.AlertHelper;
+import dk.easv.gui.controllers.helpers.AlertHelper;
 import dk.easv.helpers.CurrentUser;
 import dk.easv.helpers.ViewType;
 import io.github.palexdev.materialfx.controls.MFXTableView;
@@ -38,12 +38,15 @@ public class CustomersViewController extends RootController {
     @FXML
     private void createCustomer(ActionEvent actionEvent) {
         try {
-
             RootController rootController = ControllerFactory.loadFxmlFile(ViewType.ADD_CUSTOMER);
             BorderPane borderPane = (BorderPane) rootVBox.getParent();
             borderPane.setCenter(rootController.getView());
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            AlertHelper alertHelper = new AlertHelper("An error occurred while loading a new view", e);
+            alertHelper.showAndWait();
+        } catch (NullPointerException ex){
+            AlertHelper alertHelper = new AlertHelper("The view you selected does not exist", ex);
+            alertHelper.showAndWait();
         }
     }
 
@@ -56,7 +59,11 @@ public class CustomersViewController extends RootController {
             BorderPane borderPane = (BorderPane) rootVBox.getParent();
             borderPane.setCenter(controller.getView());
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            AlertHelper alertHelper = new AlertHelper("An error occurred while loading a new view", e);
+            alertHelper.showAndWait();
+        } catch (NullPointerException ex){
+            AlertHelper alertHelper = new AlertHelper("The view you selected does not exist", ex);
+            alertHelper.showAndWait();
         } catch (IndexOutOfBoundsException e) {
             AlertHelper alertHelper = new AlertHelper("Please select a Customer", Alert.AlertType.WARNING);
             alertHelper.showAndWait();
@@ -68,7 +75,8 @@ public class CustomersViewController extends RootController {
         try {
             customerModel.deleteCustomer(customersTable.getSelectionModel().getSelectedValues().get(0));
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            AlertHelper alertHelper = new AlertHelper("An error occurred while deleting the customer", e);
+            alertHelper.showAndWait();
         } catch (IndexOutOfBoundsException e) {
             AlertHelper alertHelper = new AlertHelper("Please select a Customer", Alert.AlertType.WARNING);
             alertHelper.showAndWait();
@@ -90,9 +98,14 @@ public class CustomersViewController extends RootController {
             RootController rootController = ControllerFactory.loadFxmlFile(ViewType.PROJECTS_VIEW);
             mainBorderPane.setCenter(rootController.getView());
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            AlertHelper alertHelper = new AlertHelper("An error occurred while loading a new view", e);
+            alertHelper.showAndWait();
+        } catch (NullPointerException ex){
+            AlertHelper alertHelper = new AlertHelper("The view you selected does not exist", ex);
+            alertHelper.showAndWait();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            AlertHelper alertHelper = new AlertHelper("An error occurred while loading the projects", e);
+            alertHelper.showAndWait();
         }
     }
 
@@ -106,7 +119,8 @@ public class CustomersViewController extends RootController {
             customerModel = CustomerModel.getInstance();
             TableSetters.setUpCustomerTable(customersTable);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            AlertHelper alertHelper = new AlertHelper("An error occurred while loading the customers", e);
+            alertHelper.showAndWait();
         }
     }
 

@@ -6,7 +6,7 @@ import dk.easv.gui.controllers.helpers.InputValidators;
 import dk.easv.gui.models.CustomerModel;
 import dk.easv.gui.models.interfaces.ICustomerModel;
 import dk.easv.gui.rootContoller.RootController;
-import dk.easv.helpers.AlertHelper;
+import dk.easv.gui.controllers.helpers.AlertHelper;
 import dk.easv.helpers.ViewType;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXTextField;
@@ -62,7 +62,9 @@ public class AddCustomerViewController extends RootController {
                 customerModel.add(new Customer(nameTextField.getText(), emailTextField.getText(), addressTextField.getText(), zipCode));
             } catch (SQLException e) {
                 // catch if exception in add
-                throw new RuntimeException(e);
+                AlertHelper alertHelper = new AlertHelper("Error adding customer", Alert.AlertType.ERROR);
+                alertHelper.showAndWait();
+                return;
             }
             goBack();
         }
@@ -74,7 +76,11 @@ public class AddCustomerViewController extends RootController {
             BorderPane borderPane = (BorderPane) rootVBox.getParent();
             borderPane.setCenter(rootController.getView());
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            AlertHelper alertHelper = new AlertHelper("An error occurred while loading a new view", e);
+            alertHelper.showAndWait();
+        } catch (NullPointerException ex){
+            AlertHelper alertHelper = new AlertHelper("The view you selected does not exist", ex);
+            alertHelper.showAndWait();
         }
     }
 
@@ -95,7 +101,8 @@ public class AddCustomerViewController extends RootController {
                     goBack();
                 }
             } catch (SQLException e) {
-                throw new RuntimeException(e);
+                AlertHelper alertHelper = new AlertHelper("Error updating customer", Alert.AlertType.ERROR);
+                alertHelper.showAndWait();
             }
         });
 

@@ -6,7 +6,7 @@ import dk.easv.gui.controllerFactory.ControllerFactory;
 import dk.easv.gui.controllers.helpers.TableSetters;
 import dk.easv.gui.models.ProjectModel;
 import dk.easv.gui.rootContoller.RootController;
-import dk.easv.helpers.AlertHelper;
+import dk.easv.gui.controllers.helpers.AlertHelper;
 import dk.easv.helpers.CurrentUser;
 import dk.easv.helpers.ViewType;
 import io.github.palexdev.materialfx.controls.MFXTableView;
@@ -37,7 +37,11 @@ public class ProjectsViewController extends RootController {
             BorderPane borderPane = (BorderPane) rootVBox.getParent();
             borderPane.setCenter(rootController.getView());
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            AlertHelper alertHelper = new AlertHelper("An error occurred while loading a new view", e);
+            alertHelper.showAndWait();
+        } catch (NullPointerException ex){
+            AlertHelper alertHelper = new AlertHelper("The view you selected does not exist", ex);
+            alertHelper.showAndWait();
         }
     }
 
@@ -49,8 +53,12 @@ public class ProjectsViewController extends RootController {
             addProjectViewController.setProjectData(projectsTable.getSelectionModel().getSelectedValues().get(0));
             BorderPane borderPane = (BorderPane) rootVBox.getParent();
             borderPane.setCenter(controller.getView());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        }catch (IOException e) {
+            AlertHelper alertHelper = new AlertHelper("An error occurred while loading a new view", e);
+            alertHelper.showAndWait();
+        } catch (NullPointerException ex){
+            AlertHelper alertHelper = new AlertHelper("The view you selected does not exist", ex);
+            alertHelper.showAndWait();
         }
     }
 
@@ -59,7 +67,8 @@ public class ProjectsViewController extends RootController {
         try {
             ProjectModel.getInstance().deleteProject(projectsTable.getSelectionModel().getSelectedValues().get(0));
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            AlertHelper alertHelper = new AlertHelper("An error occurred while deleting the project", e);
+            alertHelper.showAndWait();
         } catch (IndexOutOfBoundsException e) {
             AlertHelper alertHelper = new AlertHelper("No project selected", Alert.AlertType.WARNING);
             alertHelper.showAndWait();
@@ -74,12 +83,17 @@ public class ProjectsViewController extends RootController {
             BorderPane rootBorderPane = (BorderPane) rootVBox.getParent();
             rootBorderPane.setCenter(ControllerFactory.loadFxmlFile(ViewType.DOCUMENTS_VIEW).getView());
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            AlertHelper alertHelper = new AlertHelper("An error occurred while loading the documents from databse", e);
+            alertHelper.showAndWait();
         } catch (IndexOutOfBoundsException e) {
             AlertHelper alertHelper = new AlertHelper("No project selected", Alert.AlertType.WARNING);
             alertHelper.showAndWait();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            AlertHelper alertHelper = new AlertHelper("An error occurred while loading a new view", e);
+            alertHelper.showAndWait();
+        } catch (NullPointerException ex){
+            AlertHelper alertHelper = new AlertHelper("The view you selected does not exist", ex);
+            alertHelper.showAndWait();
         }
     }
 

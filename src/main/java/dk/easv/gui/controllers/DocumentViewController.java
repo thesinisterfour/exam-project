@@ -5,6 +5,7 @@ import dk.easv.Main;
 import dk.easv.be.Content;
 import dk.easv.be.Role;
 import dk.easv.gui.controllerFactory.ControllerFactory;
+import dk.easv.gui.controllers.helpers.AlertHelper;
 import dk.easv.gui.models.ContentModel;
 import dk.easv.gui.models.interfaces.IContentModel;
 import dk.easv.gui.models.tasks.RetrieveContentTask;
@@ -210,8 +211,12 @@ public class DocumentViewController extends RootController {
             RootController rootController = ControllerFactory.loadFxmlFile(ViewType.DOCUMENTS_VIEW);
             BorderPane borderPane = (BorderPane) rootGrid.getParent();
             borderPane.setCenter(rootController.getView());
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        } catch (IOException e) {
+            AlertHelper alertHelper = new AlertHelper("An error occurred while loading a new view", e);
+            alertHelper.showAndWait();
+        } catch (NullPointerException ex){
+            AlertHelper alertHelper = new AlertHelper("The view you selected does not exist", ex);
+            alertHelper.showAndWait();
         }
     }
 
@@ -308,9 +313,11 @@ public class DocumentViewController extends RootController {
             try {
                 model.saveAsPDF(type, file.getAbsolutePath());
             } catch (SQLException e) {
-                throw new RuntimeException(e);
+                AlertHelper alertHelper = new AlertHelper("An error occurred while loading database data", e);
+                alertHelper.showAndWait();
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                AlertHelper alertHelper = new AlertHelper("An error occurred while saving the PDF file", e);
+                alertHelper.showAndWait();
             }
         }
     }
@@ -362,7 +369,8 @@ public class DocumentViewController extends RootController {
             try {
                 model.deleteContent(id);
             } catch (SQLException e) {
-                throw new RuntimeException(e);
+                AlertHelper alertHelper = new AlertHelper("An error occurred while deleting the content", e);
+                alertHelper.showAndWait();
             }
         }
         children.remove(hBox);
@@ -439,7 +447,8 @@ public class DocumentViewController extends RootController {
                 }
 
             } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+                AlertHelper alertHelper = new AlertHelper("An error occurred in another thread", e);
+                alertHelper.showAndWait();
             }
             // remove the base loading icon
             children.remove(children.size() - 1);

@@ -4,6 +4,7 @@ import dk.easv.be.Customer;
 import dk.easv.be.Doc;
 import dk.easv.be.Project;
 import dk.easv.gui.controllerFactory.ControllerFactory;
+import dk.easv.gui.controllers.helpers.AlertHelper;
 import dk.easv.gui.controllers.helpers.InputValidators;
 import dk.easv.gui.models.CustomerModel;
 import dk.easv.gui.models.DocumentMapperModel;
@@ -51,7 +52,8 @@ public class AddDocumentViewController extends RootController {
                 goBack();
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            AlertHelper alertHelper = new AlertHelper("An error occurred while creating a document", e);
+            alertHelper.showAndWait();
         }
     }
 
@@ -66,7 +68,11 @@ public class AddDocumentViewController extends RootController {
             BorderPane borderPane = (BorderPane) rootVBox.getParent();
             borderPane.setCenter(rootController.getView());
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            AlertHelper alertHelper = new AlertHelper("An error occurred while loading a new view", e);
+            alertHelper.showAndWait();
+        } catch (NullPointerException ex){
+            AlertHelper alertHelper = new AlertHelper("The view you selected does not exist", ex);
+            alertHelper.showAndWait();
         }
     }
 
@@ -81,11 +87,13 @@ public class AddDocumentViewController extends RootController {
                     projectModel.getProjectsByCustomerId(newValue.getCustomerID());
                     projectComboBox.setItems(projectModel.getProjectObservableList());
                 } catch (SQLException e) {
-                    throw new RuntimeException(e);
+                    AlertHelper alertHelper = new AlertHelper("An error occurred while loading the projects", e);
+                    alertHelper.showAndWait();
                 }
             });
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            AlertHelper alertHelper = new AlertHelper("An error occurred while loading the properties", e);
+            alertHelper.showAndWait();
         }
     }
 }

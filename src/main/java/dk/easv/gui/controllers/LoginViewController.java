@@ -86,6 +86,8 @@ public class LoginViewController extends RootController {
                 RootController controller = ControllerFactory.loadFxmlFile(ViewType.MAIN);
                 return controller.getView();
             } catch (IOException e) {
+                // if error occurs throw a runtime exception to stop the program
+                // not an alert because the program should stop
                 throw new RuntimeException(e);
             }
         });
@@ -101,6 +103,8 @@ public class LoginViewController extends RootController {
                 new FadeIn(root).setSpeed(1).play();
 
             } catch (InterruptedException | ExecutionException ex) {
+                // if error occurs throw a runtime exception to stop the program
+                // not an alert because the program should stop
                 throw new RuntimeException(ex);
             }
         });

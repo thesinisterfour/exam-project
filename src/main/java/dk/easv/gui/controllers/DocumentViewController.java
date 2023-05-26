@@ -26,6 +26,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -68,8 +69,6 @@ public class DocumentViewController extends RootController {
     private Pane scaleReferencePane;
     @FXML
     private GridPane rootGrid;
-    @FXML
-    private HBox controlsHbox;
     @FXML
     private MFXButton saveButton;
     @FXML
@@ -138,8 +137,6 @@ public class DocumentViewController extends RootController {
     private void addTextOnAction(ActionEvent actionEvent) {
         ObservableList<Node> children = vbox.getChildren();
         children.add(addText(""));
-//        emptyCheck();;
-
     }
 
     /**
@@ -239,7 +236,8 @@ public class DocumentViewController extends RootController {
                 if (imageExtensions.contains(FilenameUtils.getExtension(file.getAbsolutePath()))) {
                     children.add(addImage(new Image(file.getAbsolutePath())));
                 } else {
-                    System.out.println("Filetype not compatible");
+                    AlertHelper alertHelper = new AlertHelper("The file you dropped is not compatible", Alert.AlertType.WARNING);
+                    alertHelper.showAndWait();
                 }
             }
         }

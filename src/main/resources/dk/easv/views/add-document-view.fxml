@@ -1,21 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import io.github.palexdev.materialfx.controls.MFXButton?>
-<?import io.github.palexdev.materialfx.controls.MFXFilterComboBox?>
-<?import io.github.palexdev.materialfx.controls.MFXTextField?>
+<?import io.github.palexdev.materialfx.controls.*?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-
-<VBox fx:id="rootVBox" alignment="CENTER" prefHeight="331.0" prefWidth="485.0" spacing="8.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.AddDocumentViewController">
+<VBox xmlns:fx="http://javafx.com/fxml/1" fx:id="rootVBox" alignment="CENTER" prefHeight="331.0" prefWidth="485.0"
+      spacing="8.0" xmlns="http://javafx.com/javafx/19"
+      fx:controller="dk.easv.gui.controllers.AddDocumentViewController">
     <children>
-        <MFXTextField fx:id="nameTextField" floatMode="BORDER" floatingText="Document name" maxWidth="-Infinity" prefHeight="38.0" prefWidth="300.0" />
-        <MFXFilterComboBox fx:id="customerComboBox" floatMode="BORDER" floatingText="Customer" maxWidth="-Infinity" prefHeight="40.0" prefWidth="300.0" />
-        <MFXFilterComboBox fx:id="projectComboBox" floatMode="BORDER" floatingText="Project" maxWidth="-Infinity" prefHeight="40.0" prefWidth="300.0" />
-        <MFXTextField fx:id="descriptionTextField" alignment="TOP_LEFT" floatMode="BORDER" floatingText="Description" maxWidth="-Infinity" prefHeight="40.0" prefWidth="300.0" />
+        <MFXTextField fx:id="nameTextField" floatMode="BORDER" floatingText="Document name" maxWidth="-Infinity"
+                      prefHeight="38.0" prefWidth="300.0"/>
+        <MFXFilterComboBox fx:id="customerComboBox" floatMode="BORDER" floatingText="Customer" maxWidth="-Infinity"
+                           prefHeight="40.0" prefWidth="300.0"/>
+        <MFXFilterComboBox fx:id="projectComboBox" floatMode="BORDER" floatingText="Project" maxWidth="-Infinity"
+                           prefHeight="40.0" prefWidth="300.0"/>
+        <MFXTextField fx:id="descriptionTextField" alignment="TOP_LEFT" floatMode="BORDER" floatingText="Description"
+                      maxWidth="-Infinity" prefHeight="40.0" prefWidth="300.0"/>
         <HBox alignment="BOTTOM_CENTER" maxWidth="-Infinity" prefWidth="300.0" spacing="20.0">
             <children>
-                <MFXButton defaultButton="true" onAction="#createOnAction" text="Create" />
-                <MFXButton cancelButton="true" onAction="#cancelOnAction" text="Cancel" />
+                <MFXButton defaultButton="true" onAction="#createOnAction" text="Create"/>
+                <MFXButton cancelButton="true" onAction="#cancelOnAction" text="Cancel"/>
             </children>
         </HBox>
     </children>

@@ -2,11 +2,11 @@ package dk.easv.gui.controllers;
 
 import dk.easv.be.Customer;
 import dk.easv.gui.controllerFactory.ControllerFactory;
+import dk.easv.gui.controllers.helpers.AlertHelper;
 import dk.easv.gui.controllers.helpers.InputValidators;
 import dk.easv.gui.models.CustomerModel;
 import dk.easv.gui.models.interfaces.ICustomerModel;
 import dk.easv.gui.rootContoller.RootController;
-import dk.easv.gui.controllers.helpers.AlertHelper;
 import dk.easv.helpers.ViewType;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXTextField;
@@ -51,7 +51,7 @@ public class AddCustomerViewController extends RootController {
     private void submitButtonAction(ActionEvent event) {
 
         if (!InputValidators.isEmptyField(rootVBox.getChildren())) {
-            if (!emailTextField.getText().matches("[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}")){
+            if (!emailTextField.getText().matches("[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}")) {
                 AlertHelper alertHelper = new AlertHelper("Email is not valid", Alert.AlertType.ERROR);
                 alertHelper.showAndWait();
                 return;
@@ -78,7 +78,7 @@ public class AddCustomerViewController extends RootController {
         } catch (IOException e) {
             AlertHelper alertHelper = new AlertHelper("An error occurred while loading a new view", e);
             alertHelper.showAndWait();
-        } catch (NullPointerException ex){
+        } catch (NullPointerException ex) {
             AlertHelper alertHelper = new AlertHelper("The view you selected does not exist", ex);
             alertHelper.showAndWait();
         }

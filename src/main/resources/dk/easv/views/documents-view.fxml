@@ -1,26 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+
 <?import io.github.palexdev.materialfx.controls.MFXButton?>
 <?import io.github.palexdev.materialfx.controls.MFXTableView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-
-
-  <VBox fx:id="rootVbox" spacing="8.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.DocumentsViewController">
-      <children>
-          <Label fx:id="documentLabel" text="Documents" />
-          <MFXTableView fx:id="documentsTable" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="230.0" prefWidth="830.0" VBox.vgrow="ALWAYS" />
-          <HBox alignment="CENTER_RIGHT" spacing="8.0">
-              <children>
-                  <MFXButton fx:id="addDocumentButton" onAction="#newDocument" text="Add Document" />
-                  <MFXButton fx:id="editDocumentButton" onAction="#handleEdit" text="Edit" />
-                  <MFXButton fx:id="deleteDocumentButton" onAction="#handleDelete" text="Delete" />
-              </children>
-          </HBox>
-      </children>
-   <padding>
-      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-   </padding>
-  </VBox>
+<VBox xmlns:fx="http://javafx.com/fxml/1" fx:id="rootVbox" spacing="8.0" xmlns="http://javafx.com/javafx/19"
+      fx:controller="dk.easv.gui.controllers.DocumentsViewController">
+    <children>
+        <Label fx:id="documentLabel" text="Documents"/>
+        <MFXTableView fx:id="documentsTable" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                      prefHeight="230.0" prefWidth="830.0" VBox.vgrow="ALWAYS"/>
+        <HBox alignment="CENTER_RIGHT" spacing="8.0">
+            <children>
+                <MFXButton fx:id="addDocumentButton" onAction="#newDocument" text="Add Document"/>
+                <MFXButton fx:id="editDocumentButton" onAction="#handleEdit" text="Edit"/>
+                <MFXButton fx:id="deleteDocumentButton" onAction="#handleDelete" text="Delete"/>
+            </children>
+        </HBox>
+    </children>
+    <padding>
+        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+    </padding>
+</VBox>

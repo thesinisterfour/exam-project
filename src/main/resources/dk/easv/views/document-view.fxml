@@ -1,50 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import io.github.palexdev.materialfx.controls.MFXButton?>
-<?import io.github.palexdev.materialfx.controls.MFXScrollPane?>
+<?import io.github.palexdev.materialfx.controls.*?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.VBox?>
-
-<GridPane fx:id="rootGrid" alignment="TOP_CENTER" prefHeight="650.0" prefWidth="900.0" vgap="10.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.gui.controllers.DocumentViewController">
+<?import javafx.scene.layout.*?>
+<GridPane xmlns:fx="http://javafx.com/fxml/1" fx:id="rootGrid" alignment="TOP_CENTER" prefHeight="650.0" prefWidth="900.0"
+          vgap="10.0" xmlns="http://javafx.com/javafx/19"
+          fx:controller="dk.easv.gui.controllers.DocumentViewController">
     <columnConstraints>
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="602.7999206542969" minWidth="10.0" prefWidth="565.1999450683594" />
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="458.3998962402344" minWidth="10.0" prefWidth="314.8000549316406" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="602.7999206542969" minWidth="10.0"
+                           prefWidth="565.1999450683594"/>
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="458.3998962402344" minWidth="10.0"
+                           prefWidth="314.8000549316406"/>
     </columnConstraints>
     <rowConstraints>
-        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="100.0" vgrow="ALWAYS" />
-        <RowConstraints minHeight="30.0" vgrow="NEVER" />
+        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="100.0" vgrow="ALWAYS"/>
+        <RowConstraints minHeight="30.0" vgrow="NEVER"/>
     </rowConstraints>
     <children>
         <MFXScrollPane fx:id="scrollPane" fitToWidth="true" vbarPolicy="ALWAYS" GridPane.columnSpan="2147483647">
             <content>
                 <HBox fx:id="centeringHBox" alignment="CENTER">
                     <children>
-                        <VBox fx:id="vbox" alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" onDragDropped="#vboxOnDragDropped" onDragOver="#vboxOnDragOver" prefHeight="574.0" spacing="10.0" HBox.hgrow="ALWAYS" />
+                        <VBox fx:id="vbox" alignment="TOP_CENTER" maxHeight="1.7976931348623157E308"
+                              onDragDropped="#vboxOnDragDropped" onDragOver="#vboxOnDragOver" prefHeight="574.0"
+                              spacing="10.0" HBox.hgrow="ALWAYS"/>
                     </children>
                 </HBox>
             </content>
         </MFXScrollPane>
         <HBox fx:id="controlsHbox" alignment="CENTER_LEFT" spacing="8.0" GridPane.rowIndex="1">
             <children>
-                <MFXButton onAction="#saveAsPdfPrivateOnAction" text="Save As PDF (Private)" />
-                <MFXButton onAction="#saveAsPdfPublicOnAction" text="Save As PDF (Public)" />
-                <MFXButton fx:id="sketchButton" onAction="#openCanvasOnAction" text="Sketch" />
-                <MFXButton fx:id="addImageButton" onAction="#addImageOnAction" text="Add image" />
-                <MFXButton fx:id="addTextButton" onAction="#addTextOnAction" text="Add text" />
+                <MFXButton onAction="#saveAsPdfPrivateOnAction" text="Save As PDF (Private)"/>
+                <MFXButton onAction="#saveAsPdfPublicOnAction" text="Save As PDF (Public)"/>
+                <MFXButton fx:id="sketchButton" onAction="#openCanvasOnAction" text="Sketch"/>
+                <MFXButton fx:id="addImageButton" onAction="#addImageOnAction" text="Add image"/>
+                <MFXButton fx:id="addTextButton" onAction="#addTextOnAction" text="Add text"/>
             </children>
         </HBox>
         <HBox alignment="CENTER_RIGHT" spacing="8.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
             <children>
-                <MFXButton fx:id="saveButton" defaultButton="true" onAction="#saveOnAction" text="Save" />
-                <MFXButton cancelButton="true" onAction="#cancelOnAction" text="Cancel" />
+                <MFXButton fx:id="saveButton" defaultButton="true" onAction="#saveOnAction" text="Save"/>
+                <MFXButton cancelButton="true" onAction="#cancelOnAction" text="Cancel"/>
             </children>
         </HBox>
     </children>
     <padding>
-        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
     </padding>
 </GridPane>

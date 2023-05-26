@@ -87,7 +87,7 @@ public class AddProjectViewController extends RootController {
         } catch (IOException e) {
             AlertHelper alertHelper = new AlertHelper("An error occurred while loading a new view", e);
             alertHelper.showAndWait();
-        } catch (NullPointerException ex){
+        } catch (NullPointerException ex) {
             AlertHelper alertHelper = new AlertHelper("The view you selected does not exist", ex);
             alertHelper.showAndWait();
         }

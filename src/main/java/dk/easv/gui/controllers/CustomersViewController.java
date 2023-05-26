@@ -3,12 +3,12 @@ package dk.easv.gui.controllers;
 import dk.easv.be.Customer;
 import dk.easv.be.Role;
 import dk.easv.gui.controllerFactory.ControllerFactory;
+import dk.easv.gui.controllers.helpers.AlertHelper;
 import dk.easv.gui.controllers.helpers.TableSetters;
 import dk.easv.gui.models.CustomerModel;
 import dk.easv.gui.models.ProjectModel;
 import dk.easv.gui.models.interfaces.ICustomerModel;
 import dk.easv.gui.rootContoller.RootController;
-import dk.easv.gui.controllers.helpers.AlertHelper;
 import dk.easv.helpers.CurrentUser;
 import dk.easv.helpers.ViewType;
 import io.github.palexdev.materialfx.controls.MFXTableView;
@@ -44,7 +44,7 @@ public class CustomersViewController extends RootController {
         } catch (IOException e) {
             AlertHelper alertHelper = new AlertHelper("An error occurred while loading a new view", e);
             alertHelper.showAndWait();
-        } catch (NullPointerException ex){
+        } catch (NullPointerException ex) {
             AlertHelper alertHelper = new AlertHelper("The view you selected does not exist", ex);
             alertHelper.showAndWait();
         }
@@ -61,7 +61,7 @@ public class CustomersViewController extends RootController {
         } catch (IOException e) {
             AlertHelper alertHelper = new AlertHelper("An error occurred while loading a new view", e);
             alertHelper.showAndWait();
-        } catch (NullPointerException ex){
+        } catch (NullPointerException ex) {
             AlertHelper alertHelper = new AlertHelper("The view you selected does not exist", ex);
             alertHelper.showAndWait();
         } catch (IndexOutOfBoundsException e) {
@@ -100,7 +100,7 @@ public class CustomersViewController extends RootController {
         } catch (IOException e) {
             AlertHelper alertHelper = new AlertHelper("An error occurred while loading a new view", e);
             alertHelper.showAndWait();
-        } catch (NullPointerException ex){
+        } catch (NullPointerException ex) {
             AlertHelper alertHelper = new AlertHelper("The view you selected does not exist", ex);
             alertHelper.showAndWait();
         } catch (SQLException e) {

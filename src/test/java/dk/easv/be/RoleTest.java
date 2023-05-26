@@ -17,7 +17,7 @@ class RoleTest {
     }
 
     @Test
-    public void testToString(){
+    public void testToString() {
         String expected = "SALESPERSON";
         String actual = Role.SALESPERSON.toString();
         Assertions.assertEquals(expected, actual);

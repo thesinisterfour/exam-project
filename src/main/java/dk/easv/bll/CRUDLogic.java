@@ -20,11 +20,7 @@ public class CRUDLogic implements ICRUDLogic {
     @Override
     public int addUser(User user) throws SQLException {
         ICRUDDao<User> userDAO = CRUDDAOFactory.getDao(DAOType.USER_DAO);
-        if (userDAO == null) {
-            return -1;
-        } else {
-            return userDAO.add(user);
-        }
+        return userDAO.add(user);
     }
 
 
@@ -40,11 +36,7 @@ public class CRUDLogic implements ICRUDLogic {
     @Override
     public int addCustomer(Customer customer) throws SQLException, NullPointerException {
         ICRUDDao<Customer> customerDAO = CRUDDAOFactory.getDao(DAOType.CUSTOMER_DAO);
-        if (customerDAO == null) {
-            throw new NullPointerException("CustomerDAO is null");
-        } else {
-            return customerDAO.add(customer);
-        }
+        return customerDAO.add(customer);
     }
 
     /**
@@ -58,11 +50,7 @@ public class CRUDLogic implements ICRUDLogic {
     @Override
     public int addCity(City city) throws SQLException, NullPointerException {
         ICRUDDao<City> cityDao = CRUDDAOFactory.getDao(DAOType.CITY_DAO);
-        if (cityDao == null) {
-            throw new NullPointerException("CityDAO is null");
-        } else {
-            return cityDao.add(city);
-        }
+        return cityDao.add(city);
     }
 
     /**
@@ -96,11 +84,7 @@ public class CRUDLogic implements ICRUDLogic {
     @Override
     public ConcurrentMap<Integer, Customer> getAllCustomers() throws SQLException {
         ICRUDDao<Customer> customerDao = CRUDDAOFactory.getDao(DAOType.CUSTOMER_DAO);
-        if (customerDao == null) {
-            throw new NullPointerException("CustomerDAO is null");
-        } else {
-            return customerDao.getAll();
-        }
+        return customerDao.getAll();
     }
 
     /**
@@ -115,11 +99,7 @@ public class CRUDLogic implements ICRUDLogic {
     @Override
     public City getCity(int zipcode) throws SQLException {
         ICRUDDao<City> cityDao = CRUDDAOFactory.getDao(DAOType.CITY_DAO);
-        if (cityDao == null) {
-            throw new NullPointerException("CityDAO is null");
-        } else {
-            return cityDao.get(zipcode);
-        }
+        return cityDao.get(zipcode);
     }
 
     /**

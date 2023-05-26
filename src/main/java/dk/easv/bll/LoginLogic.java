@@ -23,6 +23,11 @@ public class LoginLogic implements ILoginLogic {
         es.shutdown();
     }
 
+    /**
+     * utilizes the observer pattern to notify the view when the login is ready
+     * @param model a model implementing the ILoginModel interface
+     */
+
     private void notifyAllowLogin(ILoginModel model) {
         model.setLoginReady(true);
     }

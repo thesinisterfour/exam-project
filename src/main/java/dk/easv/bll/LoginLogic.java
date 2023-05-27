@@ -9,7 +9,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class LoginLogic implements ILoginLogic {
-    ConcurrentMap<Integer, User> userMap;
+    private ConcurrentMap<Integer, User> userMap;
 
     public LoginLogic(ILoginModel loginModel) {
         ExecutorService es = Executors.newSingleThreadExecutor();

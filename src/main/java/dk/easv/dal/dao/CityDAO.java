@@ -90,8 +90,7 @@ public class CityDAO implements ICRUDDao<City> {
             PreparedStatement ps = connection.prepareStatement("DELETE FROM dbo.[cities] WHERE zipcode=?;");
             ps.setInt(1, id);
 
-            ps.executeQuery();
+            return ps.executeUpdate();
         }
-        return 0;
     }
 }

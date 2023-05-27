@@ -33,9 +33,10 @@ public class ProjectDAO implements ICRUDDao<Project>, IProjectMapper {
             ResultSet rs = ps.getGeneratedKeys();
             if (rs.next()) {
                 return rs.getInt(1);
+            } else {
+                throw new SQLException("No keys generated");
             }
         }
-        return 0;
     }
 
     @Override

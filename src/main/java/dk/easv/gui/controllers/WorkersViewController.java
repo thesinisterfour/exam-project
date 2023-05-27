@@ -165,6 +165,9 @@ public class WorkersViewController extends RootController {
             Project selectedProject = projectsTable.getSelectionModel().getSelectedValues().get(0);
             IProjectModel projectModel = ProjectModel.getInstance();
             projectModel.deassignProject(selectedProject.getProjectID(), selectedUser.getUserID());
+
+            ConcurrentMap<Integer, Project> map = projectModel.getProjectsByWorkerId(selectedUser.getUserID());
+            projectsTable.setItems(FXCollections.observableArrayList(map.values()));
         } catch (IndexOutOfBoundsException o) {
             AlertHelper alertHelper = new AlertHelper("Please select a user and a project to deassign", Alert.AlertType.ERROR);
             alertHelper.showAndWait();

@@ -30,8 +30,8 @@
         </MFXScrollPane>
         <HBox fx:id="controlsHbox" alignment="CENTER_LEFT" spacing="8.0" GridPane.rowIndex="1">
             <children>
-                <MFXButton onAction="#saveAsPdfPrivateOnAction" text="Save As PDF (Private)"/>
-                <MFXButton onAction="#saveAsPdfPublicOnAction" text="Save As PDF (Public)"/>
+                <MFXButton fx:id="saveAsPDFPrivate" onAction="#saveAsPdfPrivateOnAction" text="Save As PDF (Private)"/>
+                <MFXButton fx:id="saveAsPDFPublic" onAction="#saveAsPdfPublicOnAction" text="Save As PDF (Public)"/>
                 <MFXButton fx:id="sketchButton" onAction="#openCanvasOnAction" text="Sketch"/>
                 <MFXButton fx:id="addImageButton" onAction="#addImageOnAction" text="Add image"/>
                 <MFXButton fx:id="addTextButton" onAction="#addTextOnAction" text="Add text"/>

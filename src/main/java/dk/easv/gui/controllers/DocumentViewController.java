@@ -77,6 +77,10 @@ public class DocumentViewController extends RootController {
     private MFXButton addImageButton;
     @FXML
     private MFXButton addTextButton;
+    @FXML
+    private MFXButton saveAsPDFPrivate;
+    @FXML
+    private MFXButton saveAsPDFPublic;
 
     /**
      * This function initializes the URL and ResourceBundle and populates the content if the document
@@ -104,6 +108,9 @@ public class DocumentViewController extends RootController {
             sketchButton.setDisable(true);
             addImageButton.setDisable(true);
             addTextButton.setDisable(true);
+        } else if (actualUser.getRole() == Role.TECHNICIAN) {
+            saveAsPDFPrivate.setDisable(true);
+            saveAsPDFPublic.setDisable(true);
         }
     }
 

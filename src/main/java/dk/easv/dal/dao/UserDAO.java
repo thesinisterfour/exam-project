@@ -25,7 +25,7 @@ public class UserDAO implements ICRUDDao<User> {
 
         try (Connection connection = cm.getConnection()) {
             PreparedStatement ps = connection.prepareStatement("INSERT INTO dbo.[users] (first_name, last_name, role_id, username, password)\n" +
-                    "VALUES (?, ?, (SELECT role_id FROM users_role WHERE role_name=?), ?, ?);");
+                    "OUTPUT inserted.user_id VALUES (?, ?, (SELECT role_id FROM users_role WHERE role_name=?), ?, ?);");
 
             ps.setString(1, object.getFirstName());
             ps.setString(2, object.getLastName());
@@ -33,7 +33,12 @@ public class UserDAO implements ICRUDDao<User> {
             ps.setString(4, object.getUsername());
             ps.setString(5, object.getPassword());
 
-            return ps.executeUpdate();
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            } else {
+                return 0;
+            }
         }
     }
 
